@@ -1,0 +1,12 @@
+.feedback-text{
+    font-family: var(--normal-text);
+    padding: 2%;
+    font-size: 120%;
+    width: 80%;
+    border-radius: 2px;
+    margin: auto;
+    margin-bottom: 2vh;
+    text-align: center;
+
+    
+}

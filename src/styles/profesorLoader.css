@@ -1,0 +1,35 @@
+#loading {
+    display: inline-block;
+    width: 20px;
+    height:20px;
+    border: 3px solid rgba(71, 71, 71, 0.3);
+    border-radius: 50%;
+    border-top-color: #515151;
+    animation: spin 1s ease-in-out infinite;
+    -webkit-animation: spin 1s ease-in-out infinite;
+  }
+  
+  @keyframes spin {
+    to { -webkit-transform: rotate(360deg); }
+  }
+  @-webkit-keyframes spin {
+    to { -webkit-transform: rotate(360deg); }
+  }
+
+.waiting-update {
+  margin: auto;
+  width: 50px;
+  height:50px;
+  border: 4px solid rgba(71, 71, 71, 0.3);
+  border-radius: 50%;
+  border-top-color: #7cbd1e;
+  animation: spin 1s ease-in-out infinite;
+  -webkit-animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { -webkit-transform: rotate(360deg); }
+}
+@-webkit-keyframes spin {
+  to { -webkit-transform: rotate(360deg); }
+}

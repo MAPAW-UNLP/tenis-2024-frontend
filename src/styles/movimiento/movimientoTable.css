@@ -1,0 +1,115 @@
+.movimiento-table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  border-radius: 20px;
+  background-color: var(--neutral-white);
+  cursor: default;
+  /* font: normal 13px Arial, sans-serif; */
+}
+
+.movimiento-table thead th:nth-child(-n + 3) {
+  padding: 10px;
+  text-align: left;
+  /* text-shadow: 1px 1px 1px #fff; */
+}
+
+.movimiento-table tbody td {
+  padding: 15px;
+}
+
+.container {
+  margin-top: 2vh;
+  width: 100%;
+  background-color: var(--neutral-white);
+  cursor: default;
+  margin-bottom: 10vh;
+}
+
+.table-head {
+  height: 8vh;
+  color: var(--neutral-black);
+  font-family: var(--title-text);
+  font-size: 150%;
+  background-color: var(--neutral-white);
+  border-bottom: 5px solid var(--neutral-black);
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+}
+
+.table-row {
+  padding: 0.5%;
+  border-radius: 12px;
+  background-color: var(--neutral-black);
+  color: var(--neutral-white-text);
+  font-family: var(--normal-text);
+  font-size: 110%;
+}
+
+.monto-td {
+  text-align: center;
+}
+
+/* FORMULARIO GENERICO */
+.movimiento-searchbar {
+  position: relative;
+}
+
+.movimiento-searchbar input {
+  width: 90%;
+  font-family: var(--normal-text);
+  font-size: 100%;
+  border-radius: 10px;
+  border: 1px solid var(--neutral-black);
+  color: var(--neutral-black);
+  padding-left: 2%;
+  transition: all 0.5s ease;
+}
+
+.movimiento-searchbar input:focus {
+  outline: 2px solid var(--accent-green);
+  border: none;
+}
+
+.movimiento-magnify-icon {
+  color: var(--neutral-black);
+  position: absolute;
+  top: 25%;
+  right: 12%;
+}
+
+/* BALANCE */
+.debe-td {
+  background-color: #68a386;
+  text-align: center;
+}
+
+.haber-td {
+  background-color: #a98178;
+  text-align: center;
+}
+
+.debe-th {
+  text-align: center;
+  background-color: #75ebb0;
+}
+
+.haber-th {
+  text-align: center;
+  background-color: #f5a694;
+}
+
+.container-balance {
+  margin-bottom: unset;
+}
+
+.balance-table-footer {
+  width: 100%;
+  color: var(--neutral-black);
+  font-family: var(--title-text);
+  font-size: 1.5em;
+  padding: 10px;
+  background-color: var(--neutral-white);
+  margin-bottom: 10vh;
+  border-top: 2.5px solid var(--neutral-black);
+}

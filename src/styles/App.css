@@ -1,0 +1,28 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+}
+.App {
+  
+
+  --primary-blue: #336699;
+  --primary-green: #339966;
+  --primary-red: #993300;
+  --primary-cyan: #085354;
+
+  --neutral-white-text: #F4F4F4;
+  --neutral-white: #FCF9F9;
+  --neutral-black: #5D5D5D;
+
+  --accent-yellow: #F1F864;
+  --accent-tennis-green: #BCEB3C;
+  --accent-green: #7CBD1E;
+  
+
+  --title-text: 'Oswald', sans-serif;
+  --normal-text: 'Roboto', sans-serif;
+
+}
+

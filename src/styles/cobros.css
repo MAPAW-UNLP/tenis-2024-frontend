@@ -1,0 +1,449 @@
+/* #cobros-component{
+    background-color: var(--primary-blue);
+    height: 100%;
+    min-height: 100vh;
+}
+
+#cobros-component-mainContent{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 70vw;
+    margin: auto;
+    margin-top: 5vh;
+    align-items: center;
+} */
+
+/* .cobros-add-btn{
+    width: 100%;
+    height: 5rem;
+    background-color: var(--accent-green);
+    border-radius: 20px ;
+    border: none;
+    box-shadow: 0px 5px 2px var(--neutral-black);
+    cursor: pointer;
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    margin-bottom: .2em;
+}
+
+.cobros-add-btn-text{
+    font-size: 3em;
+    color: var(--neutral-white-text);
+}
+
+.cobros-add-btn:hover{
+    box-shadow: 0px 3px 10px #75b21a
+} */
+
+/* #cobros-list-component{
+    margin-top: 2vh;
+    width: 100%;
+    border-radius: 20px;
+    background-color: var(--neutral-white);
+    cursor: default;
+    margin-bottom: 10vh;
+} */
+
+/* #cobros-list-options{
+    height: 8vh;
+    display: grid;
+    grid-template-columns: 15% 20% 20% 10% 30%;
+    align-content: center;
+    align-items: center;
+    justify-content: start;
+    color: var(--neutral-black);
+    font-family: var(--title-text);
+    font-size: 150%;
+    background-color: var(--neutral-white);
+    border-bottom: 5px solid var(--neutral-black);
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    padding-left: 2%;
+} */
+
+/* #cobros-list-options :first-child {
+    margin-left: .5em;
+} */
+
+/* CABECERA DE LISTA */
+
+/* .cobros-list-options-flex {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content:space-between; 
+    align-items: center; 
+    height: 8vh;
+    color: var(--neutral-black);
+    font-family: var(--title-text);
+    font-size: 150%;
+    background-color: var(--neutral-white);
+    border-bottom: 5px solid var(--neutral-black);
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+  } */
+  
+/* .item {
+    padding: 10px;
+    text-align: center;
+}
+  
+.dia, .concepto, .monto {
+    flex-basis: 15%;
+}
+  
+.descripcion, .buscar {
+    flex-grow: 1; Descripción y Búsqueda ocupan todo el espacio restante
+} */
+
+/* .cobros-searchbar{
+    position: relative;
+    width: 90%;
+}
+
+.cobros-searchbar input{
+    width: 90%;
+    font-family: var(--normal-text);
+    font-size: 100%;
+    border-radius: 10px;
+    border: 1px solid var(--neutral-black);
+    color: var(--neutral-black);
+    padding-left: 2%;
+    transition: all 0.5s ease;
+}
+
+.cobros-searchbar input:focus{
+    outline: 2px solid var(--accent-green);
+    border: none;
+}
+
+.magnify-icon{
+    color: var(--neutral-black);
+    position: absolute;
+    top: 35%;
+    right: 10%;
+} */
+
+/* FIN CABECERA DE LISTA */
+
+/* .cobro-info{
+    display: grid;
+    grid-template-columns: 15% 20% 20% 10%;
+    align-items: center;
+    justify-content: start;
+    margin: 0.5%;
+    padding: .8em;
+    border-radius: 12px;
+    background-color: var(--neutral-black);
+    color: var(--neutral-white-text);
+    font-family: var(--normal-text);
+    font-size: 110%;
+}
+
+.cobros-info-flex{
+    display: flex;
+    margin: 0.5%;
+    padding-top: .8em;
+    flex-wrap: wrap;
+    padding-bottom: .8em;
+    justify-content:space-between; 
+    align-items: center; 
+    border-radius: 12px;
+    background-color: var(--neutral-black);
+    color: var(--neutral-white-text);
+    font-family: var(--normal-text);
+    font-size: 110%;
+} */
+
+/* .item-detail{
+    text-align: center;
+} */
+
+/* #cobros-list{
+    min-height: 100%;
+    max-height: 60vh;
+    overflow-y: scroll; 
+} */
+
+/* #cobros-list::-webkit-scrollbar {
+    width: 12px;width of the entire scrollbar
+} */
+  
+/* #cobros-list::-webkit-scrollbar-track {
+    background-color:transparent;
+    border-bottom-left-radius:20px ;
+    border-bottom-right-radius:20px ;
+    opacity: .5;   
+} */
+  
+/* #cobros-list::-webkit-scrollbar-thumb {
+    background-color: var(--accent-green);    color of the scroll thumb
+    border-radius: 20px;       roundness of the scroll thumb
+    border: 2px solid var(--neutral-white);  creates padding around scroll thumb
+} */
+
+/* Cobro add form */
+/* .movimiento-add-component{
+    background-color: var(--neutral-white);
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 50%;
+    border-radius:20px; 
+    width: 38vw;
+    z-index: 20;
+    box-shadow: -2px -4px 400px 600px rgba(0,0,0,0.24);
+}
+
+.close-movimiento-add-form{
+    background:  none;
+    position: absolute;
+    top: 1vh;
+    border: none;
+    right: 2vw;
+    font-family: var(--title-text);
+    font-size: 1.8em;
+    color: var(--neutral-black);
+    transition: all 0.5s ease;
+    cursor: pointer;
+} */
+
+/* .close-cobro-add-form:hover{
+    font-size: 175%;
+    font-weight: bolder;
+    color: #CC3636;
+} */
+
+/* .close-movimiento-add-form:hover{
+    color: #CC3636;
+} */
+
+/* .movimiento-add-component h2{
+    width: 100%;
+    margin-top: 3vh;
+    background-color: var(--neutral-white);
+    color: var(--neutral-black);
+    font-size: 250%;
+    text-align: center;
+    font-family: var(--title-text);
+}
+
+.movimiento-add-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    background-color: var(--neutral-white);
+} */
+
+/* .movimiento-add-form input:last-of-type{
+    margin-bottom: 2em;
+}
+
+.movimiento-add-form label{
+    width: 80%;
+}
+
+.movimiento-add-form select, .movimiento-add-form input{
+    width: 80%;
+    font-family: var(--normal-text);
+    height: 2.2rem;
+    margin-bottom: 15px;
+    font-size: large;
+    background-color: var(--neutral-white);
+    padding-left: 5px;
+    border: 1px solid #d9d9d9;
+    color: var(--neutral-black);
+    border-radius: .2em;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.movimiento-add-form input:focus, select:focus{
+    border-color: #86b7fe;
+    box-shadow: 0 0 0 .20rem rgba(13,110,253,.20);
+    outline: 0;
+}
+
+.movimiento-add-form select:active{
+    color: var(--neutral-black);
+}
+
+.movimiento-add-form-addBtn{
+    width: 100%;
+    background-color: var(--accent-green);
+    height: 5rem;
+    border: none;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    cursor: pointer;
+    color: var(--neutral-white);
+    font-size: 2.3em;
+    font-weight: bolder;
+} */
+
+/* .movimiento-add-form-addBtn:disabled{
+    background-color: var(--neutral-black);
+} */
+
+/* .cobro-add-form-addBtn{
+    width: 100%;
+    background-color: var(--accent-green);
+    height: 5rem;
+    border: none;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    cursor: pointer;
+    color: var(--neutral-white);
+    font-size: 2.3em;
+    font-weight: bolder;
+} */
+
+/* .cobro-add-form-addBtn:disabled{
+    background-color: var(--neutral-black);
+} */
+
+/* #cobros-add-form-btn{
+    color: var(--accent-green);
+    background-color: var(--accent-green);
+    border: none;
+    color: var(--neutral-white);
+    font-size: 350%;
+} */
+
+/* #cobro-form-select{
+    margin-top: 0;
+} */
+
+/* #cobro-form-input{
+    margin-top: 0;
+} */
+
+/* .movimiento-form-label{
+    font-family: var(--normal-text);
+    width: 90%;
+    color: var(--accent-green);
+} */
+
+#historial-usuario-btn{
+    width: 50%;
+    border-radius: 12px;
+    height: 2rem;
+    background-color: #94F5C5;
+    font-size: 120%;
+    color: var(--neutral-black);
+    border: none;
+    box-shadow: 0px 5px 20px var(--neutral-black);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+#historial-usuario-btn:hover{
+    box-shadow: 0px 4px 100px #94F5C5; 
+    height: 2.5rem;
+    font-size: 130%;
+    cursor: pointer;
+}
+
+#cobros-detail{
+    background-color: var(--neutral-white);
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 30%;
+    left: 30vw;
+    border-radius:20px; 
+    width: 40vw;
+    z-index: 20;
+    box-shadow: -2px -4px 400px 600px rgba(0,0,0,0.24);
+}
+
+#close-detail-add-form{
+    background:  none;
+    position: absolute;
+    top: 1vh;
+    border: none;
+    right: 2vw;
+    font-family: var(--title-text);
+    font-size: 150%;
+    color: var(--neutral-black);
+    transition: all 0.5s ease;
+    cursor: pointer;
+}
+
+#close-detail-add-form:hover{
+    font-size: 175%;
+    font-weight: bolder;
+    color: #CC3636;
+}
+
+#cobros-detail-list{
+    height: 40vh;
+    overflow-y: scroll;
+}
+
+#cobros-detail-list::-webkit-scrollbar {
+    width: 12px;/* width of the entire scrollbar */
+}
+  
+cobros-detail-list::-webkit-scrollbar-track {
+  
+    background-color:transparent;
+    border-bottom-left-radius:20px ;
+    border-bottom-right-radius:20px ;
+    opacity: .5;   
+}
+  
+#cobros-detail-list::-webkit-scrollbar-thumb {
+
+    background-color: var(--neutral-black);    /* color of the scroll thumb */
+    border-radius: 20px;       /* roundness of the scroll thumb */
+    border: 2px solid var(--neutral-white);  /* creates padding around scroll thumb */
+}
+
+/* Aca poner los scrollss */
+
+.cobros-detail-item{
+    display: flex;
+    flex-direction: column;
+    background-color: #94F5C5;
+    height: 13vh;
+    width: 90%;
+    margin: auto;
+    margin-top: 10px;
+    border: 3px dashed var(--neutral-black);
+    border-left: 10px dashed  var(--neutral-black);
+    padding-left: 2%;
+    padding-top: 5%;
+    color: var(--neutral-black);
+    font-family: var(--normal-text);
+}
+
+#cobros-detail h2{
+    width: 100%;
+    margin-top: 3vh;
+    background-color: var(--neutral-white);
+    color: var(--neutral-black);
+    font-size: 250%;
+    text-align: center;
+    font-family: var(--title-text);
+}
+
+#cobros-detail-fecha{
+    font-weight:500;
+    font-size: 120%;
+}
+
+#cobros-detail-tipo{
+    font-weight:900;
+    font-size: 130%;
+}
+
+#cobros-detail-contadores{
+    margin: 5% auto 5% auto;
+    display: flex;
+    justify-content: space-around;
+    width: 90%;
+    flex-direction: row;
+    font-family: var(--title-text);
+    font-size: 140%;
+    color: var(--primary-blue)
+}

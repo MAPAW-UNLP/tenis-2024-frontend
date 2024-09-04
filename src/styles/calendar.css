@@ -1,0 +1,44 @@
+.pickers{
+    background-color: var(--neutral-black);
+    font-family: var(--title-text);
+    color: var(--neutral-white-text);
+    font-size: 130%;
+    text-align: center;
+    border: none;
+    transition: all 0.5s ease;
+}
+
+.pickers:hover{
+    color: var(--accent-yellow);
+    cursor: pointer;
+}
+
+.pickers:focus{
+    outline: none;
+    border: none;
+    color: var(--accent-yellow);
+}
+
+.ayercitoOculto{
+    font-family: var(--title-text);
+    color: var(--neutral-white-text);
+    font-size: 130%;
+    text-align: center;
+    border: none;
+    transition: all 2s ease;
+    position: absolute;
+    left: 20%;
+    top: 10%;
+    z-index: 1;
+}
+.ayercitoOculto .active{
+    color :blue
+}
+
+.derecha{
+    position: absolute;
+    
+}
+#table-panel-date button{
+    cursor: pointer;
+}

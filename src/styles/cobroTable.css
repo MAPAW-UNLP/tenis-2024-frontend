@@ -1,0 +1,50 @@
+.zui-table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+    border-radius: 20px;
+    background-color: var(--neutral-white);
+    cursor: default;
+    /* font: normal 13px Arial, sans-serif; */
+}
+
+.zui-table thead th {
+    padding: 10px;
+    text-align: left;
+    text-shadow: 1px 1px 1px #fff;
+}
+.zui-table tbody td {
+    padding: 15px;
+}
+
+.container{
+    margin-top: 2vh;
+    width: 100%;
+    background-color: var(--neutral-white);
+    cursor: default;
+    margin-bottom: 10vh;
+}
+
+.table-head{
+    height: 8vh;
+    color: var(--neutral-black);
+    font-family: var(--title-text);
+    font-size: 150%;
+    background-color: var(--neutral-white);
+    border-bottom: 5px solid var(--neutral-black);
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+}
+
+.table-row{
+    padding: 0.5%;
+    border-radius: 12px;
+    background-color: var(--neutral-black);
+    color: var(--neutral-white-text);
+    font-family: var(--normal-text);
+    font-size: 110%;
+}
+
+.cobro-input{
+    width: 100%;
+}

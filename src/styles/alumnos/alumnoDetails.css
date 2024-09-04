@@ -1,0 +1,118 @@
+.new-alumno-details-component-container {
+    /* display: flex; */
+    /* flex-direction: column; */
+    position: absolute;
+    margin-top: 10vh;
+    width: 100%;
+    z-index: 20;
+}
+
+.new-alumno-details-component {
+    width: 55%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 2em;
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 20px;
+    background-color: white;
+    position: relative;
+    box-shadow: 2px 2px 400px 900px rgba(0, 0, 0, 0.675);
+    /* justify-content: space-around; */
+    flex-direction: column;
+}
+
+.close-new-alumno-details {
+    background: none;
+    position: absolute;
+    top: 1vh;
+    border: none;
+    right: 2vw;
+    font-family: var(--title-text);
+    font-size: 1.8em;
+    color: var(--neutral-black);
+    transition: all 0.5s ease;
+    cursor: pointer;
+}
+
+.close-new-alumno-details:hover {
+    color: #CC3636;
+}
+
+.new-alumno-details-component h2 {
+    width: 100%;
+    margin-top: -.3em;
+    color: var(--neutral-black);
+    font-size: 250%;
+    font-family: var(--title-text);
+}
+
+.new-alumno-profile-pic {
+    width: 200px;
+    height: 180px;
+    background-color: #d9d9d9;
+    border: 1px solid #d9d9d9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.new-alumno-inside-title {
+    font-family: var(--normal-text);
+    color: var(--neutral-black);
+    font-size: 2em;
+    font-weight: bolder;
+    text-align: center;
+    margin-top: .8em;
+}
+
+.new-alumno-inside-text {
+    font-family: var(--normal-text);
+    color: var(--neutral-black);
+    font-size: 1em;
+    font-weight: bolder;
+    margin-top: .8em;
+}
+
+.new-alumno-details-table th {
+    padding: .5em;
+}
+
+.new-alumno-details-table td {
+    padding: .5em;
+    text-align: center;
+}
+
+.new-alumno-details-table tbody tr:nth-child(odd) {
+    background-color: rgb(232, 232, 232);
+}
+
+.new-alumno-deudas {
+    color: var(--neutral-black);
+    font-family: var(--title-text);
+    text-align: center;
+    margin-top: 1em;
+}
+
+#alumno-loading-spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.35);
+    border-radius: 50%;
+    border-top-color: #fff;
+    animation: spin 1s ease-in-out infinite;
+    -webkit-animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@-webkit-keyframes spin {
+    to {
+        -webkit-transform: rotate(360deg);
+    }
+}

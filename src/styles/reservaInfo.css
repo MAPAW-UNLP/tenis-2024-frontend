@@ -1,0 +1,66 @@
+#reserva-info{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding-left: .5vw;
+    margin-top: 2vh;
+    align-items: flex-start;
+    text-align: center;
+}
+
+#reserva-infoBTN{
+    background: none;
+    border: none;
+    border-radius: 50px;
+    
+
+    color: var(--neutral-white);
+    font-size: 150%;
+    position: absolute;
+    right: 2%;
+    top: -20%;
+    
+}
+#infoBTNICO{
+    border: 5px solid var(--accent-yellow);
+    border-radius: 50px;
+    box-shadow: 0px 5px 10px var(--neutral-black);
+    transition: all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+#infoBTNICO:hover{
+    border: 5px solid var(--neutral-white);
+    color:  var(--accent-yellow);
+    font-size: 175%;
+    box-shadow: 0px 5px 10px var(--accent-yellow);
+    cursor: pointer;
+}
+
+
+#reserva-datos{
+    display: flex;
+    flex-direction: column;
+    padding-left: .5vw;
+    align-items: flex-start;
+    text-align: center;
+    cursor: default;
+}
+
+
+#reserva-nombre{
+    color: var(--accent-yellow);
+    font-family: var(--normal-text);
+    font-size: 110%;
+}
+
+#reserva-rol{
+    color: var(--neutral-white-text);
+    font-size: 100%;
+    font-family: var(--normal-text);
+}
+#reserva-horario{
+    margin-top: 0.5vh;
+    color: var(--accent-yellow);
+    font-size: 100%;
+    font-family: var(--normal-text);
+}

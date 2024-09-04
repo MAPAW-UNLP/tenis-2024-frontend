@@ -1,0 +1,244 @@
+#canchas-component{
+    background-color: var(--neutral-white);
+    height: 100%;
+}
+#canchas-info{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
+    width: 35vw;
+    margin: auto;
+    margin-top: 10vh;
+    align-items: center;
+}
+#canchas-add-btn{
+    width: 100%;
+    height: 5rem;
+    background-color: var(--accent-green);
+    border-radius: 20px ;
+    border: none;
+    color: var(--neutral-white-text);
+    font-size: 200%;
+    box-shadow: 0px 5px 2px var(--neutral-black);
+    cursor: pointer;
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+#canchas-add-btn:hover{
+    height: 6rem;
+    box-shadow: 0px 8px 15px var(--accent-tennis-green);
+    font-size: 350%;
+}
+
+  
+
+
+#cancha-add-component{
+    background-color: var(--neutral-white);
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 50%;
+    border-radius:20px; 
+    width: 40vw;
+    z-index: 20;
+    box-shadow: -2px -4px 400px 600px rgba(0,0,0,0.24);
+}
+
+#close-cancha-add-form{
+    position: absolute;
+    top: 1vh;
+    right: 2vw;
+    font-family: var(--title-text);
+    font-size: 150%;
+    color: var(--neutral-black);
+    transition: all 0.5s ease;
+}
+
+#close-cancha-add-form:hover{
+    font-size: 175%;
+    font-weight: bolder;
+    color: #CC3636;
+    cursor: pointer;
+}
+#cancha-add-component h2{
+    width: 100%;
+    
+    margin-top: 3vh;
+    background-color: var(--neutral-white);
+    color: var(--neutral-black);
+    font-size: 250%;
+    text-align: center;
+    font-family: var(--title-text);
+}
+
+#cancha-add-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    background-color: var(--neutral-white);
+   
+}
+
+.cancha-add-form-input{
+    font-family: var(--normal-text);
+    margin: auto;
+    margin-bottom: 15px;
+    width: 90%;
+    height: 2.2rem;
+    border-radius: 2px;
+    font-size: large;
+    background-color: var(--neutral-white);
+    border: 1px solid lightgrey;
+    color: var(--neutral-black);
+    padding-left: 5px;
+    transition: all 0.5s ease;
+}
+
+.cancha-add-form-input:focus{
+    border:none;
+    outline: 2px solid var(--accent-green);
+}
+
+
+
+
+#cancha-add-form-select{
+    font-family: var(--normal-text);
+    width: 90%;
+    height: 2.2rem;
+    margin-bottom: 15px;
+    border-radius: 2px;
+    font-size: large;
+    background-color: var(--neutral-white);
+    cursor: pointer;
+    color: var(--neutral-black);
+    padding-left: 5px;
+    transition: all 0.5s ease;
+}
+
+#cancha-add-form-select:disabled{
+    background-color: var(--neutral-black);
+    color: var(--neutral-white-text);
+    border: none;
+    cursor: default;
+}
+
+
+#cancha-add-form-select:focus{
+    outline: 2px solid var(--accent-green);
+    border: none;
+}
+
+
+#cancha-add-form-addBtn{
+    width: 100%;
+    background-color: var(--accent-green);
+    height: 5rem;
+    border: none;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    cursor: pointer;
+    
+ /*    width: 100%;
+    background-color: var(--neutral-black);
+    height: 5rem;
+    font-size: 200%;
+    border: 10px solid var(--accent-green);
+    
+    transition: all 0.5s ease; */
+}
+#cancha-add-form-addBtn:hover{
+    /* Preguntar si les gusta esto */
+   /*  background-color: var(--accent-green);
+    border: 0px solid var(--accent-green);
+    height: 6rem;
+    font-size: 300%; */
+}
+
+#cancha-add-form-addBtn:disabled{
+    background-color: var(--neutral-black);
+    border: none;
+    cursor: default;
+}
+
+#canchas-add-form-btn{
+    width: 90%;
+    height: 3rem;
+    border-radius: 20px ;
+    border: none;
+    color: var(--neutral-white-text);
+    font-size: 180%;    
+}
+
+#canchas-list{
+    margin-top: 2vh;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 80vw;
+    height: 100%;
+    margin-bottom: 40vh;
+}
+#cancha-component{
+    background-color: var(--neutral-black);
+    border-radius: 20px;
+    margin-bottom: 1vh;
+    padding-left: 2vw;
+    height: 15vh;  
+    width: 25vw;
+    margin-right:1vw ;
+    position: relative;  
+    z-index: 1;
+    font-family: var(--normal-text);
+    color: var(--neutral-white-text);
+    box-shadow: 0px 2px 10px var(--neutral-black) ;
+    cursor: pointer;
+}
+
+#cancha-component h2{
+    margin-top: 2vh;
+    color: var(--accent-tennis-green);
+}
+
+#grafico{
+    position: absolute ;
+    right: 0%;
+    top: 0%;
+    height: 100%;
+    border-bottom-right-radius: 20px ;
+    border-top-right-radius: 20px ;
+    width: 30%;
+
+}
+
+#cancha-big-div{
+    border: 3px solid var(--neutral-white);
+    width: 50%;
+    height: 60%;
+    position: absolute;
+    top: 20%;
+    left: 25%;
+    transform: rotate(45deg);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+#primeraMitad{
+    width: 100%;
+    height: 30%;
+    border-bottom: 3px solid var(--neutral-white);
+}
+#medio{
+    width: 50%;
+    height: 100%;
+    border-right: 3px solid var(--neutral-white);
+}
+#segundaMitad{
+    width: 100%;
+    height:30%;
+    border-top: 3px solid var(--neutral-white);
+}

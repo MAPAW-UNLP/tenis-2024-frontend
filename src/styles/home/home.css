@@ -1,0 +1,111 @@
+.card {
+    max-width: 300px;
+    min-width: 300px;
+    border-radius: 20px;
+    background-color: #5D5D5D;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    border: 5px solid #5D5D5D;
+    text-align: center;
+    -webkit-transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  
+  .bottom {
+    margin-top: 1em;
+  }
+  
+  .movimientosCard:hover {
+    box-shadow: 0px 10px 30px #94f5c5;
+    cursor: pointer;
+    border: 5px solid #94f5c5;
+    border-radius: 21px;
+  }
+  
+  .reservasCard:hover {
+    box-shadow: 0px 10px 30px #ffa500;
+    cursor: pointer;
+    border: 5px solid #ffa500;
+    border-radius: 21px;
+  }
+  
+  .canchasCard:hover {
+    box-shadow: 0px 10px 30px #ee82ee;
+    cursor: pointer;
+    border: 5px solid #ee82ee;
+    border-radius: 21px;
+  }
+
+  .profesoresCard:hover {
+    box-shadow: 0px 10px 30px #bceb3c;
+    cursor: pointer;
+    border: 5px solid #bceb3c;
+    border-radius: 21px;
+  }
+
+  .alumnosCard:hover {
+    box-shadow: 0px 10px 30px #add8e6;
+    cursor: pointer;
+    border: 5px solid #add8e6;
+    border-radius: 21px;
+  }
+
+  .ajustesCard:hover {
+    box-shadow: 0px 10px 30px #78a1ca;
+    cursor: pointer;
+    border: 5px solid #78a1ca;
+    border-radius: 21px;
+  }
+  
+  .card a {
+    text-decoration: none
+  }
+  
+  .content {
+    padding: 1.1rem;
+  }
+  
+  .image {
+    object-fit: cover;
+    width: 100%;
+    height: 150px;
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
+  }
+  
+  .title {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    font-weight: 600;
+    font-family: var(--title-text);
+    font-size: 300%;
+  }
+  
+  .desc {
+    margin-top: 0.5rem;
+    font-family: var(--normal-text);
+    color: var(--neutral-white-text);
+    font-size: 150%;
+  }
+  
+  .action {
+    display: inline-flex;
+    margin-top: 1rem;
+    color: #ffffff;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-weight: 500;
+    align-items: center;
+    gap: 0.25rem;
+    background-color: #2563EB;
+    padding: 4px 8px;
+    border-radius: 4px;
+  }
+  
+  .action span {
+    transition: .3s ease;
+  }
+  
+  .action:hover span {
+    transform: translateX(4px);
+  }
+  

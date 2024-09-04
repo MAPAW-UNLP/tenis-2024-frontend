@@ -1,0 +1,289 @@
+#pagos-component{
+    background-color: var(--primary-blue);
+    height: 100%;
+}
+#pagos-component-mainContent{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 70vw;
+    margin: auto;
+    margin-top: 5vh;
+    align-items: center;
+    margin-bottom: 10%;
+}
+
+#pagos-list-component{
+    margin-top: 2vh;
+    width: 100%;
+    border-radius: 20px;
+    background-color: var(--neutral-white);
+    cursor: default;
+}
+#pagos-list-options{
+    height: 8vh;
+    display: grid;
+    grid-template-columns: 20% 20% 20% 20% 20%;
+    align-content: center;
+
+    justify-content: start;
+    color: var(--neutral-black);
+    font-family: var(--title-text);
+    font-size: 150%;
+    background-color: var(--neutral-white);
+    border-bottom: 5px solid var(--neutral-black);
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    padding-left: 2%;
+}
+
+.pago-info{
+    display: grid;
+    grid-template-columns: 20% 20% 20% 20% 20%;
+   
+    align-items: center;
+    justify-content: start;
+    margin: 0.5%;
+    padding: 1%;
+    border-radius: 12px;
+    background-color: var(--neutral-black);
+    color: var(--neutral-white-text);
+    font-family: var(--normal-text);
+    font-size: 110%;
+}
+
+#pagos-list{
+    min-height: 100%;
+    max-height: 60vh;
+    overflow-y: scroll; 
+}
+#pagos-list::-webkit-scrollbar {
+    width: 12px;/* width of the entire scrollbar */
+}
+  
+#pagos-list::-webkit-scrollbar-track {
+    background-color:transparent;
+    border-bottom-left-radius:20px ;
+    border-bottom-right-radius:20px ;
+    opacity: .5;   
+}
+  
+#pagos-list::-webkit-scrollbar-thumb {
+      
+    background-color: var(--accent-green);    /* color of the scroll thumb */
+    border-radius: 20px;       /* roundness of the scroll thumb */
+    border: 2px solid var(--neutral-white);  /* creates padding around scroll thumb */
+}
+
+/* Pago add form */
+#pago-add-component{
+    background-color: var(--neutral-white);
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 50%;
+    border-radius:20px; 
+    width: 40vw;
+    z-index: 20;
+    box-shadow: -2px -4px 400px 600px rgba(0,0,0,0.24);
+}
+#close-pago-add-form{
+    background:  none;
+    position: absolute;
+    top: 1vh;
+    border: none;
+    right: 2vw;
+    font-family: var(--title-text);
+    font-size: 150%;
+    color: var(--neutral-black);
+    transition: all 0.5s ease;
+    cursor: pointer;
+}
+#close-pago-add-form:hover{
+    font-size: 175%;
+    font-weight: bolder;
+    color: #CC3636;
+}
+
+#pago-add-component h2{
+    width: 100%;
+    
+    margin-top: 3vh;
+    background-color: var(--neutral-white);
+    color: var(--neutral-black);
+    font-size: 250%;
+    text-align: center;
+    font-family: var(--title-text);
+}
+#pago-add-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    background-color: var(--neutral-white);
+}
+#pago-add-form-addBtn{
+    width: 100%;
+    background-color: var(--accent-green);
+    height: 5rem;
+    border: none;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    cursor: pointer;
+}
+#pago-add-form-addBtn:disabled{
+    background-color: var(--neutral-black);
+}
+
+#pagos-add-form-btn{
+    color: var(--accent-green);
+    background-color: var(--accent-green);
+    border: none;
+    color: var(--neutral-white);
+    font-size: 350%;
+}
+#pago-form-select{
+    margin-top: 0;
+
+}
+#pago-form-input{
+    margin-top: 0;
+}
+.pago-form-label{
+    font-family: var(--normal-text);
+
+    width: 90%;
+    color: var(--accent-green);
+}
+
+#historial-usuario-btn{
+    width: 50%;
+    border-radius: 12px;
+    height: 2rem;
+    background-color: #94F5C5;
+    font-size: 120%;
+    color: var(--neutral-black);
+    border: none;
+    box-shadow: 0px 5px 20px var(--neutral-black);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+#historial-usuario-btn:hover{
+    box-shadow: 0px 4px 100px #94F5C5; 
+    height: 2.5rem;
+    font-size: 130%;
+    cursor: pointer;
+}
+
+
+#pagos-detail{
+    background-color: var(--neutral-white);
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 30%;
+    left: 30vw;
+    border-radius:20px; 
+    width: 40vw;
+    z-index: 20;
+    box-shadow: -2px -4px 400px 600px rgba(0,0,0,0.24);
+}
+#close-detail-add-form{
+    background:  none;
+    position: absolute;
+    top: 1vh;
+    border: none;
+    right: 2vw;
+    font-family: var(--title-text);
+    font-size: 150%;
+    color: var(--neutral-black);
+    transition: all 0.5s ease;
+    cursor: pointer;
+}
+#close-detail-add-form:hover{
+    font-size: 175%;
+    font-weight: bolder;
+    color: #CC3636;
+}
+
+
+
+#pagos-detail-list{
+    height: 40vh;
+    overflow-y: scroll;
+}
+#pagos-detail-list::-webkit-scrollbar {
+
+    width: 12px;/* width of the entire scrollbar */
+}
+  
+pagos-detail-list::-webkit-scrollbar-track {
+  
+    background-color:transparent;
+    border-bottom-left-radius:20px ;
+    border-bottom-right-radius:20px ;
+    opacity: .5;   
+}
+  
+#pagos-detail-list::-webkit-scrollbar-thumb {
+
+    background-color: var(--neutral-black);    /* color of the scroll thumb */
+    border-radius: 20px;       /* roundness of the scroll thumb */
+    border: 2px solid var(--neutral-white);  /* creates padding around scroll thumb */
+}
+
+/* Aca poner los scrollss */
+
+.pagos-detail-item{
+    display: flex;
+    flex-direction: column;
+
+    background-color: #94F5C5;
+    height: 13vh;
+    width: 90%;
+    margin: auto;
+    margin-top: 10px;
+    border: 3px dashed var(--neutral-black);
+    border-left: 10px dashed  var(--neutral-black);
+    padding-left: 2%;
+    padding-top: 5%;
+    color: var(--neutral-black);
+    font-family: var(--normal-text);
+}
+#pagos-detail h2{
+    width: 100%;
+    
+    margin-top: 3vh;
+    background-color: var(--neutral-white);
+    color: var(--neutral-black);
+    font-size: 250%;
+    text-align: center;
+    font-family: var(--title-text);
+}
+
+#pagos-detail-fecha{
+    font-weight:500;
+    font-size: 120%;
+
+}
+#pagos-detail-tipo{
+    font-weight:900;
+    font-size: 130%;
+
+}
+#pagos-detail-cantidad{
+
+}
+
+#pagos-detail-contadores{
+    margin: 5% auto 5% auto;
+    display: flex;
+    justify-content: space-around;
+    width: 90%;
+    flex-direction: row;
+
+    font-family: var(--title-text);
+    font-size: 140%;
+    color: var(--primary-blue)
+}

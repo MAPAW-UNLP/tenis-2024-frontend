@@ -1,0 +1,320 @@
+#alquiler-detail-component{
+    box-shadow: -2px -4px 400px 600px rgba(0,0,0,0.24);
+    background-color: var(--neutral-white);
+    display: grid;
+    grid-template-areas: "titulo"
+                         "detalles";
+    position: absolute;
+    grid-column-gap: 10px;
+    grid-row-gap: 10px;
+    top: 30%;
+    left: 30vw;
+    border-radius:20px; 
+    width: 40vw;
+    z-index: 20;
+    text-align: center;
+    border: 5px solid var(--primary-blue);
+    background-color: var(--neutral-white);
+    cursor: default;
+}
+
+#close-detail-btn{
+    position: absolute;
+    font-family: var(--title-text);
+    background: none;
+    border: none;
+    font-size: 150%;
+    color: var(--neutral-black);
+    right: 2%;
+    transition: all 0.5s ease;
+}
+
+
+#close-detail-btn:hover{
+    font-size: 175%;
+    font-weight: bolder;
+    color: #CC3636;
+    cursor: pointer;
+}
+.clase-caja-alq{
+    background-color: var(--primary-blue);
+    border-radius: 20px;
+    text-align: start;
+    padding-top: 5%;
+    box-shadow: 0px 1px 5px var(--neutral-black);
+}
+.clase-caja-alq h3{
+    border-bottom: 2px solid var(--neutral-white-text);
+    text-align: center;
+}
+.clase-caja-alq p{
+    padding: 3%;
+}
+#alquiler-detail-general{
+    grid-area:titulo;
+    font-family: var(--title-text);
+    color: var(--neutral-white);
+    width: 90%;
+    display: flex;
+    align-items: center;
+    justify-self: center;
+    margin-top: 3%;
+    padding: 0;
+    text-align: center;
+    flex-direction: column;
+    padding-bottom: 5vh;
+}
+
+#alquiler-detail-general h2{
+    font-family: var(--title-text);
+    color: var(--neutral-white-text);
+    font-size: 250%;
+    padding: 0;
+    width: 100%;
+    border-bottom: 3px solid var(--neutral-white);
+    margin-bottom: 2vh;
+}
+#alquiler-detail-general p{
+   /*  font-family: var(--title-text); */
+    
+    font-size: 150%;
+    width: 80%;
+    text-align: start;
+    padding: 0;
+}
+
+#alquiler-detail-hora{
+    font-family: var(--normal-text);
+    color: var(--accent-yellow);
+    font-size: 90%;
+
+}
+
+#alquiler-detail-detail{
+    grid-area: detalles;
+    border-radius: 20px;
+    text-align: start;
+    margin: 1vw;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    margin: auto;
+    margin-bottom: 5vh;
+    
+}
+#alquiler-detail-detail h3{
+    
+    font-family:var(--title-text);
+    font-size: 150%;
+    color: var(--neutral-white-text) ;
+}
+.alquiler-detail-nombre{
+    margin: auto;
+    width: 85%;
+    text-align: start;
+    font-family: var(--title-text);
+    color: var(--accent-yellow);
+    font-size: 140%;
+    margin-top: 2vh;
+}
+
+.alquiler-detail-numeros{
+    margin: auto;
+    width: 85%;
+    margin: -3vh auto 2vh auto;
+    text-align: start;
+    font-family: var(--normal-text);
+    color: var(--neutral-white-text);
+    font-size: 120%;
+}
+
+#alquiler-detail-futuro{
+    grid-area:titulo;
+    font-family: var(--title-text);
+    color: var(--neutral-white);
+    width: 90%;
+    display: flex;
+    align-items: center;
+    justify-self: center;
+    margin-top: 3%;
+    padding: 0;
+    text-align: center;
+    flex-direction: column;
+    height: 20vh;
+
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+#alquiler-detail-futuro.active{
+    height: 30.7vh;
+}
+
+#alquiler-detail-texto{
+    padding-top: 1.5vh;
+}
+
+#alquiler-detail-contenido{
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
+    justify-content: space-between;
+    position: relative;
+}
+
+#btn-background{
+    background-color: var(--accent-tennis-green);
+    width: 30%;
+    border-bottom-right-radius:20px ;
+    border: none;
+    color: var(--neutral-black);
+    font-size: 200%;
+    right: 0%;
+    transition: all 0.3s ease-in-out;
+    position: absolute;
+    height: 100%;
+}
+
+#btn-background.active{
+    width: 100%;
+    background-color: var(--accent-tennis-green);
+    border-bottom-left-radius: 20px;
+}
+
+#btn-background.active #alquiler-detail-edit-btn{
+    width: 5vw;
+    background-color: var(--neutral-black);
+    height: 8vh;
+    color: var(--accent-tennis-green);
+    font-size: 100%;
+    border-radius: 50px;
+    right: 2vw;
+    top: 9vh;
+    position: absolute;
+}
+
+#btn-background.active #alquiler-detail-edit-btn:hover{
+    color: var(--neutral-black);
+    background-color: var(--accent-tennis-green);
+}
+
+
+
+#alquiler-detail-edit-btn{
+    background-color: var(--accent-tennis-green);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    right: 0;
+    border-bottom-right-radius:20px ;
+    border: none;
+    color: var(--neutral-black);
+    font-size: 200%;
+    box-shadow: 0px 5px 10px var(--neutral-black);
+
+    transition: all 0.3s ease-in-out;
+}
+
+#alquiler-detail-edit-btn:hover{
+    color: var(--accent-tennis-green);
+    background-color: var(--neutral-black);
+}
+
+#alquiler-detail-futuro h2{
+    font-family: var(--title-text);
+    color: var(--neutral-white-text);
+    font-size: 250%;
+    padding: 0;
+    width: 100%;
+    border-bottom: 3px solid var(--neutral-white);
+    
+}
+
+#alquiler-detail-futuro p{
+    /*  font-family: var(--title-text); */
+     font-size: 150%;
+     width: 100%;
+     text-align: start;
+     padding: 0;
+     margin-left: 3vw;
+ }
+
+ #edit-calendar-alquiler{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+ }
+
+ #calendar{
+    position: absolute;
+    left: 0%;
+    border-bottom-left-radius: 20px ;
+    height: 20px !important;
+ }
+
+
+
+#selectorhora{
+   display: flex;
+   flex-direction: column;
+}
+
+#selectorhora select{
+    width: 120%;
+    height: 4vh;
+    margin-left: .2vw;
+    border: 1px solid var(--neutral-black);
+    font-family: var(--normal-text);
+    font-size: 80%;
+}
+
+#alquiler-detail-btns{
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    margin: auto;
+    margin-top: -5vh;
+    margin-bottom: 3vh;
+    
+}
+
+#alquiler-detail-guardar{
+    height: 4vh;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    background-color:  var(--accent-green);
+    border: 1px solid var(--neutral-black);
+    color: var(--neutral-white);
+    font-size: 140%;
+    box-shadow: 0px 2px 15px var(--neutral-black);
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+#alquiler-detail-guardar:hover{
+    height: 6vh;
+    box-shadow: 0px 5px 10px var(--accent-tennis-green);
+    border: 4px solid var(--accent-yellow);
+}
+
+#alquiler-detail-cancelar{
+    height: 4vh;
+    border-radius: 20px;
+    margin-bottom: 2vh;
+    font-size: 130%;
+    border: 1px solid var(--neutral-black);
+    background-color: var(--neutral-white-text);
+    color: var(--neutral-black);
+    box-shadow: 0px 2px 5px var(--neutral-black);
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+#alquiler-detail-cancelar:hover{
+    
+    background-color: var(--neutral-black);
+    color: var(--neutral-white);
+    box-shadow: 0px 5px 10px var(--neutral-black);
+    
+}

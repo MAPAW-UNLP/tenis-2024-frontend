@@ -1,0 +1,209 @@
+#nuevaClase-component{
+    display: flex;
+    align-items: center;
+}
+
+#nuevaClase-contenedorPrincipal h1{
+    margin-top: 10vh;
+    font-size: 300%;
+}
+
+#nuevaClase-contenedor {
+    margin: auto;
+    position: relative;
+    text-align: center;
+    background-color: var(--neutral-white);
+    box-shadow: 1px 0px 40px var(--neutral-black);
+    border-radius: 20px;
+    width: 40vw;
+    margin-top: 6vh;
+    font-family: var(--normal-text);
+}
+
+#nuevaClase-contenedor h2{
+    font-family: var(--title-text);
+    color: var(--neutral-black);
+    font-size: 150%;
+    margin-top: 3vh;
+}
+
+#nuevaClase-contenedor h5{
+    font-family: var(--title-text);
+    color: var(--neutral-black);
+    font-size: 100%;
+}
+
+#boton-continuar {
+    width: 100%;
+    background-color: var(--accent-green);
+    height: 5rem;
+    border: none;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    transition: all 0.5s ease;
+    cursor: pointer!important;
+}
+
+#boton-continuar:disabled {
+    background-color: var(--neutral-black);  
+    cursor: auto!important;
+}
+
+#pickerFecha {
+    display: flex;
+}
+
+#alumnos-nuevaClase{
+    margin: 10px;
+    width: 60%;
+    height: 200px;
+    background-color: #339966;
+    border-radius: 15px;
+    position: relative;
+}
+
+#alumnos-nuevaClase h5{
+ background-color: #339972;
+ color: white;
+ border-radius: 15px;
+ font-size: 120%;
+}
+
+/* Estilo para el botón redondeado y sin bordes */
+#button-agregarAlumno {
+    border-radius: 100%;
+    border-color: #bceb3c;
+    background-color: #ffffff;
+    color: #597a00;
+    margin-top: 2px;
+    padding: 0px 7px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+    transition: all 0.5s ease;
+  }
+  
+  #button-agregarAlumno:hover {
+    color: white;
+    background-color: #48925a;
+    border-color: white;
+  }
+
+#alumnos-lista {
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
+    height: 70%;
+    overflow-y: auto;
+}
+
+#alumnos-lista li{
+    list-style: none;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 15px;
+}
+
+#selector-alumnos{
+    display: none;
+    background-color: rgb(164 201 171 / 84%);
+    width: 40%;
+    padding: 15px;
+    border-radius: 15px;
+    align-content: center;
+    display: flex;
+    align-self: center;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    position: fixed;
+    top: 50%;
+    left: 30%;
+}
+
+#selector-alumnos div{
+    list-style: none;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 15px;
+}
+
+#button-aceptarAgregarAlumno{
+    border: none;
+    background-color: #ffffff;
+    color: #288528;
+    margin-top: 20px;
+    padding: 0px 15%;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    font-family: sans-serif;
+    transition: all 0.5s ease;
+}
+
+#button-aceptarAgregarAlumno:hover {
+    color: white;
+    background-color: #48925a;
+    border-color: white;
+}
+
+#mensajesUsuario{
+    display: none;
+    background-color: rgba(78, 156, 91, 0.829);
+    width: 50%;
+    padding: 85px;
+    border-radius: 15px;
+    align-content: center;
+    align-self: center;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    position: fixed;
+    top: 50%;
+    left: 25%;
+}
+
+#mensajesUsuario p{
+    font-family: 'Roboto';
+    font-weight: bold;
+    text-align: center;
+}
+
+#button-cerrarMensaje{
+    border: none;
+    background-color: #f5f5f5;
+    color: #202220;
+    margin-top: 20px;
+    padding: 5px 15%;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 15px;
+    font-family: 'Oswald';
+    transition: all 0.5s ease;
+}
+
+#button-cerrarMensaje:hover {
+    color: white;
+    background-color: #48925a;
+    border-color: white;
+}
+
+#selector-nombresAlumnos {
+    font-family: 'Roboto';
+    font-weight: bold;
+    padding-left: 7px;
+    margin-bottom: 5px;
+    display: inline-block;
+}
+
+#mensajeCargando-submit {
+    font-family: 'Roboto';
+    font-weight: bold;
+    padding-left: 7px;
+    margin-bottom: 5px;
+    font-size: 15px;
+    color: #f5f5f5;
+}

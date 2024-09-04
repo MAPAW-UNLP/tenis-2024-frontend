@@ -1,0 +1,177 @@
+#reservas-component {
+    background-color: var(--primary-cyan);
+    height: 100%;
+    padding-bottom: 25vh;
+    /* background-color: var(--neutral-white); */
+}
+
+
+#reserva-nuevaReserva {
+    margin: auto;
+    position: relative;
+    text-align: center;
+    background-color: var(--neutral-white);
+    box-shadow: 1px 0px 40px var(--neutral-black);
+    border-radius: 20px;
+    width: 40vw;
+    margin-top: 3vh;
+    font-family: var(--normal-text);
+   
+}
+
+#reserva-nuevaReserva h2 {
+    font-family: var(--title-text);
+    color: var(--neutral-black);
+    font-size: 250%;
+    margin-top: 3vh;
+
+}
+
+#reserva-form {
+    margin-top: 2vh;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.inputReserva {
+    font-family: var(--normal-text);
+    width: 90%;
+    height: 2.2rem;
+    margin-bottom: 15px;
+    border-radius: 2px;
+    font-size: large;
+    background-color: var(--neutral-white);
+    border: 1px solid lightgrey;
+    color: var(--neutral-black);
+    padding-left: 5px;
+    transition: all 0.5s ease;
+    cursor: pointer;
+}
+
+.inputReserva:focus {
+    border: none;
+    outline: 2px solid var(--accent-green);
+}
+
+.inputReserva:disabled {
+    border: none;
+    background-color: var(--neutral-black);
+    color: var(--neutral-white-text);
+    cursor: default;
+}
+
+#continue-btn {
+    width: 100%;
+    background-color: var(--accent-green);
+    height: 5rem;
+    border: none;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    transition: all 0.5s ease;
+}
+
+#continue-btn:disabled {
+    background-color: var(--neutral-black);
+
+}
+
+#next-icon {
+    color: var(--neutral-white);
+    font-size: 250%;
+}
+
+
+
+hr {
+    width: 50%;
+    text-align: center;
+    margin: 2vh 25% 2vh 25%;
+
+}
+
+#alquilerFormComponent {
+    transition: all 1s ease-in;
+    width: 100%;
+}
+
+#submit-btn {
+    width: 100%;
+    background-color: var(--accent-green);
+    height: 5rem;
+    border: none;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    transition: all 0.5s ease;
+    cursor: pointer;
+}
+
+#submit-btn:disabled {
+    background-color: var(--neutral-black);
+    cursor: default;
+}
+#claseFormComponent{
+    width: 100%;
+}
+
+.inputReserva.css-b62m3t-container {
+    border: none;
+    margin-left: 5%;
+    margin-right: 5%;
+    padding: 0;
+}
+
+.css-1s2u09g-control {
+    font-family: var(--normal-text);
+    width: 100%;
+    height: 2.2rem;
+    border-radius: 2px;
+    border: 1px solid lightgrey;
+    font-size: large;
+    color: var(--neutral-black);
+    padding-left: 5px;
+    transition: all 0.5s ease;
+    cursor: pointer!important;
+    background-color: var(--neutral-white)!important;
+    color: var(--neutral-black)!important;
+}
+
+.css-1pahdxg-control {
+    font-family: var(--normal-text);
+    width: 100%;
+    height: 2.2rem;
+    border-radius: 2px;
+    font-size: large;
+    background-color: var(--neutral-white);
+    color: var(--neutral-black);
+    padding-left: 5px;
+    transition: all 0.5s ease;
+    box-shadow: none !important;
+    border: 2px solid var(--accent-green) !important;
+    cursor: pointer!important;
+}
+
+#react-select-3-listbox {
+    font-family: var(--normal-text);
+    width: 100%;
+}
+#checkbox-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin: 0 0 4% 5%;
+    width: 100%;
+    position: relative;
+    font-family: var(--normal-text);
+    color: var(--neutral-black);
+    font-size: large;
+}
+#checkbox-container input{
+    cursor: pointer;
+    margin-right: 2%;
+    width: 16px;
+}
