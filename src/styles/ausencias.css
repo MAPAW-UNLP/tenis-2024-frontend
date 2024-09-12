@@ -1,0 +1,62 @@
+#ausencias-contenedorPrincipal h1{
+    margin-top: 10vh;
+    font-size: 300%;
+}
+
+#ausencias-contenedor {
+    margin: auto;
+    position: relative;
+    text-align: center;
+    background-color: var(--neutral-white);
+    box-shadow: 1px 0px 40px var(--neutral-black);
+    border-radius: 20px;
+    width: 70vw;
+    margin-top: 6vh;
+    font-family: var(--normal-text);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 25px;
+}
+
+#ausencias-contenedor h2{
+    font-family: var(--title-text);
+    color: var(--neutral-black);
+    font-size: 150%;
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+
+#ausencias-contenedor h5{
+    font-family: var(--title-text);
+    color: var(--neutral-black);
+    font-size: 100%;
+}
+
+#ausencias-component{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    align-items: center;
+}
+
+#ausencias-component button{
+    padding: 7px;
+    width: 30vw;
+    margin: 7px;
+    background-color: #ffb965;
+    color: #000;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    font-family: system-ui;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.7s ease;
+}
+
+#ausencias-component button:hover {
+    background-color: #2980b9;
+}
+

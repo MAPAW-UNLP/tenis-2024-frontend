@@ -17,17 +17,17 @@
 
 #home_card_icon{
     color: var(--neutral-black);
-    font-size: 500%;
+    font-size: 400%;
     padding-top: 20%;
 }
 
 #home_card h2{
     font-family: var(--title-text);
-    font-size: 300%;
+    font-size: 200%;
 }
 
 #home_card h3{
     font-family: var(--normal-text);
     color: var(--neutral-white-text);
-    font-size: 150%;
+    font-size: 100%;
 }

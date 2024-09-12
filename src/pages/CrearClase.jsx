@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 //styles
 import '../styles/crearClase.css';
+import '../styles/mensajesUsuario.css'
 //utils
 import { ordenarPorNombre } from '../components/Utils/Functions';
 //hora
@@ -12,6 +13,7 @@ import SelectHoraFin from '../components/Utils/Alquiler/SelectHoraFin';
 import NavBar from './Navbar/NavBar';
 import InputComponent from '../components/Utils/InputComponent';
 import SelectComponent from '../components/Utils/SelectComponent';
+import Select from 'react-select';
 
 //Fontawesome icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -203,31 +205,20 @@ const CrearClase = ({ setSesion }) => {
       // Aca deberia actualizar las clases de la app
       //.finally((response) => setActClases((v) => !v));
   };
-  
-  // Manejador de los botones del selector de alumnos.
-  const handleAgregarAlumno = (e) => {
-    e.preventDefault();
-    // El boton para agregar alumnos cambia el display del selector a flex para que se muestre.
-    const selectorAlumnos = document.getElementById('selector-alumnos');
-    selectorAlumnos.style.display = 'flex';
-  }
-  const handleCerrarAgregarAlumno  = (e) => {
-    e.preventDefault();
-    // Cuando se "acepta" se "cierra" el selector (se oculta con display none)
-    const selectorAlumnos = document.getElementById('selector-alumnos');
-    selectorAlumnos.style.display = 'none';
-  }
 
+  const handleChangeAlumnoMultSelect = (e) => {
+    console.log('Selecciono alumno ', e)
+  }
 
   // El siguiente segmento de código se utiliza para mostrarle mensajes al usuario.
-  const [mensajeUsuario, setMensajeUsuario] = useState('Hola!');
+  const [mensajeUsuario, setMensajeUsuario] = useState('Hola mundo!');
 
   const handleMostrarMensaje = (message) => {
     // Muestra el mensaje al usuario
     const mensajesUsuario = document.getElementById('mensajesUsuario');
     setMensajeUsuario(message);
     mensajesUsuario.style.display = 'flex';
-
+    
     // Si existia el mensaje de "cargando", lo oculta y habilita el boton de submit
     const mensajeCargandosubmit = document.getElementById('mensajeCargando-submit');
     mensajeCargandosubmit.style.display = 'none';
@@ -237,18 +228,23 @@ const CrearClase = ({ setSesion }) => {
   
   const handleCerrarMostrarMensaje  = (e) => {
     e.preventDefault();
-    // Cuando se "acepta" se cierran los mensajes
+    // Cuando se "acepta" se cierran los mensajes, 
+    // en caso de que se haya creado la clase sin problemas, redirecciona al usuario al inicio
+    // (La manera en que se chequea si se creo la clase es bastante improvisada, se puede mejorar)
+    if (mensajeUsuario == "Reserva registrada con éxito") {
+      navigate('/inicio');
+    }
     const mensajesUsuario = document.getElementById('mensajesUsuario');
     mensajesUsuario.style.display = 'none';
-  }
-  
-  // A la BD se envia: Fecha inicio, repeticion, fecha fin, hora inicio, hora fin, cancha, alumnos.
+  }  
+
+  // A la BD se envia: Fecha inicio, repeticion, fecha fin, hora inicio, hora fin, cancha, alumnos (sus id).
   return (
     <div id="nuevaClase-contenedorPrincipal">
       <NavBar title={'Nueva clase'} setSesion={setSesion} />
       <div id="nuevaClase-contenedor">
         {/* Este boton tiene que llevar a mis clases, pagina que esta en desarrollo */}
-        <button id="clase-closeBTN" onClick={() => navigate('../misClases')}>
+        <button id="clase-closeBTN" onClick={() => navigate('../inicio')}>
           x
         </button>
         <h2>Crear clase</h2>
@@ -303,50 +299,19 @@ const CrearClase = ({ setSesion }) => {
                 <option>Seleccionar cancha (*)</option>
                 {canchas.map((cancha) => <option value={cancha.id} key={cancha.id}>{cancha.nombre}</option>)}
               </select>
+              <Select className='inputReserva' isMulti onChange={handleChangeAlumnoMultSelect} options={alumnos.map((el)=> ({label:el.nombre, value:el.id}))} placeholder="Seleccionar alumnos">
+              </Select>
             </form>
-            <div id="alumnos-nuevaClase">
-              <h5>Alumnos</h5>
-              <ul id="alumnos-lista">
-                {alumnosSelec.map((alumno, index) => (
-                <li key={index}>
-                      {alumno}
-                </li>))}
-              </ul>
-              <button id="button-agregarAlumno" onClick={handleAgregarAlumno}>
-                +
-              </button>
-            </div>
         </div>
         <button id="boton-continuar" onClick={handleSubmitContinue} disabled={false}> {' '}
           <FontAwesomeIcon id="next-icon" icon={faChevronRight} />{' '}
           <p id='mensajeCargando-submit' style={{display : 'none'}}>Cargando...</p>
         </button>
       </div>
-      {/*Formulario para manejar al agregado de alumnos, muestra los alumnos del sistema y permite seleccionarlos.
-      Se muestra solo cuando se presiona el botón de agregado de alumnos a la clase.*/}
-      <form onSubmit={handleCerrarAgregarAlumno}>
-          <div id='selector-alumnos' style={{display : 'none'}}>
-            {alumnos.map((alumno, index) => (
-              <div key={index}>
-                <input
-                  type="checkbox"
-                  id={`alumnoCheckbox-${index}`}
-                  value={alumno.nombre + " " + alumno.id}
-                  checked={alumnosSelec.includes(alumno.nombre + " " + alumno.id)}
-                  onChange={handleSelectorAlumnosChange}
-                />
-                <label htmlFor={`alumnoCheckbox-${index}`} id='selector-nombresAlumnos'>{alumno.nombre}</label>
-              </div>
-            ))}
-            <button id="button-aceptarAgregarAlumno" type='submit'>
-                Aceptar
-            </button>
-          </div>
-      </form>
       {/*El div "mensajes" es para mostrar mensajes al usuario, inicialmente está oculto*/}
-      <div id="mensajesUsuario" display='none'>
+      <div id="mensajesUsuario" style={{display : 'none'}}>
             <p>{mensajeUsuario}</p>
-            <button id="button-cerrarMensaje" onClick={handleCerrarMostrarMensaje}>
+            <button id="button-aceptarMensaje" onClick={handleCerrarMostrarMensaje} className='botones-MensajesUsuario'>
                 Aceptar
             </button>
       </div>

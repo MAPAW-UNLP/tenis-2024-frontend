@@ -4,7 +4,7 @@ import React from 'react'
 import NavBar from '../Navbar/NavBar'
 import HomeCard from '../../components/HomeCard'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTableTennis, faUser, faCalendar,faUserTie, faDollarSign } from '@fortawesome/free-solid-svg-icons'
+import { faTableTennis, faUser, faCalendar,faUserTie, faDollarSign, faPlus, faCalendarTimes } from '@fortawesome/free-solid-svg-icons'
 
 export const Home = ({setSesion}) => {
 
@@ -15,23 +15,15 @@ export const Home = ({setSesion}) => {
       <div id='home-content'>
         <HomeCard
           title={'Canchas'} 
-          descr={'Manejo de las cannchas del sistema'}
+          descr={'Manejo de las canchas del sistema'}
           Logo={<FontAwesomeIcon icon={faTableTennis}/>}
           color={'#EE82EE'}
           link="../canchas" 
           nombreClase={'canchashc'}
         />
         <HomeCard 
-          title={'Alumnos'} 
-          descr={'Gestion de alumnos'} 
-          Logo={<FontAwesomeIcon icon={faUser}/>} 
-          color={'#ADD8E6'} 
-          link="../alumnos" 
-          nombreClase={'alumnoshc'}
-        />
-        <HomeCard 
           title={'Reservas'} 
-          descr={'Reservación de alquiléres y clases'} 
+          descr={'Reservación de alquileres y clases'} 
           Logo={<FontAwesomeIcon icon={faCalendar}/>} 
           color={'#FFA500'} 
           link="../reservas" 
@@ -52,6 +44,30 @@ export const Home = ({setSesion}) => {
           color={'#94F5C5'} 
           link="../movimientos" 
           nombreClase={'pagoshc'}
+        />
+        <HomeCard 
+          title={'Clases'} 
+          descr={'Crear clases'} 
+          Logo={<FontAwesomeIcon icon={faPlus} />} 
+          color={'#FFA500'} 
+          link="../crearClase" 
+          nombreClase={'claseshc'}
+        />
+        <HomeCard 
+          title={'Alumnos'} 
+          descr={'Gestion de alumnos'} 
+          Logo={<FontAwesomeIcon icon={faUser}/>} 
+          color={'#ADD8E6'} 
+          link="../alumnos" 
+          nombreClase={'alumnoshc'}
+        />
+        <HomeCard 
+          title={'Ausencias y suspenciones'} 
+          descr={'Gestión de periodos de ausencia y suspención de clases'} 
+          Logo={<FontAwesomeIcon icon={faCalendarTimes} />} 
+          color={'#698bc9'} 
+          link="../ausencias" 
+          nombreClase={'ausenciashc'}
         />
       </div>
     </>

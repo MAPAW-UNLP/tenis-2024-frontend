@@ -12,14 +12,9 @@
     align-items: center;
     justify-content: flex-end;
     width: 90vw;
-
     border: 1px solid var(--neutral-black);
     border-radius: 20px;
 }
-
-
-
-
 
 #table-options{
     position: relative;
@@ -182,8 +177,9 @@
 
 #home-content{
     display: grid;
-    grid-template-areas: 'pagos reservas reservas'
-                        'profesores alumnos canchas' ;
+    grid-template-areas: 'a1 a2 a3'
+                         'a4 a5 a6'
+                         'a7 a8 a9' ;
     margin: 3vh 30% 0 30%;
     width: 80vw;  
     margin: auto;  
@@ -198,32 +194,49 @@
 }
 
 .canchashc{
-    grid-area: canchas;
+    grid-area: a5;
     width: 25vw;
     margin: 5%;
 }
-.alumnoshc{
-    grid-area: alumnos;
-    width: 25vw;
-    margin: 5%;
-}
-.reservashc{
-    grid-area: reservas;
-    width: 51.7vw;
-    margin: 2.7%;
 
-}
-.profesoreshc{
-    grid-area: profesores;
+.alumnoshc{
+    grid-area: a7;
     width: 25vw;
     margin: 5%;
 }
+
+.reservashc{
+    grid-area: a3;
+    width: 25vw;
+    margin: 5%;
+}
+
+.profesoreshc{
+    grid-area: a4;
+    width: 25vw;
+    margin: 5%;
+}
+
 .pagoshc{
-    grid-area: pagos;
+    grid-area: a6;
     width: 25vw;
     margin: 5%;
     
 }
+
+.claseshc{
+    grid-area: a1;
+    width: 25vw;
+    margin: 5%;
+}
+
+.ausenciashc{
+    font-size: 13px;
+    grid-area: a2;
+    width: 25vw;
+    margin: 5%;
+}
+
 
 
 /* //semanal */
