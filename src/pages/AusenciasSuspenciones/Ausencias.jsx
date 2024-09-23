@@ -6,13 +6,13 @@ import '../../styles/ausencias.css'
 //components
 import NavBar from '../Navbar/NavBar'
 
-const CrearClase = ({ setSesion }) => {
+const CrearClase = () => {
   //navegacion
   const navigate = useNavigate()
 
   return (
     <div id="ausencias-contenedorPrincipal">
-      <NavBar title={'Ausencias y suspenciones'} setSesion={setSesion} />
+      <NavBar title={'Ausencias y suspenciones'} />
       <div id="ausencias-contenedor">
         {/* Este boton tiene que llevar a mis clases, pagina que esta en desarrollo */}
         <button id="clase-closeBTN" onClick={() => navigate('../inicio')}>

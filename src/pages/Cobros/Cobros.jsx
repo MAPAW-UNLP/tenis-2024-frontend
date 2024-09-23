@@ -9,7 +9,7 @@ import NavBar from '../Navbar/NavBar'
 
 import '../../styles/movimiento/movimiento.css'
 
-export const Cobros = ({ setSesion }) => {
+export const Cobros = () => {
   const URL_BASE = `http://localhost:8083/api/`
 
   const [active, setActive] = useState(false)
@@ -164,7 +164,7 @@ export const Cobros = ({ setSesion }) => {
 
   return (
     <div className="movimiento-component">
-      <NavBar title={'Cobros'} setSesion={setSesion} />
+      <NavBar title={'Cobros'} />
       <div className="movimiento-component-mainContent">
         <GenericLargeButton
           doSomething={() => setActive(true)}

@@ -31,75 +31,35 @@ import { Ajustes } from './pages/Ajustes/Ajustes'
 import { AlumnosNew } from './pages/Alumno/AlumnosNew'
 
 function App() {
-  //para la sesion
-  const navigate = useNavigate()
-  const [sesion, setSesion] = useState('')
-
-  //sesion Effect D:
-  useEffect(() => {
-    const user = localStorage.getItem('sesion')
-    if (user === '') {
-      navigate('/')
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sesion])
-
   return (
     <>
       <div className="App">
         <header className="App-header"></header>
         <Routes>
-          <Route path="/" element={<Login setSesion={setSesion} />} />
-          <Route path="/inicio" element={<HomeRe setSesion={setSesion} />} />
-          <Route
-            path="/reservas"
-            element={<HomeVariant setSesion={setSesion} />}
-          />
-          <Route path="/canchas" element={<Canchas setSesion={setSesion} />} />
-          <Route
-            path="/alumnos"
-            element={<AlumnosNew setSesion={setSesion} />}
-          />
-          <Route
-            path="/profesores"
-            element={<Profesores setSesion={setSesion} />}
-          />
-          <Route path="/cobros" element={<Cobros setSesion={setSesion} />} />
-          <Route path="/pagos" element={<Pagos setSesion={setSesion} />} />
-          <Route path="/balance" element={<Balance setSesion={setSesion} />} />
-          <Route
-            path="/movimientos"
-            element={<Movimientos setSesion={setSesion} />}
-          />
-          <Route
-            path="/nuevaReserva"
-            element={<Reservas setSesion={setSesion} />}
-          />
-          <Route
-            path="/crearClase"
-            element={<CrearClase setSesion={setSesion} />}
-          />
-          <Route path="/ajustes" element={<Ajustes setSesion={setSesion} />} />
-          <Route
-            path="/periodoAusencia"
-            element={<PeriodoAusencia setSesion={setSesion} />}
-          />
-          <Route
-            path="/suspencionClase"
-            element={<SuspencionClase setSesion={setSesion} />}
-          />
+          <Route path="/" element={<Login />} />
+          <Route path="/inicio" element={<HomeRe />} />
+          <Route path="/reservas" element={<HomeVariant />} />
+          <Route path="/canchas" element={<Canchas />} />
+          <Route path="/alumnos" element={<AlumnosNew />} />
+          <Route path="/profesores" element={<Profesores />} />
+          <Route path="/cobros" element={<Cobros />} />
+          <Route path="/pagos" element={<Pagos />} />
+          <Route path="/balance" element={<Balance />} />
+          <Route path="/movimientos" element={<Movimientos />} />
+          <Route path="/nuevaReserva" element={<Reservas />} />
+          <Route path="/crearClase" element={<CrearClase />} />
+          <Route path="/ajustes" element={<Ajustes />} />
+          <Route path="/periodoAusencia" element={<PeriodoAusencia />} />
+          <Route path="/suspencionClase" element={<SuspencionClase />} />
           <Route
             path="/misSolicitudesSuspencion"
-            element={<SolicitudesSuspencion setSesion={setSesion} />}
+            element={<SolicitudesSuspencion />}
           />
           <Route
             path="/misSolicitudesAusencia"
-            element={<SolicitudesAusencias setSesion={setSesion} />}
+            element={<SolicitudesAusencias />}
           />
-          <Route
-            path="/ausencias"
-            element={<Ausencias setSesion={setSesion} />}
-          />
+          <Route path="/ausencias" element={<Ausencias />} />
         </Routes>
       </div>
     </>

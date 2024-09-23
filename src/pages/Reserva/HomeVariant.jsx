@@ -17,7 +17,7 @@ import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 import { ordenarPorNombre } from '../../components/Utils/Functions'
 import '../../styles/home.css'
 
-const Home = ({ setSesion }) => {
+const Home = () => {
   const URL_BASE = `http://localhost:8083/api/`
 
   //Todo esto es para manejar una fecha visible para el usuario
@@ -133,7 +133,7 @@ const Home = ({ setSesion }) => {
 
   return (
     <div id="home-component">
-      <NavBar title={'Tennis app'} setSesion={setSesion} />
+      <NavBar title={'Tennis app'} />
       {/* <VistaSemanal canchas={canchas} reservas={reservas}/> */}
       <AlquilerDetails
         reserva={reservaDetail}

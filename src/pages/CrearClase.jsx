@@ -24,7 +24,7 @@ const URL_BASE = `http://localhost:8083/api/`
 
 // Crear clase recibe por parámetro:
 // Las canchas, las reservas (para comprobar disponibilidad), y los alumnos.
-const CrearClase = ({ setSesion }) => {
+const CrearClase = () => {
   //navegacion
   const navigate = useNavigate()
 
@@ -257,7 +257,7 @@ const CrearClase = ({ setSesion }) => {
   // A la BD se envia: Fecha inicio, repeticion, fecha fin, hora inicio, hora fin, cancha, alumnos (sus id).
   return (
     <div id="nuevaClase-contenedorPrincipal">
-      <NavBar title={'Nueva clase'} setSesion={setSesion} />
+      <NavBar title={'Nueva clase'} />
       <div id="nuevaClase-contenedor">
         {/* Este boton tiene que llevar a mis clases, pagina que esta en desarrollo */}
         <button id="clase-closeBTN" onClick={() => navigate('../inicio')}>

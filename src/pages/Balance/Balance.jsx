@@ -8,7 +8,7 @@ import NavBar from '../Navbar/NavBar'
 import '../../styles/movimiento/movimiento.css'
 import NoData from '../../Img/noData.png'
 
-export const Balance = ({ setSesion }) => {
+export const Balance = () => {
   const URL_BASE = `http://localhost:8083/api/`
 
   const [actMovimientos, setActMovimientos] = useState(false)
@@ -88,7 +88,7 @@ export const Balance = ({ setSesion }) => {
 
   return (
     <div className="movimiento-component">
-      <NavBar title={'Balance general'} setSesion={setSesion} />
+      <NavBar title={'Balance general'} />
       <div className="movimiento-component-mainContent">
         {movimientosLoader ? (
           <LoaderSpinner

@@ -10,7 +10,7 @@ import CanchasAddForm from '../../components/Cancha/CanchasAddForm'
 import CanchasList from '../../components/Cancha/CanchasList'
 import LoaderSpinner from '../../components/LoaderSpinner'
 
-export const Canchas = ({ setSesion }) => {
+export const Canchas = () => {
   const URL_BASE = `http://localhost:8083/api/`
 
   const [actived, setActived] = useState(false)
@@ -128,7 +128,7 @@ export const Canchas = ({ setSesion }) => {
 
   return (
     <div id="canchas-component">
-      <NavBar title={'Canchas'} setSesion={setSesion} />
+      <NavBar title={'Canchas'} />
       <LoaderSpinner
         active={activedLoader}
         containerClass={'canchasLoader'}

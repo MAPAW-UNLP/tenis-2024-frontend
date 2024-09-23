@@ -5,8 +5,9 @@ import { useNavigate } from 'react-router-dom'
 //components
 import FeedbackText from '../FeedbackText'
 import LoaderSpinner from '../LoaderSpinner'
+import { useSession } from '../../common/hooks/useSession'
 
-const LoginForm = ({ setSesion }) => {
+const LoginForm = () => {
   const URL_BASE = 'http://localhost:8083/api/'
 
   const [user, setUser] = useState('')
@@ -15,6 +16,8 @@ const LoginForm = ({ setSesion }) => {
   const [active, setActive] = useState(false)
   const [activeLoader, setActiveLoader] = useState(false)
   const navigate = useNavigate()
+
+  const { logIn } = useSession()
 
   const handleUserNameChange = (e) => {
     setUser(e.target.value)
@@ -51,8 +54,7 @@ const LoginForm = ({ setSesion }) => {
       .then((response) => response.json())
       .then((data) => {
         if (data.rta === 'ok') {
-          localStorage.setItem('sesion', 'sesionIniciada')
-          setSesion('sesion Iniciada :D')
+          logIn()
           setActiveLoader(false)
           navigate('../inicio')
         } else {

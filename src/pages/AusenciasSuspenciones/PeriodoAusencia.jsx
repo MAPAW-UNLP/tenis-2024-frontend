@@ -16,7 +16,7 @@ import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
 // Url base de datos
 const URL_BASE = `http://localhost:8083/api/`
 
-const PeriodoAusencia = ({ setSesion }) => {
+const PeriodoAusencia = () => {
   //navegacion
   const navigate = useNavigate()
 
@@ -133,7 +133,7 @@ const PeriodoAusencia = ({ setSesion }) => {
   // Nota: Los estilos fueron copiados de "nueva clase", deberian cambiarse los ID
   return (
     <div id="nuevaClase-contenedorPrincipal">
-      <NavBar title={'Crear periodo de ausencia'} setSesion={setSesion} />
+      <NavBar title={'Crear periodo de ausencia'} />
       <div id="nuevaClase-contenedor">
         <button id="clase-closeBTN" onClick={() => navigate('../inicio')}>
           x

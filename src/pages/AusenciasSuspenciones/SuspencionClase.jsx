@@ -16,7 +16,7 @@ import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
 // Url base de datos
 const URL_BASE = `http://localhost:8083/api/`
 
-const SuspencionClase = ({ setSesion }) => {
+const SuspencionClase = () => {
   //navegacion
   const navigate = useNavigate()
 
@@ -209,7 +209,7 @@ const SuspencionClase = ({ setSesion }) => {
   // A la BD se envia: Fecha, hora inicio, motivo.
   return (
     <div id="nuevaClase-contenedorPrincipal">
-      <NavBar title={'Suspención de clase'} setSesion={setSesion} />
+      <NavBar title={'Suspención de clase'} />
       <div id="nuevaClase-contenedor">
         <button id="clase-closeBTN" onClick={() => navigate('../inicio')}>
           x

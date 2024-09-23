@@ -9,9 +9,11 @@ import LinkItem from '../../components/LinkItem'
 import '../../styles/navbar.css'
 
 import { useState } from 'react'
+import { useSession } from '../../common/hooks/useSession'
 
-const NavBar = ({ title, setSesion }) => {
+const NavBar = ({ title }) => {
   const [active, setActive] = useState('link')
+  const { logOut } = useSession()
 
   useEffect(() => {
     //cambia la clase active del nav y se las saca a los que no lo tienen
@@ -28,11 +30,6 @@ const NavBar = ({ title, setSesion }) => {
       }
     })
   }, [active])
-
-  const handleCloseSesion = () => {
-    localStorage.setItem('sesion', '')
-    setSesion('')
-  }
 
   const esProfesor = true // Simula la sesión para ocultar elementos, eventualmente esta información debe
   // ser sacada de la sesión actual obtenida.
@@ -89,11 +86,7 @@ const NavBar = ({ title, setSesion }) => {
           )}
           <li>
             {' '}
-            <Link
-              to="/"
-              className="linkCerrarSesion"
-              onClick={handleCloseSesion}
-            >
+            <Link to="/" className="linkCerrarSesion" onClick={logOut}>
               Cerrar Sesión{' '}
             </Link>
           </li>

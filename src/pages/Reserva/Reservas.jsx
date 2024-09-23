@@ -20,7 +20,7 @@ import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
 
 import { ordenarPorNombre } from '../../components/Utils/Functions'
 
-export const Reservas = ({ setSesion }) => {
+export const Reservas = () => {
   const URL_BASE = `http://localhost:8083/api/`
   //navegacion
   const navigate = useNavigate()
@@ -228,7 +228,7 @@ export const Reservas = ({ setSesion }) => {
 
   return (
     <div id="reservas-component">
-      <NavBar title={'Reservas'} setSesion={setSesion} />
+      <NavBar title={'Reservas'} />
       <div id="reserva-nuevaReserva">
         <button id="clase-closeBTN" onClick={() => navigate('../reservas')}>
           x

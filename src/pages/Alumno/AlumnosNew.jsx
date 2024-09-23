@@ -14,7 +14,7 @@ import { AgregarAlumno } from '../../components/AlumnoNew/AgregarAlumno'
 import { AlumnoDetails } from '../../components/AlumnoNew/AlumnoDetails'
 import { EditarAlumno } from '../../components/AlumnoNew/EditarAlumno'
 
-export const AlumnosNew = ({ setSesion }) => {
+export const AlumnosNew = () => {
   const URL_BASE = `http://localhost:8083/api/`
 
   // Lista de cobros actuales del alumno
@@ -224,7 +224,7 @@ export const AlumnosNew = ({ setSesion }) => {
         cobrosActUser={cobrosActUser}
         setEditAlumnoActive={setEditAlumnoActive}
       />
-      <NavBar title={'Alumnos'} setSesion={setSesion} />
+      <NavBar title={'Alumnos'} />
       <div id="alumnos-component-mainContent">
         {/* Agregar alumno - Formulario flotante */}
         <GenericLargeButton

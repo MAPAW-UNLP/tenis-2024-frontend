@@ -13,14 +13,14 @@ import {
 
 import '../../styles/home/home.css'
 
-export const HomeRe = ({ setSesion }) => {
+export const HomeRe = () => {
   const navigate = useNavigate()
   const handleRedirect = (link) => {
     navigate(link)
   }
   return (
     <>
-      <NavBar title={'Inicio'} setSesion={setSesion} />
+      <NavBar title={'Inicio'} />
       <div
         style={{
           width: '80%',

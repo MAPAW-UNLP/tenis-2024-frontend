@@ -5,7 +5,7 @@ import '../../styles/ajustes/ajustes.css'
 import { GenericButton } from '../../components/Utils/GenericButton'
 import LoaderSpinner from '../../components/LoaderSpinner'
 
-export const Ajustes = ({ setSesion }) => {
+export const Ajustes = () => {
   const URL_BASE = `http://localhost:8083/api/`
   const [profesores, setProfesores] = useState([])
   const [tipoClases, setTipoClases] = useState([])
@@ -75,7 +75,7 @@ export const Ajustes = ({ setSesion }) => {
   return (
     <>
       <div id="ajustes-component">
-        <NavBar title={'Ajustes'} setSesion={setSesion} />
+        <NavBar title={'Ajustes'} />
         {cargando ? (
           <LoaderSpinner
             active={cargando}

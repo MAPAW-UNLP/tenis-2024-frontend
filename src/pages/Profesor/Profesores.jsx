@@ -15,7 +15,7 @@ import { GenericLargeButton } from '../../components/Utils/GenericLargeButton'
 import '../../styles/profesores.css'
 import { ProfesorDetail } from '../../components/Profesor/ProfesorDetail'
 
-export const Profesores = ({ setSesion }) => {
+export const Profesores = () => {
   const URL_BASE = `http://localhost:8083/api/`
 
   const feedbackStructure = {
@@ -340,7 +340,7 @@ export const Profesores = ({ setSesion }) => {
 
   return (
     <div id="profesores-component">
-      <NavBar title={'Profesores'} setSesion={setSesion} />
+      <NavBar title={'Profesores'} />
       <div id="profesores-component-mainContent">
         <GenericLargeButton
           title={'Crear nuevo profesor'}

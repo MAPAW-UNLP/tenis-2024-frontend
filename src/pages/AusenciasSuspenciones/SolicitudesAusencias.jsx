@@ -14,7 +14,7 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons'
 // Url base de datos
 const URL_BASE = `http://localhost:8083/api/`
 
-const SolicitudesAusencias = ({ setSesion }) => {
+const SolicitudesAusencias = () => {
   //navegacion
   const navigate = useNavigate()
 
@@ -102,10 +102,7 @@ const SolicitudesAusencias = ({ setSesion }) => {
 
   return (
     <div id="solicitudes-contenedorPrincipal">
-      <NavBar
-        title={'Solicitudes de periodos de ausencia'}
-        setSesion={setSesion}
-      />
+      <NavBar title={'Solicitudes de periodos de ausencia'} />
       <div id="solicitudes-contenedor">
         <button id="clase-closeBTN" onClick={() => navigate('../inicio')}>
           x

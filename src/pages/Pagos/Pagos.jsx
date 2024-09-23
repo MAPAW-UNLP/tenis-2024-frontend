@@ -9,7 +9,7 @@ import LoaderSpinner from '../../components/LoaderSpinner'
 
 import '../../styles/movimiento/movimiento.css'
 
-export const Pagos = ({ setSesion }) => {
+export const Pagos = () => {
   const URL_BASE = `http://localhost:8083/api/`
 
   const [active, setActive] = useState(false)
@@ -150,7 +150,7 @@ export const Pagos = ({ setSesion }) => {
 
   return (
     <div className="movimiento-component">
-      <NavBar title={'Pagos'} setSesion={setSesion} />
+      <NavBar title={'Pagos'} />
       <div className="movimiento-component-mainContent">
         <GenericLargeButton
           doSomething={() => setActive(true)}

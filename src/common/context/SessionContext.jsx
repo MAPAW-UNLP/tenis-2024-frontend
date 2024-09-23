@@ -1,26 +1,39 @@
-import { createContext, useEffect, useState } from 'react'
+import { createContext, useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router'
+import { useLocalStorage } from '../hooks/useLocalStorage'
 
 export const SessionContext = createContext(null)
 
 export function SessionProvider({ children }) {
-  //para la sesion
   const navigate = useNavigate()
-  const [session, setSession] = useState('')
 
-  //sesion Effect D:
+  // Con el custom hook useLocalStorage todos los cambios al estado `session`
+  // se actualizan automáticamente en el localStorage con la key 'session'
+  const [session, setSession] = useLocalStorage('session', '')
+
+  const isLoggedIn = useCallback(() => {
+    return session === ''
+  }, [session])
+
   useEffect(() => {
-    const user = localStorage.getItem('session')
-    if (user === '') {
-      navigate('/')
-    }
-  }, [navigate, session])
+    // Si no tiene sesión iniciada enviar al log in
+    if (isLoggedIn()) navigate('/')
+  }, [isLoggedIn, navigate, session])
+
+  function logIn() {
+    setSession('sesión iniciada :D')
+  }
+
+  function logOut() {
+    setSession('')
+  }
 
   return (
     <SessionContext.Provider
       value={{
         session,
-        setSession,
+        logIn,
+        logOut,
       }}
     >
       {children}

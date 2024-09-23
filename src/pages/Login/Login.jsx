@@ -9,7 +9,7 @@ import LoginForm from '../../components/Login/LoginForm'
 //style
 import '../../styles/login.css'
 
-export const Login = ({ setSesion }) => {
+export const Login = () => {
   return (
     <div id="login-frame">
       <div id="nav-div">
@@ -22,7 +22,7 @@ export const Login = ({ setSesion }) => {
           <div id="login-header-last"></div>
         </div>
         <div id="logo"></div>
-        <LoginForm setSesion={setSesion} />
+        <LoginForm />
       </div>
     </div>
   )

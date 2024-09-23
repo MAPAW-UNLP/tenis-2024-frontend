@@ -11,14 +11,14 @@ import {
 
 import '../../styles/movimiento/movimiento.css'
 
-export const Movimientos = ({ setSesion }) => {
+export const Movimientos = () => {
   const navigate = useNavigate()
   const handleRedirect = (link) => {
     navigate(link)
   }
   return (
     <>
-      <NavBar title={'Movimientos'} setSesion={setSesion} />
+      <NavBar title={'Movimientos'} />
       <div
         style={{
           width: '50%',
