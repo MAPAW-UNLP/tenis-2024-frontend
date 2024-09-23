@@ -1,40 +1,40 @@
-import React from 'react';
+import React from 'react'
 //react tools
-import { Link } from 'react-router-dom';
-import { useEffect } from 'react';
+import { Link } from 'react-router-dom'
+import { useEffect } from 'react'
 
 /* Components */
-import LinkItem from '../../components/LinkItem';
+import LinkItem from '../../components/LinkItem'
 
-import '../../styles/navbar.css';
+import '../../styles/navbar.css'
 
-import { useState } from 'react';
+import { useState } from 'react'
 
 const NavBar = ({ title, setSesion }) => {
-  const [active, setActive] = useState('link');
+  const [active, setActive] = useState('link')
 
   useEffect(() => {
     //cambia la clase active del nav y se las saca a los que no lo tienen
     var pathName = window.location.pathname
       .replace('/', '')
       .split(' ')
-      .join(' ');
-    pathName = pathName.charAt(0).toUpperCase() + pathName.slice(1);
-    const links = Array.from(document.getElementsByClassName('link'));
+      .join(' ')
+    pathName = pathName.charAt(0).toUpperCase() + pathName.slice(1)
+    const links = Array.from(document.getElementsByClassName('link'))
     links.map((el) => {
-      if (el.innerHTML === pathName) el.className += ' active';
+      if (el.innerHTML === pathName) el.className += ' active'
       else {
-        el.className = 'link';
+        el.className = 'link'
       }
-    });
-  }, [active]);
+    })
+  }, [active])
 
   const handleCloseSesion = () => {
-    localStorage.setItem('sesion', '');
-    setSesion('');
-  };
+    localStorage.setItem('sesion', '')
+    setSesion('')
+  }
 
-  const esProfesor = true; // Simula la sesión para ocultar elementos, eventualmente esta información debe
+  const esProfesor = true // Simula la sesión para ocultar elementos, eventualmente esta información debe
   // ser sacada de la sesión actual obtenida.
 
   return (
@@ -101,7 +101,7 @@ const NavBar = ({ title, setSesion }) => {
       </nav>
       <h1>{title}</h1>
     </div>
-  );
-};
+  )
+}
 
-export default NavBar;
+export default NavBar

@@ -1,48 +1,48 @@
-import { useEffect } from 'react';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 //Components
-import { Login } from './pages/Login/Login';
-import { HomeRe } from './pages/Home/HomeRe';
-import { Canchas } from './pages/Cancha/Canchas';
-import { Reservas } from './pages/Reserva/Reservas';
-import { Profesores } from './pages/Profesor/Profesores';
-import { Cobros } from './pages/Cobros/Cobros';
-import { Pagos } from './pages/Pagos/Pagos';
-import { Balance } from './pages/Balance/Balance';
-import CrearClase from './pages/CrearClase';
-import { Movimientos } from './pages/Movimientos/Movimientos';
-import SuspencionClase from './pages/AusenciasSuspenciones/SuspencionClase';
-import PeriodoAusencia from './pages/AusenciasSuspenciones/PeriodoAusencia';
-import SolicitudesSuspencion from './pages/AusenciasSuspenciones/SolicitudesSuspencion';
-import SolicitudesAusencias from './pages/AusenciasSuspenciones/SolicitudesAusencias';
-import Ausencias from './pages/AusenciasSuspenciones/Ausencias';
+import { Login } from './pages/Login/Login'
+import { HomeRe } from './pages/Home/HomeRe'
+import { Canchas } from './pages/Cancha/Canchas'
+import { Reservas } from './pages/Reserva/Reservas'
+import { Profesores } from './pages/Profesor/Profesores'
+import { Cobros } from './pages/Cobros/Cobros'
+import { Pagos } from './pages/Pagos/Pagos'
+import { Balance } from './pages/Balance/Balance'
+import CrearClase from './pages/CrearClase'
+import { Movimientos } from './pages/Movimientos/Movimientos'
+import SuspencionClase from './pages/AusenciasSuspenciones/SuspencionClase'
+import PeriodoAusencia from './pages/AusenciasSuspenciones/PeriodoAusencia'
+import SolicitudesSuspencion from './pages/AusenciasSuspenciones/SolicitudesSuspencion'
+import SolicitudesAusencias from './pages/AusenciasSuspenciones/SolicitudesAusencias'
+import Ausencias from './pages/AusenciasSuspenciones/Ausencias'
 
 //VarianteHome
-import HomeVariant from './pages/Reserva/HomeVariant';
+import HomeVariant from './pages/Reserva/HomeVariant'
 
 //Style
-import './styles/App.css';
+import './styles/App.css'
 
 //routes react
-import { Routes, Route } from 'react-router-dom';
-import { Ajustes } from './pages/Ajustes/Ajustes';
-import { AlumnosNew } from './pages/Alumno/AlumnosNew';
+import { Routes, Route } from 'react-router-dom'
+import { Ajustes } from './pages/Ajustes/Ajustes'
+import { AlumnosNew } from './pages/Alumno/AlumnosNew'
 
 function App() {
   //para la sesion
-  const navigate = useNavigate();
-  const [sesion, setSesion] = useState('');
+  const navigate = useNavigate()
+  const [sesion, setSesion] = useState('')
 
   //sesion Effect D:
   useEffect(() => {
-    const user = localStorage.getItem('sesion');
+    const user = localStorage.getItem('sesion')
     if (user === '') {
-      navigate('/');
+      navigate('/')
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sesion]);
+  }, [sesion])
 
   return (
     <>
@@ -103,7 +103,7 @@ function App() {
         </Routes>
       </div>
     </>
-  );
+  )
 }
 
-export default App;
+export default App

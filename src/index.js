@@ -1,12 +1,12 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
+import React from 'react'
+import ReactDOM from 'react-dom/client'
 
 //router
-import { BrowserRouter } from "react-router-dom";
-import App from "./App";
-import { SessionProvider } from "./common/context/SessionContext";
+import { BrowserRouter } from 'react-router-dom'
+import App from './App'
+import { SessionProvider } from './common/context/SessionContext'
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
+const root = ReactDOM.createRoot(document.getElementById('root'))
 
 root.render(
   <React.StrictMode>
@@ -16,4 +16,4 @@ root.render(
       </SessionProvider>
     </BrowserRouter>
   </React.StrictMode>
-);
+)

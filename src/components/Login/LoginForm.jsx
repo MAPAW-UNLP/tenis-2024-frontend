@@ -1,68 +1,68 @@
-import React from 'react';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 //components
-import FeedbackText from '../FeedbackText';
-import LoaderSpinner from '../LoaderSpinner';
+import FeedbackText from '../FeedbackText'
+import LoaderSpinner from '../LoaderSpinner'
 
 const LoginForm = ({ setSesion }) => {
-  const URL_BASE = 'http://localhost:8083/api/';
+  const URL_BASE = 'http://localhost:8083/api/'
 
-  const [user, setUser] = useState('');
-  const [pass, setPass] = useState('');
+  const [user, setUser] = useState('')
+  const [pass, setPass] = useState('')
 
-  const [active, setActive] = useState(false);
-  const [activeLoader, setActiveLoader] = useState(false);
-  const navigate = useNavigate();
+  const [active, setActive] = useState(false)
+  const [activeLoader, setActiveLoader] = useState(false)
+  const navigate = useNavigate()
 
   const handleUserNameChange = (e) => {
-    setUser(e.target.value);
-    const passInput = document.getElementById('input-pass');
+    setUser(e.target.value)
+    const passInput = document.getElementById('input-pass')
     if (e.target.value === '') {
-      passInput.disabled = true;
-      setActive(false);
-      setPass('');
-      const loginBtn = document.getElementById('login-btn');
+      passInput.disabled = true
+      setActive(false)
+      setPass('')
+      const loginBtn = document.getElementById('login-btn')
       e.target.value === ''
         ? (loginBtn.disabled = true)
-        : (loginBtn.disabled = false);
-    } else passInput.disabled = false;
-  };
+        : (loginBtn.disabled = false)
+    } else passInput.disabled = false
+  }
 
   const handlePassChange = (e) => {
-    setPass(e.target.value);
-    setActive(false);
-    const loginBtn = document.getElementById('login-btn');
+    setPass(e.target.value)
+    setActive(false)
+    const loginBtn = document.getElementById('login-btn')
     e.target.value === ''
       ? (loginBtn.disabled = true)
-      : (loginBtn.disabled = false);
-  };
+      : (loginBtn.disabled = false)
+  }
 
   const habldeSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
-    setActiveLoader(true);
+    setActiveLoader(true)
     const requestOptions = {
       method: 'POST',
       body: JSON.stringify({ user: user, password: pass }),
-    };
+    }
     fetch(`${URL_BASE}usuario`, requestOptions)
       .then((response) => response.json())
       .then((data) => {
         if (data.rta === 'ok') {
-          localStorage.setItem('sesion', 'sesionIniciada');
-          setSesion('sesion Iniciada :D');
-          setActiveLoader(false);
-          navigate('../inicio');
+          localStorage.setItem('sesion', 'sesionIniciada')
+          setSesion('sesion Iniciada :D')
+          setActiveLoader(false)
+          navigate('../inicio')
         } else {
-          setActive(true);
-          const loginBtn = document.getElementById('login-btn');
-          loginBtn.disabled = true;
-          setActiveLoader(false);
+          setActive(true)
+          const loginBtn = document.getElementById('login-btn')
+          loginBtn.disabled = true
+          setActiveLoader(false)
         }
-      });
-  };
+      })
+  }
 
   return (
     <div id="login-form-div">
@@ -111,7 +111,7 @@ const LoginForm = ({ setSesion }) => {
         </button>
       </form>
     </div>
-  );
-};
+  )
+}
 
-export default LoginForm;
+export default LoginForm

@@ -1,11 +1,11 @@
-#ajustes-component{
+#ajustes-component {
   background-color: var(--primary-blue);
   min-height: 100vh;
   height: 100%;
   padding-bottom: 2em;
 }
 
-.container-ajustes{
+.container-ajustes {
   width: 60%;
   margin: 0 auto;
   display: flex;
@@ -21,7 +21,7 @@
   border-bottom-right-radius: 1.1em;
 }
 
-.table-head-ajustes{
+.table-head-ajustes {
   width: 100%;
   margin: 0 auto;
   display: flex;
@@ -31,16 +31,16 @@
   font-family: var(--title-text);
   color: var(--neutral-white-text);
   background-color: #5d5d5d;
-  padding: .8em;
+  padding: 0.8em;
   border-top-left-radius: 1em;
   border-top-right-radius: 1em;
 }
 
-.container-table-ajustes{
+.container-table-ajustes {
   width: 70%;
   margin: 0 auto;
   margin-bottom: 1.2em;
-  padding: .8em;
+  padding: 0.8em;
 }
 
 .table-row-ajustes {
@@ -63,7 +63,7 @@
   color: white;
 }
 
-.table-input-ajustes{
+.table-input-ajustes {
   width: 50%;
   text-align: center;
   font-family: var(--title-text);
