@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { BalanceTable } from '../../components/Movimiento/BalanceTable'
 import InputReComponent from '../../components/Utils/InputReComponent'
 import { ordenarPorNombre } from '../../components/Utils/Functions'

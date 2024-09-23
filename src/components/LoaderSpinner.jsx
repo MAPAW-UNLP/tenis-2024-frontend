@@ -1,4 +1,3 @@
-import React from 'react'
 import '../styles/loader.css'
 
 const LoaderSpinner = ({ active, containerClass, loaderClass }) => {

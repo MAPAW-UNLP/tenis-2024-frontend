@@ -1,4 +1,3 @@
-import React from 'react'
 import '../styles/coverSpinner.css'
 
 export const CoverSpinner = ({ loadingFetch }) => {

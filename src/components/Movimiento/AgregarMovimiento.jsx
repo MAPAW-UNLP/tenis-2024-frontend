@@ -1,4 +1,3 @@
-import React from 'react'
 import { MovimientoForm } from './MovimientoForm'
 
 export const AgregarMovimiento = ({

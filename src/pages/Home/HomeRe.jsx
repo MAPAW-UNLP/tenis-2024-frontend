@@ -1,4 +1,3 @@
-import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import NavBar from '../Navbar/NavBar'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'

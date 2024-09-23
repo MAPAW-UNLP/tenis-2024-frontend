@@ -1,5 +1,3 @@
-import React from 'react'
-
 const ReservaSemanal = ({ datos, canchas }) => {
   const coloresCanchas = [
     '#FFA500',

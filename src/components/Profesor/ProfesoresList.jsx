@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 
 import { Profesor } from './Profesor'
 import InputComponent from '../Utils/InputComponent'

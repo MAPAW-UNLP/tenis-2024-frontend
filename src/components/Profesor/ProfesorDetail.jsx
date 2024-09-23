@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 import InputReComponent from '../Utils/InputReComponent'
 import '../../styles/profesorLoader.css'

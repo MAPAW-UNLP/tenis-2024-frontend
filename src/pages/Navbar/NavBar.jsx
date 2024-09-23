@@ -1,4 +1,3 @@
-import React from 'react'
 //react tools
 import { Link } from 'react-router-dom'
 import { useEffect } from 'react'

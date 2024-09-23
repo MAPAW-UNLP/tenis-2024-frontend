@@ -1,5 +1,3 @@
-import React from 'react'
-
 const Cancha = ({ id, nombre, tipo }) => {
   const pickBackgroundColor = () => {
     if (tipo === 'verde') {

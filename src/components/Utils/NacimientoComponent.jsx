@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import DatePicker, { registerLocale } from 'react-datepicker'
 import getYear from 'date-fns/getYear'
 import getMonth from 'date-fns/getYear'

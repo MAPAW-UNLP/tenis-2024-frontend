@@ -1,5 +1,3 @@
-import React from 'react'
-
 const SelectHoraFin = ({ id, className, setHoraFin, horaInicio }) => {
   const horas = [
     '8:00',

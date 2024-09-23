@@ -1,4 +1,3 @@
-import React from 'react'
 import { AlumnoForm } from './AlumnoForm'
 
 export const AgregarAlumno = ({

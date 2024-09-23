@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 //styles
 import '../../styles/reservaInfo.css'

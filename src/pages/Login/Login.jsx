@@ -1,5 +1,3 @@
-import React from 'react'
-
 //resources
 import tennisImg from '../../Img/tennisImg.jpg'
 

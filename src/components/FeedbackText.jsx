@@ -1,4 +1,3 @@
-import React from 'react'
 import '../styles/feedbackText.css'
 
 const FeedbackText = ({ text, color, backGroundColor, active }) => {
