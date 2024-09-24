@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import moment from 'moment'
 import '../../styles/alquilerDetail.css'
 

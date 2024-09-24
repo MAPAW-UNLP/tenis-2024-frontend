@@ -7,7 +7,6 @@ import NavBar from '../Navbar/NavBar'
 import Reserva from '../../components/Reserva/Reserva'
 import LoaderSpinner from '../../components/LoaderSpinner'
 import CalendarComponent from '../../components/Reserva/CalendarComponent'
-import VistaSemanal from '../../components/VistaSemanal'
 import AlquilerDetails from '../../components/Reserva/AlquilerDetails'
 import ClaseDetails from '../../components/Reserva/ClaseDetails'
 //Fontawesome

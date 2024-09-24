@@ -1,10 +1,8 @@
 import { useState } from 'react'
-import DatePicker, { registerLocale } from 'react-datepicker'
+import DatePicker from 'react-datepicker'
 import getYear from 'date-fns/getYear'
 import getMonth from 'date-fns/getYear'
-import getDate from 'date-fns/getYear'
 import range from 'lodash/range'
-import moment from 'moment'
 
 import { formatDate } from './Functions'
 

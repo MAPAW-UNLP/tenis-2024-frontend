@@ -1,11 +1,8 @@
-import { useState } from 'react'
-
 //styles
 import '../../styles/reservaInfo.css'
 //fontawesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleInfo } from '@fortawesome/free-solid-svg-icons'
-import { useEffect } from 'react'
 
 const Reserva = ({
   datos,

@@ -1,5 +1,3 @@
-import { useState } from 'react'
-
 import ReservaSemanal from './ReservaSemanal'
 
 const VistaSemanal = ({ canchas, reservas }) => {

@@ -1,8 +1,6 @@
 import { useState } from 'react'
 
 //Components
-import InputComponent from '../InputComponent'
-import SelectComponent from '../SelectComponent'
 import Select from 'react-select'
 
 //FontawesomeIcon

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import moment from 'moment'
 import { useNavigate } from 'react-router-dom'
 
@@ -7,15 +7,10 @@ import '../../styles/claseDetail.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faPlusCircle,
-  faPenToSquare,
   faCalendar,
   faCheck,
 } from '@fortawesome/free-solid-svg-icons'
 //components
-import SelectAlumnosAddClase from '../SelectAlumnosAddClase'
-import FeedbackText from '../FeedbackText'
-import LoaderSpinner from '../LoaderSpinner'
-import Select from 'react-select'
 import EditFechaYHoraController from './EditFechaYHoraController'
 import SelectorDeAlumnosDeClase from './SelectorDeAlumnosDeClase'
 

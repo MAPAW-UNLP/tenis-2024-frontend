@@ -1,8 +1,3 @@
-import { useEffect } from 'react'
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-
-//Components
 import { Login } from './pages/Login/Login'
 import { HomeRe } from './pages/Home/HomeRe'
 import { Canchas } from './pages/Cancha/Canchas'

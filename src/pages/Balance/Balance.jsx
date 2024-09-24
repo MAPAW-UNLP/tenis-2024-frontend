@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import { BalanceTable } from '../../components/Movimiento/BalanceTable'
 import InputReComponent from '../../components/Utils/InputReComponent'
-import { ordenarPorNombre } from '../../components/Utils/Functions'
 import LoaderSpinner from '../../components/LoaderSpinner'
 import NavBar from '../Navbar/NavBar'
 

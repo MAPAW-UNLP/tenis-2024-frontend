@@ -2,13 +2,10 @@ import { useState } from 'react'
 import DatePicker, { registerLocale } from 'react-datepicker'
 import moment from 'moment'
 import es from 'date-fns/locale/es'
+
 //Font awesome component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
-  faPlusCircle,
-  faCaretRight,
-  faCaretLeft,
-} from '@fortawesome/free-solid-svg-icons'
+import { faCaretRight, faCaretLeft } from '@fortawesome/free-solid-svg-icons'
 
 import 'react-datepicker/dist/react-datepicker.css'
 import '../../styles/calendar.css'

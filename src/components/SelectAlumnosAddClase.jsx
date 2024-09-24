@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import Select from 'react-select'
 
 const SelectAlumnosAddClase = ({ alumnosDeLaClase, alumnos, setAlumnos }) => {
   const [alumnosFiltrados, setAlumnosFiltrados] = useState([])
