@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom/client'
 //router
 import { BrowserRouter } from 'react-router-dom'
 import App from './App'
-import { SessionProvider } from './common/context/SessionContext'
+import { SessionProvider } from './context/SessionContext'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 

@@ -8,7 +8,7 @@ import LinkItem from '../../components/LinkItem'
 import '../../styles/navbar.css'
 
 import { useState } from 'react'
-import { useSession } from '../../common/hooks/useSession'
+import { useSession } from '../../hooks/useSession'
 
 const NavBar = ({ title }) => {
   const [active, setActive] = useState('link')

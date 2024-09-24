@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 //components
 import FeedbackText from '../FeedbackText'
 import LoaderSpinner from '../LoaderSpinner'
-import { useSession } from '../../common/hooks/useSession'
+import { useSession } from '../../hooks/useSession'
 
 const LoginForm = () => {
   const URL_BASE = 'http://localhost:8083/api/'
