@@ -1,276 +1,273 @@
 #alumnos-component {
-    background-color: var(--primary-blue);
-    height: 100%;
-    min-height: 100vh;
+  background-color: var(--primary-blue);
+  height: 100%;
+  min-height: 100vh;
 }
 
 #alumnos-component-mainContent {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 70vw;
-    /* Cambiar aca a 35vw si queremos algo compatible con las canchas */
-    margin: auto;
-    margin-top: 5vh;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 70vw;
+  /* Cambiar aca a 35vw si queremos algo compatible con las canchas */
+  margin: auto;
+  margin-top: 5vh;
+  align-items: center;
 }
 
 #alumnos-list-component {
-    margin-top: 2vh;
-    width: 100%;
-    border-radius: 20px;
-    background-color: var(--neutral-white);
-    margin-bottom: 10vh;
-    cursor: default;
+  margin-top: 2vh;
+  width: 100%;
+  border-radius: 20px;
+  background-color: var(--neutral-white);
+  margin-bottom: 10vh;
+  cursor: default;
 }
 
 #alumnos-list-options {
-    height: 8vh;
-    display: grid;
-    grid-template-columns: 20% 20% 20% 40%;
-    align-content: center;
-    align-items: center;
-    justify-content: center;
-    color: var(--neutral-black);
-    font-family: var(--title-text);
-    border-bottom: 5px solid var(--neutral-black);
-    background-color: var(--neutral-white);
-    border-top-left-radius: 2px;
-    border-top-right-radius: 2px;
-    padding-left: 2%;
+  height: 8vh;
+  display: grid;
+  grid-template-columns: 20% 20% 20% 40%;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  color: var(--neutral-black);
+  font-family: var(--title-text);
+  border-bottom: 5px solid var(--neutral-black);
+  background-color: var(--neutral-white);
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+  padding-left: 2%;
 }
 
 .list-options-header {
-    font-size: 150%;
+  font-size: 150%;
 }
 
 #alumnos-searchbar {
-    position: relative;
-    width: 90%;
+  position: relative;
+  width: 90%;
 }
 
 #alumnos-searchbar input {
-    width: 100%;
-    font-family: var(--normal-text);
-    font-size: 100%;
-    border-radius: 10px;
-    border: 1px solid var(--neutral-black);
-    color: var(--neutral-black);
-    padding-left: 2%;
-    transition: all 0.5s ease;
+  width: 100%;
+  font-family: var(--normal-text);
+  font-size: 100%;
+  border-radius: 10px;
+  border: 1px solid var(--neutral-black);
+  color: var(--neutral-black);
+  padding-left: 2%;
+  transition: all 0.5s ease;
 }
 
 #alumnos-searchbar input:focus {
-    outline: 2px solid var(--accent-green);
-    border: none;
+  outline: 2px solid var(--accent-green);
+  border: none;
 }
 
 #magnify-iconAlumnos {
-    color: var(--neutral-black);
-    position: absolute;
-    top: 10%;
-    right: 5%;
+  color: var(--neutral-black);
+  position: absolute;
+  top: 10%;
+  right: 5%;
 }
 
 .alumno-info {
-    display: grid;
-    grid-template-columns: 20% 20% 20% 40%;
-    margin: 0.5%;
-    padding: 1%;
-    border-radius: 12px;
-    background-color: var(--neutral-black);
-    color: var(--neutral-white-text);
-    font-family: var(--normal-text);
-    font-size: 110%;
+  display: grid;
+  grid-template-columns: 20% 20% 20% 40%;
+  margin: 0.5%;
+  padding: 1%;
+  border-radius: 12px;
+  background-color: var(--neutral-black);
+  color: var(--neutral-white-text);
+  font-family: var(--normal-text);
+  font-size: 110%;
 }
 
 #alumno-add-component {
-    background-color: var(--neutral-white);
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    top: 50%;
-    border-radius: 20px;
-    width: 40vw;
-    z-index: 20;
-    box-shadow: -2px -4px 400px 600px rgba(0, 0, 0, 0.24);
+  background-color: var(--neutral-white);
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 50%;
+  border-radius: 20px;
+  width: 40vw;
+  z-index: 20;
+  box-shadow: -2px -4px 400px 600px rgba(0, 0, 0, 0.24);
 }
 
 #alumnos-list {
-    min-height: 100%;
-    height: 60vh;
-    overflow-y: scroll;
+  min-height: 100%;
+  height: 60vh;
+  overflow-y: scroll;
 }
 
 #alumnos-list::-webkit-scrollbar {
-    width: 12px;
-    /* width of the entire scrollbar */
+  width: 12px;
+  /* width of the entire scrollbar */
 }
 
 #alumnos-list::-webkit-scrollbar-track {
-    background-color: transparent;
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
-    opacity: .5;
+  background-color: transparent;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  opacity: 0.5;
 }
 
 #alumnos-list::-webkit-scrollbar-thumb {
-
-    background-color: var(--accent-green);
-    /* color of the scroll thumb */
-    border-radius: 20px;
-    /* roundness of the scroll thumb */
-    border: 2px solid var(--neutral-white);
-    /* creates padding around scroll thumb */
+  background-color: var(--accent-green);
+  /* color of the scroll thumb */
+  border-radius: 20px;
+  /* roundness of the scroll thumb */
+  border: 2px solid var(--neutral-white);
+  /* creates padding around scroll thumb */
 }
 
-
 #close-alumno-add-form {
-    background: none;
-    position: absolute;
-    top: 1vh;
-    border: none;
-    right: 2vw;
-    font-family: var(--title-text);
-    font-size: 150%;
-    color: var(--neutral-black);
-    transition: all 0.5s ease;
-    cursor: pointer;
+  background: none;
+  position: absolute;
+  top: 1vh;
+  border: none;
+  right: 2vw;
+  font-family: var(--title-text);
+  font-size: 150%;
+  color: var(--neutral-black);
+  transition: all 0.5s ease;
+  cursor: pointer;
 }
 
 #close-alumno-add-form:hover {
-    font-size: 175%;
-    font-weight: bolder;
-    color: #CC3636;
+  font-size: 175%;
+  font-weight: bolder;
+  color: #cc3636;
 }
 
 #alumno-add-component h2 {
-    width: 100%;
-    margin-top: 3vh;
-    background-color: var(--neutral-white);
-    color: var(--neutral-black);
-    font-size: 250%;
-    text-align: center;
-    font-family: var(--title-text);
+  width: 100%;
+  margin-top: 3vh;
+  background-color: var(--neutral-white);
+  color: var(--neutral-black);
+  font-size: 250%;
+  text-align: center;
+  font-family: var(--title-text);
 }
 
 #alumno-add-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
-    background-color: var(--neutral-white);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  background-color: var(--neutral-white);
 }
 
 .alumno-add-form-input {
-    font-family: var(--normal-text);
-    margin: auto;
-    margin-bottom: 15px;
-    width: 90%;
-    height: 2.2rem;
-    margin: 1.7vh 2vw;
-    border-radius: 2px;
-    font-size: large;
-    background-color: var(--neutral-white);
-    border: 1px solid lightgrey;
-    color: var(--neutral-black);
-    padding-left: 5px;
-    transition: all 0.5s ease;
+  font-family: var(--normal-text);
+  margin: auto;
+  margin-bottom: 15px;
+  width: 90%;
+  height: 2.2rem;
+  margin: 1.7vh 2vw;
+  border-radius: 2px;
+  font-size: large;
+  background-color: var(--neutral-white);
+  border: 1px solid lightgrey;
+  color: var(--neutral-black);
+  padding-left: 5px;
+  transition: all 0.5s ease;
 }
 
 .alumno-add-form-input:focus {
-    border: none;
-    outline: 2px solid var(--accent-green);
+  border: none;
+  outline: 2px solid var(--accent-green);
 }
 
 .alumno-add-form-input:disabled {
-    border: none;
-    background-color: var(--neutral-black);
+  border: none;
+  background-color: var(--neutral-black);
 }
 
 #inputDateBirth {
-    width: 81%;
-    cursor: pointer;
+  width: 81%;
+  cursor: pointer;
 }
 
 #alumno-add-form-addBtn {
-    width: 100%;
-    background-color: var(--accent-green);
-    height: 5rem;
-    border: none;
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
-    cursor: pointer;
+  width: 100%;
+  background-color: var(--accent-green);
+  height: 5rem;
+  border: none;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  cursor: pointer;
 }
 
 #alumno-add-form-addBtn:disabled {
-    background-color: var(--neutral-black);
+  background-color: var(--neutral-black);
 }
 
 .feedbackInline {
-    font-family: var(--normal-text);
-    position: relative;
-    top: -1.5vh;
-    font-size: 80%;
+  font-family: var(--normal-text);
+  position: relative;
+  top: -1.5vh;
+  font-size: 80%;
 }
 
 #nacimientoPicker {
-    height: 2rem;
-    margin: 2vh 10% 2vh 10%;
-    width: 80%;
-    border: 1px solid lightgrey;
-    border-radius: 2px;
-    font-family: var(--normal-text);
-    font-size: 105%;
-    padding-left: 2%;
-    border-radius: 2px;
-    font-size: large;
-    background-color: var(--neutral-white);
-    border: 1px solid lightgrey;
-    color: var(--neutral-black);
-    transition: all 0.5s ease;
-    cursor: pointer;
+  height: 2rem;
+  margin: 2vh 10% 2vh 10%;
+  width: 80%;
+  border: 1px solid lightgrey;
+  border-radius: 2px;
+  font-family: var(--normal-text);
+  font-size: 105%;
+  padding-left: 2%;
+  border-radius: 2px;
+  font-size: large;
+  background-color: var(--neutral-white);
+  border: 1px solid lightgrey;
+  color: var(--neutral-black);
+  transition: all 0.5s ease;
+  cursor: pointer;
 }
 
 #nacimientoPicker::placeholder {
-    font-family: var(--normal-text);
-    font-size: large;
-    color: var(--neutral-black);
+  font-family: var(--normal-text);
+  font-size: large;
+  color: var(--neutral-black);
 }
 
 #nacimientoPicker:focus {
-    outline: 2px solid var(--accent-green);
+  outline: 2px solid var(--accent-green);
 }
 
 #fecha-nacimiento {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    width: 80%;
-    font-size: 150%;
-    font-family: var(--normal-text);
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  width: 80%;
+  font-size: 150%;
+  font-family: var(--normal-text);
 }
 
 #fecha-nacimiento input {
-    width: 10%;
-    font-size: 70%;
-    padding-left: .2%;
-    font-family: var(--normal-text);
-    height: 2rem;
-    border-radius: 2px;
-    border: 1px solid var(--neutral-black);
+  width: 10%;
+  font-size: 70%;
+  padding-left: 0.2%;
+  font-family: var(--normal-text);
+  height: 2rem;
+  border-radius: 2px;
+  border: 1px solid var(--neutral-black);
 }
 
 #fecha-nacimiento input:last-child {
-    width: 20%;
-    font-size: 70%;
-    font-family: var(--normal-text);
-    height: 2rem;
-    border-radius: 2px;
-    border: 1px solid var(--neutral-black);
+  width: 20%;
+  font-size: 70%;
+  font-family: var(--normal-text);
+  height: 2rem;
+  border-radius: 2px;
+  border: 1px solid var(--neutral-black);
 }
-
 
 /* #btn-pagos{
     width: 50%;
@@ -286,115 +283,115 @@
 /* COBROS DEL ALUMNO */
 
 .cobros-detail {
-    background-color: var(--neutral-white);
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    top: 30%;
-    left: 30vw;
-    border-radius: 20px;
-    width: 40vw;
-    z-index: 20;
-    box-shadow: -2px -4px 400px 600px rgba(0, 0, 0, 0.24);
+  background-color: var(--neutral-white);
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 30%;
+  left: 30vw;
+  border-radius: 20px;
+  width: 40vw;
+  z-index: 20;
+  box-shadow: -2px -4px 400px 600px rgba(0, 0, 0, 0.24);
 }
 
 .close-detail-add-form {
-    background: none;
-    position: absolute;
-    top: 1vh;
-    border: none;
-    right: 2vw;
-    font-family: var(--title-text);
-    font-size: 1.4em;
-    color: var(--neutral-black);
-    transition: all 0.5s ease;
-    cursor: pointer;
+  background: none;
+  position: absolute;
+  top: 1vh;
+  border: none;
+  right: 2vw;
+  font-family: var(--title-text);
+  font-size: 1.4em;
+  color: var(--neutral-black);
+  transition: all 0.5s ease;
+  cursor: pointer;
 }
 
 .close-detail-add-form:hover {
-    color: #CC3636;
+  color: #cc3636;
 }
 
 .cobros-detail-list {
-    height: 40vh;
-    overflow-y: scroll;
-    margin-bottom: 2em;
+  height: 40vh;
+  overflow-y: scroll;
+  margin-bottom: 2em;
 }
 
 .cobros-detail-list::-webkit-scrollbar {
-    width: 12px;
-    /* width of the entire scrollbar */
+  width: 12px;
+  /* width of the entire scrollbar */
 }
 
 .cobros-detail-list::-webkit-scrollbar-track {
-    background-color: transparent;
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
-    opacity: .5;
+  background-color: transparent;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  opacity: 0.5;
 }
 
 .cobros-detail-list::-webkit-scrollbar-thumb {
-    background-color: var(--neutral-black);
-    /* color of the scroll thumb */
-    border-radius: 20px;
-    /* roundness of the scroll thumb */
-    border: 2px solid var(--neutral-white);
-    /* creates padding around scroll thumb */
+  background-color: var(--neutral-black);
+  /* color of the scroll thumb */
+  border-radius: 20px;
+  /* roundness of the scroll thumb */
+  border: 2px solid var(--neutral-white);
+  /* creates padding around scroll thumb */
 }
 
 /* Aca poner los scrollss */
 
 .cobros-detail-item {
-    display: flex;
-    flex-direction: column;
-    background-color: #94F5C5;
-    /* height: 13vh; */
-    width: 90%;
-    margin: auto;
-    margin-top: 10px;
-    border: 3px dashed var(--neutral-black);
-    border-left: 6px dashed var(--neutral-black);
-    padding: 1em;
-    color: var(--neutral-black);
-    /* font-family: var(--normal-text); */
+  display: flex;
+  flex-direction: column;
+  background-color: #94f5c5;
+  /* height: 13vh; */
+  width: 90%;
+  margin: auto;
+  margin-top: 10px;
+  border: 3px dashed var(--neutral-black);
+  border-left: 6px dashed var(--neutral-black);
+  padding: 1em;
+  color: var(--neutral-black);
+  /* font-family: var(--normal-text); */
 }
 
 .cobros-detail h2 {
-    width: 100%;
-    margin-top: 3vh;
-    background-color: var(--neutral-white);
-    color: var(--neutral-black);
-    font-size: 250%;
-    text-align: center;
-    font-family: var(--title-text);
+  width: 100%;
+  margin-top: 3vh;
+  background-color: var(--neutral-white);
+  color: var(--neutral-black);
+  font-size: 250%;
+  text-align: center;
+  font-family: var(--title-text);
 }
 
-.cobros-detail-title{
-    text-align: center;
-    font-family: var(--title-text);
-    margin-bottom: .3em;
+.cobros-detail-title {
+  text-align: center;
+  font-family: var(--title-text);
+  margin-bottom: 0.3em;
 }
 
 .cobros-detail-fecha {
-    font-size: 1.1em;
+  font-size: 1.1em;
 }
 
 .cobros-detail-tipo {
-    font-size: 1.3em;
+  font-size: 1.3em;
 }
 
 .cobros-detail-cantidad {
-    font-family: var(--normal-text);
-    font-size: 1.2em;
+  font-family: var(--normal-text);
+  font-size: 1.2em;
 }
 
 .cobros-detail-contadores {
-    margin: 5% auto 5% auto;
-    display: flex;
-    justify-content: space-around;
-    width: 90%;
-    flex-direction: row;
-    font-family: var(--title-text);
-    font-size: 140%;
-    color: var(--primary-blue)
+  margin: 5% auto 5% auto;
+  display: flex;
+  justify-content: space-around;
+  width: 90%;
+  flex-direction: row;
+  font-family: var(--title-text);
+  font-size: 140%;
+  color: var(--primary-blue);
 }

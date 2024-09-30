@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import moment from 'moment';
+import { useState, useEffect } from 'react'
+import moment from 'moment'
 import { AgregarMovimiento } from '../../components/Movimiento/AgregarMovimiento'
 import { MovimientoTable } from '../../components/Movimiento/MovimientoTable'
 import { ordenarPorNombre } from '../../components/Utils/Functions'
@@ -9,22 +9,22 @@ import NavBar from '../Navbar/NavBar'
 
 import '../../styles/movimiento/movimiento.css'
 
-export const Cobros = ({ setSesion }) => {
-  const URL_BASE = `http://localhost:8083/api/`;
+export const Cobros = () => {
+  const URL_BASE = `http://localhost:8083/api/`
 
-  const [active, setActive] = useState(false);
-  const [cobros, setCobros] = useState([]);
-  const [actCobros, setActCobros] = useState(false);
+  const [active, setActive] = useState(false)
+  const [cobros, setCobros] = useState([])
+  const [actCobros, setActCobros] = useState(false)
 
-  const [alumnos, setAlumnos] = useState([]);
-  const [cobrosLoader, setCobrosLoader] = useState(true); // Spinner
+  const [alumnos, setAlumnos] = useState([])
+  const [cobrosLoader, setCobrosLoader] = useState(true) // Spinner
   const [loadingFetch, setLoadingFetch] = useState() // Spinner despues de cargar un cobro
 
-  // Trae todos los COBROS 
+  // Trae todos los COBROS
   useEffect(() => {
     const requestOptions = {
       method: 'GET',
-    };
+    }
     fetch(`${URL_BASE}cobros`, requestOptions)
       .then((response) => response.json())
       .then((data) => setCobros(data))
@@ -36,7 +36,7 @@ export const Cobros = ({ setSesion }) => {
       .then((data) => setAlumnos(ordenarPorNombre(data)))
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [actCobros]);
+  }, [actCobros])
 
   // Estado para el formulario de "Agregar Cobro"
   const [cobroAddForm, setCobroAddForm] = useState({
@@ -52,32 +52,31 @@ export const Cobros = ({ setSesion }) => {
   const handleChangeFormData = (e) => {
     if (e.target.name === 'personaId') {
       // El valor de la persona seleccionada
-      const personaSeleccionada = e.target[e.target.selectedIndex].text;
-      
+      const personaSeleccionada = e.target[e.target.selectedIndex].text
+
       // Si no seleccionamos ningun alumno resetamos el input a cadena vacia ("")
-      if (e.target.value === "") {
+      if (e.target.value === '') {
         setCobroAddForm({
           ...cobroAddForm,
-          'personaSeleccionada': "",
+          personaSeleccionada: '',
           [e.target.name]: e.target.value,
-          'descripcion': ""
-        });
+          descripcion: '',
+        })
       }
       // Si tenemos que setear personaId con un valor != vacio --> entonces agarramos el valor de option y lo
       // seteamos en el formulario del estado
       else {
         setCobroAddForm({
           ...cobroAddForm,
-          'personaSeleccionada': personaSeleccionada,
+          personaSeleccionada: personaSeleccionada,
           [e.target.name]: e.target.value,
-          'descripcion': `Cobro a: ${personaSeleccionada}`
-        });
+          descripcion: `Cobro a: ${personaSeleccionada}`,
+        })
       }
+    } else {
+      setCobroAddForm({ ...cobroAddForm, [e.target.name]: e.target.value })
     }
-    else {
-      setCobroAddForm({ ...cobroAddForm, [e.target.name]: e.target.value });
-    }
-  };
+  }
 
   // Reseteo el formulario de COBRO
   const resetCobroAddForm = () => {
@@ -87,18 +86,18 @@ export const Cobros = ({ setSesion }) => {
       concepto: '',
       monto: '',
       descripcion: '',
-      tipoClaseId: ''
+      tipoClaseId: '',
     })
   }
 
   // Funcion para cerrar el formulario de creacion de COBRO
   const handleCloseForm = () => {
     resetCobroAddForm()
-    setActive(false);
-  };
+    setActive(false)
+  }
 
   const submitCobroForm = (event) => {
-    setActive(false);
+    setActive(false)
     setLoadingFetch(true)
 
     if (cobroAddForm.personaId) {
@@ -115,9 +114,8 @@ export const Cobros = ({ setSesion }) => {
       }
       fetch(`${URL_BASE}nuevo_cobro`, requestOptions)
         .then((response) => response.json())
-        .then(() => setActCobros((v) => !v));
-    }
-    else {
+        .then(() => setActCobros((v) => !v))
+    } else {
       const requestOptions = {
         method: 'POST',
         body: JSON.stringify({
@@ -129,57 +127,71 @@ export const Cobros = ({ setSesion }) => {
       }
       fetch(`${URL_BASE}nuevo_cobro`, requestOptions)
         .then((response) => response.json())
-        .then(() => setActCobros((v) => !v));
+        .then(() => setActCobros((v) => !v))
     }
 
     resetCobroAddForm()
-  };
-
+  }
 
   // Opciones de movimiento (Cobro) para el formulario de 'Agregar Cobro'
   const movimientoOptions = [
     {
       id: 1,
-      concepto: "Alumno"
+      concepto: 'Alumno',
     },
     {
       id: 2,
-      concepto: "Alquiler"
+      concepto: 'Alquiler',
     },
     {
       id: 3,
-      concepto: "Varios"
-    }
-  ];
+      concepto: 'Varios',
+    },
+  ]
 
   // Opciones de clases (Individual - Grupal ) para el formulario de 'Agregar Cobro'
   // cuando se selecciona un alumno
   const clasesOptions = [
     {
       id: 1,
-      tipo: "Individual"
+      tipo: 'Individual',
     },
     {
       id: 2,
-      tipo: "Grupal"
-    }
+      tipo: 'Grupal',
+    },
   ]
 
   return (
-    <div className='movimiento-component'>
-      <NavBar title={'Cobros'} setSesion={setSesion} />
-      <div className='movimiento-component-mainContent'>
-        <GenericLargeButton doSomething={() => setActive(true)} title={"Crear nuevo cobro"} />
+    <div className="movimiento-component">
+      <NavBar title={'Cobros'} />
+      <div className="movimiento-component-mainContent">
+        <GenericLargeButton
+          doSomething={() => setActive(true)}
+          title={'Crear nuevo cobro'}
+        />
 
-        <AgregarMovimiento active={active} handleCloseForm={handleCloseForm} submitMovimientoForm={submitCobroForm}
-          movimientoAddForm={cobroAddForm} handleChangeFormData={handleChangeFormData} personas={alumnos}
-          movimientoName={"Cobro"} movimientoOptions={movimientoOptions} clasesOptions={clasesOptions} />
+        <AgregarMovimiento
+          active={active}
+          handleCloseForm={handleCloseForm}
+          submitMovimientoForm={submitCobroForm}
+          movimientoAddForm={cobroAddForm}
+          handleChangeFormData={handleChangeFormData}
+          personas={alumnos}
+          movimientoName={'Cobro'}
+          movimientoOptions={movimientoOptions}
+          clasesOptions={clasesOptions}
+        />
 
-        {cobrosLoader ?
-          <LoaderSpinner active={cobrosLoader} containerClass={'canchasLoader'} loaderClass={'canchasLoaderSpinner'} />
-          :
+        {cobrosLoader ? (
+          <LoaderSpinner
+            active={cobrosLoader}
+            containerClass={'canchasLoader'}
+            loaderClass={'canchasLoaderSpinner'}
+          />
+        ) : (
           <MovimientoTable movimientos={cobros} loadingFetch={loadingFetch} />
-        }
+        )}
       </div>
     </div>
   )

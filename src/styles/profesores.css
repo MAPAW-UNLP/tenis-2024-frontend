@@ -1,264 +1,262 @@
-#profesores-component{
-    background-color: var(--primary-blue);
-    min-height: 100vh;
-    height: 100%;
+#profesores-component {
+  background-color: var(--primary-blue);
+  min-height: 100vh;
+  height: 100%;
 }
 
-#profesores-component-mainContent{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+#profesores-component-mainContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 
-    width: 70vw;
-    /* Cambiar aca a 35vw si queremos algo compatible con las canchas */
-    margin: auto;
-    margin-top: 5vh;
-    align-items: center;
-
+  width: 70vw;
+  /* Cambiar aca a 35vw si queremos algo compatible con las canchas */
+  margin: auto;
+  margin-top: 5vh;
+  align-items: center;
 }
 
-#profesores-list-component{
-    margin-top: 2vh;
-    margin-bottom: 10vh;
-    width: 100%;
-    border-radius: 20px;
-    background-color: var(--neutral-white);
-    cursor: default;
+#profesores-list-component {
+  margin-top: 2vh;
+  margin-bottom: 10vh;
+  width: 100%;
+  border-radius: 20px;
+  background-color: var(--neutral-white);
+  cursor: default;
 }
 
-#profesores-list-options{
-    height: 8vh;
-    display: grid;
-    grid-template-columns: 20% 20% 20% 40%;
-    align-content: center;
-    align-items: center;
-    justify-content: center;
-    color: var(--neutral-black);
-    font-family: var(--title-text);
-    font-size: 150%;
-    background-color: var(--neutral-white);
-    border-bottom: 5px solid var(--neutral-black);
-    border-top-left-radius: 2px;
-    border-top-right-radius: 2px;
+#profesores-list-options {
+  height: 8vh;
+  display: grid;
+  grid-template-columns: 20% 20% 20% 40%;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  color: var(--neutral-black);
+  font-family: var(--title-text);
+  font-size: 150%;
+  background-color: var(--neutral-white);
+  border-bottom: 5px solid var(--neutral-black);
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
 }
-#profesores-list-options :first-child{
-    margin-left: .5em;
-}
-
-#profesores-searchbar{
-    position: relative;
-    width: 90%;
+#profesores-list-options :first-child {
+  margin-left: 0.5em;
 }
 
-#profesores-searchbar input{
-    width: 100%;
-    
-    font-family: var(--normal-text);
-    font-size: 100%;
-    border-radius: 10px;
-    border: 1px solid var(--neutral-black);
-    color: var(--neutral-black);
-    padding-left: 2%;
-    transition: all 0.5s ease;
+#profesores-searchbar {
+  position: relative;
+  width: 90%;
 }
 
-#profesores-searchbar input:focus{
-    outline: 2px solid var(--accent-green);
-    border: none;
+#profesores-searchbar input {
+  width: 100%;
+
+  font-family: var(--normal-text);
+  font-size: 100%;
+  border-radius: 10px;
+  border: 1px solid var(--neutral-black);
+  color: var(--neutral-black);
+  padding-left: 2%;
+  transition: all 0.5s ease;
 }
 
-#magnify-icon{
-    color: var(--neutral-black);
-    position: absolute;
-    top: 25%;
-    right: 5%;
+#profesores-searchbar input:focus {
+  outline: 2px solid var(--accent-green);
+  border: none;
 }
 
-.profesor-info{
-    display: grid;
-    grid-template-columns: 20% 20% 40% 20%;
-    margin: 0.5%;
-    padding: 1%;
-    border-radius: 12px;
-    background-color: var(--neutral-black);
-    color: var(--neutral-white-text);
-    font-family: var(--normal-text);
-    font-size: 110%;
+#magnify-icon {
+  color: var(--neutral-black);
+  position: absolute;
+  top: 25%;
+  right: 5%;
 }
 
-#edit-profesor-btn{
-    width: 50%;
-    border-radius: 12px;
-    height: 2rem;
-    background-color: #94F5C5;
-    font-size: 120%;
-    color: var(--neutral-black);
-    border: none;
-    box-shadow: 0px 5px 20px var(--neutral-black);
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+.profesor-info {
+  display: grid;
+  grid-template-columns: 20% 20% 40% 20%;
+  margin: 0.5%;
+  padding: 1%;
+  border-radius: 12px;
+  background-color: var(--neutral-black);
+  color: var(--neutral-white-text);
+  font-family: var(--normal-text);
+  font-size: 110%;
 }
 
-#edit-profesor-btn:hover{
-    box-shadow: 0px 4px 100px #94F5C5; 
-    height: 2.5rem;
-    font-size: 130%;
-    cursor: pointer;
+#edit-profesor-btn {
+  width: 50%;
+  border-radius: 12px;
+  height: 2rem;
+  background-color: #94f5c5;
+  font-size: 120%;
+  color: var(--neutral-black);
+  border: none;
+  box-shadow: 0px 5px 20px var(--neutral-black);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+#edit-profesor-btn:hover {
+  box-shadow: 0px 4px 100px #94f5c5;
+  height: 2.5rem;
+  font-size: 130%;
+  cursor: pointer;
 }
 /* Form */
-#profesor-add-component{
-    background-color: var(--neutral-white);
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    top: 50%;
-    border-radius:20px; 
-    width: 40vw;
-    z-index: 20;
-    box-shadow: -2px -4px 400px 600px rgba(0,0,0,0.24);
+#profesor-add-component {
+  background-color: var(--neutral-white);
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 50%;
+  border-radius: 20px;
+  width: 40vw;
+  z-index: 20;
+  box-shadow: -2px -4px 400px 600px rgba(0, 0, 0, 0.24);
 }
 
-#close-profesor-add-form{
-    background:  none;
-    position: absolute;
-    top: 1vh;
-    border: none;
-    right: 2vw;
-    font-family: var(--title-text);
-    font-size: 150%;
-    color: var(--neutral-black);
-    transition: all 0.5s ease;
-    cursor: pointer;
+#close-profesor-add-form {
+  background: none;
+  position: absolute;
+  top: 1vh;
+  border: none;
+  right: 2vw;
+  font-family: var(--title-text);
+  font-size: 150%;
+  color: var(--neutral-black);
+  transition: all 0.5s ease;
+  cursor: pointer;
 }
 
-#close-profesor-add-form:hover{
-    font-size: 175%;
-    font-weight: bolder;
-    color: #CC3636;
+#close-profesor-add-form:hover {
+  font-size: 175%;
+  font-weight: bolder;
+  color: #cc3636;
 }
 
-#profesor-add-component h2{
-    width: 100%;
-    
-    margin-top: 3vh;
-    background-color: var(--neutral-white);
-    color: var(--neutral-black);
-    font-size: 250%;
-    text-align: center;
-    font-family: var(--title-text);
+#profesor-add-component h2 {
+  width: 100%;
+
+  margin-top: 3vh;
+  background-color: var(--neutral-white);
+  color: var(--neutral-black);
+  font-size: 250%;
+  text-align: center;
+  font-family: var(--title-text);
 }
 
-#profesor-add-form{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
-    background-color: var(--neutral-white);
+#profesor-add-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  background-color: var(--neutral-white);
 }
 
-.profesor-add-form-input{
-    font-family: var(--normal-text);
-    margin-bottom: 15px;
-    width: 90%;
-    margin: 2vh 2vw ;
-    height: 2.2rem;
-    border-radius: 2px;
-    font-size: large;
-    background-color: var(--neutral-white);
-    border: 1px solid lightgrey;
-    color: var(--neutral-black);
-    padding-left: 5px;
-    transition: all 0.5s ease;
+.profesor-add-form-input {
+  font-family: var(--normal-text);
+  margin-bottom: 15px;
+  width: 90%;
+  margin: 2vh 2vw;
+  height: 2.2rem;
+  border-radius: 2px;
+  font-size: large;
+  background-color: var(--neutral-white);
+  border: 1px solid lightgrey;
+  color: var(--neutral-black);
+  padding-left: 5px;
+  transition: all 0.5s ease;
 }
 
-.profesor-add-form-input:focus{
-    border:none;
-    outline: 2px solid var(--accent-green);
+.profesor-add-form-input:focus {
+  border: none;
+  outline: 2px solid var(--accent-green);
 }
 
-.profesor-add-form-input:disabled{
-    border: none;
-    background-color: var(--neutral-black);
+.profesor-add-form-input:disabled {
+  border: none;
+  background-color: var(--neutral-black);
 }
 
-#profesor-add-form-addBtn{
-    width: 100%;
-    background-color: var(--accent-green);
-    height: 5rem;
-    border: none;
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
-    cursor: pointer;
+#profesor-add-form-addBtn {
+  width: 100%;
+  background-color: var(--accent-green);
+  height: 5rem;
+  border: none;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  cursor: pointer;
 }
 
-#profesor-add-form-addBtn:disabled{
-    background-color: var(--neutral-black);
+#profesor-add-form-addBtn:disabled {
+  background-color: var(--neutral-black);
 }
-.inputlabel{
-    width: 90%;
-    position: relative;
+.inputlabel {
+  width: 90%;
+  position: relative;
 }
 /*  */
 
-#profesores-list{
-    min-height: 100%;
-    max-height: 60vh;
-    overflow-y: scroll; 
+#profesores-list {
+  min-height: 100%;
+  max-height: 60vh;
+  overflow-y: scroll;
 }
 
 #profesores-list::-webkit-scrollbar {
-    width: 12px;/* width of the entire scrollbar */
+  width: 12px; /* width of the entire scrollbar */
 }
-  
-  #profesores-list::-webkit-scrollbar-track {
-    background-color:transparent;
-    border-bottom-left-radius:20px ;
-    border-bottom-right-radius:20px ;
-    opacity: .5;   
+
+#profesores-list::-webkit-scrollbar-track {
+  background-color: transparent;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  opacity: 0.5;
 }
-  
+
 #profesores-list::-webkit-scrollbar-thumb {
-      
-    background-color: var(--accent-green);    /* color of the scroll thumb */
-    border-radius: 20px;       /* roundness of the scroll thumb */
-    border: 2px solid var(--neutral-white);  /* creates padding around scroll thumb */
+  background-color: var(--accent-green); /* color of the scroll thumb */
+  border-radius: 20px; /* roundness of the scroll thumb */
+  border: 2px solid var(--neutral-white); /* creates padding around scroll thumb */
 }
 
-
-.feedbackInline{
-    font-family: var(--normal-text);
-    position: absolute;
-    top: 0;
-    left: 2vw;
-    /* border: 1px solid red; */
-    font-size: 80%;
-    transition: all 0.2s ease;
+.feedbackInline {
+  font-family: var(--normal-text);
+  position: absolute;
+  top: 0;
+  left: 2vw;
+  /* border: 1px solid red; */
+  font-size: 80%;
+  transition: all 0.2s ease;
 }
 /*Detail*/
-#profesor-edit-component{
-    background-color: var(--neutral-white);
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    top: 50%;
-    left: 35%;
-    border-radius:20px; 
-    width: 35vw;
-    z-index: 20;
-    box-shadow: -2px -4px 400px 600px rgba(0,0,0,0.24);
+#profesor-edit-component {
+  background-color: var(--neutral-white);
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 50%;
+  left: 35%;
+  border-radius: 20px;
+  width: 35vw;
+  z-index: 20;
+  box-shadow: -2px -4px 400px 600px rgba(0, 0, 0, 0.24);
 }
-#profesor-edit-component h2{
-    width: 100%;
-    margin-top: 3vh;
-    background-color: var(--neutral-white);
-    color: var(--neutral-black);
-    font-size: 250%;
-    text-align: center;
-    font-family: var(--title-text);
+#profesor-edit-component h2 {
+  width: 100%;
+  margin-top: 3vh;
+  background-color: var(--neutral-white);
+  color: var(--neutral-black);
+  font-size: 250%;
+  text-align: center;
+  font-family: var(--title-text);
 }
-#profesor-edit-component .inputlabel{
-    width: 100%;
+#profesor-edit-component .inputlabel {
+  width: 100%;
 }
-#nombreProfesor, #telefonoProfesor{
-    color: black;
+#nombreProfesor,
+#telefonoProfesor {
+  color: black;
 }

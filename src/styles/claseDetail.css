@@ -1,624 +1,594 @@
-
-
-#clase-detail-component{
-    box-shadow: -2px -4px 400px 600px rgba(0,0,0,0.24);
-    background-color: var(--neutral-white);
-    display: grid;
-    grid-template-areas: "titulo titulo"
-                         "profesor alumnos"
-                         "botones botones";
-    grid-column-gap: 10px;
-    grid-row-gap: 10px;
-    grid-template-columns: 47% 47%;
-    justify-content: center;
-    position: absolute;
-    top: 30%;
-    left: 30vw;
-    border-radius:20px; 
-    width: 40vw;
-    z-index: 20;
-    text-align: center;
-    border: 5px solid var(--primary-green);
-    background-color: var(--neutral-white);
-    cursor: default;
-    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-
-
+#clase-detail-component {
+  box-shadow: -2px -4px 400px 600px rgba(0, 0, 0, 0.24);
+  background-color: var(--neutral-white);
+  display: grid;
+  grid-template-areas:
+    'titulo titulo'
+    'profesor alumnos'
+    'botones botones';
+  grid-column-gap: 10px;
+  grid-row-gap: 10px;
+  grid-template-columns: 47% 47%;
+  justify-content: center;
+  position: absolute;
+  top: 30%;
+  left: 30vw;
+  border-radius: 20px;
+  width: 40vw;
+  z-index: 20;
+  text-align: center;
+  border: 5px solid var(--primary-green);
+  background-color: var(--neutral-white);
+  cursor: default;
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-#clase-detail-component.activeAlumnos{
-    grid-template-areas: "titulo alumnos"
-                         "profesor alumnos"
-                         "botones botones";
+#clase-detail-component.activeAlumnos {
+  grid-template-areas:
+    'titulo alumnos'
+    'profesor alumnos'
+    'botones botones';
 }
 
-#clase-closeBTN{
-    position: absolute;
-    font-family: var(--title-text);
-    background: none;
-    border: none;
-    font-size: 150%;
-    color: var(--neutral-black);
-    right: 2%;
-    transition: all 0.5s ease;
+#clase-closeBTN {
+  position: absolute;
+  font-family: var(--title-text);
+  background: none;
+  border: none;
+  font-size: 150%;
+  color: var(--neutral-black);
+  right: 2%;
+  transition: all 0.5s ease;
 }
 
-
-#clase-closeBTN:hover{
-    font-size: 175%;
-    font-weight: bolder;
-    color: #CC3636;
-    cursor: pointer;
+#clase-closeBTN:hover {
+  font-size: 175%;
+  font-weight: bolder;
+  color: #cc3636;
+  cursor: pointer;
 }
 
-#clase-detail-fecha{
-    padding-top: 4%;
-    font-family: var(--title-text);
-    color: var(--neutral-white);
-    font-size: 110%;
-    
+#clase-detail-fecha {
+  padding-top: 4%;
+  font-family: var(--title-text);
+  color: var(--neutral-white);
+  font-size: 110%;
 }
 
-.clase-caja{
-    background-color: var(--primary-green);
-    border-radius: 20px;
-    text-align: start;
-    padding-top: 5%;
-    /*width: 18vw;*/
-    box-shadow: 0px 1px 5px var(--neutral-black);
-
+.clase-caja {
+  background-color: var(--primary-green);
+  border-radius: 20px;
+  text-align: start;
+  padding-top: 5%;
+  /*width: 18vw;*/
+  box-shadow: 0px 1px 5px var(--neutral-black);
 }
-.clase-caja h3{
-    border-bottom: 2px solid var(--neutral-white-text);
-    text-align: center;
+.clase-caja h3 {
+  border-bottom: 2px solid var(--neutral-white-text);
+  text-align: center;
 }
-.clase-caja p{
-    padding: 3%;
+.clase-caja p {
+  padding: 3%;
 }
-.clase-caja select{
-    margin-left: 2%;
-}
-
-#clase-detail-contenido{
-    display: flex;
-    flex-direction: row;
-    height: 100%;
-    width: 100%;
-    justify-content: space-between;
-    position: relative;
-}
-#clase-detail-futuro{
-    grid-area:titulo;
-    font-family: var(--title-text);
-    color: var(--neutral-white);
-    width: 95%;
-    display: flex;
-    align-items: center;
-    justify-self: center;
-    margin-top: 3%;
-    padding: 0;
-    text-align: center;
-    flex-direction: column;
-    height: 20vh;
-    position: relative;
-    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+.clase-caja select {
+  margin-left: 2%;
 }
 
-#clase-detail-futuro.active{
-    height: 30.7vh;
+#clase-detail-contenido {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  width: 100%;
+  justify-content: space-between;
+  position: relative;
+}
+#clase-detail-futuro {
+  grid-area: titulo;
+  font-family: var(--title-text);
+  color: var(--neutral-white);
+  width: 95%;
+  display: flex;
+  align-items: center;
+  justify-self: center;
+  margin-top: 3%;
+  padding: 0;
+  text-align: center;
+  flex-direction: column;
+  height: 20vh;
+  position: relative;
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-#clase-detail-general{
-    grid-area:titulo;
-    font-family: var(--title-text);
-    color: var(--neutral-white);
-    width: 95%;
-    display: flex;
-    align-items: center;
-    justify-self: center;
-    margin-top: 3%;
-    padding: 0;
-    flex-direction: column;
-    padding-bottom: 5vh;
-    position: relative;
-}
-#clase-detail-general h2{
-    color: var(--neutral-white-text);
-    font-size: 250%;
-    padding: 0;
-    width: 100%;
-    border-bottom: 3px solid var(--neutral-white);
-    margin-bottom: 2vh;
-    text-align: center;
-}
-#clase-detail-general p{
-    text-align: start;
-    width: 80%;
-    font-size: 150%;
-    padding: 0;
+#clase-detail-futuro.active {
+  height: 30.7vh;
 }
 
-#clase-detail-hora{
-    font-family: var(--normal-text);
-    color: var(--accent-yellow);
-    font-size: 90%;
+#clase-detail-general {
+  grid-area: titulo;
+  font-family: var(--title-text);
+  color: var(--neutral-white);
+  width: 95%;
+  display: flex;
+  align-items: center;
+  justify-self: center;
+  margin-top: 3%;
+  padding: 0;
+  flex-direction: column;
+  padding-bottom: 5vh;
+  position: relative;
+}
+#clase-detail-general h2 {
+  color: var(--neutral-white-text);
+  font-size: 250%;
+  padding: 0;
+  width: 100%;
+  border-bottom: 3px solid var(--neutral-white);
+  margin-bottom: 2vh;
+  text-align: center;
+}
+#clase-detail-general p {
+  text-align: start;
+  width: 80%;
+  font-size: 150%;
+  padding: 0;
 }
 
-#clase-detail-profesor{
-    grid-area: profesor;
-    margin-left: 1vw;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-
+#clase-detail-hora {
+  font-family: var(--normal-text);
+  color: var(--accent-yellow);
+  font-size: 90%;
 }
 
-
-#profesorInput{
-    border-radius: 12px;
-    width: 90%;
-    text-align: center;
-    margin: 2vh 1vw 2vh 1vw;
-}
-#clase-detail-alumnos{
-    grid-area: alumnos;
-    /*width: 18vw;*/
-    margin-top: 1vh;
-    margin-right: 1vw;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    padding-left: 0%;
-    position: relative;
-    overflow-y: hidden;
-    height: 100%;
-    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-
+#clase-detail-profesor {
+  grid-area: profesor;
+  margin-left: 1vw;
+  position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
-
-
-
-#profesor-label{
-    display: flex;
-    justify-content: flex-start;
-    padding-left: .5vw;
+#profesorInput {
+  border-radius: 12px;
+  width: 90%;
+  text-align: center;
+  margin: 2vh 1vw 2vh 1vw;
+}
+#clase-detail-alumnos {
+  grid-area: alumnos;
+  /*width: 18vw;*/
+  margin-top: 1vh;
+  margin-right: 1vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-left: 0%;
+  position: relative;
+  overflow-y: hidden;
+  height: 100%;
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-#profesor{
-    font-size: 120%;
-    font-family: var(--normal-text);
-    color: var(--neutral-white);
+#profesor-label {
+  display: flex;
+  justify-content: flex-start;
+  padding-left: 0.5vw;
 }
 
+#profesor {
+  font-size: 120%;
+  font-family: var(--normal-text);
+  color: var(--neutral-white);
+}
 
-
-#deleteAlumnoBtn{
-    border: 1px solid var(--neutral-white);
-    border-radius: 2px;
-    width: 25px;
-    height: 25px;
-    margin-right: 5%;
-    background-color: #CC3636;
-    position: relative;
-    /*right: 0%;
+#deleteAlumnoBtn {
+  border: 1px solid var(--neutral-white);
+  border-radius: 2px;
+  width: 25px;
+  height: 25px;
+  margin-right: 5%;
+  background-color: #cc3636;
+  position: relative;
+  /*right: 0%;
     width: 10%;*/
-    color: var(--neutral-white-text);
-    transition: 0.2s all cubic-bezier(0.165, 0.84, 0.44, 1);
+  color: var(--neutral-white-text);
+  transition: 0.2s all cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
-#deleteAlumnoBtn:hover{
-    box-shadow: 0px 5px 10px #CC3636;
-    width: 30px;
-    height: 30px;
-    cursor: pointer;
+#deleteAlumnoBtn:hover {
+  box-shadow: 0px 5px 10px #cc3636;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
 }
 
-
-#alumnosList{
-    background-color: #29754F;
-    padding-left: 2%;
-    padding-top: 2%;
-    height: 15vh;
-    margin-bottom: 2.5vh;
-    overflow-y: scroll;
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
-    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    position: relative;
+#alumnosList {
+  background-color: #29754f;
+  padding-left: 2%;
+  padding-top: 2%;
+  height: 15vh;
+  margin-bottom: 2.5vh;
+  overflow-y: scroll;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
 }
 
-
-
-#alumnosList-detail{
-    font-size: 80%;
-    font-family: var(--normal-text);
-    color: var(--accent-yellow);
-    padding-left: 2%;
-    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-
+#alumnosList-detail {
+  font-size: 80%;
+  font-family: var(--normal-text);
+  color: var(--accent-yellow);
+  padding-left: 2%;
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.css-b62m3t-container{
-    height: 100%;
+.css-b62m3t-container {
+  height: 100%;
 }
-.css-1s2u09g-control{
-    display: inline-flex!important;
-    height: 100%;
-    /*display: flex;*/
-    flex-direction: row;
-    flex-wrap: wrap!important;
-    width: 96%;
+.css-1s2u09g-control {
+  display: inline-flex !important;
+  height: 100%;
+  /*display: flex;*/
+  flex-direction: row;
+  flex-wrap: wrap !important;
+  width: 96%;
 }
-.css-lpahdxg-control{
-    display: inline-flex!important;
-    height: 100%;
-    /*display: flex;*/
-    flex-direction: row;
-    flex-wrap: wrap!important;
-    width: 96%;
-}
-
-.css-g1d714-ValueContainer{
-    width: 80%;
-    height: 100%;
-    padding: 0!important;
-    align-content: flex-start;
-}
-.css-1hb7zxy-IndicatorsContainer{
-    height: 50%;
-    padding: 0;
-    margin: 0;
-}
-.css-tj5bde-Svg{
-
-}
-.css-tlfecz-indicatorContainer{
-    padding: 8px 0 8px 0!important;
+.css-lpahdxg-control {
+  display: inline-flex !important;
+  height: 100%;
+  /*display: flex;*/
+  flex-direction: row;
+  flex-wrap: wrap !important;
+  width: 96%;
 }
 
-#clase-detail-alumnos-nuevosAlumnos{
-    position: relative;
+.css-g1d714-ValueContainer {
+  width: 80%;
+  height: 100%;
+  padding: 0 !important;
+  align-content: flex-start;
+}
+.css-1hb7zxy-IndicatorsContainer {
+  height: 50%;
+  padding: 0;
+  margin: 0;
+}
+.css-tj5bde-Svg {
+}
+.css-tlfecz-indicatorContainer {
+  padding: 8px 0 8px 0 !important;
+}
+
+#clase-detail-alumnos-nuevosAlumnos {
+  position: relative;
 }
 
 #alumnosList::-webkit-scrollbar {
-    width: 12px;/* width of the entire scrollbar */
-      
-  }
-  
+  width: 12px; /* width of the entire scrollbar */
+}
+
 #alumnosList::-webkit-scrollbar-track {
-      background-color:transparent;
-      border-bottom-left-radius:20px ;
-      border-bottom-right-radius:20px ;
-      opacity: .5;   
-      /* color of the tracking area */
-  }
-  
+  background-color: transparent;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  opacity: 0.5;
+  /* color of the tracking area */
+}
+
 #alumnosList::-webkit-scrollbar-thumb {
-      
-    background-color: var(--accent-tennis-green);    /* color of the scroll thumb */
-    border-radius: 20px;       /* roundness of the scroll thumb */
-    border: 2px solid var(--neutral-white);  /* creates padding around scroll thumb */
+  background-color: var(--accent-tennis-green); /* color of the scroll thumb */
+  border-radius: 20px; /* roundness of the scroll thumb */
+  border: 2px solid var(--neutral-white); /* creates padding around scroll thumb */
 }
 
-#alumnosList-detail{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+#alumnosList-detail {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
 
-#alumnosList small{
-    color: var(--neutral-white-text);
+#alumnosList small {
+  color: var(--neutral-white-text);
 }
 
-#clase-detail-alumnos-addBTN{
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
-    border: 2px solid var(--neutral-white);
-    background-color: var(--neutral-black);
-    color: var(--accent-tennis-green);
-    font-size: 150%;
-    bottom: 0%;
-    position: absolute;
-    width: 100%;
-    cursor: pointer;
+#clase-detail-alumnos-addBTN {
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  border: 2px solid var(--neutral-white);
+  background-color: var(--neutral-black);
+  color: var(--accent-tennis-green);
+  font-size: 150%;
+  bottom: 0%;
+  position: absolute;
+  width: 100%;
+  cursor: pointer;
 }
 
-#clase-detail-alumnos-addBTN.btnDis{
-    color: var(--neutral-white-text);
-    cursor: no-drop;
+#clase-detail-alumnos-addBTN.btnDis {
+  color: var(--neutral-white-text);
+  cursor: no-drop;
 }
-#clase-detail-alumnos-addBTN.btnDis:hover{
-    opacity: 0.1;
+#clase-detail-alumnos-addBTN.btnDis:hover {
+  opacity: 0.1;
 }
-.desvanecer small{
-    display: inline-flex;
-    text-align: center;
-    color: var(--neutral-white);
-    font-weight: bold;
-    line-height: 100%;
+.desvanecer small {
+  display: inline-flex;
+  text-align: center;
+  color: var(--neutral-white);
+  font-weight: bold;
+  line-height: 100%;
 }
-.desvanecer small:hover{
-    opacity: 1;
+.desvanecer small:hover {
+  opacity: 1;
 }
-#clase-detail-futuro.activeAlumnos{
-    border-bottom-left-radius: 20px;
-    position: relative;
-    left: 0;
+#clase-detail-futuro.activeAlumnos {
+  border-bottom-left-radius: 20px;
+  position: relative;
+  left: 0;
 }
-#clase-btn-background.activeAlumnos{
-    width: 0;
+#clase-btn-background.activeAlumnos {
+  width: 0;
 }
-#clase-btn-background.activeAlumnos  #clase-detail-edit-btn{
-    width: 0;
-    opacity: 0;
+#clase-btn-background.activeAlumnos #clase-detail-edit-btn {
+  width: 0;
+  opacity: 0;
 }
-#alumnosList.activeAlumnos{
-    position: absolute;
-    height: 0;
-    width: 100%;
-    opacity: 0;
+#alumnosList.activeAlumnos {
+  position: absolute;
+  height: 0;
+  width: 100%;
+  opacity: 0;
 }
 
 /* ///////////////////////////////////// */
 
-#clase-detail-profesor-edit{
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
-    border: 2px solid var(--neutral-white);
-    background-color: var(--neutral-black);
-    color: var(--accent-tennis-green);
-    font-size: 150%;
-    width: 100%;
-    position: relative;
-    bottom: 0;
-    left: 0;
-    cursor: pointer;
+#clase-detail-profesor-edit {
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  border: 2px solid var(--neutral-white);
+  background-color: var(--neutral-black);
+  color: var(--accent-tennis-green);
+  font-size: 150%;
+  width: 100%;
+  position: relative;
+  bottom: 0;
+  left: 0;
+  cursor: pointer;
 }
-#clase-detail-component h3{
-    font-family:var(--title-text);
-    font-size: 150%;
-    color: var(--neutral-white-text) ;
-}
-
-.clase-detail-nombre{
-    font-family: var(--normal-text);
-    color: var(--accent-yellow);
-    font-size: 120%;
+#clase-detail-component h3 {
+  font-family: var(--title-text);
+  font-size: 150%;
+  color: var(--neutral-white-text);
 }
 
-.clase-detail-numeros{
-    font-family: var(--normal-text);
-    color: var(--neutral-white-text);
-    font-size: 120%;
+.clase-detail-nombre {
+  font-family: var(--normal-text);
+  color: var(--accent-yellow);
+  font-size: 120%;
 }
 
-#clase-detail-btns{
-    grid-area: botones;
-    display: grid;
-    grid-template-areas: "botonA"
-                         "botonB";
+.clase-detail-numeros {
+  font-family: var(--normal-text);
+  color: var(--neutral-white-text);
+  font-size: 120%;
 }
 
-#clase-detail-guardar{
-    grid-area: botonA;
-    width: 95%;
-    /* height: 4vh; */
-    height: 2.2em;
-    /* border-radius: 20px; */
-    border-radius: 15px;
-    margin: auto;
-    margin-bottom: 10px;
-    margin-top: 2vh;
-    background-color:  var(--accent-green);
-    /* border: 1px solid var(--neutral-black); */
-    border: none;
-    color: var(--neutral-white);
-    font-size: 140%;
-    /* box-shadow: 0px 2px 15px var(--neutral-black); */
-    cursor: pointer;
-    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+#clase-detail-btns {
+  grid-area: botones;
+  display: grid;
+  grid-template-areas:
+    'botonA'
+    'botonB';
 }
 
-#clase-detail-guardar:hover{
-    height: 2.2em;
-    /* height: 6vh;
+#clase-detail-guardar {
+  grid-area: botonA;
+  width: 95%;
+  /* height: 4vh; */
+  height: 2.2em;
+  /* border-radius: 20px; */
+  border-radius: 15px;
+  margin: auto;
+  margin-bottom: 10px;
+  margin-top: 2vh;
+  background-color: var(--accent-green);
+  /* border: 1px solid var(--neutral-black); */
+  border: none;
+  color: var(--neutral-white);
+  font-size: 140%;
+  /* box-shadow: 0px 2px 15px var(--neutral-black); */
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+#clase-detail-guardar:hover {
+  height: 2.2em;
+  /* height: 6vh;
     box-shadow: 0px 5px 10px var(--accent-tennis-green);
     border: 4px solid var(--accent-yellow); */
 }
 
-#clase-detail-disabled{
-    grid-area: botonA;
-    width: 95%;
-    /* height: 4vh; */
-    height: 2.2em;
-    border-radius: 15px;
-    margin: auto;
-    margin-bottom: 10px;
-    margin-top: 2vh;
-    font-size: 140%;
-    border: none;
-    /* border: 1px solid var(--neutral-black); */
-    /* box-shadow: 0px 2px 5px var(--neutral-black); */
-    color:rgb(197, 197, 197);
-    background-color: var(--neutral-black);
+#clase-detail-disabled {
+  grid-area: botonA;
+  width: 95%;
+  /* height: 4vh; */
+  height: 2.2em;
+  border-radius: 15px;
+  margin: auto;
+  margin-bottom: 10px;
+  margin-top: 2vh;
+  font-size: 140%;
+  border: none;
+  /* border: 1px solid var(--neutral-black); */
+  /* box-shadow: 0px 2px 5px var(--neutral-black); */
+  color: rgb(197, 197, 197);
+  background-color: var(--neutral-black);
 }
 
-#clase-detail-cancelar{
-    grid-area: botonB;
-    width: 95%;
-    height: 2.2em;
-    border-radius: 15px;
-    margin: auto;
-    margin-bottom: 2vh;
-    font-size: 130%;
-    /* border: 1px solid var(--neutral-black); */
-    border: 1px solid #C6C6C6;
-    background-color: var(--neutral-white-text);
-    color: var(--neutral-black);
-    /* box-shadow: 0px 2px 5px var(--neutral-black); */
-    cursor: pointer;
-    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-
+#clase-detail-cancelar {
+  grid-area: botonB;
+  width: 95%;
+  height: 2.2em;
+  border-radius: 15px;
+  margin: auto;
+  margin-bottom: 2vh;
+  font-size: 130%;
+  /* border: 1px solid var(--neutral-black); */
+  border: 1px solid #c6c6c6;
+  background-color: var(--neutral-white-text);
+  color: var(--neutral-black);
+  /* box-shadow: 0px 2px 5px var(--neutral-black); */
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-#clase-detail-cancelar:hover{
-    height: 2.2em;
-    /* background-color: var(--neutral-black);
+#clase-detail-cancelar:hover {
+  height: 2.2em;
+  /* background-color: var(--neutral-black);
     color: var(--neutral-white); */
-    /* box-shadow: 0px 5px 10px var(--neutral-black); */
-    
+  /* box-shadow: 0px 5px 10px var(--neutral-black); */
 }
-
 
 /* selector alumnos */
-#selectorAlumnosDetallesClase{
-    position: absolute;
-    top: 6vh;
-    padding-left: 2%;
-    width: 100%;
-    background-color: var(--neutral-black);
-    height: 20vh;
+#selectorAlumnosDetallesClase {
+  position: absolute;
+  top: 6vh;
+  padding-left: 2%;
+  width: 100%;
+  background-color: var(--neutral-black);
+  height: 20vh;
 }
 
-#selectorAlumnos{
-    width: 98%;
-   
-    margin: auto;
-   
-    
+#selectorAlumnos {
+  width: 98%;
+
+  margin: auto;
 }
 
-.selectorAlumnos{
-
-    font-family: var(--normal-text);
-    text-align: center;
+.selectorAlumnos {
+  font-family: var(--normal-text);
+  text-align: center;
 }
-#clase-btn-background{
-    background-color: var(--accent-tennis-green);
-    width: 30%;
-    border-bottom-right-radius:20px ;
-    border: none;
-    color: var(--neutral-black);
-    font-size: 200%;
-    right: 0%;
-    top: 0;
-    transition: all 0.3s ease-in-out;
-    position: absolute;
-    height: 100%;
-}
-
-#clase-btn-background.active{
-    width: 100%;
-    background-color: var(--accent-tennis-green);
-    border-bottom-left-radius: 20px;
+#clase-btn-background {
+  background-color: var(--accent-tennis-green);
+  width: 30%;
+  border-bottom-right-radius: 20px;
+  border: none;
+  color: var(--neutral-black);
+  font-size: 200%;
+  right: 0%;
+  top: 0;
+  transition: all 0.3s ease-in-out;
+  position: absolute;
+  height: 100%;
 }
 
-#clase-btn-background.active #clase-detail-edit-btn{
-    width: 5vw;
-    background-color: var(--neutral-black);
-    height: 8vh;
-    color: var(--accent-tennis-green);
-    font-size: 100%;
-    border-radius: 50px;
-    right: 2vw;
-    top: 9vh;
-    position: absolute;
+#clase-btn-background.active {
+  width: 100%;
+  background-color: var(--accent-tennis-green);
+  border-bottom-left-radius: 20px;
 }
 
-#clase-btn-background.active #clase-detail-edit-btn:hover{
-    color: var(--neutral-black);
-    background-color: var(--accent-tennis-green);
+#clase-btn-background.active #clase-detail-edit-btn {
+  width: 5vw;
+  background-color: var(--neutral-black);
+  height: 8vh;
+  color: var(--accent-tennis-green);
+  font-size: 100%;
+  border-radius: 50px;
+  right: 2vw;
+  top: 9vh;
+  position: absolute;
 }
 
-
-#clase-detail-edit-btn{
-    background-color: var(--accent-tennis-green);
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    right: 0;
-    border-bottom-right-radius:20px ;
-    border: none;
-    color: var(--neutral-black);
-    font-size: 200%;
-    box-shadow: 0px 5px 10px var(--neutral-black);
-    transition: all 0.3s ease-in-out;
-}
-#clase-detail-edit-btn:hover{
-    cursor: pointer;
-}
-#selectorhora select:hover{
-    cursor: pointer;
+#clase-btn-background.active #clase-detail-edit-btn:hover {
+  color: var(--neutral-black);
+  background-color: var(--accent-tennis-green);
 }
 
-#clase-detail-futuro h2{
-    font-family: var(--title-text);
-    color: var(--neutral-white-text);
-    font-size: 250%;
-    padding: 0;
-    width: 100%;
-    border-bottom: 3px solid var(--neutral-white);
+#clase-detail-edit-btn {
+  background-color: var(--accent-tennis-green);
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  right: 0;
+  border-bottom-right-radius: 20px;
+  border: none;
+  color: var(--neutral-black);
+  font-size: 200%;
+  box-shadow: 0px 5px 10px var(--neutral-black);
+  transition: all 0.3s ease-in-out;
+}
+#clase-detail-edit-btn:hover {
+  cursor: pointer;
+}
+#selectorhora select:hover {
+  cursor: pointer;
 }
 
-#clase-detail-futuro p{
-    /*  font-family: var(--title-text); */
-     font-size: 150%;
-     width: 100%;
-     text-align: start;
-     padding: 0;
-     margin-left: 3vw;
- }
+#clase-detail-futuro h2 {
+  font-family: var(--title-text);
+  color: var(--neutral-white-text);
+  font-size: 250%;
+  padding: 0;
+  width: 100%;
+  border-bottom: 3px solid var(--neutral-white);
+}
 
-#alumnosListAddDiv{
-    overflow-y: scroll;
-    height: 25vh;
-    text-align: start;
-    padding-left: 2%;
-    color: var(--accent-yellow);
-    font-family: var(--normal-text);
+#clase-detail-futuro p {
+  /*  font-family: var(--title-text); */
+  font-size: 150%;
+  width: 100%;
+  text-align: start;
+  padding: 0;
+  margin-left: 3vw;
+}
+
+#alumnosListAddDiv {
+  overflow-y: scroll;
+  height: 25vh;
+  text-align: start;
+  padding-left: 2%;
+  color: var(--accent-yellow);
+  font-family: var(--normal-text);
 }
 
 #alumnosListAddDiv::-webkit-scrollbar {
-    width: 12px;/* width of the entire scrollbar */
-      
-  }
-  
+  width: 12px; /* width of the entire scrollbar */
+}
+
 #alumnosListAddDiv::-webkit-scrollbar-track {
-      background-color:transparent;
-      border-bottom-left-radius:20px ;
-      border-bottom-right-radius:20px ;
-      opacity: .5;   
-      /* color of the tracking area */
-  }
-  
+  background-color: transparent;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  opacity: 0.5;
+  /* color of the tracking area */
+}
+
 #alumnosListAddDiv::-webkit-scrollbar-thumb {
-      
-    background-color: var(--neutral-black);    /* color of the scroll thumb */
-    border-radius: 20px;       /* roundness of the scroll thumb */
-    border: 2px solid var(--neutral-white);  /* creates padding around scroll thumb */
+  background-color: var(--neutral-black); /* color of the scroll thumb */
+  border-radius: 20px; /* roundness of the scroll thumb */
+  border: 2px solid var(--neutral-white); /* creates padding around scroll thumb */
 }
- #alumnosListAdd{
-
+#alumnosListAdd {
 }
 
- #alumnosListAdd:hover{
-    background-color: #29754F;
- }
-
-
-#buscadorDeAlumnos{
-    width: 96%;
-    margin: 1% 2%;
-    height: 2rem;
-    border-radius: 2px;
-    font-family: var(--normal-text);
-    font-size: 120%;
-    border: 1px solid lightgrey;
-    padding-left: 1vw;
+#alumnosListAdd:hover {
+  background-color: #29754f;
 }
 
-#buscadorDeAlumnos:focus{
-    outline: 2px solid var(--accent-green);
+#buscadorDeAlumnos {
+  width: 96%;
+  margin: 1% 2%;
+  height: 2rem;
+  border-radius: 2px;
+  font-family: var(--normal-text);
+  font-size: 120%;
+  border: 1px solid lightgrey;
+  padding-left: 1vw;
+}
+
+#buscadorDeAlumnos:focus {
+  outline: 2px solid var(--accent-green);
 }

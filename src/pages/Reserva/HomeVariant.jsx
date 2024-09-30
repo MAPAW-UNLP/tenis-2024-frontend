@@ -1,25 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react'
 //react router
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'
 
 //components
-import NavBar from '../Navbar/NavBar';
-import Reserva from '../../components/Reserva/Reserva';
-import LoaderSpinner from '../../components/LoaderSpinner';
-import CalendarComponent from '../../components/Reserva/CalendarComponent';
-import VistaSemanal from '../../components/VistaSemanal';
-import AlquilerDetails from '../../components/Reserva/AlquilerDetails';
-import ClaseDetails from '../../components/Reserva/ClaseDetails';
+import NavBar from '../Navbar/NavBar'
+import Reserva from '../../components/Reserva/Reserva'
+import LoaderSpinner from '../../components/LoaderSpinner'
+import CalendarComponent from '../../components/Reserva/CalendarComponent'
+import AlquilerDetails from '../../components/Reserva/AlquilerDetails'
+import ClaseDetails from '../../components/Reserva/ClaseDetails'
 //Fontawesome
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 
-import { ordenarPorNombre } from '../../components/Utils/Functions';
-import '../../styles/home.css';
+import { ordenarPorNombre } from '../../components/Utils/Functions'
+import '../../styles/home.css'
 
-const Home = ({ setSesion }) => {
-  const URL_BASE = `http://localhost:8083/api/`;
-  
+const Home = () => {
+  const URL_BASE = `http://localhost:8083/api/`
+
   //Todo esto es para manejar una fecha visible para el usuario
   const horas = [
     '8:00',
@@ -49,7 +48,7 @@ const Home = ({ setSesion }) => {
     '20:00',
     '20:30',
     '21:00',
-  ];
+  ]
   const coloresCanchas = [
     '#FFA500',
     '#FFC0CB',
@@ -58,82 +57,82 @@ const Home = ({ setSesion }) => {
     '#ADD8E6',
     '#EE82EE',
     '#94F5C5',
-  ];
+  ]
   //cositas para formatear el dia
-  const mes = ('0' + (new Date().getMonth() + 1)).slice(-2);
-  const dia = ('0' + new Date().getDate()).slice(-2);
-  const año = new Date().getFullYear();
-  const DateToday = `${año}-${mes}-${dia}`;
+  const mes = ('0' + (new Date().getMonth() + 1)).slice(-2)
+  const dia = ('0' + new Date().getDate()).slice(-2)
+  const año = new Date().getFullYear()
+  const DateToday = `${año}-${mes}-${dia}`
 
-  const [today, setToday] = useState(DateToday);
+  const [today, setToday] = useState(DateToday)
 
   //alumnos de la clase
-  const [alumnosDeLaClase, setAlumnosDeLaClase] = useState([]);
+  const [alumnosDeLaClase, setAlumnosDeLaClase] = useState([])
 
-  const [profeClase, setProfeClase] = useState('');
+  const [profeClase, setProfeClase] = useState('')
 
   //Details
-  const [reservaDetail, setReservaDetail] = useState({});
-  const [claseDetail, setClaseDetail] = useState({});
+  const [reservaDetail, setReservaDetail] = useState({})
+  const [claseDetail, setClaseDetail] = useState({})
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   // Refactor desde home para reservas
-  const [reservas, setReservas] = useState([]);
-  const [reservasLoader, setReservasLoader] = useState(false); // Spinner
-  const [actReservas, setActReservas] = useState(false);
-  const [canchas, setCanchas] = useState([]);
-  const [alumnos, setAlumnos] = useState([]);
-  const [profesores, setProfesores] = useState([]);
-  const [actProfesores, setActProfesores] = useState(false);
-  const [actCanchas, setActCanchas] = useState(false);
-  const [actAlumnos, setActAlumnos] = useState(false);
+  const [reservas, setReservas] = useState([])
+  const [reservasLoader, setReservasLoader] = useState(false) // Spinner
+  const [actReservas, setActReservas] = useState(false)
+  const [canchas, setCanchas] = useState([])
+  const [alumnos, setAlumnos] = useState([])
+  const [profesores, setProfesores] = useState([])
+  const [actProfesores, setActProfesores] = useState(false)
+  const [actCanchas, setActCanchas] = useState(false)
+  const [actAlumnos, setActAlumnos] = useState(false)
 
   useEffect(() => {
     const requestOptions = {
       method: 'GET',
-    };
+    }
     fetch(`${URL_BASE}profesores`, requestOptions)
       .then((response) => response.json())
       .then((data) => setProfesores(ordenarPorNombre(data)))
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [actProfesores]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [actProfesores])
 
   useEffect(() => {
     const requestOptions = {
       method: 'GET',
-    };
+    }
     fetch(`${URL_BASE}canchas`, requestOptions)
       .then((response) => response.json())
       .then((data) => setCanchas(data.detail))
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [actCanchas]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [actCanchas])
 
   useEffect(() => {
     const requestOptions = {
       method: 'GET',
-    };
+    }
     fetch(`${URL_BASE}alumnos`, requestOptions)
       .then((response) => response.json())
       .then((data) => setAlumnos(ordenarPorNombre(data.detail)))
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [actAlumnos]);
+  }, [actAlumnos])
 
   useEffect(() => {
     const requestOptions = {
       method: 'GET',
-    };
+    }
     fetch(`${URL_BASE}reservas`, requestOptions)
       .then(setReservasLoader(true))
       .then((response) => response.json())
       .then((data) => setReservas(data.detail))
-      .then(() => setReservasLoader((v) => false));
+      .then(() => setReservasLoader((v) => false))
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [actReservas]);
+  }, [actReservas])
 
   return (
     <div id="home-component">
-      <NavBar title={'Tennis app'} setSesion={setSesion} />
+      <NavBar title={'Tennis app'} />
       {/* <VistaSemanal canchas={canchas} reservas={reservas}/> */}
       <AlquilerDetails
         reserva={reservaDetail}
@@ -169,7 +168,8 @@ const Home = ({ setSesion }) => {
           </div>
           {/* Aca iria el selector */}
         </div>
-        <div id="table-grid"
+        <div
+          id="table-grid"
           style={{
             display: 'grid',
             gridTemplateColumns: `13vw repeat(${canchas.length}, 1fr)`,
@@ -223,10 +223,14 @@ const Home = ({ setSesion }) => {
             />
           ))}
         </div>
-        <LoaderSpinner active={reservasLoader} containerClass={'homeLoaderNew'} loaderClass={'homeLoaderSpinner'}/>
+        <LoaderSpinner
+          active={reservasLoader}
+          containerClass={'homeLoaderNew'}
+          loaderClass={'homeLoaderSpinner'}
+        />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home
