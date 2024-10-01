@@ -1,0 +1,301 @@
+#proveedores-component {
+    background-color: var(--primary-blue);
+    min-height: 100vh;
+    height: 100%;
+}
+
+#proveedores-component-mainContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    width: 70vw;
+    /* Cambiar aca a 35vw si queremos algo compatible con las canchas */
+    margin: auto;
+    margin-top: 5vh;
+    align-items: center;
+
+}
+
+#proveedores-list-component {
+    margin-top: 2vh;
+    margin-bottom: 10vh;
+    width: 100%;
+    border-radius: 20px;
+    background-color: var(--neutral-white);
+    cursor: default;
+}
+
+#proveedores-list-options {
+    height: 8vh;
+    display: grid;
+    grid-template-columns: 20% 20% 20% 40%;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    color: var(--neutral-black);
+    font-family: var(--title-text);
+    font-size: 150%;
+    background-color: var(--neutral-white);
+    border-bottom: 5px solid var(--neutral-black);
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+}
+
+#proveedores-list-options :first-child {
+    margin-left: .5em;
+}
+
+#proveedores-searchbar {
+    position: relative;
+    width: 90%;
+}
+
+#proveedores-searchbar input {
+    width: 100%;
+
+    font-family: var(--normal-text);
+    font-size: 100%;
+    border-radius: 10px;
+    border: 1px solid var(--neutral-black);
+    color: var(--neutral-black);
+    padding-left: 2%;
+    transition: all 0.5s ease;
+}
+
+#proveedores-searchbar input:focus {
+    outline: 2px solid var(--accent-green);
+    border: none;
+}
+
+#magnify-icon {
+    color: var(--neutral-black);
+    position: absolute;
+    top: 25%;
+    right: 5%;
+}
+
+.proveedor-info {
+    display: grid;
+    grid-template-columns: 20% 20% 40% 20%;
+    margin: 0.5%;
+    padding: 1%;
+    border-radius: 12px;
+    background-color: var(--neutral-black);
+    color: var(--neutral-white-text);
+    font-family: var(--normal-text);
+    font-size: 110%;
+}
+
+#edit-proveedor-btn {
+    width: 50%;
+    border-radius: 12px;
+    height: 2rem;
+    background-color: #94F5C5;
+    font-size: 120%;
+    color: var(--neutral-black);
+    border: none;
+    box-shadow: 0px 5px 20px var(--neutral-black);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+#edit-proveedor-btn:hover {
+    box-shadow: 0px 4px 100px #94F5C5;
+    height: 2.5rem;
+    font-size: 130%;
+    cursor: pointer;
+}
+
+/* Form */
+#proveedor-add-component {
+    background-color: var(--neutral-white);
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 50%;
+    border-radius: 20px;
+    width: 40vw;
+    z-index: 20;
+    box-shadow: -2px -4px 400px 600px rgba(0, 0, 0, 0.24);
+}
+
+#close-proveedor-add-form {
+    background: none;
+    position: absolute;
+    top: 1vh;
+    border: none;
+    right: 2vw;
+    font-family: var(--title-text);
+    font-size: 150%;
+    color: var(--neutral-black);
+    transition: all 0.5s ease;
+    cursor: pointer;
+}
+
+#close-proveedor-add-form:hover {
+    font-size: 175%;
+    font-weight: bolder;
+    color: #CC3636;
+}
+
+#proveedor-add-component h2 {
+    width: 100%;
+
+    margin-top: 3vh;
+    background-color: var(--neutral-white);
+    color: var(--neutral-black);
+    font-size: 250%;
+    text-align: center;
+    font-family: var(--title-text);
+}
+
+#proveedor-add-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    background-color: var(--neutral-white);
+}
+
+.proveedor-add-form-input {
+    font-family: var(--normal-text);
+    margin-bottom: 15px;
+    width: 90%;
+    margin: 2vh 2vw;
+    margin-top: 0px;
+    height: 2.2rem;
+    border-radius: 2px;
+    font-size: large;
+    background-color: var(--neutral-white);
+    border: 1px solid lightgrey;
+    color: var(--neutral-black);
+    padding-left: 5px;
+    transition: all 0.5s ease;
+}
+
+.proveedor-add-form-input:focus {
+    border: none;
+    outline: 2px solid var(--accent-green);
+}
+
+.proveedor-add-form-input:disabled {
+    border: none;
+    background-color: var(--neutral-black);
+}
+
+#proveedor-add-form-addBtn {
+    width: 100%;
+    border-radius: 0px 0px 20px 20px;
+    background-color: #7CBD1E;
+    height: 5rem;
+    border: none;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    cursor: pointer;
+}
+
+#proveedor-add-form-addBtn:disabled {
+    background-color: var(--neutral-black);
+}
+
+.inputlabel {
+    width: 90%;
+    position: relative;
+}
+
+/*  */
+
+#proveedores-list {
+    min-height: 100%;
+    max-height: 60vh;
+    overflow-y: scroll;
+}
+
+#proveedores-list::-webkit-scrollbar {
+    width: 12px;
+    /* width of the entire scrollbar */
+}
+
+#proveedores-list::-webkit-scrollbar-track {
+    background-color: transparent;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    opacity: .5;
+}
+
+#proveedores-list::-webkit-scrollbar-thumb {
+
+    background-color: var(--accent-green);
+    /* color of the scroll thumb */
+    border-radius: 20px;
+    /* roundness of the scroll thumb */
+    border: 2px solid var(--neutral-white);
+    /* creates padding around scroll thumb */
+}
+
+
+.feedbackInline {
+    font-family: var(--normal-text);
+    position: absolute;
+    top: 0;
+    left: 2vw;
+    /* border: 1px solid red; */
+    font-size: 80%;
+    transition: all 0.2s ease;
+}
+
+/*Detail*/
+#proveedor-edit-component {
+    background-color: var(--neutral-white);
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 50%;
+    left: 35%;
+    border-radius: 20px;
+    width: 35vw;
+    z-index: 20;
+    box-shadow: -2px -4px 400px 600px rgba(0, 0, 0, 0.24);
+}
+
+#proveedor-edit-component h2 {
+    width: 100%;
+    margin-top: 3vh;
+    background-color: var(--neutral-white);
+    color: var(--neutral-black);
+    font-size: 250%;
+    text-align: center;
+    font-family: var(--title-text);
+}
+
+#proveedor-edit-component .inputlabel {
+    width: 100%;
+}
+
+#nombreProveedor,
+#telefonoProveedor {
+    color: black;
+}
+
+.textoBotonAceptar {
+    color: #FFF;
+    text-align: center;
+    font-family: var(--title-text);
+    font-size: 48px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 50px;
+    /* 104.167% */
+}
+
+.textoFormulario {
+    color: #000;
+    font-family: var(--title-text);
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 50px;
+    padding-left: 30px;
+    /* 250% */
+}
