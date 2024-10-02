@@ -3,7 +3,7 @@ import InputReComponent from '../Utils/InputReComponent';
 import useInputValidation from '../Utils/useInputValidation';
 
 function AgregarProveedor({ handleCloseForm, proveedores }) {
-    
+
     const [proveedorForm, setProveedorForm] = useState({
         nombre: '',
         telefono: '',
@@ -22,6 +22,8 @@ function AgregarProveedor({ handleCloseForm, proveedores }) {
         isValid: telefonoValid,
         handleChange: handleChangeTelefono
     } = useInputValidation('', "telefono", setProveedorForm, 'telefono');
+
+    const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
     const habilitarBoton = () => {
         return !(nombreValid && telefonoValid);
@@ -43,6 +45,8 @@ function AgregarProveedor({ handleCloseForm, proveedores }) {
         fetch(`http://localhost:8083/api/proveedor`, requestOptions)
             .then((response) => response.json())
             .then((result) => console.log(result),
+                setShowSuccessPopup(true),
+                setTimeout(() => setShowSuccessPopup(false), 5000),
                 handleCloseForm());
     };
 
@@ -85,6 +89,11 @@ function AgregarProveedor({ handleCloseForm, proveedores }) {
                     <p className="textoBotonAceptar">Agregar</p>
                 </button>
             </form>
+            {showSuccessPopup && (
+                <div className="popup">
+                    ¡Proveedor agregado con éxito!
+                </div>
+            )}
         </div>
     );
 }
