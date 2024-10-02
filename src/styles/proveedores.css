@@ -1,10 +1,33 @@
-#proveedores-component {
-    background-color: var(--primary-blue);
-    min-height: 100vh;
-    height: 100%;
-}
 
-#proveedores-component-mainContent {
+.container-table-proveedores {
+    width: 100%;
+    margin: 0 auto;
+    margin-bottom: 1.2em;
+    padding: 0.8em;
+  }
+
+  .table-head-proveedores {
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-bottom: 1.3em;
+    font-family: var(--title-text);
+    color: var(--neutral-white-text);
+    background-color: #5d5d5d;
+    padding: 0.8em;
+    border-top-left-radius: 1em;
+    border-top-right-radius: 1em;
+  }
+
+  #proveedores-component {
+    background-color: var(--primary-blue);
+    height: 100%;
+    min-height: 100vh;
+  }
+
+  #proveedores-component-mainContent {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -14,6 +37,60 @@
     margin: auto;
     margin-top: 5vh;
     align-items: center;
+  }
+  
+  .proveedores-item-list {
+    cursor: pointer;
+    display: flex;
+    justify-content: space-around;
+    background-color: #5d5d5d;
+    border-radius: 1em;
+    margin-bottom: 1em;
+    height:2.5em;
+  }
+
+  .proveedores-item-list p {
+    font-family: var(--title-text);
+    color: var(--neutral-white-text);
+    text-align: center;
+    width: 200px;
+    font-size: 25px;
+  }
+  
+  .proveedores-item-list:hover {
+    cursor: pointer;
+    box-shadow: 0px 1.5px 1px #48617a;
+  }
+
+  .botones-proveedor-main {
+    width: 70vw;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .btn-agregar-proveedor {
+    background-color: #7CBD1E;
+    color: #fff;
+    width: 300px;
+    height: 50px;
+    font-size: 20px;
+    border: none;
+    border-radius: 10px;
+    font-family: var(--title-text);
+  }
+
+  .list-options-header {
+    font-size: 150%;
+  }
+  
+  #proveedores-searchbar {
+    position: relative;
+    width: 90%;
+  }
+  
+  #proveedores-searchbar input {
+    width: 100%;
 
 }
 
@@ -46,13 +123,6 @@
     margin-left: .5em;
 }
 
-#proveedores-searchbar {
-    position: relative;
-    width: 90%;
-}
-
-#proveedores-searchbar input {
-    width: 100%;
 
     font-family: var(--normal-text);
     font-size: 100%;
@@ -61,11 +131,20 @@
     color: var(--neutral-black);
     padding-left: 2%;
     transition: all 0.5s ease;
-}
-
-#proveedores-searchbar input:focus {
+  }
+  
+  #proveedores-searchbar input:focus {
     outline: 2px solid var(--accent-green);
     border: none;
+  }
+  
+  #magnify-iconProveedor {
+    color: var(--neutral-black);
+    position: absolute;
+    top: 10%;
+    right: 5%;
+  }
+
 }
 
 #magnify-icon {
