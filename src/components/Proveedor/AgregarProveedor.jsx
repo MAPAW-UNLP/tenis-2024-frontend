@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import InputReComponent from '../Utils/InputReComponent';
 import useInputValidation from '../Utils/useInputValidation';
 
-function AgregarProveedor({ handleCloseForm = null, proveedores = [] }) {
+function AgregarProveedor({ handleCloseForm, proveedores }) {
+    
     const [proveedorForm, setProveedorForm] = useState({
         nombre: '',
         telefono: '',
@@ -41,7 +42,8 @@ function AgregarProveedor({ handleCloseForm = null, proveedores = [] }) {
 
         fetch(`http://localhost:8083/api/proveedor`, requestOptions)
             .then((response) => response.json())
-            .then((result) => console.log(result));
+            .then((result) => console.log(result),
+                handleCloseForm());
     };
 
     return (
