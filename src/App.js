@@ -24,6 +24,7 @@ import './styles/App.css'
 import { Routes, Route } from 'react-router-dom'
 import { Ajustes } from './pages/Ajustes/Ajustes'
 import { AlumnosNew } from './pages/Alumno/AlumnosNew'
+import Proveedores from 'pages/Proveedores/Proveedores'
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
           <Route path="/canchas" element={<Canchas />} />
           <Route path="/alumnos" element={<AlumnosNew />} />
           <Route path="/profesores" element={<Profesores />} />
+          <Route path="/proveedores" element={<Proveedores />} />
           <Route path="/cobros" element={<Cobros />} />
           <Route path="/pagos" element={<Pagos />} />
           <Route path="/balance" element={<Balance />} />
