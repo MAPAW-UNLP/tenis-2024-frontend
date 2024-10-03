@@ -51,6 +51,7 @@ export const Profesores = () => {
     nombreFBCorrecto: null,
     telefonoFBCorrecto: null,
     emailFBCorrecto: null,
+    valorHoraFB: { isValid: false, text: '', color: '' },
   })
 
   useEffect(() => {
@@ -277,6 +278,23 @@ export const Profesores = () => {
       }
     }
   }
+
+  const handleChangeValorHora = (e) => {
+    const value = e.target.value;
+    console.log("ValorHora changed: ", value); // Debugging log
+  
+    if (value > 0) {
+      setFeedback({
+        ...feedback,
+        valorHoraFB: { isValid: true, text: 'Valor válido', color: '#7CBD1E' },
+      });
+    } else {
+      setFeedback({
+        ...feedback,
+        valorHoraFB: { isValid: false, text: 'El valor debe ser mayor que 0', color: '#CC3636' },
+      });
+    }
+  };
 
   // Si todos los feefbacks son correctos entonces habilito boton para AGREGAR PROFESOR
   useEffect(() => {
