@@ -1,24 +1,32 @@
-import { useState, useEffect } from 'react'
-//react router
+// React
+import { useEffect, useState } from 'react'
+
+// React Router
 import { useNavigate } from 'react-router-dom'
 
-//components
-import NavBar from '../Navbar/NavBar'
-import Reserva from '../../components/Reserva/Reserva'
-import LoaderSpinner from '../../components/LoaderSpinner'
-import CalendarComponent from '../../components/Reserva/CalendarComponent'
-import AlquilerDetails from '../../components/Reserva/AlquilerDetails'
-import ClaseDetails from '../../components/Reserva/ClaseDetails'
-//Fontawesome
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
+// API
+import { getAlumnos } from 'api/alumnos'
+import { getCanchas } from 'api/canchas'
+import { getProfesores } from 'api/profesores'
+import { getReservas } from 'api/reservas'
 
-import { ordenarPorNombre } from '../../components/Utils/Functions'
-import '../../styles/home.css'
+// Components
+import LoaderSpinner from 'components/LoaderSpinner'
+import AlquilerDetails from 'components/Reserva/AlquilerDetails'
+import CalendarComponent from 'components/Reserva/CalendarComponent'
+import ClaseDetails from 'components/Reserva/ClaseDetails'
+import Reserva from 'components/Reserva/Reserva'
+import NavBar from 'pages/Navbar/NavBar'
+
+// Fontawesome
+import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
+import { ordenarPorNombre } from 'components/Utils/Functions'
+
+import 'styles/home.css'
 
 const Home = () => {
-  const URL_BASE = `http://localhost:8083/api/`
-
   //Todo esto es para manejar una fecha visible para el usuario
   const horas = [
     '8:00',
@@ -49,6 +57,7 @@ const Home = () => {
     '20:30',
     '21:00',
   ]
+
   const coloresCanchas = [
     '#FFA500',
     '#FFC0CB',
@@ -58,6 +67,7 @@ const Home = () => {
     '#EE82EE',
     '#94F5C5',
   ]
+
   //cositas para formatear el dia
   const mes = ('0' + (new Date().getMonth() + 1)).slice(-2)
   const dia = ('0' + new Date().getDate()).slice(-2)
@@ -79,56 +89,30 @@ const Home = () => {
 
   // Refactor desde home para reservas
   const [reservas, setReservas] = useState([])
-  const [reservasLoader, setReservasLoader] = useState(false) // Spinner
+  const [reservasIsLoading, setReservasIsLoading] = useState(false) // Spinner
   const [actReservas, setActReservas] = useState(false)
   const [canchas, setCanchas] = useState([])
   const [alumnos, setAlumnos] = useState([])
   const [profesores, setProfesores] = useState([])
-  const [actProfesores, setActProfesores] = useState(false)
-  const [actCanchas, setActCanchas] = useState(false)
-  const [actAlumnos, setActAlumnos] = useState(false)
 
   useEffect(() => {
-    const requestOptions = {
-      method: 'GET',
-    }
-    fetch(`${URL_BASE}profesores`, requestOptions)
-      .then((response) => response.json())
-      .then((data) => setProfesores(ordenarPorNombre(data)))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [actProfesores])
+    getProfesores().then((data) => setProfesores(ordenarPorNombre(data)))
+  }, [])
 
   useEffect(() => {
-    const requestOptions = {
-      method: 'GET',
-    }
-    fetch(`${URL_BASE}canchas`, requestOptions)
-      .then((response) => response.json())
-      .then((data) => setCanchas(data.detail))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [actCanchas])
+    getCanchas().then((data) => setCanchas(data.detail))
+  }, [])
 
   useEffect(() => {
-    const requestOptions = {
-      method: 'GET',
-    }
-    fetch(`${URL_BASE}alumnos`, requestOptions)
-      .then((response) => response.json())
-      .then((data) => setAlumnos(ordenarPorNombre(data.detail)))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [actAlumnos])
+    getAlumnos().then((data) => setAlumnos(ordenarPorNombre(data.detail)))
+  }, [])
 
   useEffect(() => {
-    const requestOptions = {
-      method: 'GET',
-    }
-    fetch(`${URL_BASE}reservas`, requestOptions)
-      .then(setReservasLoader(true))
-      .then((response) => response.json())
+    setReservasIsLoading(true)
+    getReservas()
       .then((data) => setReservas(data.detail))
-      .then(() => setReservasLoader((v) => false))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [actReservas])
+      .then(() => setReservasIsLoading(false))
+  }, [])
 
   return (
     <div id="home-component">
@@ -224,7 +208,7 @@ const Home = () => {
           ))}
         </div>
         <LoaderSpinner
-          active={reservasLoader}
+          active={reservasIsLoading}
           containerClass={'homeLoaderNew'}
           loaderClass={'homeLoaderSpinner'}
         />
