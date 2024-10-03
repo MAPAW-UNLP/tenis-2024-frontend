@@ -51,15 +51,6 @@ const AgregarProfesor = ({
                 id={'emailInput'}
                 className={'profesor-add-form-input'}
                 placeholder={'Email'}
-                onChangeFuncion={(e) =>
-                  handleChangeEmail(
-                    e,
-                    'profesor-add-form-addBtn',
-                    'telefonoInput',
-                    true
-                  )
-                }
-                deshabilitado={true}
               />
               <p
                 className="feedbackInline"
@@ -75,10 +66,6 @@ const AgregarProfesor = ({
                 id={'telefonoInput'}
                 className={'profesor-add-form-input'}
                 placeholder={'Telefono'}
-                onChangeFuncion={(e) =>
-                  handleChangePhone(e, 'profesor-add-form-addBtn', true)
-                }
-                deshabilitado={true}
                 min={7}
                 max={12}
               />
@@ -89,8 +76,9 @@ const AgregarProfesor = ({
                 {feedback.telefonoFB.text}
               </p>
             </div>
-            <button disabled id="profesor-add-form-addBtn" type="sumbit">
-              <FontAwesomeIcon id="canchas-add-form-btn" icon={faPlusCircle} />
+            <button disabled id="clase-detail-guardar" type="sumbit">
+              {''}
+              Guardar{''}
             </button>
           </form>
         </div>
