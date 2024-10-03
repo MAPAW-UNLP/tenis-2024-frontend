@@ -6,6 +6,7 @@ import LoaderSpinner from '../../components/LoaderSpinner'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { GenericButtonDisabled } from '../../components/Utils/GenericButtonDisabled'
+import FormularioTipoClase from '../../components/Clase/AgregarTipoClase'
 
 export const Ajustes = () => {
   const URL_BASE = `http://localhost:8083/api/`
@@ -15,6 +16,7 @@ export const Ajustes = () => {
   const [mensajeUsuario, setMensajeUsuario] = useState('')
   const [tipoClasePorBorrar, setTipoClasePorBorrar] = useState(null) // Tipo de clase a eliminar
   const [botonHabilitado, setBotonHabilitado] = useState(false)
+  const [mostrarFormulario, setMostrarFormulario] = useState(false)
 
   useEffect(() => {
     fetchTipoClases()
@@ -28,6 +30,27 @@ export const Ajustes = () => {
       setTipoClases(data)
     } catch (error) {
       console.error('Error al obtener datos desde la BD', error)
+    } finally {
+      setCargando(false)
+    }
+  }
+
+  const handleAgregarTipoClase = async (nuevoTipoClase) => {
+    setCargando(true)
+    try {
+      const response = await fetch(`${URL_BASE}addClase`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(nuevoTipoClase),
+      })
+      const data = await response.json()
+      if (data.status === 'ok') {
+        fetchTipoClases() // Recargar los tipos de clase
+      } else {
+        console.error(data.message)
+      }
+    } catch (error) {
+      console.error('Error al agregar tipo de clase:', error)
     } finally {
       setCargando(false)
     }
@@ -135,9 +158,17 @@ export const Ajustes = () => {
               backgroundColor={'#92bc1e'}
               color="white"
               borderRadius="1em"
+              onClick={() => setMostrarFormulario(true)}
             >
               Crear tipo de clase
             </GenericButton>
+
+            {mostrarFormulario && (
+              <FormularioTipoClase
+                onClose={() => setMostrarFormulario(false)}
+                onSubmit={handleAgregarTipoClase}
+              />
+            )}
             <div
               style={{
                 display: 'flex',
@@ -222,7 +253,7 @@ export const Ajustes = () => {
             width="20em"
             centrado
             onClick={handleConfirmarCambios}
-            disabled={!botonHabilitado}
+            disabled={false}
           >
             Confirmar cambios
           </GenericButtonDisabled>
