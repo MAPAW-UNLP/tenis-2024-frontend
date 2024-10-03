@@ -5,9 +5,21 @@ import '../../styles/ajustes/tipoClaseForm.css'
 const FormularioTipoClase = ({ onClose, onSubmit }) => {
   const [tipo, setTipo] = useState('')
   const [importe, setImporte] = useState('')
+  const [errores, setErrores] = useState({ tipo: false, importe: false })
 
   const handleSubmit = (e) => {
     e.preventDefault()
+
+    const nuevosErrores = {
+      tipo: tipo.trim() === '',
+      importe: importe === '',
+    }
+
+    setErrores(nuevosErrores)
+
+    // Si hay algún error, no enviar el formulario
+    if (nuevosErrores.tipo || nuevosErrores.importe) return
+
     onSubmit({ tipo, importe })
     onClose()
   }
@@ -26,9 +38,12 @@ const FormularioTipoClase = ({ onClose, onSubmit }) => {
               id="tipo"
               type="text"
               value={tipo}
-              onChange={(e) => setTipo(e.target.value)}
+              onChange={(e) => setTipo(e.target.value.toUpperCase())}
               className="new-clase-input"
             />
+            {errores.tipo && (
+              <p style={{ color: 'red' }}>*Debes ingresar el nombre</p>
+            )}
           </div>
           <div>
             <label htmlFor="importe" className="new-clase-add-form-label">
@@ -41,8 +56,11 @@ const FormularioTipoClase = ({ onClose, onSubmit }) => {
               value={importe}
               onChange={(e) => setImporte(e.target.value)}
             />
+            {errores.importe && (
+              <p style={{ color: 'red' }}>*Debes ingresar el importe</p>
+            )}
           </div>
-          <button> Crear</button>
+          <button>Crear</button>
           <button type="button" className="cancel-button" onClick={onClose}>
             Cancelar
           </button>

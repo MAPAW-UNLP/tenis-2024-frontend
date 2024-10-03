@@ -37,23 +37,23 @@ export const Ajustes = () => {
 
   const handleAgregarTipoClase = async (nuevoTipoClase) => {
     setCargando(true)
-    try {
-      const response = await fetch(`${URL_BASE}addClase`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(nuevoTipoClase),
-      })
-      const data = await response.json()
-      if (data.status === 'ok') {
-        fetchTipoClases() // Recargar los tipos de clase
-      } else {
-        console.error(data.message)
-      }
-    } catch (error) {
-      console.error('Error al agregar tipo de clase:', error)
-    } finally {
-      setCargando(false)
+
+    const response = await fetch(`${URL_BASE}addClase`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(nuevoTipoClase),
+    })
+
+    const data = await response.json()
+
+    if (data.status === 'ok') {
+      fetchTipoClases() // Recargar los tipos de clase
+    } else {
+      console.error(data.message)
     }
+
+    setCargando(false)
+    fetchTipoClases()
   }
 
   const handleTipoClaseChange = (tipo, valor) => {
