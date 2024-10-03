@@ -108,8 +108,10 @@
   background-color: var(--neutral-white);
   display: flex;
   flex-direction: column;
-  position: absolute;
-  top: 50%;
+  position: fixed; /* Cambia a fixed para centrar respecto a la ventana */
+  top: 50%; /* Centrando verticalmente */
+  left: 50%; /* Centrando horizontalmente */
+  transform: translate(-50%, -50%); /* Ajuste para centrar exacto */
   border-radius: 20px;
   width: 40vw;
   z-index: 20;
@@ -236,9 +238,10 @@
   background-color: var(--neutral-white);
   display: flex;
   flex-direction: column;
-  position: absolute;
-  top: 50%;
-  left: 35%;
+  position: fixed; /* Cambia a fixed para centrar respecto a la ventana */
+  top: 50%; /* Centrando verticalmente */
+  left: 50%; /* Centrando horizontalmente */
+  transform: translate(-50%, -50%); /* Ajuste para centrar exacto */
   border-radius: 20px;
   width: 35vw;
   z-index: 20;

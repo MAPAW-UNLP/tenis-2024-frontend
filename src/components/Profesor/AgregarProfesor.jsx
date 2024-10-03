@@ -80,6 +80,10 @@ const AgregarProfesor = ({
               {''}
               Guardar{''}
             </button>
+            <button disabled id="clase-detail-cancelar" type="sumbit">
+              {''}
+              Cancelar{''}
+            </button>
           </form>
         </div>
       )}
