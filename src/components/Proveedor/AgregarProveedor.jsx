@@ -25,12 +25,16 @@ function AgregarProveedor({ handleCloseForm, proveedores }) {
 
     const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
+    const [loading, setLoading] = useState(false);
+
     const habilitarBoton = () => {
         return !(nombreValid && telefonoValid);
     };
 
     const addProveedor = (e) => {
         e.preventDefault();
+
+        setLoading(true);
 
         const data = {
             nombre: proveedorForm.nombre,
@@ -44,10 +48,15 @@ function AgregarProveedor({ handleCloseForm, proveedores }) {
 
         fetch(`http://localhost:8083/api/proveedor`, requestOptions)
             .then((response) => response.json())
-            .then((result) => console.log(result),
+            .then(() =>
                 setShowSuccessPopup(true),
-                setTimeout(() => setShowSuccessPopup(false), 5000),
-                handleCloseForm());
+                setTimeout(() => {
+                    setShowSuccessPopup(false);
+                    handleCloseForm();
+                }, 5000))
+            .finally(() => {
+                setLoading(false);
+            });
     };
 
     return (
@@ -93,6 +102,9 @@ function AgregarProveedor({ handleCloseForm, proveedores }) {
                 <div className="popup">
                     ¡Proveedor agregado con éxito!
                 </div>
+            )}
+            {loading && (
+                <div className="spinner">Cargando...</div>
             )}
         </div>
     );
