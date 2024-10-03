@@ -3,6 +3,7 @@ import { HomeRe } from './pages/Home/HomeRe'
 import { Canchas } from './pages/Cancha/Canchas'
 import { Reservas } from './pages/Reserva/Reservas'
 import { Profesores } from './pages/Profesor/Profesores'
+import  Proveedores  from './pages/Proveedores/Proveedores'
 import { Cobros } from './pages/Cobros/Cobros'
 import { Pagos } from './pages/Pagos/Pagos'
 import { Balance } from './pages/Balance/Balance'
@@ -24,7 +25,6 @@ import './styles/App.css'
 import { Routes, Route } from 'react-router-dom'
 import { Ajustes } from './pages/Ajustes/Ajustes'
 import { AlumnosNew } from './pages/Alumno/AlumnosNew'
-import Proveedores from 'pages/Proveedores/Proveedores'
 
 function App() {
   return (
