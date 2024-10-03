@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import '../../styles/proveedores.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
+import AgregarProveedor from 'components/Proveedor/AgregarProveedor'
 
 function Proveedores() {
 
@@ -10,21 +11,26 @@ function Proveedores() {
 
     const [proveedores, setProveedores] = useState([])
 
+    const [mostrarPopup, setMostrarPopup] = useState(false)
+
     useEffect(() => {
         fetch(`${URL_BASE}proveedor`)
             .then((response) => response.json())
             .then((data) => {
                 setProveedores(data)
             })
-            // .then(() => setAlumnosLoader(() => false))
+        // .then(() => setAlumnosLoader(() => false))
     }, [])
+
+    const activarFormulario = () => { setMostrarPopup(true) }
+    const ocultarFormulario = () => { setMostrarPopup(false) }
 
     return (
         <div id="proveedores-component">
             <NavBar title={'Proveedores'} />
             <div id='proveedores-component-mainContent'>
                 <div className='botones-proveedor-main'>
-                    <button className='btn-agregar-proveedor'>Agregar nuevo Proveedor</button>
+                    <button className='btn-agregar-proveedor' onClick={activarFormulario}>Agregar nuevo Proveedor</button>
                     {/* <div
                     id="proveedores-searchbar"
                     className="list-options-header"
@@ -39,8 +45,8 @@ function Proveedores() {
                 </div> */}
                 </div>
                 <div className="table-head-proveedores">
-                    <span style={{ fontSize: '1.8em',width:200, textAlign:"center"}}>Nombre</span>
-                    <span style={{ fontSize: '1.8em', width:200,textAlign:"center"}}>Telefono</span>
+                    <span style={{ fontSize: '1.8em', width: 200, textAlign: "center" }}>Nombre</span>
+                    <span style={{ fontSize: '1.8em', width: 200, textAlign: "center" }}>Telefono</span>
                     <span></span>
                 </div>
                 <div className="container-table-proveedores">
@@ -54,6 +60,9 @@ function Proveedores() {
                         })
                     }
                 </div>
+                {mostrarPopup && (
+                    <AgregarProveedor handleCloseForm={ocultarFormulario} proveedores={proveedores} />
+                )}
             </div>
 
         </div>

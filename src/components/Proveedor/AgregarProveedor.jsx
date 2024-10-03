@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import InputReComponent from '../Utils/InputReComponent';
-import useInputValidation from '../Utils/useInputValidation';
+import useInputValidation from 'hooks/Proveedores/useInputValidation';
 
-function AgregarProveedor({ handleCloseForm, proveedores }) {
+function AgregarProveedor({ handleCloseForm, proveedores = [] }) {
 
     const [proveedorForm, setProveedorForm] = useState({
         nombre: '',
@@ -28,14 +28,14 @@ function AgregarProveedor({ handleCloseForm, proveedores }) {
     const [loading, setLoading] = useState(false);
 
     const habilitarBoton = () => {
-        return !(nombreValid && telefonoValid);
+        return !(nombreValid && telefonoValid && !loading);
     };
 
     const addProveedor = (e) => {
         e.preventDefault();
 
         setLoading(true);
-
+        
         const data = {
             nombre: proveedorForm.nombre,
             telefono: proveedorForm.telefono,
@@ -53,10 +53,8 @@ function AgregarProveedor({ handleCloseForm, proveedores }) {
                 setTimeout(() => {
                     setShowSuccessPopup(false);
                     handleCloseForm();
-                }, 5000))
-            .finally(() => {
-                setLoading(false);
-            });
+                    setLoading(false);
+                }, 4000))
     };
 
     return (
@@ -97,14 +95,14 @@ function AgregarProveedor({ handleCloseForm, proveedores }) {
                 <button disabled={habilitarBoton()} id="proveedor-add-form-addBtn" type="submit">
                     <p className="textoBotonAceptar">Agregar</p>
                 </button>
+                {loading && (
+                    <div className="spinner"></div>
+                )}
             </form>
             {showSuccessPopup && (
                 <div className="popup">
                     ¡Proveedor agregado con éxito!
                 </div>
-            )}
-            {loading && (
-                <div className="spinner">Cargando...</div>
             )}
         </div>
     );
