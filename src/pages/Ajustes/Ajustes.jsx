@@ -95,9 +95,9 @@ export const Ajustes = () => {
     setTipoClasePorBorrar(tipoClase)
     setMensajeUsuario(
       <span style={{ fontSize: '1.2em' }}>
-        ¿Está seguro de que quiere eliminar el tipo de clase:{' '}
-        <span style={{ color: 'red' }}>{tipoClase.tipo}</span>? Esta acción no
-        se puede deshacer.
+        ¿Está seguro de que quiere eliminar la clase:{' '}
+        <span style={{ color: 'red' }}>{tipoClase.tipo}</span>?<br></br> Esta
+        acción no se puede deshacer.
       </span>
     )
     document.getElementById('mensajesUsuario').style.display = 'flex'
