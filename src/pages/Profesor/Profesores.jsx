@@ -230,19 +230,25 @@ export const Profesores = () => {
     }
   }
 
-  const handleChangePhone = (e, submitButtonName, checkDisabled) => {
+  const handleChangePhone = (
+    e,
+    submitButtonName,
+    valorHoraInput,
+    checkDisabled
+  ) => {
     const pattern = '^[0-9]+$'
 
+    const submitBtn = document.getElementById(submitButtonName)
     const telefonoProfesor = e.target.value
     setProfesorForm({ ...profesorForm, [e.target.name]: telefonoProfesor })
 
-    let submitBtn = document.getElementById(submitButtonName)
+    let nextInput = document.getElementById(valorHoraInput)
     const shouldIStartDisabled = checkDisabled
 
     if (telefonoProfesor === '') {
       setFeedback({ ...feedback, telefonoFB: feedbackStructure })
       if (shouldIStartDisabled) {
-        submitBtn.disabled = true
+        nextInput.disabled = true
         setFeedback({
           ...feedback,
           telefonoFBCorrecto: false,
@@ -263,7 +269,7 @@ export const Profesores = () => {
             color: '#7CBD1E',
           },
         })
-        shouldIStartDisabled && (submitBtn.disabled = false)
+        shouldIStartDisabled && (nextInput.disabled = false)
       } else {
         setFeedback({
           ...feedback,
@@ -274,27 +280,33 @@ export const Profesores = () => {
             color: '#CC3636',
           },
         })
-        shouldIStartDisabled && (submitBtn.disabled = true)
+        shouldIStartDisabled && (nextInput.disabled = true)
       }
     }
   }
 
-  const handleChangeValorHora = (e) => {
-    const value = e.target.value;
-    console.log("ValorHora changed: ", value); // Debugging log
-  
+  const handleChangeValorHora = (e, checkDisabled) => {
+    const shouldIStartDisabled = checkDisabled
+    const value = e.target.value
+
+    console.log('ValorHora changed: ', value) // Debugging log
+
     if (value > 0) {
       setFeedback({
         ...feedback,
         valorHoraFB: { isValid: true, text: 'Valor válido', color: '#7CBD1E' },
-      });
+      })
     } else {
       setFeedback({
         ...feedback,
-        valorHoraFB: { isValid: false, text: 'El valor debe ser mayor que 0', color: '#CC3636' },
-      });
+        valorHoraFB: {
+          isValid: false,
+          text: 'El valor debe ser mayor que 0',
+          color: '#CC3636',
+        },
+      })
     }
-  };
+  }
 
   // Si todos los feefbacks son correctos entonces habilito boton para AGREGAR PROFESOR
   useEffect(() => {
@@ -370,6 +382,7 @@ export const Profesores = () => {
           handleChangeName={handleChangeName}
           handleChangeEmail={handleChangeEmail}
           handleChangePhone={handleChangePhone}
+          handleChangeValorHora={handleChangeValorHora}
           feedback={feedback}
           submitProfesorForm={submitProfesorForm}
         />
