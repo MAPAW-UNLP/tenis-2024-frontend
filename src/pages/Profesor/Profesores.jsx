@@ -365,6 +365,7 @@ export const Profesores = () => {
       telefonoFBCorrecto: null,
       nombreFBCorrecto: null,
       emailFBCorrecto: null,
+      valorHoraFB: { isValid: false, text: '', color: '' },
     })
   }
 
