@@ -7,12 +7,25 @@ const FormularioTipoClase = ({ onClose, onSubmit }) => {
   const [importe, setImporte] = useState('')
   const [errores, setErrores] = useState({ tipo: false, importe: false })
 
+  const MAX_LENGTH = 20
   const handleSubmit = (e) => {
     e.preventDefault()
 
     const nuevosErrores = {
-      tipo: tipo.trim() === '',
-      importe: importe === '',
+      tipo: '',
+      importe: '',
+    }
+
+    if (tipo.trim() === '') {
+      nuevosErrores.tipo = '*Debes ingresar el nombre'
+    } else if (tipo.length > MAX_LENGTH) {
+      nuevosErrores.tipo = `*El nombre no debe exceder ${MAX_LENGTH} caracteres`
+    }
+
+    if (importe === '') {
+      nuevosErrores.importe = '*Debes ingresar el importe'
+    } else if (parseFloat(importe) <= 0) {
+      nuevosErrores.importe = '*El importe debe ser mayor a 0'
     }
 
     setErrores(nuevosErrores)
@@ -20,7 +33,7 @@ const FormularioTipoClase = ({ onClose, onSubmit }) => {
     // Si hay algún error, no enviar el formulario
     if (nuevosErrores.tipo || nuevosErrores.importe) return
 
-    onSubmit({ tipo, importe })
+    onSubmit({ tipo, importe: parseFloat(importe) })
     onClose()
   }
 
@@ -41,9 +54,7 @@ const FormularioTipoClase = ({ onClose, onSubmit }) => {
               onChange={(e) => setTipo(e.target.value.toUpperCase())}
               className="new-clase-input"
             />
-            {errores.tipo && (
-              <p style={{ color: 'red' }}>*Debes ingresar el nombre</p>
-            )}
+            {errores.tipo && <p style={{ color: 'red' }}>{errores.tipo}</p>}
           </div>
           <div>
             <label htmlFor="importe" className="new-clase-add-form-label">
@@ -57,7 +68,7 @@ const FormularioTipoClase = ({ onClose, onSubmit }) => {
               onChange={(e) => setImporte(e.target.value)}
             />
             {errores.importe && (
-              <p style={{ color: 'red' }}>*Debes ingresar el importe</p>
+              <p style={{ color: 'red' }}>{errores.importe}</p>
             )}
           </div>
           <button>Crear</button>
