@@ -166,7 +166,6 @@
   border-radius: 2px;
   font-size: large;
   background-color: var(--neutral-white);
-  border: 1px solid lightgrey;
   color: var(--neutral-black);
   padding-left: 5px;
   transition: all 0.5s ease;

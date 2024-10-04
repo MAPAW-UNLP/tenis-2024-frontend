@@ -55,7 +55,7 @@ const AgregarProfesor = ({
               </p>
             </div>
             <div className="inputlabel">
-              <label htmlFor="emailInput" className="new-clase-add-form-label">
+              <label htmlFor="emailInput" className="profesor-add-form-input">
                 Email:{' '}
                 <span style={{ color: 'green', marginLeft: '1.8rem' }}>*</span>
               </label>
@@ -82,7 +82,7 @@ const AgregarProfesor = ({
               </p>
             </div>
             <div className="inputlabel">
-              <label htmlFor="telefonoInput"className="new-clase-add-form-label">
+              <label htmlFor="telefonoInput"className="profesor-add-form-input">
                 Telefono:{' '}
                 <span style={{ color: 'green', marginLeft: '1.8rem' }}>*</span>
               </label>
@@ -92,7 +92,7 @@ const AgregarProfesor = ({
                 id={'telefonoInput'}
                 className={'profesor-add-form-input'}
                 onChangeFuncion={(e) =>
-                  handleChangePhone(e, 'profesor-add-form-addBtn', true)
+                  handleChangePhone(e, 'profesor-add-form-addBtn','valorHoraInput', true)
                 }
                 deshabilitado={true}
                 min={7}
@@ -106,7 +106,7 @@ const AgregarProfesor = ({
               </p>
             </div>
             <div className="inputlabel">
-              <label htmlFor="valorHoraInput"className="new-clase-add-form-label">
+              <label htmlFor="valorHoraInput"className="profesor-add-form-input">
                 Valor/Hora:{' '}
                 <span style={{ color: 'green', marginLeft: '1.8rem' }}>*</span>
               </label>
@@ -116,8 +116,9 @@ const AgregarProfesor = ({
                 id={'valorHoraInput'}
                 className={'profesor-add-form-input'}
                 onChangeFuncion={(e) =>
-                  handleChangeValorHora(e)
+                  handleChangeValorHora(e,'profesor-add-form-addBtn', true)
                 }
+                deshabilitado={true}
               />
               <p
                 className="feedbackInline"
