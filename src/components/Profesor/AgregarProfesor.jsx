@@ -1,7 +1,7 @@
 //Fontawesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
-
+import '../../styles/ajustes/tipoClaseForm.css'
 import InputReComponent from '../Utils/InputReComponent'
 
 const AgregarProfesor = ({
@@ -30,12 +30,14 @@ const AgregarProfesor = ({
           <h2>Nuevo Profesor</h2>
           <form id="alumno-add-form" onSubmit={submitProfesorForm}>
             <div className="inputlabel">
-              <label htmlFor="nombreInput">Nombre *</label>
+              <label htmlFor="nombreInput" className="profesor-add-form-input">
+                Nombre:{' '}
+                <span style={{ color: 'green', marginLeft: '1.8rem' }}>*</span>
+              </label>
               <InputReComponent
                 type={'text'}
                 name={'nombre'}
                 className={'profesor-add-form-input'}
-                placeholder={'Nombre'}
                 onChangeFuncion={(e) =>
                   handleChangeName(
                     e,
@@ -53,13 +55,15 @@ const AgregarProfesor = ({
               </p>
             </div>
             <div className="inputlabel">
-              <label htmlFor="emailInput">Email *</label>
+              <label htmlFor="emailInput" className="new-clase-add-form-label">
+                Email:{' '}
+                <span style={{ color: 'green', marginLeft: '1.8rem' }}>*</span>
+              </label>
               <InputReComponent
                 type={'text'}
                 name={'email'}
                 id={'emailInput'}
                 className={'profesor-add-form-input'}
-                placeholder={'Email'}
                 onChangeFuncion={(e) =>
                   handleChangeEmail(
                     e,
@@ -78,13 +82,15 @@ const AgregarProfesor = ({
               </p>
             </div>
             <div className="inputlabel">
-              <label htmlFor="telefonoInput">Teléfono *</label>
+              <label htmlFor="telefonoInput"className="new-clase-add-form-label">
+                Telefono:{' '}
+                <span style={{ color: 'green', marginLeft: '1.8rem' }}>*</span>
+              </label>
               <InputReComponent
                 type={'text'}
                 name={'telefono'}
                 id={'telefonoInput'}
                 className={'profesor-add-form-input'}
-                placeholder={'Telefono'}
                 onChangeFuncion={(e) =>
                   handleChangePhone(e, 'profesor-add-form-addBtn', true)
                 }
@@ -100,13 +106,15 @@ const AgregarProfesor = ({
               </p>
             </div>
             <div className="inputlabel">
-              <label htmlFor="valorHoraInput">Valor/Hora *</label>
+              <label htmlFor="valorHoraInput"className="new-clase-add-form-label">
+                Valor/Hora:{' '}
+                <span style={{ color: 'green', marginLeft: '1.8rem' }}>*</span>
+              </label>
               <InputReComponent
                 type={'number'}
                 name={'valorHora'}
                 id={'valorHoraInput'}
                 className={'profesor-add-form-input'}
-                placeholder={'Valor por hora'}
                 onChangeFuncion={(e) =>
                   handleChangeValorHora(e)
                 }
