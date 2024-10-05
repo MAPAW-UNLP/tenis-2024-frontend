@@ -25,48 +25,80 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { ordenarPorNombre } from 'components/Utils/Functions'
 
 import 'styles/home.css'
+import Dashboard from 'components/Dashboard/Dashboard'
+
+const horas = [
+  '8:00',
+  '8:30',
+  '9:00',
+  '9:30',
+  '10:00',
+  '10:30',
+  '11:00',
+  '11:30',
+  '12:00',
+  '12:30',
+  '13:00',
+  '13:30',
+  '14:00',
+  '14:30',
+  '15:00',
+  '15:30',
+  '16:00',
+  '16:30',
+  '17:00',
+  '17:30',
+  '18:00',
+  '18:30',
+  '19:00',
+  '19:30',
+  '20:00',
+  '20:30',
+  '21:00',
+]
+
+const horasObj = {
+  '8:00': 0,
+  '8:30': 0,
+  '9:00': 0,
+  '9:30': 0,
+  '10:00': 0,
+  '10:30': 0,
+  '11:00': 0,
+  '11:30': 0,
+  '12:00': 0,
+  '12:30': 0,
+  '13:00': 0,
+  '13:30': 0,
+  '14:00': 0,
+  '14:30': 0,
+  '15:00': 0,
+  '15:30': 0,
+  '16:00': 0,
+  '16:30': 0,
+  '17:00': 0,
+  '17:30': 0,
+  '18:00': 0,
+  '18:30': 0,
+  '19:00': 0,
+  '19:30': 0,
+  '20:00': 0,
+  '20:30': 0,
+  '21:00': 0,
+}
+
+const coloresCanchas = [
+  '#FFA500',
+  '#FFC0CB',
+  '#90EE90',
+  '#FFFFE0',
+  '#ADD8E6',
+  '#EE82EE',
+  '#94F5C5',
+]
 
 const Home = () => {
   //Todo esto es para manejar una fecha visible para el usuario
-  const horas = [
-    '8:00',
-    '8:30',
-    '9:00',
-    '9:30',
-    '10:00',
-    '10:30',
-    '11:00',
-    '11:30',
-    '12:00',
-    '12:30',
-    '13:00',
-    '13:30',
-    '14:00',
-    '14:30',
-    '15:00',
-    '15:30',
-    '16:00',
-    '16:30',
-    '17:00',
-    '17:30',
-    '18:00',
-    '18:30',
-    '19:00',
-    '19:30',
-    '20:00',
-    '20:30',
-    '21:00',
-  ]
-
-  const coloresCanchas = [
-    '#FFA500',
-    '#FFC0CB',
-    '#90EE90',
-    '#FFFFE0',
-    '#ADD8E6',
-    '#EE82EE',
-    '#94F5C5',
-  ]
 
   //cositas para formatear el dia
   const mes = ('0' + (new Date().getMonth() + 1)).slice(-2)
@@ -136,6 +168,29 @@ const Home = () => {
         setActReservas={setActReservas}
       />
       {/* <LoaderSpinner active={reservasLoader} containerClass={'homeLoader'} loaderClass={'homeLoaderSpinner'}/> */}
+
+      <Dashboard>
+        <Dashboard.Col first={true} sticky={true}>
+          <Dashboard.Row header={true} sticky={true}>
+            Horas
+          </Dashboard.Row>
+          {Object.keys(horasObj).map((hora) => (
+            <Dashboard.Row key={hora} header={true}>
+              {hora}
+            </Dashboard.Row>
+          ))}
+        </Dashboard.Col>
+        {canchas.map((cancha) => (
+          <Dashboard.Col>
+            <Dashboard.Row header={true} sticky={true}>
+              {cancha.nombre}
+            </Dashboard.Row>
+            <Dashboard.Row start={3} end={5}>
+              Foo
+            </Dashboard.Row>
+          </Dashboard.Col>
+        ))}
+      </Dashboard>
 
       <div id="table-component">
         <div id="table-options">
