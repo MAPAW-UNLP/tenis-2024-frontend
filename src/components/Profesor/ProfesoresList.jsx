@@ -42,6 +42,7 @@ export const ProfesoresList = ({
         <p>Nombre</p>
         <p>Telefono</p>
         <p>Email</p>
+        <p>Valor/Hora</p>
         <div id="profesores-searchbar">
           <FontAwesomeIcon id="magnify-icon" icon={faMagnifyingGlass} />
           <InputComponent

@@ -31,9 +31,9 @@ const AgregarProfesor = ({
           <h2>Nuevo Profesor</h2>
           <form id="alumno-add-form" onSubmit={submitProfesorForm}>
             <div className="inputlabel">
-              <label htmlFor="nombreInput" className="profesor-add-form-input">
+              <label htmlFor="nombreInput" className="profesor-add-form-label">
                 Nombre:{' '}
-                <span style={{ color: 'green', marginLeft: '1.8rem' }}>*</span>
+                <span style={{ color: 'green', marginLeft: '0.1rem' }}>*</span>
               </label>
               <InputReComponent
                 type={'text'}
@@ -56,9 +56,9 @@ const AgregarProfesor = ({
               </p>
             </div>
             <div className="inputlabel">
-              <label htmlFor="emailInput" className="profesor-add-form-input">
+              <label htmlFor="emailInput" className="profesor-add-form-label">
                 Email:{' '}
-                <span style={{ color: 'green', marginLeft: '1.8rem' }}>*</span>
+                <span style={{ color: 'green', marginLeft: '0.1rem' }}>*</span>
               </label>
               <InputReComponent
                 type={'text'}
@@ -83,9 +83,9 @@ const AgregarProfesor = ({
               </p>
             </div>
             <div className="inputlabel">
-              <label htmlFor="telefonoInput"className="profesor-add-form-input">
+              <label htmlFor="telefonoInput"className="profesor-add-form-label">
                 Telefono:{' '}
-                <span style={{ color: 'green', marginLeft: '1.8rem' }}>*</span>
+                <span style={{ color: 'green', marginLeft: '0.1rem' }}>*</span>
               </label>
               <InputReComponent
                 type={'text'}
@@ -107,9 +107,9 @@ const AgregarProfesor = ({
               </p>
             </div>
             <div className="inputlabel">
-              <label htmlFor="valorHoraInput"className="profesor-add-form-input">
+              <label htmlFor="valorHoraInput"className="profesor-add-form-label">
                 Valor/Hora:{' '}
-                <span style={{ color: 'green', marginLeft: '1.8rem' }}>*</span>
+                <span style={{ color: 'green', marginLeft: '0.1rem' }}>*</span>
               </label>
               <InputReComponent
                 type={'number'}
@@ -129,14 +129,14 @@ const AgregarProfesor = ({
               </p>
             </div>
             <button
-              id="clase-detail-guardar"
+              id="profesor-button-guardar"
               type="submit"
               disabled={!isFormValid} // Habilitar solo si el formulario es válido
             >
               Guardar
             </button>
             <button
-              id="clase-detail-cancelar"
+              id="profesor-button-cancelar"
               type="button"
               onClick={(e) => {
                 e.preventDefault(); // Evitar cualquier acción de envío

@@ -89,9 +89,9 @@ export const ProfesorDetail = ({
           </button>
           <h2>Editar Profesor</h2>
           <div className="inputlabel">
-            <label htmlFor="nombreInput" className="profesor-add-form-input">
+            <label htmlFor="nombreInput" className="profesor-edit-label">
               Nombre:{' '}
-              <span style={{ color: 'green', marginLeft: '1.8rem' }}>*</span>
+              <span style={{ color: 'green', marginLeft: '0.1rem' }}>*</span>
             </label>
             <InputReComponent
               type={'text'}
@@ -113,9 +113,9 @@ export const ProfesorDetail = ({
           </div>
 
           <div className="inputlabel">
-            <label htmlFor="emailInput" className="profesor-add-form-input">
+            <label htmlFor="emailInput" className="profesor-edit-label">
               Email:{' '}
-              <span style={{ color: 'green', marginLeft: '1.8rem' }}>*</span>
+              <span style={{ color: 'green', marginLeft: '0.1rem' }}>*</span>
             </label>
             <InputReComponent
               type={'text'}
@@ -137,9 +137,9 @@ export const ProfesorDetail = ({
           </div>
 
           <div className="inputlabel">
-            <label htmlFor="telefonoInput" className="profesor-add-form-input">
+            <label htmlFor="telefonoInput" className="profesor-edit-label">
               Telefono:{' '}
-              <span style={{ color: 'green', marginLeft: '1.8rem' }}>*</span>
+              <span style={{ color: 'green', marginLeft: '0.1rem' }}>*</span>
             </label>
             <InputReComponent
               type={'text'}
@@ -163,9 +163,9 @@ export const ProfesorDetail = ({
           </div>
 
           <div className="inputlabel">
-            <label htmlFor="valorHoraInput" className="profesor-add-form-input">
+            <label htmlFor="valorHoraInput" className="profesor-edit-label">
               Valor/Hora:{' '}
-              <span style={{ color: 'green', marginLeft: '1.8rem' }}>*</span>
+              <span style={{ color: 'green', marginLeft: '0.1rem' }}>*</span>
             </label>
             <InputReComponent
               type={'number'}
@@ -193,13 +193,13 @@ export const ProfesorDetail = ({
               loaderClass={'loader'}
             />
           ) : (
-            <div id="clase-detail-btns">
+            <div id="profesor-edit-buttons">
               {feedback.nombreFBCorrecto === false ||
                 feedback.telefonoFBCorrecto === false ||
                 feedback.emailFBCorrecto === false ||
                 feedback.valorHoraFB === false? (
                 <button
-                  id="clase-detail-disabled"
+                  id="profesor-edit-disabled"
                   type="button"
                   disabled={true}
                 >
@@ -207,12 +207,12 @@ export const ProfesorDetail = ({
                   Guardar{' '}
                 </button>
               ) : (
-                <button id="clase-detail-guardar" onClick={actualizar}>
+                <button id="profesor-button-guardar" onClick={actualizar}>
                   {' '}
                   Guardar{' '}
                 </button>
               )}
-              <button id="clase-detail-cancelar" onClick={handleCloseForm}>
+              <button id="profesor-button-cancelar" onClick={handleCloseForm}>
                 {' '}
                 Cancelar{' '}
               </button>
