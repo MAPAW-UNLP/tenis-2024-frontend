@@ -47,6 +47,7 @@ export const Ajustes = () => {
     const data = await response.json()
 
     if (data.status === 'ok') {
+      console.log('Tipo de clase creado exitosamente')
       fetchTipoClases() // Recargar los tipos de clase
     } else {
       console.error(data.message)
@@ -114,24 +115,18 @@ export const Ajustes = () => {
     if (!tipoClasePorBorrar) return
 
     setCargando(true)
-    try {
-      const response = await fetch(`${URL_BASE}bajaClase`, {
-        method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: tipoClasePorBorrar.id }),
-      })
-      const data = await response.json()
-      if (data.status === 'ok') {
-        console.log('Tipo de clase eliminado exitosamente')
-        fetchTipoClases() // Recargar los datos después de eliminar
-      } else {
-        console.error(data.message)
-      }
-    } catch (error) {
-      console.error('Error al eliminar el tipo de clase:', error)
-    } finally {
+    const response = await fetch(`${URL_BASE}bajaClase`, {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: tipoClasePorBorrar.id }),
+    })
+    const data = await response.json()
+    if (data.status === 'ok') {
+      console.log('Tipo de clase eliminado exitosamente')
+      fetchTipoClases() // Recargar los datos después de eliminar
+    } else {
+      console.error(data.message)
       setCargando(false)
-      fetchTipoClases()
     }
   }
 
