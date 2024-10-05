@@ -20,6 +20,7 @@ const AgregarProfesor = ({
     feedback.emailFB.isValid &&
     feedback.telefonoFB.isValid &&
     feedback.valorHoraFB.isValid; // Verificar que el 
+    console.log("Is Form Valid: ", isFormValid);
   return (
     <>
       {active && (
