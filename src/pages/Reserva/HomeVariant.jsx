@@ -13,10 +13,11 @@ import { getReservas } from 'api/reservas'
 // Components
 import LoaderSpinner from 'components/LoaderSpinner'
 import AlquilerDetails from 'components/Reserva/AlquilerDetails'
-import CalendarComponent from 'components/Reserva/CalendarComponent'
+import CalendarPicker from 'components/Reserva/CalendarComponent'
 import ClaseDetails from 'components/Reserva/ClaseDetails'
 import Reserva from 'components/Reserva/Reserva'
 import NavBar from 'pages/Navbar/NavBar'
+import Dashboard from 'components/Dashboard/Dashboard'
 
 // Fontawesome
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
@@ -25,7 +26,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { ordenarPorNombre } from 'components/Utils/Functions'
 
 import 'styles/home.css'
-import Dashboard from 'components/Dashboard/Dashboard'
+import moment from 'moment'
 
 const horas = [
   '8:00',
@@ -98,15 +99,7 @@ const coloresCanchas = [
 ]
 
 const Home = () => {
-  //Todo esto es para manejar una fecha visible para el usuario
-
-  //cositas para formatear el dia
-  const mes = ('0' + (new Date().getMonth() + 1)).slice(-2)
-  const dia = ('0' + new Date().getDate()).slice(-2)
-  const año = new Date().getFullYear()
-  const DateToday = `${año}-${mes}-${dia}`
-
-  const [today, setToday] = useState(DateToday)
+  const [selectedDate, setSelectedDate] = useState(Date.now())
 
   //alumnos de la clase
   const [alumnosDeLaClase, setAlumnosDeLaClase] = useState([])
@@ -136,7 +129,7 @@ const Home = () => {
   }, [])
 
   useEffect(() => {
-    getAlumnos().then((data) => setAlumnos(ordenarPorNombre(data.detail)))
+    getAlumnos().then((data) => setAlumnos(ordenarPorNombre(data)))
   }, [])
 
   useEffect(() => {
@@ -152,12 +145,12 @@ const Home = () => {
       {/* <VistaSemanal canchas={canchas} reservas={reservas}/> */}
       <AlquilerDetails
         reserva={reservaDetail}
-        diaReserva={today}
+        diaReserva={selectedDate}
         setReservaDetail={setReservaDetail}
       />
       <ClaseDetails
         reserva={claseDetail}
-        diaReserva={today}
+        diaReserva={selectedDate}
         setClaseDetail={setClaseDetail}
         alumnosDeLaClase={alumnosDeLaClase}
         setAlumnosDeLaClase={setAlumnosDeLaClase}
@@ -169,30 +162,61 @@ const Home = () => {
       />
       {/* <LoaderSpinner active={reservasLoader} containerClass={'homeLoader'} loaderClass={'homeLoaderSpinner'}/> */}
 
-      <Dashboard>
+      <Dashboard
+        header={
+          <div className="home__dashboard-header">
+            <button className="home__btn-add">
+              <FontAwesomeIcon icon={faPlusCircle} />
+            </button>
+            <div className="home__date">
+              <CalendarPicker
+                selectedDate={selectedDate}
+                setSelectedDate={setSelectedDate}
+              />
+            </div>
+          </div>
+        }
+      >
         <Dashboard.Col first={true} sticky={true}>
-          <Dashboard.Row header={true} sticky={true}>
-            Horas
+          <Dashboard.Row
+            header={true}
+            sticky={true}
+            className="home__hora--main"
+          >
+            Hora
           </Dashboard.Row>
-          {Object.keys(horasObj).map((hora) => (
-            <Dashboard.Row key={hora} header={true}>
+          {Object.keys(horasObj).map((hora, i) => (
+            <Dashboard.Row
+              key={hora}
+              header={true}
+              className={`home__hora ${i % 2 === 0 ? 'home__hora--hour' : 'home__hora--half'}`}
+            >
               {hora}
             </Dashboard.Row>
           ))}
         </Dashboard.Col>
-        {canchas.map((cancha) => (
-          <Dashboard.Col>
-            <Dashboard.Row header={true} sticky={true}>
+        {canchas.map((cancha, i) => (
+          <Dashboard.Col
+            key={cancha.nombre}
+            style={{
+              backgroundColor: coloresCanchas[i % (canchas.length - 1)],
+            }}
+          >
+            <Dashboard.Row
+              header={true}
+              sticky={true}
+              className="home__cancha"
+              style={{
+                backgroundColor: coloresCanchas[i % (canchas.length - 1)],
+              }}
+            >
               {cancha.nombre}
-            </Dashboard.Row>
-            <Dashboard.Row start={3} end={5}>
-              Foo
             </Dashboard.Row>
           </Dashboard.Col>
         ))}
       </Dashboard>
 
-      <div id="table-component">
+      <div id="table-component" class>
         <div id="table-options">
           <button
             id="home-addReservaBtn"
@@ -203,7 +227,7 @@ const Home = () => {
           </button>
 
           <div id="table-panel-date">
-            <CalendarComponent today={today} setToday={setToday} />
+            <CalendarPicker today={selectedDate} setToday={setSelectedDate} />
           </div>
           {/* Aca iria el selector */}
         </div>
@@ -254,7 +278,7 @@ const Home = () => {
               key={el.reservaId}
               datos={el}
               canchas={canchas}
-              today={today}
+              today={moment(selectedDate).format('YYYY-MM-DD')}
               setReservaDetail={setReservaDetail}
               setClaseDetail={setClaseDetail}
               setAlumnos={setAlumnosDeLaClase}

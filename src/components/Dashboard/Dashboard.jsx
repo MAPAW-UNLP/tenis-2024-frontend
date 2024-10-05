@@ -1,8 +1,9 @@
 import './Dashboard.css'
 
-function Dashboard({ children }) {
+function Dashboard({ header, children }) {
   return (
     <div className="dashboard-container">
+      {header}
       <div className="dashboard-wrapper">
         <div className="dashboard">{children}</div>
       </div>
