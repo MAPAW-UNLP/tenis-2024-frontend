@@ -37,13 +37,14 @@ const horas = [
 export default function ReservaDashboardItem({ reserva }) {
   // Uso useMemo para evitar que estas cuentas se repitan cada vez que se
   // re-renderiza el componente
-  const { height, top, backgroundColor } = useMemo(() => {
+  const style = useMemo(() => {
     const indexIni = horas.indexOf(reserva.horaIni) + 1
     const indexFin = horas.indexOf(reserva.horaFin) + 1
-    const top = `${CELL_HEIGHT * indexIni}rem`
-    const height = `${CELL_HEIGHT * (indexFin - indexIni) - 0.125}rem`
-    const backgroundColor = reserva.tipo === 'ALQUILER' ? '#336699' : '#339967'
-    return { top, height, backgroundColor }
+    return {
+      top: `${CELL_HEIGHT * indexIni}rem`,
+      height: `${CELL_HEIGHT * (indexFin - indexIni) - 0.125}rem`,
+      backgroundColor: reserva.tipo === 'ALQUILER' ? '#336699' : '#339967',
+    }
   }, [reserva.horaFin, reserva.horaIni, reserva.tipo])
 
   const itemRef = useRef(null)
@@ -57,13 +58,13 @@ export default function ReservaDashboardItem({ reserva }) {
   }
 
   function handleMouseLeave() {
-    itemRef.current.style.height = height
+    itemRef.current.style.height = style.height
   }
 
   return (
     <div
       className="item-reserva"
-      style={{ top, height, backgroundColor }}
+      style={style}
       ref={itemRef}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}

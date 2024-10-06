@@ -35,7 +35,6 @@
 
 .dashboard {
   display: flex;
-  gap: 1px;
   min-width: fit-content;
 }
 

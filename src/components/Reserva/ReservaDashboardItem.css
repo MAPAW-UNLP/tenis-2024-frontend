@@ -1,8 +1,8 @@
 .item-reserva {
   position: absolute;
   content: '';
-  left: 0;
-  width: 100%;
+  left: 2px;
+  width: calc(100% - 4px);
   border-radius: 0.5rem;
   padding: 0.5rem;
   overflow: hidden;
