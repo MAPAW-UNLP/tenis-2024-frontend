@@ -3,9 +3,11 @@ import './Dashboard.css'
 function Dashboard({ header, children }) {
   return (
     <div className="dashboard-container">
-      <div className="dashboard-header">{header}</div>
-      <div className="dashboard-wrapper">
-        <div className="dashboard">{children}</div>
+      <div style={{ borderRadius: '1rem 1rem 0 0', overflow: 'hidden' }}>
+        <div className="dashboard-header">{header}</div>
+        <div className="dashboard-wrapper">
+          <div className="dashboard">{children}</div>
+        </div>
       </div>
     </div>
   )

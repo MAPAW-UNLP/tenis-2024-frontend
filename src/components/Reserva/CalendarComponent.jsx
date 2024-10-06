@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import DatePicker, { registerLocale } from 'react-datepicker'
 import moment from 'moment'
 import es from 'date-fns/locale/es'
