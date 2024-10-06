@@ -4,6 +4,7 @@ import { useEffect } from 'react'
 
 /* Components */
 import LinkItem from '../../components/LinkItem'
+import ProfileSideBar from '../../components/ProfileMenu/ProfileSideBar'
 
 import '../../styles/navbar.css'
 
@@ -84,10 +85,7 @@ const NavBar = ({ title }) => {
             </>
           )}
           <li>
-            {' '}
-            <Link to="/" className="linkCerrarSesion" onClick={logOut}>
-              Cerrar Sesión{' '}
-            </Link>
+            <ProfileSideBar />
           </li>
         </ul>
       </nav>
