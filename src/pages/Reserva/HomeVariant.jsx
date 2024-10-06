@@ -140,7 +140,10 @@ const Home = () => {
       <Dashboard
         header={
           <div className="home__dashboard-header">
-            <button className="home__btn-add">
+            <button
+              className="home__btn-add"
+              onClick={() => navigate('../nuevaReserva')}
+            >
               <FontAwesomeIcon icon={faPlusCircle} />
             </button>
             <div className="home__date">
