@@ -180,6 +180,7 @@ const ClaseDetails = ({
     )
   }
 
+  // TODO: Refactorizar para usar modal.
   return (
     <>
       {reserva.canchaNombre !== undefined ? (
