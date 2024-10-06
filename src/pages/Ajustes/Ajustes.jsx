@@ -48,13 +48,11 @@ export const Ajustes = () => {
 
     if (data.status === 'ok') {
       console.log('Tipo de clase creado exitosamente')
-      fetchTipoClases() // Recargar los tipos de clase
+      await fetchTipoClases() // Recargar los tipos de clase
     } else {
       console.error(data.message)
+      setCargando(false)
     }
-
-    setCargando(false)
-    fetchTipoClases()
   }
 
   const handleTipoClaseChange = (tipo, valor) => {
@@ -88,8 +86,7 @@ export const Ajustes = () => {
         console.error('Error al actualizar el importe:', error)
       }
     }
-    setCargando(false)
-    fetchTipoClases()
+    await fetchTipoClases()
   }
 
   const handleEliminarTipoClase = (tipoClase) => {
@@ -123,7 +120,7 @@ export const Ajustes = () => {
     const data = await response.json()
     if (data.status === 'ok') {
       console.log('Tipo de clase eliminado exitosamente')
-      fetchTipoClases() // Recargar los datos después de eliminar
+      await fetchTipoClases() // Recargar los datos después de eliminar
     } else {
       console.error(data.message)
       setCargando(false)
