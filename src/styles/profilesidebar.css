@@ -1,0 +1,64 @@
+/* Sidebar.css */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #fc9e33;
+  color: white;
+  transform: translateY(-100%);
+  transition: transform 0.3s ease;
+  z-index: 1000;
+}
+
+.sidebar.open {
+  transform: translateY(0);
+}
+
+.burger-button {
+  position: fixed;
+  background: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 24px;
+  z-index: 1001;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: white; /* Make the close button white */
+  cursor: pointer;
+  position: absolute;
+  top: 15px; /* Position at the top */
+  right: 15px; /* Position at the right */
+  z-index: 1001; /* Ensure the close button is above other elements */
+}
+
+ul {
+  list-style-type: none;
+  padding: 20px;
+}
+
+li {
+  margin: 10px 0;
+}
+
+.sub-menu {
+  list-style-type: none;
+  display: block; /* Show sub-menu when item is clicked */
+  background-color: rgb(255, 255, 255);
+  padding: 0;
+}
+
+.sub-menu li {
+  padding: 2px 0; /* Space between sub-menu items */
+  color: black;
+}
+.sub-menu li:hover {
+  background-color: #fc9e33;
+}
+
