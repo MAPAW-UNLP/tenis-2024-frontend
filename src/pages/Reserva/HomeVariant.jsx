@@ -118,7 +118,6 @@ const Home = () => {
         isVisible={alquilerDetailsIsVisible}
         onClose={() => setAlquilerDetailsIsVisible(false)}
         reserva={reservaDetail}
-        diaReserva={selectedDate}
         setReservaDetail={setReservaDetail}
       />
       <ClaseDetails
