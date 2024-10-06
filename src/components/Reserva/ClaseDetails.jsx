@@ -59,15 +59,15 @@ const ClaseDetails = ({
   }
 
   const handleEditProfe = (e) => {
-    console.log(e.target.value)
+    // console.log(e.target.value)
     /*setProfeClase(parseInt(e.target.value));*/
     setActProfe(parseInt(e.target.value))
   }
 
   const handleEditAlumnos = (e) => {
-    console.log('Selecciono alumnos ', e)
+    // console.log('Selecciono alumnos ', e)
     setAlumnosDeLaClase(e.map((i) => i.value))
-    console.log(alumnosDeLaClase)
+    // console.log(alumnosDeLaClase)
   }
 
   const formateoFecha = (fecha) => {
@@ -86,7 +86,7 @@ const ClaseDetails = ({
     setActive(true)
     const background = document.getElementById('clase-detail-futuro')
     const componente = document.getElementById('clase-btn-background')
-    console.log(componente)
+    // console.log(componente)
     background.classList.add('active')
     componente.classList.add('active')
   }
@@ -98,7 +98,7 @@ const ClaseDetails = ({
     const componente = document.getElementById('addAlumnosDiv')
     const father = document.getElementById('clase-detail-component')
     const alumnosList = document.getElementById('alumnosList')
-    console.log(componente)
+    // console.log(componente)
     father.classList.add('activeAlumnos')
     alumnosList.classList.add('activeAlumnos')
     background.classList.add('activeAlumnos')
@@ -113,7 +113,7 @@ const ClaseDetails = ({
     const componente = document.getElementById('addAlumnosDiv')
     const father = document.getElementById('clase-detail-component')
     const alumnosList = document.getElementById('alumnosList')
-    console.log(componente)
+    // console.log(componente)
     father.classList.remove('activeAlumnos')
     alumnosList.classList.remove('activeAlumnos')
     background.classList.remove('activeAlumnos')
@@ -152,7 +152,7 @@ const ClaseDetails = ({
       ? params.append('persona_id', profeDefault)
       : params.append('persona_id', actProfe)
     params.append('grupo_ids', alumnos_ID)
-    console.log(params)
+    // console.log(params)
 
     const requestOptions = {
       method: 'PUT',
@@ -169,7 +169,7 @@ const ClaseDetails = ({
     const params = new URLSearchParams()
     params.append('reserva_id', reserva.reservaId)
     params.append('persona_id', actProfe)
-    console.log('Acutalizando las reservas')
+    // console.log('Acutalizando las reservas')
 
     const requestOptions = {
       method: 'PUT',
@@ -387,7 +387,7 @@ const ClaseDetails = ({
       ) : (
         ''
       )}
-      {console.log(reserva)}
+      {/* {console.log(reserva)} */}
     </>
   )
 }

@@ -37,29 +37,6 @@ const CalendarPicker = ({ selectedDate, setSelectedDate }) => {
       <button className="calendar-picker__btn" onClick={selectTomorrow}>
         <FontAwesomeIcon icon={faCaretRight} />
       </button>
-
-      {/*
-      <button onClick={yesterday}>
-        {' '}
-        <FontAwesomeIcon icon={faCaretLeft} />
-      </button>
-      <DatePicker
-        id="date"
-        selected={startDate}
-        onChange={(date) => {
-          setStartDate(date)
-          setDate(date)
-        }}
-        locale="es"
-        className="pickers"
-        dateFormat="dd 'de' MMMM"
-        withPortal
-      />
-      <button onClick={tomorrow}>
-        {' '}
-        <FontAwesomeIcon icon={faCaretRight} />
-      </button>
-      */}
     </div>
   )
 }

@@ -3,7 +3,7 @@ import './Dashboard.css'
 function Dashboard({ header, children }) {
   return (
     <div className="dashboard-container">
-      {header}
+      <div className="dashboard-header">{header}</div>
       <div className="dashboard-wrapper">
         <div className="dashboard">{children}</div>
       </div>
@@ -12,7 +12,7 @@ function Dashboard({ header, children }) {
 }
 
 /**
- * @typedef {React.HTMLProps<HTMLDivElement> & {
+ * @typedef {HTMLDivElement & {
  *   first?: boolean;
  *   sticky?: boolean;
  *   children: React.ReactNode;
@@ -35,7 +35,7 @@ function Col({ first, sticky, children, ...props }) {
 }
 
 /**
- * @typedef {React.HTMLProps<HTMLDivElement> & {
+ * @typedef {HTMLDivElement & {
  *   header?: boolean;
  *   sticky?: boolean;
  *   start?: number;

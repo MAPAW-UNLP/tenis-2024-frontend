@@ -1,0 +1,40 @@
+.item-reserva {
+  position: absolute;
+  content: '';
+  left: 0;
+  width: 100%;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 1rem 1rem rgba(0, 0, 0, 0);
+  transition: all 0.2s ease-in-out;
+}
+
+.item-reserva:hover {
+  z-index: 1;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
+}
+
+.item-reserva__data {
+  position: sticky;
+  bottom: 0;
+  left: 0;
+}
+
+.item-reserva__titular {
+  color: var(--accent-yellow);
+  font-family: var(--normal-text);
+  font-size: 1.2em;
+  font-weight: bolder;
+  margin-bottom: 0.125rem;
+}
+
+.item-reserva__rol {
+  color: var(--neutral-white-text);
+  font-weight: bolder;
+  margin-bottom: 0.125rem;
+}
+
+.item-reserva__horarios {
+  color: var(--accent-yellow);
+}

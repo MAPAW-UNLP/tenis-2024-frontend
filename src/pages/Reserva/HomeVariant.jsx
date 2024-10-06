@@ -1,8 +1,7 @@
-// React
+// Libraries
 import { useEffect, useState } from 'react'
-
-// React Router
 import { useNavigate } from 'react-router-dom'
+import moment from 'moment'
 
 // API
 import { getAlumnos } from 'api/alumnos'
@@ -18,21 +17,20 @@ import ClaseDetails from 'components/Reserva/ClaseDetails'
 import Reserva from 'components/Reserva/Reserva'
 import NavBar from 'pages/Navbar/NavBar'
 import Dashboard from 'components/Dashboard/Dashboard'
+import ReservaDashboardItem from 'components/Reserva/ReservaDashboardItem'
+import { ordenarPorNombre } from 'components/Utils/Functions'
 
 // Fontawesome
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-import { ordenarPorNombre } from 'components/Utils/Functions'
-
 import 'styles/home.css'
-import moment from 'moment'
 
 const horas = [
-  '8:00',
-  '8:30',
-  '9:00',
-  '9:30',
+  '08:00',
+  '08:30',
+  '09:00',
+  '09:30',
   '10:00',
   '10:30',
   '11:00',
@@ -58,41 +56,10 @@ const horas = [
   '21:00',
 ]
 
-const horasObj = {
-  '8:00': 0,
-  '8:30': 0,
-  '9:00': 0,
-  '9:30': 0,
-  '10:00': 0,
-  '10:30': 0,
-  '11:00': 0,
-  '11:30': 0,
-  '12:00': 0,
-  '12:30': 0,
-  '13:00': 0,
-  '13:30': 0,
-  '14:00': 0,
-  '14:30': 0,
-  '15:00': 0,
-  '15:30': 0,
-  '16:00': 0,
-  '16:30': 0,
-  '17:00': 0,
-  '17:30': 0,
-  '18:00': 0,
-  '18:30': 0,
-  '19:00': 0,
-  '19:30': 0,
-  '20:00': 0,
-  '20:30': 0,
-  '21:00': 0,
-}
-
 const coloresCanchas = [
   '#FFA500',
   '#FFC0CB',
   '#90EE90',
-  '#FFFFE0',
   '#ADD8E6',
   '#EE82EE',
   '#94F5C5',
@@ -100,6 +67,7 @@ const coloresCanchas = [
 
 const Home = () => {
   const [selectedDate, setSelectedDate] = useState(Date.now())
+  const [reservasDelDia, setReservasDelDia] = useState([])
 
   //alumnos de la clase
   const [alumnosDeLaClase, setAlumnosDeLaClase] = useState([])
@@ -114,7 +82,7 @@ const Home = () => {
 
   // Refactor desde home para reservas
   const [reservas, setReservas] = useState([])
-  const [reservasIsLoading, setReservasIsLoading] = useState(false) // Spinner
+  const [reservasIsLoading, setReservasIsLoading] = useState(true) // Spinner
   const [actReservas, setActReservas] = useState(false)
   const [canchas, setCanchas] = useState([])
   const [alumnos, setAlumnos] = useState([])
@@ -122,22 +90,29 @@ const Home = () => {
 
   useEffect(() => {
     getProfesores().then((data) => setProfesores(ordenarPorNombre(data)))
-  }, [])
-
-  useEffect(() => {
     getCanchas().then((data) => setCanchas(data.detail))
-  }, [])
-
-  useEffect(() => {
     getAlumnos().then((data) => setAlumnos(ordenarPorNombre(data)))
-  }, [])
-
-  useEffect(() => {
     setReservasIsLoading(true)
     getReservas()
       .then((data) => setReservas(data.detail))
       .then(() => setReservasIsLoading(false))
   }, [])
+
+  useEffect(() => {
+    if (reservasIsLoading) return
+
+    const reservasDia = reservas.reduce((acc, reserva) => {
+      if (reserva.fecha === moment(selectedDate).format('YYYY-MM-DD')) {
+        if (!acc[reserva.canchaId]) {
+          acc[reserva.canchaId] = []
+        }
+        acc[reserva.canchaId].push(reserva)
+      }
+      return acc
+    }, {})
+
+    setReservasDelDia(reservasDia)
+  }, [reservas, reservasIsLoading, selectedDate])
 
   return (
     <div id="home-component">
@@ -185,7 +160,7 @@ const Home = () => {
           >
             Hora
           </Dashboard.Row>
-          {Object.keys(horasObj).map((hora, i) => (
+          {horas.map((hora, i) => (
             <Dashboard.Row
               key={hora}
               header={true}
@@ -199,7 +174,7 @@ const Home = () => {
           <Dashboard.Col
             key={cancha.nombre}
             style={{
-              backgroundColor: coloresCanchas[i % (canchas.length - 1)],
+              backgroundColor: coloresCanchas[i % (coloresCanchas.length - 1)],
             }}
           >
             <Dashboard.Row
@@ -207,16 +182,30 @@ const Home = () => {
               sticky={true}
               className="home__cancha"
               style={{
-                backgroundColor: coloresCanchas[i % (canchas.length - 1)],
+                backgroundColor:
+                  coloresCanchas[i % (coloresCanchas.length - 1)],
               }}
             >
               {cancha.nombre}
             </Dashboard.Row>
+
+            {/* Rellenar con celdas vacías para armar la grilla  */}
+            {horas.map((hora) => (
+              <Dashboard.Row key={`${cancha.nombre}-${hora}`}></Dashboard.Row>
+            ))}
+            {/* Mostrar los eventos para esa cancha */}
+            {reservasDelDia[cancha.id] &&
+              reservasDelDia[cancha.id].map((reserva) => (
+                <ReservaDashboardItem
+                  key={reserva.reservaId}
+                  reserva={reserva}
+                />
+              ))}
           </Dashboard.Col>
         ))}
       </Dashboard>
 
-      <div id="table-component" class>
+      <div id="table-component">
         <div id="table-options">
           <button
             id="home-addReservaBtn"
