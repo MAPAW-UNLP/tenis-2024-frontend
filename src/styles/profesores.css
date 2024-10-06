@@ -44,8 +44,8 @@
 }
 
 #profesores-searchbar {
-  display: flex;
-  align-items: center; /* Center align the items inside the search bar */
+  position: relative;
+  width: 90%;
 }
 
 #profesores-searchbar input {
