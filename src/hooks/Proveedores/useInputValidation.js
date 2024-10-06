@@ -62,6 +62,9 @@ const useInputValidation = (
 
   const validatePartialName = (nombre) => {
     const pattern = /^[A-Za-z\s]+$/ // Solo letras y espacios
+    if (nombre === '') {
+      return { valid: true, message: 'Se registrara el nombre anterior.' }
+    }
     if (!pattern.test(nombre)) {
       return { valid: false, message: 'El nombre solo debe contener letras.' }
     } else if (nombre.length > 30) {
@@ -75,6 +78,9 @@ const useInputValidation = (
 
   const validatePartialTelefono = (telefono) => {
     const pattern = /^\d+$/ // Solo números
+    if (telefono === '') {
+      return { valid: true, message: 'Se registrara el telefono anterior.' }
+    }
     if (!pattern.test(telefono)) {
       return {
         valid: false,

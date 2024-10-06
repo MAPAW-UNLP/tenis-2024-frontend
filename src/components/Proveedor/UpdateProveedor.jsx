@@ -34,6 +34,7 @@ export const UpdateProveedor = ({ handleCloseForm, proveedor = {} }) => {
     'telefono',
     setProveedorForm,
     'telefono',
+    proveedor,
     partial
   )
 
@@ -43,8 +44,12 @@ export const UpdateProveedor = ({ handleCloseForm, proveedor = {} }) => {
     setLoading(true)
 
     const data = {
-      nombre: proveedorForm.nombre,
-      telefono: proveedorForm.telefono,
+      nombre:
+        proveedorForm.nombre !== '' ? proveedorForm.nombre : proveedor.nombre,
+      telefono:
+        proveedorForm.telefono !== ''
+          ? proveedorForm.telefono
+          : proveedor.telefono,
     }
 
     const requestOptions = {
