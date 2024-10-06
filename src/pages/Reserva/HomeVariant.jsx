@@ -186,7 +186,13 @@ const Home = () => {
                   coloresCanchas[i % (coloresCanchas.length - 1)],
               }}
             >
-              {cancha.nombre}
+              <span
+                className="text-ellipsis"
+                style={{ maxWidth: '100%' }}
+                title={cancha.nombre}
+              >
+                {cancha.nombre}
+              </span>
             </Dashboard.Row>
 
             {/* Rellenar con celdas vacías para armar la grilla  */}

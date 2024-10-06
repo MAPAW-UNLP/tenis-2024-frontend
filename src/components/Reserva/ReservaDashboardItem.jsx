@@ -68,9 +68,17 @@ export default function ReservaDashboardItem({ reserva }) {
       ref={itemRef}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      onClick={onClick}
     >
       <div className="item-reserva__data">
-        <p className="item-reserva__titular">{reserva.titular?.nombre}</p>
+        {reserva.titular && (
+          <p
+            className="item-reserva__titular text-ellipsis"
+            title={reserva.titular.nombre}
+          >
+            {reserva.titular.nombre}
+          </p>
+        )}
         <p className="item-reserva__rol">
           {reserva.tipo === 'ALQUILER' ? 'Cliente' : 'Profesor'}
         </p>

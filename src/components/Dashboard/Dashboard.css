@@ -51,6 +51,12 @@
   min-width: 6rem;
 }
 
+.dashboard__row {
+  min-width: 100%;
+  width: 100%;
+  padding: 0.25rem 0.5rem;
+}
+
 .dashboard__row:nth-child(odd) {
   box-shadow: inset 0px -1px 0px hsla(0, 0%, 96%, 0.85);
 }
