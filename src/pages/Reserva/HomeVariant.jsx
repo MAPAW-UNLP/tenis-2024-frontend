@@ -67,31 +67,28 @@ const coloresCanchas = [
 
 const Home = () => {
   const [selectedDate, setSelectedDate] = useState(Date.now())
-  const [reservasDelDia, setReservasDelDia] = useState([])
-
-  //alumnos de la clase
-  const [alumnosDeLaClase, setAlumnosDeLaClase] = useState([])
-
-  const [profeClase, setProfeClase] = useState('')
-
-  //Details
-  const [reservaDetail, setReservaDetail] = useState({})
-  const [claseDetail, setClaseDetail] = useState({})
-
-  const navigate = useNavigate()
-
-  // Refactor desde home para reservas
+  const [canchas, setCanchas] = useState([])
   const [reservas, setReservas] = useState([])
   const [reservasIsLoading, setReservasIsLoading] = useState(true) // Spinner
+  const [reservasDelDia, setReservasDelDia] = useState([])
+
+  const [reservaDetail, setReservaDetail] = useState({})
+  const [alquilerDetailsIsVisible, setAlquilerDetailsIsVisible] =
+    useState(false)
+
+  const [alumnosDeLaClase, setAlumnosDeLaClase] = useState([])
+  const [profeClase, setProfeClase] = useState('')
+  const [claseDetail, setClaseDetail] = useState({})
   const [actReservas, setActReservas] = useState(false)
-  const [canchas, setCanchas] = useState([])
   const [alumnos, setAlumnos] = useState([])
   const [profesores, setProfesores] = useState([])
 
+  const navigate = useNavigate()
+
   useEffect(() => {
     getProfesores().then((data) => setProfesores(ordenarPorNombre(data)))
-    getCanchas().then((data) => setCanchas(data.detail))
     getAlumnos().then((data) => setAlumnos(ordenarPorNombre(data)))
+    getCanchas().then((data) => setCanchas(data.detail))
     setReservasIsLoading(true)
     getReservas()
       .then((data) => setReservas(data.detail))
@@ -117,8 +114,9 @@ const Home = () => {
   return (
     <div id="home-component">
       <NavBar title={'Tennis app'} />
-      {/* <VistaSemanal canchas={canchas} reservas={reservas}/> */}
       <AlquilerDetails
+        isVisible={alquilerDetailsIsVisible}
+        onClose={() => setAlquilerDetailsIsVisible(false)}
         reserva={reservaDetail}
         diaReserva={selectedDate}
         setReservaDetail={setReservaDetail}
@@ -208,6 +206,14 @@ const Home = () => {
                 <ReservaDashboardItem
                   key={reserva.reservaId}
                   reserva={reserva}
+                  onClick={() => {
+                    setReservaDetail(reserva)
+                    if (reserva.tipo === 'ALQUILER') {
+                      setAlquilerDetailsIsVisible(true)
+                    } else {
+                      // TODO ver qué hacer con el otro tipo
+                    }
+                  }}
                 />
               ))}
           </Dashboard.Col>

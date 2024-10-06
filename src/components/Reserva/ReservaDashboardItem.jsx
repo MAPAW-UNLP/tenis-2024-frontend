@@ -34,7 +34,7 @@ const horas = [
   '21:00',
 ]
 
-export default function ReservaDashboardItem({ reserva }) {
+export default function ReservaDashboardItem({ reserva, onClick }) {
   // Uso useMemo para evitar que estas cuentas se repitan cada vez que se
   // re-renderiza el componente
   const style = useMemo(() => {
@@ -64,7 +64,7 @@ export default function ReservaDashboardItem({ reserva }) {
   return (
     <div
       className="item-reserva"
-      style={style}
+      style={{ ...style, cursor: onClick ? 'pointer' : 'default' }}
       ref={itemRef}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
