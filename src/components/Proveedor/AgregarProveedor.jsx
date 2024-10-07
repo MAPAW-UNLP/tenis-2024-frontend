@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import InputReComponent from '../Utils/InputReComponent';
 import useInputValidation from 'hooks/Proveedores/useInputValidation';
 
-function AgregarProveedor({ handleCloseForm, proveedores = [] }) {
+function AgregarProveedor({ handleCloseForm, proveedores = [], updateList = () => {}}) {
 
     const [proveedorForm, setProveedorForm] = useState({
         nombre: '',
@@ -35,7 +35,7 @@ function AgregarProveedor({ handleCloseForm, proveedores = [] }) {
         e.preventDefault();
 
         setLoading(true);
-        
+
         const data = {
             nombre: proveedorForm.nombre,
             telefono: proveedorForm.telefono,
@@ -54,6 +54,7 @@ function AgregarProveedor({ handleCloseForm, proveedores = [] }) {
                     setShowSuccessPopup(false);
                     handleCloseForm();
                     setLoading(false);
+                    updateList()
                 }, 4000))
     };
 
@@ -92,9 +93,14 @@ function AgregarProveedor({ handleCloseForm, proveedores = [] }) {
                         {telefonoFeedback.text}
                     </p>
                 </div>
-                <button disabled={habilitarBoton()} id="proveedor-add-form-addBtn" type="submit">
-                    <p className="textoBotonAceptar">Agregar</p>
-                </button>
+                <div className="button-container">
+                    <button disabled={habilitarBoton()} id="proveedor-add-form-addBtn" type="submit">
+                        <p className="textoBotonAceptar">Agregar</p>
+                    </button>
+                    <button onClick={handleCloseForm} id="proveedor-add-form-cancelBtn">
+                        <p className="textoBotonCancelar">Cancelar</p>
+                    </button>
+                </div>
                 {loading && (
                     <div className="spinner"></div>
                 )}

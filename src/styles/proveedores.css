@@ -3,6 +3,7 @@
   margin: 0 auto;
   margin-bottom: 1.2em;
   padding: 0.8em;
+  height: 300px;
 }
 
 .table-head-proveedores {
@@ -50,11 +51,14 @@
 }
 
 .proveedores-item-list p {
-  font-family: var(--title-text);
-  color: var(--neutral-white-text);
-  text-align: center;
-  width: 200px;
-  font-size: 25px;
+    font-family: var(--title-text);
+    color: var(--neutral-white-text);
+    text-align: center;
+    width: 200px;
+    font-size: 25px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .proveedores-item-list:hover {
@@ -70,15 +74,15 @@
 }
 
 .btn-agregar-proveedor {
-  background-color: #7cbd1e;
-  color: #fff;
-  width: 300px;
-  height: 50px;
-  font-size: 20px;
-  border: none;
-  border-radius: 10px;
-  font-family: var(--title-text);
-  cursor: pointer;
+    background-color: #7CBD1E;
+    color: #fff;
+    width: 300px;
+    height: 50px;
+    font-size: 20px;
+    border: none;
+    border-radius: 10px;
+    font-family: var(--title-text);
+    cursor: pointer;
 }
 
 .list-options-header {
@@ -326,10 +330,33 @@
   background-color: var(--neutral-black);
 }
 
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+#proveedor-add-form-addBtn,
+#proveedor-add-form-cancelBtn {
+    height: 45px;
+    width: 220px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 8px 14px rgba(0, 0, 0, 0.2),
+        0 -8px 14px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.3s ease;
+}
+
 #proveedor-add-form-addBtn {
   width: 100%;
   border-radius: 0px 0px 20px 20px;
-  background-color: #7cbd1e;
+  background-color: #7CBD1E;
   height: 5rem;
   border: none;
   border-bottom-left-radius: 20px;
@@ -337,8 +364,23 @@
   cursor: pointer;
 }
 
+#proveedor-add-form-cancelBtn {
+    background-color: #ffffff;
+}
+
+#proveedor-add-form-addBtn:hover,
+#proveedor-add-form-cancelBtn:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4),
+        0 -4px 8px rgba(0, 0, 0, 0.4);
+}
+
 #proveedor-add-form-addBtn:disabled {
   background-color: var(--neutral-black);
+}
+
+.btnSelectPage {
+    padding: 10px;
+    background-color: #7caee1;
 }
 
 .inputlabel {
@@ -418,28 +460,6 @@
   color: black;
 }
 
-.textoBotonAceptar {
-  color: #fff;
-  text-align: center;
-  font-family: var(--title-text);
-  font-size: 48px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 50px;
-  /* 104.167% */
-}
-
-.textoFormulario {
-  color: #000;
-  font-family: var(--title-text);
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 300;
-  line-height: 50px;
-  padding-left: 30px;
-  /* 250% */
-}
-
 .proveedor-delete-modal {
   background-color: var(--neutral-white);
   display: flex;
@@ -477,4 +497,31 @@
 .trash-icon {
   color: #fff;
   /* font-size: 1em; */
+}
+
+.textoBotonAceptar,
+.textoBotonCancelar,
+.textoFormulario {
+    font-family: var(--title-text);
+    font-size: 20px;
+    font-style: normal;
+    line-height: 50px;
+}
+
+.textoBotonAceptar {
+    color: white;
+    font-weight: 700; 
+    text-align: center; 
+}
+
+.textoBotonCancelar {
+    color: black;
+    font-weight: 700; 
+    text-align: center; 
+}
+
+.textoFormulario {
+    color: #000;
+    font-weight: 300; 
+    padding-left: 30px; 
 }
