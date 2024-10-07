@@ -1,14 +1,15 @@
 import Button from './Button'
 
-const EliminarProveedor = ({ idProveedor, isOpen, handleClose }) => {
+const EliminarProveedor = ({ idProveedor, isOpen, handleClose, upgrade = () => {} }) => {
   const handleDelete = async () => {
-    handleClose()
     const deletedProveedor = await fetch(
       `http://localhost:8083/api/proveedor/${idProveedor}`,
       {
         method: 'DELETE',
       }
     )
+    handleClose()
+    upgrade()
   }
 
   if (!isOpen) return null

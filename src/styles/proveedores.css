@@ -354,10 +354,7 @@
 }
 
 #proveedor-add-form-addBtn {
-  width: 100%;
-  border-radius: 0px 0px 20px 20px;
   background-color: #7CBD1E;
-  height: 5rem;
   border: none;
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
