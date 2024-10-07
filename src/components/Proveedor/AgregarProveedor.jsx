@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import InputReComponent from '../Utils/InputReComponent';
 import useInputValidation from 'hooks/Proveedores/useInputValidation';
 
-function AgregarProveedor({ handleCloseForm, proveedores = [] }) {
+function AgregarProveedor({ handleCloseForm, proveedores = [], updateList = () => {}}) {
 
     const [proveedorForm, setProveedorForm] = useState({
         nombre: '',
@@ -54,6 +54,7 @@ function AgregarProveedor({ handleCloseForm, proveedores = [] }) {
                     setShowSuccessPopup(false);
                     handleCloseForm();
                     setLoading(false);
+                    updateList()
                 }, 4000))
     };
 
