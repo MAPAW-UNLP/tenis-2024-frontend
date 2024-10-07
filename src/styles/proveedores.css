@@ -203,6 +203,7 @@
     0% {
         transform: rotate(0deg);
     }
+
     100% {
         transform: rotate(360deg);
     }
@@ -233,14 +234,17 @@
         opacity: 0;
         transform: translateX(-50%) translateY(-50px);
     }
+
     10% {
         opacity: 1;
         transform: translateX(-50%) translateY(0);
     }
+
     90% {
         opacity: 1;
         transform: translateX(-50%) translateY(0);
     }
+
     100% {
         opacity: 0;
         transform: translateX(-50%) translateY(-50px);
@@ -324,15 +328,41 @@
     background-color: var(--neutral-black);
 }
 
-#proveedor-add-form-addBtn {
-    width: 100%;
-    border-radius: 0px 0px 20px 20px;
-    background-color: #7CBD1E;
-    height: 5rem;
-    border: none;
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+#proveedor-add-form-addBtn,
+#proveedor-add-form-cancelBtn {
+    height: 45px;
+    width: 220px;
+    border-radius: 20px;
+    margin-bottom: 20px;
     cursor: pointer;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 8px 14px rgba(0, 0, 0, 0.2),
+        0 -8px 14px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.3s ease;
+}
+
+#proveedor-add-form-addBtn {
+    background-color: #7CBD1E;
+}
+
+#proveedor-add-form-cancelBtn {
+    background-color: #ffffff;
+}
+
+#proveedor-add-form-addBtn:hover,
+#proveedor-add-form-cancelBtn:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4),
+        0 -4px 8px rgba(0, 0, 0, 0.4);
 }
 
 #proveedor-add-form-addBtn:disabled {
@@ -418,24 +448,29 @@
     color: black;
 }
 
-.textoBotonAceptar {
-    color: #FFF;
-    text-align: center;
+.textoBotonAceptar,
+.textoBotonCancelar,
+.textoFormulario {
     font-family: var(--title-text);
-    font-size: 48px;
+    font-size: 20px;
     font-style: normal;
-    font-weight: 700;
     line-height: 50px;
-    /* 104.167% */
+}
+
+.textoBotonAceptar {
+    color: white;
+    font-weight: 700; 
+    text-align: center; 
+}
+
+.textoBotonCancelar {
+    color: black;
+    font-weight: 700; 
+    text-align: center; 
 }
 
 .textoFormulario {
     color: #000;
-    font-family: var(--title-text);
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 300;
-    line-height: 50px;
-    padding-left: 30px;
-    /* 250% */
+    font-weight: 300; 
+    padding-left: 30px; 
 }
