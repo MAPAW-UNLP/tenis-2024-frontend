@@ -73,14 +73,15 @@
 
 .profesor-info {
   display: grid;
-  grid-template-columns: 20% 20% 40% 20%;
-  margin: 0.5%;
+  grid-template-columns: 20% 20% 20% 20% 20%;
+  margin: 0.6%;
   padding: 1%;
   border-radius: 12px;
   background-color: var(--neutral-black);
   color: var(--neutral-white-text);
   font-family: var(--normal-text);
   font-size: 110%;
+  align-items: center; /* Asegura que el contenido de las celdas esté centrado verticalmente */
 }
 
 #edit-profesor-btn {

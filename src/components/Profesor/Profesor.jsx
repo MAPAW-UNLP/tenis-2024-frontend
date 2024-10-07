@@ -19,6 +19,7 @@ export const Profesor = ({
       <p>{info.nombre}</p>
       <p>{info.telefono}</p>
       <p>{info.email}</p>
+      <p>${info.valorHora}</p>
       <button
         id="edit-profesor-btn"
         style={{ margin: 'auto' }}
@@ -29,6 +30,7 @@ export const Profesor = ({
             setLoadingDetails(true)
           )
         }
+        
       >
         {loadingDetails && profeDetail.id === info.id ? (
           <LoadingSpinner

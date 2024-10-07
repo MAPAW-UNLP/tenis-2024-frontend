@@ -59,10 +59,11 @@ export const Profesores = () => {
     const requestOptions = {
       method: 'GET',
     }
+    setProfesoresLoader(true); // Activa el loader antes de la petición
     fetch(`${URL_BASE}profesoress`, requestOptions)
       .then((response) => response.json())
       .then((data) => setProfesores(ordenarPorNombre(data)))
-      .then(() => setProfesoresLoader(() => false))
+      .finally(() => setProfesoresLoader(false)); // Desactiva el loader cuando termina la petición
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [actProfesores])
 
@@ -71,6 +72,7 @@ export const Profesores = () => {
     if (willEdit) {
       // Verificar el estado de profesorForm en consola antes de continuar
       console.log("Datos del formulario:", profesorForm);
+      setLoadingDetails(true); // Activa el loader antes de la petición
       fetch(`${URL_BASE}profesorr?profesorId=${profeDetail.id}`)
         .then((response) => response.json())
         .then((data) => setProfeDetail(data))
@@ -81,7 +83,7 @@ export const Profesores = () => {
           (profesorForm.valorHora = profeDetail.valorHora)
         )
         .then(() => setActiveDetail(true))
-        .then(() => setLoadingDetails(false))
+        .finally(() => setLoadingDetails(false)); // Desactiva el loader cuando termina la petición
     }
     // Verificar el estado de profesorForm en consola antes de continuar
     console.log("Datos del formulario:", profesorForm);
