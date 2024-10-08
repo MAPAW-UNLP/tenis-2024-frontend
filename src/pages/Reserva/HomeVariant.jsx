@@ -14,7 +14,7 @@ import LoaderSpinner from 'components/LoaderSpinner'
 import AlquilerDetails from 'components/Reserva/AlquilerDetails'
 import CalendarPicker from 'components/Reserva/CalendarComponent'
 import ClaseDetails from 'components/Reserva/ClaseDetails'
-import Reserva from 'components/Reserva/Reserva'
+// import Reserva from 'components/Reserva/Reserva'
 import NavBar from 'pages/Navbar/NavBar'
 import Dashboard from 'components/Dashboard/Dashboard'
 import ReservaDashboardItem from 'components/Reserva/ReservaDashboardItem'
@@ -25,6 +25,7 @@ import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import 'styles/home.css'
+import NotFound404 from 'components/NotFound404/NotFound404'
 
 const horas = [
   '08:00',
@@ -66,24 +67,12 @@ const coloresCanchas = [
 ]
 
 const Home = () => {
-  const [selectedDate, setSelectedDate] = useState(Date.now())
   const [canchas, setCanchas] = useState([])
   const [reservas, setReservas] = useState([])
   const [reservasIsLoading, setReservasIsLoading] = useState(true) // Spinner
-  const [reservasDelDia, setReservasDelDia] = useState([])
 
-  const [reservaDetail, setReservaDetail] = useState({})
-  const [alquilerDetailsIsVisible, setAlquilerDetailsIsVisible] =
-    useState(false)
-
-  const [alumnosDeLaClase, setAlumnosDeLaClase] = useState([])
-  const [profeClase, setProfeClase] = useState('')
-  const [claseDetail, setClaseDetail] = useState({})
-  const [actReservas, setActReservas] = useState(false)
   const [alumnos, setAlumnos] = useState([])
   const [profesores, setProfesores] = useState([])
-
-  const navigate = useNavigate()
 
   useEffect(() => {
     getProfesores().then((data) => setProfesores(ordenarPorNombre(data)))
@@ -95,9 +84,45 @@ const Home = () => {
       .then(() => setReservasIsLoading(false))
   }, [])
 
-  useEffect(() => {
-    if (reservasIsLoading) return
+  return (
+    <div id="home-component">
+      <NavBar title={'Tennis app'} />
 
+      {reservasIsLoading ? (
+        <div style={{ position: 'relative' }}>
+          <LoaderSpinner
+            active={reservasIsLoading}
+            containerClass={'homeLoader'}
+            loaderClass={'homeLoaderSpinner'}
+          />
+        </div>
+      ) : (
+        <HomeBody
+          alumnos={alumnos}
+          canchas={canchas}
+          profesores={profesores}
+          reservas={reservas}
+        />
+      )}
+    </div>
+  )
+}
+
+function HomeBody({ reservas, canchas, alumnos, profesores }) {
+  const [reservasDelDia, setReservasDelDia] = useState([])
+  const [reservaDetail, setReservaDetail] = useState({})
+  const [alquilerDetailsIsVisible, setAlquilerDetailsIsVisible] =
+    useState(false)
+  const [selectedDate, setSelectedDate] = useState(Date.now())
+
+  const [alumnosDeLaClase, setAlumnosDeLaClase] = useState([])
+  const [profeClase, setProfeClase] = useState('')
+  const [claseDetail, setClaseDetail] = useState({})
+  const [actReservas, setActReservas] = useState(false)
+
+  const navigate = useNavigate()
+
+  useEffect(() => {
     const reservasDia = reservas.reduce((acc, reserva) => {
       if (reserva.fecha === moment(selectedDate).format('YYYY-MM-DD')) {
         if (!acc[reserva.canchaId]) {
@@ -109,11 +134,23 @@ const Home = () => {
     }, {})
 
     setReservasDelDia(reservasDia)
-  }, [reservas, reservasIsLoading, selectedDate])
+  }, [reservas, selectedDate])
+
+  if (canchas.length === 0) {
+    return (
+      <div style={{ marginTop: '6rem' }}>
+        <NotFound404
+          title="¡Oops! No encontramos canchas de tenis"
+          description="Parece que todavía no hay canchas de tenis disponibles en este complejo. No te preocupes, puedes agregarlas fácilmente o consultar con el administrador para más información."
+          btnText="Añadir una nueva cancha"
+          onCallToAction={() => navigate('../canchas')}
+        />
+      </div>
+    )
+  }
 
   return (
-    <div id="home-component">
-      <NavBar title={'Tennis app'} />
+    <>
       <AlquilerDetails
         isVisible={alquilerDetailsIsVisible}
         onClose={() => setAlquilerDetailsIsVisible(false)}
@@ -132,7 +169,6 @@ const Home = () => {
         profesores={profesores}
         setActReservas={setActReservas}
       />
-      {/* <LoaderSpinner active={reservasLoader} containerClass={'homeLoader'} loaderClass={'homeLoaderSpinner'}/> */}
 
       <Dashboard
         header={
@@ -219,7 +255,7 @@ const Home = () => {
         ))}
       </Dashboard>
 
-      <div id="table-component">
+      {/*<div id="table-component">
         <div id="table-options">
           <button
             id="home-addReservaBtn"
@@ -232,7 +268,6 @@ const Home = () => {
           <div id="table-panel-date">
             <CalendarPicker today={selectedDate} setToday={setSelectedDate} />
           </div>
-          {/* Aca iria el selector */}
         </div>
         <div
           id="table-grid"
@@ -295,7 +330,8 @@ const Home = () => {
           loaderClass={'homeLoaderSpinner'}
         />
       </div>
-    </div>
+      */}
+    </>
   )
 }
 
