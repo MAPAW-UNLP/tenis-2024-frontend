@@ -1,0 +1,53 @@
+.not-found-container {
+  max-width: 800px;
+  margin-inline: auto;
+  padding-inline: 1rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 2rem;
+
+  font-family: var(--normal-text);
+
+  @media (min-width: 700px) {
+    flex-direction: row;
+  }
+}
+
+.not-found__title {
+  font-size: 2rem;
+  text-wrap: balance;
+  margin-bottom: 1rem;
+}
+
+.not-found__description {
+  text-wrap: balance;
+  margin-bottom: 2rem;
+}
+
+.not-found__btn {
+  all: unset;
+  font-weight: bolder;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  color: var(--neutral-white-text);
+  background-color: var(--accent-green);
+  cursor: pointer;
+  transition: background-color 0.15s ease-in-out;
+
+  &:hover {
+    background-color: var(--accent-tennis-green);
+  }
+}
+
+.not-found__img {
+  min-width: 200px;
+  max-width: 300px;
+  justify-self: end;
+
+  img {
+    width: 100%;
+  }
+}
