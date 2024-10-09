@@ -23,6 +23,7 @@
   transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
+
 #clase-detail-component.activeAlumnos {
   grid-template-areas:
     'titulo alumnos'

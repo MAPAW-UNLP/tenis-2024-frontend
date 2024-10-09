@@ -97,41 +97,45 @@ const Home = () => {
 
   useEffect(() => {
     if (reservasIsLoading) return
-
+  
     const reservasDia = reservas.reduce((acc, reserva) => {
       if (reserva.fecha === moment(selectedDate).format('YYYY-MM-DD')) {
         if (!acc[reserva.canchaId]) {
           acc[reserva.canchaId] = []
         }
-        acc[reserva.canchaId].push(reserva)
+        const cancha = canchas.find(c => c.id === reserva.canchaId)
+        const reservaConCancha = {
+          ...reserva,
+          canchaNombre: cancha ? cancha.nombre : 'Desconocida',
+        }
+        console.log('Reserva con canchaNombre:', reservaConCancha) // Log
+        acc[reserva.canchaId].push(reservaConCancha)
       }
       return acc
     }, {})
-
+  
     setReservasDelDia(reservasDia)
-  }, [reservas, reservasIsLoading, selectedDate])
+  }, [reservas, reservasIsLoading, selectedDate, canchas])
 
   return (
     <div id="home-component">
       <NavBar title={'Tennis app'} />
+      {alquilerDetailsIsVisible && (
       <AlquilerDetails
         isVisible={alquilerDetailsIsVisible}
         onClose={() => setAlquilerDetailsIsVisible(false)}
         reserva={reservaDetail}
         setReservaDetail={setReservaDetail}
       />
-      <ClaseDetails
-        reserva={claseDetail}
-        diaReserva={selectedDate}
-        setClaseDetail={setClaseDetail}
-        alumnosDeLaClase={alumnosDeLaClase}
-        setAlumnosDeLaClase={setAlumnosDeLaClase}
-        profeClase={profeClase}
-        setProfeClase={setProfeClase}
-        alumnos={alumnos}
-        profesores={profesores}
-        setActReservas={setActReservas}
-      />
+)}
+      {claseDetail && Object.keys(claseDetail).length > 0 && (
+          <ClaseDetails
+          isVisible={claseDetail && Object.keys(claseDetail).length > 0}
+          onClose={() => setClaseDetail({})}
+          reserva={claseDetail}
+        />
+)}
+
       {/* <LoaderSpinner active={reservasLoader} containerClass={'homeLoader'} loaderClass={'homeLoaderSpinner'}/> */}
 
       <Dashboard
@@ -210,7 +214,8 @@ const Home = () => {
                     if (reserva.tipo === 'ALQUILER') {
                       setAlquilerDetailsIsVisible(true)
                     } else {
-                      // TODO ver qué hacer con el otro tipo
+                      console.log("CLIQUEO ",reserva); // Verifica el objeto reserva
+                      setClaseDetail(reserva)
                     }
                   }}
                 />

@@ -209,11 +209,11 @@ export const Reservas = () => {
     const requestOptions = {
       method: 'GET',
     }
-    fetch(`${URL_BASE}profesores`, requestOptions)
+    fetch(`${URL_BASE}profesoress`, requestOptions)
       .then((response) => response.json())
       .then((data) => setProfesores(ordenarPorNombre(data)))
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [actProfesores])
+  }, [])
 
   useEffect(() => {
     const requestOptions = {
@@ -221,9 +221,9 @@ export const Reservas = () => {
     }
     fetch(`${URL_BASE}alumnos`, requestOptions)
       .then((response) => response.json())
-      .then((data) => setAlumnos(ordenarPorNombre(data.detail)))
+      .then((data) => setAlumnos(data))
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [actAlumnos])
+  }, [])
 
   return (
     <div id="reservas-component">
