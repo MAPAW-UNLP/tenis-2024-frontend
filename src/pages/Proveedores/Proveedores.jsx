@@ -51,18 +51,6 @@ function Proveedores() {
           <button className="btn-agregar-proveedor" onClick={activarFormulario}>
             Agregar nuevo Proveedor
           </button>
-          {/* <div
-                    id="proveedores-searchbar"
-                    className="list-options-header"
-                    style={{ width: 'unset' }}
-                >
-                    <FontAwesomeIcon id="magnify-icon" icon={faMagnifyingGlass} />
-                    <input
-                        type="text"
-                        placeholder="Busca un alumno"
-                        onChange={() => {}}
-                    />
-                </div> */}
         </div>
         <div className="table-head-proveedores">
           <span style={{ fontSize: '1.8em', width: 200, textAlign: 'center' }}>
