@@ -2,7 +2,7 @@ import { createContext, useCallback, useEffect } from 'react'
 import { useNavigate } from 'react-router'
 import { useLocalStorage } from '../hooks/useLocalStorage'
 import Swal from 'sweetalert2'
-import '../../styles/alerts.css'
+import '../styles/alerts.css'
 
 export const SessionContext = createContext(null)
 
