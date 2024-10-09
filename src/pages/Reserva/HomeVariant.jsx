@@ -83,6 +83,8 @@ const Home = () => {
   const [alumnos, setAlumnos] = useState([])
   const [profesores, setProfesores] = useState([])
 
+  const [profesorSeleccionado, setProfesorSeleccionado] = useState('');
+
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -94,6 +96,25 @@ const Home = () => {
       .then((data) => setReservas(data.detail))
       .then(() => setReservasIsLoading(false))
   }, [])
+
+  const handleBuscarClases = () => {
+    if (!profesorSeleccionado || !selectedDate) {
+      alert('Debe seleccionar un profesor y una fecha.');
+      return;
+    }
+
+    const formattedDate = moment(selectedDate).format('YYYY-MM-DD');
+    const url = `http://localhost:8083/api/clases-profesor?persona_id=${profesorSeleccionado}&fecha=${formattedDate}`;
+
+    fetch(url)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('Clases encontradas:', data);
+        // Aquí puedes manejar los resultados obtenidos
+      })
+      .catch((error) => console.error('Error fetching clases:', error));
+  };
+
 
   useEffect(() => {
     if (reservasIsLoading) return
@@ -147,6 +168,22 @@ const Home = () => {
             >
               <FontAwesomeIcon icon={faPlusCircle} />
             </button>
+            <div>
+        <label htmlFor="profesor-select">Seleccionar Profesor:</label>
+        <select
+          id="profesor-select"
+          value={profesorSeleccionado}
+          onChange={(e) => setProfesorSeleccionado(e.target.value)}
+        >
+          <option value="">Seleccione un profesor</option>
+          {profesores.map((profesor) => (
+            <option key={profesor.id} value={profesor.id}>
+              {profesor.nombre}
+            </option>
+          ))}
+        </select>
+        <button onClick={handleBuscarClases}>Aceptar</button>
+      </div>
             <div className="home__date">
               <CalendarPicker
                 selectedDate={selectedDate}
