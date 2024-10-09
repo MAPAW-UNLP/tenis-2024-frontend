@@ -4,6 +4,7 @@ import { useEffect } from 'react'
 
 /* Components */
 import LinkItem from '../../components/LinkItem'
+import ProfileSideBar from '../../components/ProfileMenu/ProfileSideBar'
 
 import '../../styles/navbar.css'
 
@@ -12,7 +13,6 @@ import { useSession } from '../../hooks/useSession'
 
 const NavBar = ({ title }) => {
   const [active, setActive] = useState('link')
-  const { logOut } = useSession()
 
   useEffect(() => {
     //cambia la clase active del nav y se las saca a los que no lo tienen
@@ -84,10 +84,7 @@ const NavBar = ({ title }) => {
             </>
           )}
           <li>
-            {' '}
-            <Link to="/" className="linkCerrarSesion" onClick={logOut}>
-              Cerrar Sesión{' '}
-            </Link>
+            <ProfileSideBar />
           </li>
         </ul>
       </nav>
