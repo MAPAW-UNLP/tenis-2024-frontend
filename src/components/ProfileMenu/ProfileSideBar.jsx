@@ -10,7 +10,6 @@ const ProfileSideBar = () => {
   const URL_BASE = 'http://localhost:8083/api/'
   const [isOpen, setIsOpen] = useState(false)
   const [expanded, setExpanded] = useState(false)
-  const [selectedOption, setSelectedOption] = useState(null)
   const { logOut } = useSession()
   const toggleSidebar = () => {
     setIsOpen(!isOpen)
@@ -21,52 +20,46 @@ const ProfileSideBar = () => {
     setExpanded(!expanded)
   }
 
-  const handleOptionClick = (option) => {
-    setSelectedOption(option)
-    Swal.fire({
-      position: 'bottom-end',
-      icon: 'success',
-      title: 'Cambio de Rol Exitoso!',
-      showConfirmButton: false,
-      timer: 6000,
-      background: '#4CAF50',
-      color: 'white',
-      toast: true,
-      customClass: {
-        popup: 'small-alert',
-      },
-    })
-  }
-
-  const submitForm = () => {
-    const formData = {
-      param: selectedOption,
+  const handleChangeRole = (option) => {
+    const requestOptions = {
+      method: 'PUT',
+      body: JSON.stringify({ id: 1, rolPorDefecto: option }),
     }
-    console.log('Form data:', formData)
+    console.log(requestOptions)
+    fetch(`${URL_BASE}usuario`, requestOptions)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.rta === 'ok') {
+          Swal.fire({
+            position: 'bottom-end',
+            icon: 'success',
+            title: 'Cambio de Rol Exitoso!',
+            showConfirmButton: false,
+            timer: 6000,
+            background: '#4CAF50',
+            color: 'white',
+            toast: true,
+            customClass: {
+              popup: 'small-alert',
+            },
+          })
+        } else {
+          Swal.fire({
+            position: 'bottom-end',
+            icon: 'warning',
+            title: 'Fallo el cambio de Rol!',
+            showConfirmButton: false,
+            timer: 6000,
+            background: '#b22222',
+            color: 'white',
+            toast: true,
+            customClass: {
+              popup: 'small-alert',
+            },
+          })
+        }
+      })
   }
-
-  // const habldeChangeROle = (e) => {
-  //   e.preventDefault()
-
-  //   const requestOptions = {
-  //     method: 'PUT',
-  //     body: JSON.stringify({ user: user, password: pass }),
-  //   }
-  //   fetch(`${URL_BASE}usuario`, requestOptions)
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       if (data.rta === 'ok') {
-  //         logIn()
-  //         setActiveLoader(false)
-  //         navigate('../inicio')
-  //       } else {
-  //         setActive(true)
-  //         const loginBtn = document.getElementById('login-btn')
-  //         loginBtn.disabled = true
-  //         setActiveLoader(false)
-  //       }
-  //     })
-  // }
 
   return (
     <>
@@ -90,19 +83,19 @@ const ProfileSideBar = () => {
           {expanded && (
             <ul className="options-list">
               <li
-                onClick={() => handleOptionClick('admin')}
+                onClick={() => handleChangeRole('ROLE_ADMIN')}
                 className="options-sidebar"
               >
                 Admin
               </li>
               <li
-                onClick={() => handleOptionClick('profesor')}
+                onClick={() => handleChangeRole('ROLE_PROFESOR')}
                 className="options-sidebar"
               >
                 Profesor
               </li>
               <li
-                onClick={() => handleOptionClick('cliente')}
+                onClick={() => handleChangeRole('ROLE_ALUMNO')}
                 className="options-sidebar"
               >
                 Cliente
