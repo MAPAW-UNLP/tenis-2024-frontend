@@ -107,9 +107,14 @@ export const UpdateProveedor = ({ handleCloseForm, proveedor = {} }) => {
             {telefonoFeedback.text}
           </p>
         </div>
-        <button id="proveedor-add-form-addBtn" type="submit">
-          <p className="textoBotonAceptar">Guardar</p>
-        </button>
+        <div className="button-container">
+          <button id="proveedor-add-form-addBtn" type="submit">
+            <p className="textoBotonAceptar">Guardar</p>
+          </button>
+          <button onClick={handleCloseForm} id="proveedor-add-form-cancelBtn">
+            <p className="textoBotonCancelar">Cancelar</p>
+          </button>
+        </div>
         {loading && <div className="spinner"></div>}
       </form>
       {showSuccessPopup && (
