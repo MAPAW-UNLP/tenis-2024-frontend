@@ -92,10 +92,10 @@ const ProfileSideBar = () => {
                 Profesor
               </li>
               <li
-                onClick={() => handleOptionClick('alumno')}
+                onClick={() => handleOptionClick('cliente')}
                 className="options-sidebar"
               >
-                Alumno
+                Cliente
               </li>
             </ul>
           )}
