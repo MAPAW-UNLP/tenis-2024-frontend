@@ -141,7 +141,7 @@ function HomeBody({ reservas, canchas, alumnos, profesores }) {
       <div style={{ marginTop: '6rem' }}>
         <NotFound404
           title="¡Oops! No encontramos canchas de tenis"
-          description="Parece que todavía no hay canchas de tenis disponibles en este complejo. No te preocupes, puedes agregarlas fácilmente o consultar con el administrador para más información."
+          description="Parece que todavía no hay canchas de tenis disponibles en este complejo. No te preocupes, puedes agregarlas fácilmente."
           btnText="Añadir una nueva cancha"
           onCallToAction={() => navigate('../canchas')}
         />
