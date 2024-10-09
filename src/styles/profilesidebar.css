@@ -1,4 +1,3 @@
-/* Sidebar.css */
 .sidebar {
   position: fixed;
   top: 0;
@@ -12,53 +11,81 @@
   z-index: 1000;
 }
 
+.h2-sidebar {
+  margin: 0;
+  font-size: 40px;
+}
+
 .sidebar.open {
   transform: translateY(0);
 }
 
-.burger-button {
-  position: fixed;
-  background: transparent;
+.profile-button {
+  background: none;
   border: none;
   color: white;
   cursor: pointer;
   font-size: 24px;
-  z-index: 1001;
 }
 
 .close-btn {
   background: none;
   border: none;
   font-size: 24px;
-  color: white; /* Make the close button white */
+  color: white;
   cursor: pointer;
   position: absolute;
-  top: 15px; /* Position at the top */
-  right: 15px; /* Position at the right */
-  z-index: 1001; /* Ensure the close button is above other elements */
-}
-
-ul {
-  list-style-type: none;
-  padding: 20px;
-}
-
-li {
-  margin: 10px 0;
+  top: 15px;
+  right: 15px;
+  z-index: 1001;
 }
 
 .sub-menu {
   list-style-type: none;
-  display: block; /* Show sub-menu when item is clicked */
+  display: block;
   background-color: rgb(255, 255, 255);
   padding: 0;
+  width: 100%;
 }
 
 .sub-menu li {
-  padding: 2px 0; /* Space between sub-menu items */
+  padding: 2px 0;
   color: black;
 }
 .sub-menu li:hover {
   background-color: #fc9e33;
 }
 
+.profile-sidebar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  flex-grow: 1;
+  padding: 60px;
+  width: 100%;
+}
+
+.list-toggle,
+.options-list li {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  font-size: 18px;
+  color: white;
+}
+
+.options-sidebar {
+  font-size: 36px;
+}
+
+.options-sidebar:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: black;
+}
+
+.options-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
