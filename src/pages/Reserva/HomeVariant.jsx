@@ -99,7 +99,7 @@ const Home = () => {
     if (reservasIsLoading) return
   
     const reservasDia = reservas.reduce((acc, reserva) => {
-      if (reserva.fecha === moment(selectedDate).format('YYYY-MM-DD')) {
+      if (reserva.fecha === moment(selectedDate).format('YYYY-MM-DD') && reserva.estado=== 'ASIGNADO') {
         if (!acc[reserva.canchaId]) {
           acc[reserva.canchaId] = []
         }
