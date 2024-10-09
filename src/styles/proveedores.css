@@ -51,14 +51,14 @@
 }
 
 .proveedores-item-list p {
-    font-family: var(--title-text);
-    color: var(--neutral-white-text);
-    text-align: center;
-    width: 200px;
-    font-size: 25px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
+  font-family: var(--title-text);
+  color: var(--neutral-white-text);
+  text-align: center;
+  width: 200px;
+  font-size: 25px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .proveedores-item-list:hover {
@@ -74,15 +74,15 @@
 }
 
 .btn-agregar-proveedor {
-    background-color: #7CBD1E;
-    color: #fff;
-    width: 300px;
-    height: 50px;
-    font-size: 20px;
-    border: none;
-    border-radius: 10px;
-    font-family: var(--title-text);
-    cursor: pointer;
+  background-color: #7cbd1e;
+  color: #fff;
+  width: 300px;
+  height: 50px;
+  font-size: 20px;
+  border: none;
+  border-radius: 10px;
+  font-family: var(--title-text);
+  cursor: pointer;
 }
 
 .list-options-header {
@@ -330,30 +330,31 @@
 }
 
 .button-container {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
 }
 
 #proveedor-add-form-addBtn,
 #proveedor-add-form-cancelBtn {
-    height: 45px;
-    width: 220px;
-    border-radius: 20px;
-    margin-bottom: 20px;
-    cursor: pointer;
-    border: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 8px 14px rgba(0, 0, 0, 0.2),
-        0 -8px 14px rgba(0, 0, 0, 0.2);
-    transition: box-shadow 0.3s ease;
+  height: 45px;
+  width: 220px;
+  border-radius: 20px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow:
+    0 8px 14px rgba(0, 0, 0, 0.2),
+    0 -8px 14px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 0.3s ease;
 }
 
 #proveedor-add-form-addBtn {
-  background-color: #7CBD1E;
+  background-color: #7cbd1e;
   border: none;
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
@@ -361,13 +362,14 @@
 }
 
 #proveedor-add-form-cancelBtn {
-    background-color: #ffffff;
+  background-color: #ffffff;
 }
 
 #proveedor-add-form-addBtn:hover,
 #proveedor-add-form-cancelBtn:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4),
-        0 -4px 8px rgba(0, 0, 0, 0.4);
+  box-shadow:
+    0 4px 8px rgba(0, 0, 0, 0.4),
+    0 -4px 8px rgba(0, 0, 0, 0.4);
 }
 
 #proveedor-add-form-addBtn:disabled {
@@ -375,8 +377,8 @@
 }
 
 .btnSelectPage {
-    padding: 10px;
-    background-color: #7caee1;
+  padding: 10px;
+  background-color: #7caee1;
 }
 
 .inputlabel {
@@ -466,6 +468,7 @@
   border: none;
   box-shadow: 0px 5px 20px var(--neutral-black);
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: pointer;
 }
 
 .proveedor-delete-modal {
@@ -510,26 +513,26 @@
 .textoBotonAceptar,
 .textoBotonCancelar,
 .textoFormulario {
-    font-family: var(--title-text);
-    font-size: 20px;
-    font-style: normal;
-    line-height: 50px;
+  font-family: var(--title-text);
+  font-size: 20px;
+  font-style: normal;
+  line-height: 50px;
 }
 
 .textoBotonAceptar {
-    color: white;
-    font-weight: 700; 
-    text-align: center; 
+  color: white;
+  font-weight: 700;
+  text-align: center;
 }
 
 .textoBotonCancelar {
-    color: black;
-    font-weight: 700; 
-    text-align: center; 
+  color: black;
+  font-weight: 700;
+  text-align: center;
 }
 
 .textoFormulario {
-    color: #000;
-    font-weight: 300; 
-    padding-left: 30px; 
+  color: #000;
+  font-weight: 300;
+  padding-left: 30px;
 }
