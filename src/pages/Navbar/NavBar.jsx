@@ -13,7 +13,6 @@ import { useSession } from '../../hooks/useSession'
 
 const NavBar = ({ title }) => {
   const [active, setActive] = useState('link')
-  const { logOut } = useSession()
 
   useEffect(() => {
     //cambia la clase active del nav y se las saca a los que no lo tienen

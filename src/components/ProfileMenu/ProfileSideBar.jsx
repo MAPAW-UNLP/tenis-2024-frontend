@@ -1,7 +1,8 @@
-// Sidebar.jsx
 import React, { useState } from 'react'
+import Swal from 'sweetalert2'
 import { Link } from 'react-router-dom'
 import '../../styles/profilesidebar.css'
+import '../../styles/alerts.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes, faUser } from '@fortawesome/free-solid-svg-icons'
 import { useSession } from '../../hooks/useSession'
@@ -22,17 +23,26 @@ const ProfileSideBar = () => {
 
   const handleOptionClick = (option) => {
     setSelectedOption(option)
-    // You can submit the form here or use a separate button
-    console.log(`Selected option: ${option}`)
+    Swal.fire({
+      position: 'bottom-end',
+      icon: 'success',
+      title: 'Cambio de Rol Exitoso!',
+      showConfirmButton: false,
+      timer: 6000,
+      background: '#4CAF50',
+      color: 'white',
+      toast: true,
+      customClass: {
+        popup: 'small-alert',
+      },
+    })
   }
 
   const submitForm = () => {
-    // Simulate form submission to endpoint
     const formData = {
       param: selectedOption,
     }
     console.log('Form data:', formData)
-    // Add your submission logic here (fetch/axios to submit to endpoint)
   }
 
   // const habldeChangeROle = (e) => {

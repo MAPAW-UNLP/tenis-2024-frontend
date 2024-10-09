@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import FeedbackText from '../FeedbackText'
 import LoaderSpinner from '../LoaderSpinner'
 import { useSession } from '../../hooks/useSession'
+import Swal from 'sweetalert2'
 
 const LoginForm = () => {
   const URL_BASE = 'http://localhost:8083/api/'
@@ -56,6 +57,19 @@ const LoginForm = () => {
           logIn()
           setActiveLoader(false)
           navigate('../inicio')
+          Swal.fire({
+            position: 'bottom-end',
+            icon: 'success',
+            title: 'Inicio de sesion exitoso',
+            showConfirmButton: false,
+            timer: 6000,
+            background: '#4CAF50',
+            color: 'white',
+            toast: true,
+            customClass: {
+              popup: 'small-alert',
+            },
+          })
         } else {
           setActive(true)
           const loginBtn = document.getElementById('login-btn')

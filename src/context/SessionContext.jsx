@@ -1,6 +1,8 @@
 import { createContext, useCallback, useEffect } from 'react'
 import { useNavigate } from 'react-router'
 import { useLocalStorage } from '../hooks/useLocalStorage'
+import Swal from 'sweetalert2'
+import '../../styles/alerts.css'
 
 export const SessionContext = createContext(null)
 
@@ -26,6 +28,19 @@ export function SessionProvider({ children }) {
 
   function logOut() {
     setSession('')
+    Swal.fire({
+      position: 'bottom-end',
+      icon: 'success',
+      title: 'Se cerro la sesión',
+      showConfirmButton: false,
+      timer: 6000,
+      background: '#B22222',
+      color: 'white',
+      toast: true,
+      customClass: {
+        popup: 'small-alert',
+      },
+    })
   }
 
   return (
