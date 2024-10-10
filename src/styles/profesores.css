@@ -51,7 +51,7 @@
 #profesores-searchbar input {
   width: 100%;
   font-family: var(--normal-text);
-  font-size: 100%;
+  font-size: 90%;
   border-radius: 10px;
   border: 1px solid var(--neutral-black);
   color: var(--neutral-black);
