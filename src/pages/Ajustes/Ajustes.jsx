@@ -11,6 +11,7 @@ import FormularioTipoClase from '../../components/Clase/AgregarTipoClase'
 export const Ajustes = () => {
   const URL_BASE = `http://localhost:8083/api/`
   const [tipoClases, setTipoClases] = useState([])
+  const [valoresOriginales, setValoresOriginales] = useState({})
   const [cargando, setCargando] = useState(true)
   const [tempChanges, setTempChanges] = useState({})
   const [mensajeUsuario, setMensajeUsuario] = useState('')
@@ -28,6 +29,12 @@ export const Ajustes = () => {
       const response = await fetch(`${URL_BASE}clases`, { method: 'GET' })
       const data = await response.json()
       setTipoClases(data)
+      // Almacenar los valores originales de importe
+      const originales = {}
+      data.forEach((clase) => {
+        originales[clase.id] = clase.importe
+      })
+      setValoresOriginales(originales)
     } catch (error) {
       console.error('Error al obtener datos desde la BD', error)
     } finally {
@@ -56,26 +63,23 @@ export const Ajustes = () => {
   }
 
   const handleTipoClaseChange = (tipo, valor) => {
-    const nuevoImporte = valor.replace(/\D/g, '') // Solo permite numeros enteros
+    const nuevoImporte = valor.replace(/\D/g, '') // Solo permite números enteros
     setTempChanges((prev) => ({
       ...prev,
       [tipo.id]: nuevoImporte,
     }))
 
-    // Validar si el valor es permitido (no vacío y numérico)
-  const valorPermitido = nuevoImporte.length > 0 && !isNaN(nuevoImporte);
+    const valorOriginal = valoresOriginales[tipo.id]
+    const valorPermitido = nuevoImporte.length > 0 && !isNaN(nuevoImporte)
+    const mismoValor = nuevoImporte === String(valorOriginal)
 
-  // Comparar el valor formateado con el importe original para ver si hay cambios
-  const mismoValor = nuevoImporte === String(tipo.importe);
+    if (valorPermitido && !mismoValor) {
+      setBotonHabilitado(true)
+    } else {
+      setBotonHabilitado(false) // Deshabilitar si no es válido o si es el mismo valor
+    }
 
-  // Si el valor es permitido y es diferente al valor original, habilitar el botón
-  if (valorPermitido && !mismoValor) {
-    setBotonHabilitado(true);
-  } else {
-    setBotonHabilitado(false); // Deshabilitar si no es válido o si es el mismo valor
-  }
-
-    // Actualizar la vista localmente
+    // Actualizar solo la vista localmente para mostrar el valor temporal
     setTipoClases((prevTipoClases) =>
       prevTipoClases.map((tipoClase) =>
         tipoClase.id === tipo.id
@@ -100,9 +104,9 @@ export const Ajustes = () => {
       }
     }
     // Limpiar el estado de cambios temporales y deshabilitar el botón
-    setTempChanges({});
-    setBotonHabilitado(false); // Deshabilitar el botón nuevamente
-    setCargando(false);
+    setTempChanges({})
+    setBotonHabilitado(false)
+    setCargando(false)
     await fetchTipoClases()
   }
 

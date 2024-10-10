@@ -42,7 +42,7 @@ export const Profesores = () => {
     nombre: '',
     telefono: '',
     email: '',
-    valorHora:'',
+    valorHora: '',
   })
 
   const [feedback, setFeedback] = useState({
@@ -180,7 +180,7 @@ export const Profesores = () => {
     const submitBtn = document.getElementById(submitButtonName)
     const shouldIStartDisabled = checkDisabled // Con esto pregunto, deberia considerar este valor/input?
 
-    setProfesorForm({ ...profesorForm, [e.target.name]: emailProfesor, isValid: false,})
+    setProfesorForm({ ...profesorForm, [e.target.name]: emailProfesor, isValid: false, })
     let nextInput
     if (shouldIStartDisabled)
       nextInput = document.getElementById(telefonoInputName)
@@ -263,7 +263,7 @@ export const Profesores = () => {
     const shouldIStartDisabled = checkDisabled
 
     if (telefonoProfesor === '') {
-      setFeedback({ ...feedback, telefonoFB: feedbackStructure, isValid: false,})
+      setFeedback({ ...feedback, telefonoFB: feedbackStructure, isValid: false, })
       if (shouldIStartDisabled) {
         nextInput.disabled = true
         setFeedback({
@@ -309,7 +309,7 @@ export const Profesores = () => {
     const shouldIStartDisabled = checkDisabled;
     const valorHora = parseFloat(e.target.value); // Convertir a número flotante
     setProfesorForm({ ...profesorForm, [e.target.name]: valorHora, isValid: false });
-  
+
     if (valorHora > 0 && Number.isInteger(valorHora)) { // Validar que sea mayor que 0 y entero
       setFeedback({
         ...feedback,
@@ -355,7 +355,7 @@ export const Profesores = () => {
     e.preventDefault()
     // Verificar el estado de profesorForm en consola antes de continuar
     console.log("Datos del formulario:", profesorForm);
-    
+
     setFeedback({
       nombreFB: feedbackStructure,
       telefonoFB: feedbackStructure,
@@ -409,29 +409,30 @@ export const Profesores = () => {
   return (
     <div id="profesores-component">
       <NavBar title={'Profesores'} />
-      <div id="profesores-component-mainContent">
-        <GenericLargeButton
-          title={'Crear nuevo profesor'}
-          doSomething={() => setActive(true)}
+      {profesoresLoader ? (
+        <LoaderSpinner
+          active={profesoresLoader}
+          containerClass={'canchasLoader'}
+          loaderClass={'canchasLoaderSpinner'}
         />
-        <AgregarProfesor
-          active={active}
-          handleCloseForm={handleCloseForm}
-          handleChangeName={handleChangeName}
-          handleChangeEmail={handleChangeEmail}
-          handleChangePhone={handleChangePhone}
-          handleChangeValorHora={handleChangeValorHora}
-          feedback={feedback}
-          submitProfesorForm={submitProfesorForm}
-        />
-
-        {profesoresLoader ? (
-          <LoaderSpinner
-            active={profesoresLoader}
-            containerClass={'canchasLoader'}
-            loaderClass={'canchasLoaderSpinner'}
+      ) : (
+        <div id="profesores-component-mainContent">
+          <GenericLargeButton
+            title={'Crear nuevo profesor'}
+            doSomething={() => setActive(true)}
           />
-        ) : (
+          <AgregarProfesor
+            active={active}
+            handleCloseForm={handleCloseForm}
+            handleChangeName={handleChangeName}
+            handleChangeEmail={handleChangeEmail}
+            handleChangePhone={handleChangePhone}
+            handleChangeValorHora={handleChangeValorHora}
+            feedback={feedback}
+            submitProfesorForm={submitProfesorForm}
+          />
+
+
           <div id="profesores-list-component">
             <ProfesorDetail
               activeDetail={activeDetail}
@@ -458,8 +459,8 @@ export const Profesores = () => {
               loadingDetails={loadingDetails}
             />
           </div>
-        )}
-      </div>
+
+        </div>)}
     </div>
   )
 }
