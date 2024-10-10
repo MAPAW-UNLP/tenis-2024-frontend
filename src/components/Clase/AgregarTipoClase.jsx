@@ -8,6 +8,7 @@ const FormularioTipoClase = ({ onClose, onSubmit }) => {
   const [errores, setErrores] = useState({ tipo: false, importe: false })
 
   const MAX_LENGTH = 20
+
   const handleSubmit = (e) => {
     e.preventDefault()
 
@@ -24,8 +25,8 @@ const FormularioTipoClase = ({ onClose, onSubmit }) => {
 
     if (importe === '') {
       nuevosErrores.importe = '*Debes ingresar el importe'
-    } else if (parseFloat(importe) <= 0) {
-      nuevosErrores.importe = '*El importe debe ser mayor a 0'
+    } else if (!Number.isInteger(Number(importe)) || parseFloat(importe) <= 0) {
+      nuevosErrores.importe = '*El importe debe ser un número  mayor a 0'
     }
 
     setErrores(nuevosErrores)
@@ -33,8 +34,13 @@ const FormularioTipoClase = ({ onClose, onSubmit }) => {
     // Si hay algún error, no enviar el formulario
     if (nuevosErrores.tipo || nuevosErrores.importe) return
 
-    onSubmit({ tipo, importe: parseFloat(importe) })
+    onSubmit({ tipo, importe: parseInt(importe) })
     onClose()
+  }
+
+  const handleImporteChange = (e) => {
+    const valor = e.target.value.replace(/[^0-9]/g, '') // Permitir solo dígitos
+    setImporte(valor)
   }
 
   return (
@@ -63,9 +69,9 @@ const FormularioTipoClase = ({ onClose, onSubmit }) => {
             </label>
             <input
               id="importe"
-              type="number"
+              type="text" // Cambiado a "text" para aplicar la regex
               value={importe}
-              onChange={(e) => setImporte(e.target.value)}
+              onChange={handleImporteChange} // Usar la nueva función
             />
             {errores.importe && (
               <p style={{ color: 'red' }}>{errores.importe}</p>
