@@ -198,6 +198,10 @@
   margin-top: 23%;
 }
 
+.spinner-centered {
+  margin-left: auto;
+}
+
 .spinner-container {
   display: flex;
   justify-content: center;
@@ -480,17 +484,10 @@
   position: absolute;
   border-radius: 20px;
   width: 35vw;
-  /* height: 20vh; */
+  text-align: center;
   z-index: 20;
   box-shadow: -2px -4px 400px 600px rgba(0, 0, 0, 0.24);
   padding: 2em;
-}
-
-.botones-delete-proveedor {
-  display: flex;
-  gap: 1em;
-  justify-content: space-around;
-  width: 100%;
 }
 
 .btn-proveedor-white {
