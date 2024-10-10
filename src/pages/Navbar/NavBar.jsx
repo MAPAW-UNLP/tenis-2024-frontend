@@ -72,6 +72,11 @@ const NavBar = ({ title }) => {
               />
               <LinkItem to={'/cobros'} setActive={setActive} name={'Cobros'} />
               <LinkItem
+                to={'/proveedores'}
+                setActive={setActive}
+                name={'Proveedores'}
+              />
+              <LinkItem
                 to={'/movimientos'}
                 setActive={setActive}
                 name={'Movimientos'}

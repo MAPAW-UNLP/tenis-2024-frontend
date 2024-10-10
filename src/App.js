@@ -3,6 +3,7 @@ import { HomeRe } from './pages/Home/HomeRe'
 import { Canchas } from './pages/Cancha/Canchas'
 import { Reservas } from './pages/Reserva/Reservas'
 import { Profesores } from './pages/Profesor/Profesores'
+import Proveedores from './pages/Proveedores/Proveedores'
 import { Cobros } from './pages/Cobros/Cobros'
 import { Pagos } from './pages/Pagos/Pagos'
 import { Balance } from './pages/Balance/Balance'
@@ -37,6 +38,7 @@ function App() {
           <Route path="/canchas" element={<Canchas />} />
           <Route path="/alumnos" element={<AlumnosNew />} />
           <Route path="/profesores" element={<Profesores />} />
+          <Route path="/proveedores" element={<Proveedores />} />
           <Route path="/cobros" element={<Cobros />} />
           <Route path="/pagos" element={<Pagos />} />
           <Route path="/balance" element={<Balance />} />

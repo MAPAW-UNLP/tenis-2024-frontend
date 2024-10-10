@@ -1,75 +1,43 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import moment from 'moment'
 import { useNavigate } from 'react-router-dom'
-
-import '../../styles/claseDetail.css'
-//fontawesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faPlusCircle,
   faCalendar,
   faCheck,
 } from '@fortawesome/free-solid-svg-icons'
-//components
+
+// Components
+import Modal from 'components/Modal/Modal'
 import EditFechaYHoraController from './EditFechaYHoraController'
 import SelectorDeAlumnosDeClase from './SelectorDeAlumnosDeClase'
 
-const ClaseDetails = ({
-  reserva,
-  diaReserva,
-  setClaseDetail,
-  alumnosDeLaClase,
-  setAlumnosDeLaClase,
-  profeClase,
-  setProfeClase,
-  alumnos,
-  profesores,
-  setActReservas,
-}) => {
-  const [active, setActive] = useState()
+// Styles
+import '../../styles/claseDetail.css'
 
+const ClaseDetails = ({ isVisible, onClose, reserva }) => {
+  const [active, setActive] = useState(false)
   const [horaInicio, setHoraInicio] = useState('')
   const [horaFinal, setHoraFinal] = useState('')
   const [diaElegido, setDiaElegido] = useState('')
+  const [alumnosBtnActive, setAlumnosBtnActive] = useState(false)
+  const [actProfe, setActProfe] = useState(null)
+  const [alumnosDeLaClase, setAlumnosDeLaClase] = useState(reserva.grupo || [])
 
-  const [alumnosBtnActive, setAlumnosBtnActive] = useState()
+  const navigate = useNavigate()
 
   const dias = [
+    'Domingo',
     'Lunes',
     'Martes',
     'Miércoles',
     'Jueves',
     'Viernes',
     'Sábado',
-    'Domingo',
   ]
 
-  const [selectActive, setActiveSelect] = useState(false)
-  const [actProfe, setActProfe] = useState(null)
-  const [idReserva, setIdReserva] = useState('')
-
-  const [profeLoader, setProfeLoader] = useState(false)
-  const navigate = useNavigate()
-
-  const handleDeleteAlumno = (indexItem) => {
-    setAlumnosDeLaClase((prevState) =>
-      prevState.filter((alu, index) => index !== indexItem)
-    )
-    //aca vamos a deletear al alumno de la clase
-  }
-
-  const handleEditProfe = (e) => {
-    // console.log(e.target.value)
-    /*setProfeClase(parseInt(e.target.value));*/
-    setActProfe(parseInt(e.target.value))
-  }
-
-  const handleEditAlumnos = (e) => {
-    // console.log('Selecciono alumnos ', e)
-    setAlumnosDeLaClase(e.map((i) => i.value))
-    // console.log(alumnosDeLaClase)
-  }
-
+  // Función para formatear la fecha
   const formateoFecha = (fecha) => {
     const numeroDia = new Date(fecha).getDay()
     const nombreDia = dias[numeroDia]
@@ -78,318 +46,194 @@ const ClaseDetails = ({
     return `${nombreDia} ${destructFecha[2]}/${destructFecha[1]}`
   }
 
+  // Función para verificar si la clase ya pasó
   const clasePasada = (fecha) => {
     return fecha.split('-').join('') < moment(new Date()).format('YYYYMMDD')
   }
 
-  const setClassActive = () => {
-    setActive(true)
-    const background = document.getElementById('clase-detail-futuro')
-    const componente = document.getElementById('clase-btn-background')
-    // console.log(componente)
-    background.classList.add('active')
-    componente.classList.add('active')
+  // Funciones para manejar la edición de la clase
+  const handleDeleteAlumno = (indexItem) => {
+    setAlumnosDeLaClase((prevState) =>
+      prevState.filter((_, index) => index !== indexItem)
+    )
+    // Aquí puedes agregar lógica para eliminar al alumno en el backend
   }
 
-  const activeAddAlumnos = () => {
-    setAlumnosBtnActive(true)
-    const background = document.getElementById('clase-detail-futuro')
-    const componenteSuperior = document.getElementById('clase-btn-background')
-    const componente = document.getElementById('addAlumnosDiv')
-    const father = document.getElementById('clase-detail-component')
-    const alumnosList = document.getElementById('alumnosList')
-    // console.log(componente)
-    father.classList.add('activeAlumnos')
-    alumnosList.classList.add('activeAlumnos')
-    background.classList.add('activeAlumnos')
-    componenteSuperior.classList.add('activeAlumnos')
-    componente.classList.add('activeAlumnos')
+  const handleEditProfe = (e) => {
+    setActProfe(parseInt(e.target.value))
   }
 
-  const desactivateAddAlumnos = () => {
-    setAlumnosBtnActive(false)
-    const background = document.getElementById('clase-detail-futuro')
-    const componenteSuperior = document.getElementById('clase-btn-background')
-    const componente = document.getElementById('addAlumnosDiv')
-    const father = document.getElementById('clase-detail-component')
-    const alumnosList = document.getElementById('alumnosList')
-    // console.log(componente)
-    father.classList.remove('activeAlumnos')
-    alumnosList.classList.remove('activeAlumnos')
-    background.classList.remove('activeAlumnos')
-    componenteSuperior.classList.remove('activeAlumnos')
-    componente.classList.remove('activeAlumnos')
-  }
-  const cerrarEdicion = () => {
-    setAlumnosBtnActive(false)
-    setActive(false)
-    const componente = document.getElementById('clase-btn-background')
-    const background = document.getElementById('clase-detail-futuro')
-    background.classList.remove('active')
-    componente.classList.remove('active')
-  }
-
-  const cerrarDetalles = () => {
-    cerrarEdicion()
-    setClaseDetail({})
-    setHoraFinal('')
-    setHoraInicio('')
-    setDiaElegido('')
+  const handleEditAlumnos = (selectedAlumnos) => {
+    setAlumnosDeLaClase(selectedAlumnos.map((i) => i.value))
   }
 
   const actualizarClase = () => {
-    //Aca agarrar todos los datos que tiene detalles y hacer un POST a la API, el unico problema es que los IDs de los usuarios no vienen a la front
     const URL_BASE = 'http://localhost:8083/api/'
     const alumnos_ID = alumnosDeLaClase.map((el) => el.id)
     const params = new URLSearchParams()
-    const profeDefault = document.getElementById('idProfeSelected').value
+    const profeDefault = reserva.profesorId // Usar el id del profesor
 
     params.append('reserva_id', reserva.reservaId)
-    params.append('hora_ini', horaInicio)
-    params.append('hora_fin', horaFinal)
-    params.append('fecha', diaElegido)
-    actProfe == null
-      ? params.append('persona_id', profeDefault)
-      : params.append('persona_id', actProfe)
+    params.append('hora_ini', horaInicio || reserva.horaIni)
+    params.append('hora_fin', horaFinal || reserva.horaFin)
+    params.append('fecha', diaElegido || reserva.fecha)
+    params.append('persona_id', actProfe || profeDefault)
     params.append('grupo_ids', alumnos_ID)
-    // console.log(params)
 
     const requestOptions = {
       method: 'PUT',
       body: params,
     }
+
     fetch(`${URL_BASE}clase_reserva`, requestOptions)
-      .then((response) => setActReservas((v) => !v))
-      .then((response) => setClaseDetail((v) => !v))
-      .finally(navigate('/reservas'))
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Error al actualizar la clase')
+        }
+        return response.json()
+      })
+      .then(() => {
+        onClose() // Cerrar el modal después de actualizar
+      })
+      .catch((error) => {
+        console.error('Error:', error)
+      })
   }
 
-  const editProfe = () => {
-    const URL_BASE = 'http://localhost:8083/api/'
-    const params = new URLSearchParams()
-    params.append('reserva_id', reserva.reservaId)
-    params.append('persona_id', actProfe)
-    // console.log('Acutalizando las reservas')
-
-    const requestOptions = {
-      method: 'PUT',
-      body: params,
-    }
-    fetch(`${URL_BASE}profe_reserva`, requestOptions).then((response) =>
-      setClaseDetail((v) => !v)
-    )
+  const cerrarDetalles = () => {
+    onClose()
+    setHoraFinal('')
+    setHoraInicio('')
+    setDiaElegido('')
+    setActProfe(null)
   }
 
-  // TODO: Refactorizar para usar modal.
   return (
-    <>
-      {reserva.canchaNombre !== undefined ? (
-        <div id="clase-detail-component">
-          {clasePasada(reserva.fecha) ? (
-            <button id="clase-closeBTN" onClick={() => setClaseDetail({})}>
-              x
-            </button>
-          ) : (
-            <button id="clase-closeBTN" onClick={cerrarDetalles}>
-              x
-            </button>
-          )}
-
-          {clasePasada(reserva.fecha) ? (
-            <div id="clase-detail-general" className="clase-caja">
-              <h2>Cancha: {reserva.canchaNombre}</h2>
-              <p id="clase-detail-fecha">{formateoFecha(reserva.fecha)}</p>
-              <p id="clase-detail-hora">
-                {reserva.horaIni} - {reserva.horaFin}
-              </p>
-            </div>
-          ) : (
-            <div id="clase-detail-futuro" className="clase-caja">
-              <h2>Cancha: {reserva.canchaNombre}</h2>
-              {active ? (
-                <div id="clase-detail-contenido">
-                  <div id="clase-detail-texto">
-                    <p id="clase-detail-fecha">
-                      {diaElegido === ''
-                        ? formateoFecha(reserva.fecha)
-                        : formateoFecha(diaElegido)}
-                    </p>
-                    <p id="clase-detail-hora">
-                      {horaInicio === '' ? reserva.horaIni : horaInicio} -{' '}
-                      {horaFinal === '' ? reserva.horaFin : horaFinal}
-                    </p>
-                  </div>
-                  <div id="clase-btn-background">
-                    <EditFechaYHoraController
-                      reserva={reserva}
-                      setHoraInicio={setHoraInicio}
-                      horaInicio={horaInicio}
-                      setHoraFinal={setHoraFinal}
-                      horaFinal={horaFinal}
-                      diaElegido={diaElegido}
-                      setDiaElegido={setDiaElegido}
-                    />
-                    <button id="clase-detail-edit-btn" onClick={cerrarEdicion}>
-                      {' '}
-                      <FontAwesomeIcon icon={faCheck} />
-                    </button>
-                  </div>
-                </div>
-              ) : (
-                <div id="clase-detail-contenido">
-                  <div id="clase-detail-texto">
-                    <p id="clase-detail-fecha">
-                      {diaElegido === ''
-                        ? formateoFecha(reserva.fecha)
-                        : formateoFecha(diaElegido)}
-                    </p>
-                    <p id="clase-detail-hora">
-                      {horaInicio === '' ? reserva.horaIni : horaInicio} -{' '}
-                      {horaFinal === '' ? reserva.horaFin : horaFinal}
-                    </p>
-                  </div>
-                  <div id="clase-btn-background">
-                    <button id="clase-detail-edit-btn" onClick={setClassActive}>
-                      {' '}
-                      <FontAwesomeIcon icon={faCalendar} />
-                    </button>
-                  </div>
-                </div>
-              )}
-            </div>
-          )}
-
-          <div id="clase-detail-profesor" className="clase-caja">
-            <h3>Profesor</h3>
-            {clasePasada(reserva.fecha) ? (
-              <div id="profesor-label">
-                <p id="profesor">nombre: </p>
-                <p className="clase-detail-nombre">{reserva.titular.nombre}</p>
-              </div>
-            ) : (
-              <div>
-                <div id="profesor-label">
-                  <p id="profesor">nombre: </p>
-                  <p className="clase-detail-nombre">
-                    {reserva.titular.nombre}{' '}
+    <Modal
+      isVisible={isVisible}
+      onClose={cerrarDetalles}
+      title="Detalles de la Clase"
+    >
+      <div id="clase-detail-component">
+        {clasePasada(reserva.fecha) ? (
+          <div id="clase-detail-general" className="clase-caja">
+            <h2>Cancha: {reserva.canchaNombre}</h2>
+            <p id="clase-detail-fecha">{formateoFecha(reserva.fecha)}</p>
+            <p id="clase-detail-hora">
+              {reserva.horaIni} - {reserva.horaFin}
+            </p>
+          </div>
+        ) : (
+          <div id="clase-detail-futuro" className="clase-caja">
+            <h2>Cancha: {reserva.canchaNombre}</h2>
+            {active ? (
+              <div id="clase-detail-contenido">
+                <div id="clase-detail-texto">
+                  <p id="clase-detail-fecha">
+                    {diaElegido === ''
+                      ? formateoFecha(reserva.fecha)
+                      : formateoFecha(diaElegido)}
+                  </p>
+                  <p id="clase-detail-hora">
+                    {horaInicio === '' ? reserva.horaIni : horaInicio} -{' '}
+                    {horaFinal === '' ? reserva.horaFin : horaFinal}
                   </p>
                 </div>
-                <select
-                  name=""
-                  className="inputReserva"
-                  id="profeInput"
-                  onChange={handleEditProfe}
-                  defaultValue={reserva.titular.id}
-                >
-                  <option id="idProfeSelected" value={reserva.titular.id}>
-                    Cambiar Profe
-                  </option>
-                  {profesores.map((el) => {
-                    return reserva.titular.nombre !== el.nombre ? (
-                      <option value={el.id} key={el.id}>
-                        {el.nombre}
-                      </option>
-                    ) : (
-                      ''
-                    )
-                  })}
-                </select>
-              </div>
-            )}
-          </div>
-
-          <div id="clase-detail-alumnos" className="clase-caja">
-            <h3>Alumnos</h3>
-            {clasePasada(reserva.fecha) ? (
-              <div id="alumnosList">
-                {alumnosDeLaClase.map((el, index) => (
-                  <div
-                    key={index}
-                    className="clase-detail-a"
-                    id="alumnosList-detail"
-                  >
-                    <p>{el.nombre}</p>{' '}
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div id="alumnosList">
-                {alumnosDeLaClase.map((el, index) => (
-                  <div
-                    key={index}
-                    className="clase-detail-a"
-                    id="alumnosList-detail"
-                  >
-                    <p>{el.nombre}</p>{' '}
-                    <button
-                      id="deleteAlumnoBtn"
-                      onClick={() => handleDeleteAlumno(index)}
-                    >
-                      x
-                    </button>{' '}
-                  </div>
-                ))}
-              </div>
-            )}
-            <div id="addAlumnosDiv">
-              {alumnosBtnActive ? (
-                <div>
-                  <SelectorDeAlumnosDeClase
-                    alumnos={alumnos}
-                    setAlumnosDeLaClase={setAlumnosDeLaClase}
-                    alumnosDeLaClase={alumnosDeLaClase}
+                <div id="clase-btn-background">
+                  <EditFechaYHoraController
+                    reserva={reserva}
+                    setHoraInicio={setHoraInicio}
+                    horaInicio={horaInicio}
+                    setHoraFinal={setHoraFinal}
+                    horaFinal={horaFinal}
+                    diaElegido={diaElegido}
+                    setDiaElegido={setDiaElegido}
                   />
                   <button
-                    id="clase-detail-alumnos-addBTN"
-                    onClick={desactivateAddAlumnos}
+                    id="clase-detail-edit-btn"
+                    onClick={() => setActive(false)}
                   >
                     <FontAwesomeIcon icon={faCheck} />
                   </button>
                 </div>
-              ) : reserva.tipo === 'INDIVIDUAL' &&
-                alumnosDeLaClase.length === 1 ? (
-                <div class="desvanecer">
-                  <button
-                    id="clase-detail-alumnos-addBTN"
-                    class="btnDis"
-                    title="Sólo puede haber un alumno asignado"
-                    disabled
-                  >
-                    <FontAwesomeIcon icon={faPlusCircle} />
-                  </button>
-                  <small>Sólo puede haber un alumno asignado</small>
+              </div>
+            ) : (
+              <div id="clase-detail-contenido">
+                <div id="clase-detail-texto">
+                  <p id="clase-detail-fecha">
+                    {diaElegido === ''
+                      ? formateoFecha(reserva.fecha)
+                      : formateoFecha(diaElegido)}
+                  </p>
+                  <p id="clase-detail-hora">
+                    {horaInicio === '' ? reserva.horaIni : horaInicio} -{' '}
+                    {horaFinal === '' ? reserva.horaFin : horaFinal}
+                  </p>
                 </div>
-              ) : (
-                <button
-                  id="clase-detail-alumnos-addBTN"
-                  onClick={activeAddAlumnos}
-                >
-                  <FontAwesomeIcon icon={faPlusCircle} />
-                </button>
-              )}
-            </div>
+                <div id="clase-btn-background">
+                  <button
+                    id="clase-detail-edit-btn"
+                    onClick={() => setActive(true)}
+                  >
+                    <FontAwesomeIcon icon={faCalendar} />
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
-          {clasePasada(reserva.fecha) ? (
-            ''
-          ) : (
-            <div id="clase-detail-btns">
-              <button id="clase-detail-guardar" onClick={actualizarClase}>
-                Guardar
-              </button>
-              <button
-                id="clase-detail-cancelar"
-                onClick={() => setClaseDetail({})}
-              >
-                Cancelar
-              </button>
-            </div>
+        )}
+
+        <div id="clase-detail-profesor" className="clase-caja">
+          <h3>Profesor</h3>
+          <div id="profesor-label">
+            <p id="profesor">ID del profesor: </p>{' '}
+            {/*TDOO mostrar el nombre, no el id*/}
+            <p className="clase-detail-nombre">{reserva.profesorId}</p>
+          </div>
+          {!clasePasada(reserva.fecha) && (
+            <select
+              className="inputReserva"
+              onChange={handleEditProfe}
+              defaultValue={reserva.profesorId}
+            >
+              <option value={reserva.profesorId}>Cambiar Profe</option>
+              {/* Aquí debes incluir la lista de profesores */}
+            </select>
           )}
         </div>
-      ) : (
-        ''
-      )}
-      {/* {console.log(reserva)} */}
-    </>
+
+        <div id="clase-detail-alumnos" className="clase-caja">
+          <h3>Alumnos</h3>
+          {alumnosDeLaClase.length > 0 ? (
+            alumnosDeLaClase.map((alumno, index) => (
+              <div key={index} className="alumno-item">
+                <span>{alumno.nombre}</span>
+                <button onClick={() => handleDeleteAlumno(index)}>
+                  Eliminar
+                </button>
+              </div>
+            ))
+          ) : (
+            <p>No hay alumnos en esta clase.</p>
+          )}
+          <SelectorDeAlumnosDeClase
+            selectedAlumnos={alumnosDeLaClase}
+            onChange={handleEditAlumnos}
+          />
+        </div>
+
+        {!clasePasada(reserva.fecha) && (
+          <div id="clase-detail-btns">
+            <button id="clase-detail-guardar" onClick={actualizarClase}>
+              Guardar
+            </button>
+            <button id="clase-detail-cancelar" onClick={cerrarDetalles}>
+              Cancelar
+            </button>
+          </div>
+        )}
+      </div>
+    </Modal>
   )
 }
 

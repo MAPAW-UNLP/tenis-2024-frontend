@@ -71,14 +71,12 @@ const Home = () => {
   const [reservas, setReservas] = useState([])
   const [reservasIsLoading, setReservasIsLoading] = useState(true) // Spinner
 
-  const [alumnos, setAlumnos] = useState([])
   const [profesores, setProfesores] = useState([])
 
   useEffect(() => {
-    getProfesores().then((data) => setProfesores(ordenarPorNombre(data)))
-    getAlumnos().then((data) => setAlumnos(ordenarPorNombre(data)))
-    getCanchas().then((data) => setCanchas(data.detail))
     setReservasIsLoading(true)
+    getProfesores().then((data) => setProfesores(ordenarPorNombre(data)))
+    getCanchas().then((data) => setCanchas(data.detail))
     getReservas()
       .then((data) => setReservas(data.detail))
       .then(() => setReservasIsLoading(false))
@@ -87,7 +85,6 @@ const Home = () => {
   return (
     <div id="home-component">
       <NavBar title={'Tennis app'} />
-
       {reservasIsLoading ? (
         <div style={{ position: 'relative' }}>
           <LoaderSpinner
@@ -98,43 +95,70 @@ const Home = () => {
         </div>
       ) : (
         <HomeBody
-          alumnos={alumnos}
           canchas={canchas}
           profesores={profesores}
           reservas={reservas}
+          reservasIsLoading={reservasIsLoading}
         />
       )}
     </div>
   )
 }
 
-function HomeBody({ reservas, canchas, alumnos, profesores }) {
+function HomeBody({ reservas, canchas, profesores, reservasIsLoading }) {
   const [reservasDelDia, setReservasDelDia] = useState([])
   const [reservaDetail, setReservaDetail] = useState({})
   const [alquilerDetailsIsVisible, setAlquilerDetailsIsVisible] =
     useState(false)
   const [selectedDate, setSelectedDate] = useState(Date.now())
 
-  const [alumnosDeLaClase, setAlumnosDeLaClase] = useState([])
-  const [profeClase, setProfeClase] = useState('')
   const [claseDetail, setClaseDetail] = useState({})
-  const [actReservas, setActReservas] = useState(false)
+  const [profesorSeleccionado, setProfesorSeleccionado] = useState('')
 
   const navigate = useNavigate()
 
+  const handleBuscarClases = () => {
+    if (!profesorSeleccionado || !selectedDate) {
+      alert('Debe seleccionar un profesor y una fecha.')
+      return
+    }
+
+    const formattedDate = moment(selectedDate).format('YYYY-MM-DD')
+    const url = `http://localhost:8083/api/clases-profesor?persona_id=${profesorSeleccionado}&fecha=${formattedDate}`
+
+    fetch(url)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('Clases encontradas:', data)
+        // Aquí puedes manejar los resultados obtenidos
+      })
+      .catch((error) => console.error('Error fetching clases:', error))
+  }
+
   useEffect(() => {
+    if (reservasIsLoading) return
+
     const reservasDia = reservas.reduce((acc, reserva) => {
-      if (reserva.fecha === moment(selectedDate).format('YYYY-MM-DD')) {
+      if (
+        reserva.fecha === moment(selectedDate).format('YYYY-MM-DD') &&
+        reserva.estado === 'ASIGNADO'
+      ) {
         if (!acc[reserva.canchaId]) {
           acc[reserva.canchaId] = []
         }
-        acc[reserva.canchaId].push(reserva)
+        const cancha = canchas.find((c) => c.id === reserva.canchaId)
+        const reservaConCancha = {
+          ...reserva,
+          canchaNombre: cancha ? cancha.nombre : 'Desconocida',
+        }
+        console.log('Reserva con canchaNombre:', reservaConCancha) // Log
+        acc[reserva.canchaId].push(reservaConCancha)
       }
       return acc
     }, {})
 
     setReservasDelDia(reservasDia)
-  }, [reservas, selectedDate])
+  }, [canchas, reservas, reservasIsLoading, selectedDate])
 
   if (canchas.length === 0) {
     return (
@@ -151,24 +175,22 @@ function HomeBody({ reservas, canchas, alumnos, profesores }) {
 
   return (
     <>
-      <AlquilerDetails
-        isVisible={alquilerDetailsIsVisible}
-        onClose={() => setAlquilerDetailsIsVisible(false)}
-        reserva={reservaDetail}
-        setReservaDetail={setReservaDetail}
-      />
-      <ClaseDetails
-        reserva={claseDetail}
-        diaReserva={selectedDate}
-        setClaseDetail={setClaseDetail}
-        alumnosDeLaClase={alumnosDeLaClase}
-        setAlumnosDeLaClase={setAlumnosDeLaClase}
-        profeClase={profeClase}
-        setProfeClase={setProfeClase}
-        alumnos={alumnos}
-        profesores={profesores}
-        setActReservas={setActReservas}
-      />
+      <NavBar title={'Tennis app'} />
+      {alquilerDetailsIsVisible && (
+        <AlquilerDetails
+          isVisible={alquilerDetailsIsVisible}
+          onClose={() => setAlquilerDetailsIsVisible(false)}
+          reserva={reservaDetail}
+          setReservaDetail={setReservaDetail}
+        />
+      )}
+      {claseDetail && Object.keys(claseDetail).length > 0 && (
+        <ClaseDetails
+          isVisible={claseDetail && Object.keys(claseDetail).length > 0}
+          onClose={() => setClaseDetail({})}
+          reserva={claseDetail}
+        />
+      )}
 
       <Dashboard
         header={
@@ -179,6 +201,22 @@ function HomeBody({ reservas, canchas, alumnos, profesores }) {
             >
               <FontAwesomeIcon icon={faPlusCircle} />
             </button>
+            <div>
+              <label htmlFor="profesor-select">Seleccionar Profesor:</label>
+              <select
+                id="profesor-select"
+                value={profesorSeleccionado}
+                onChange={(e) => setProfesorSeleccionado(e.target.value)}
+              >
+                <option value="">Seleccione un profesor</option>
+                {profesores.map((profesor) => (
+                  <option key={profesor.id} value={profesor.id}>
+                    {profesor.nombre}
+                  </option>
+                ))}
+              </select>
+              <button onClick={handleBuscarClases}>Aceptar</button>
+            </div>
             <div className="home__date">
               <CalendarPicker
                 selectedDate={selectedDate}
@@ -246,7 +284,8 @@ function HomeBody({ reservas, canchas, alumnos, profesores }) {
                     if (reserva.tipo === 'ALQUILER') {
                       setAlquilerDetailsIsVisible(true)
                     } else {
-                      // TODO ver qué hacer con el otro tipo
+                      console.log('CLIQUEO ', reserva) // Verifica el objeto reserva
+                      setClaseDetail(reserva)
                     }
                   }}
                 />
@@ -254,83 +293,6 @@ function HomeBody({ reservas, canchas, alumnos, profesores }) {
           </Dashboard.Col>
         ))}
       </Dashboard>
-
-      {/*<div id="table-component">
-        <div id="table-options">
-          <button
-            id="home-addReservaBtn"
-            onClick={() => navigate('../nuevaReserva')}
-          >
-            {' '}
-            <FontAwesomeIcon id="reserva-add-btn" icon={faPlusCircle} />
-          </button>
-
-          <div id="table-panel-date">
-            <CalendarPicker today={selectedDate} setToday={setSelectedDate} />
-          </div>
-        </div>
-        <div
-          id="table-grid"
-          style={{
-            display: 'grid',
-            gridTemplateColumns: `13vw repeat(${canchas.length}, 1fr)`,
-            gridTemplateRows: `repeat(${horas.length + 1}, 1fr)`,
-          }}
-        >
-          <div id="hora" style={{ gridArea: '1/1/2/2' }}>
-            Hora
-          </div>
-
-          {horas.map((el, i) => (
-            <div
-              className="horas"
-              key={i}
-              style={{ gridArea: `${i + 2}/1/${i + 3}/2` }}
-            >
-              {' '}
-              {el}{' '}
-            </div>
-          ))}
-          {canchas.map((el, i) => (
-            <div
-              className="canchas"
-              key={el.id}
-              style={{
-                gridArea: `1/${i + 2} / ${horas.length}/${i + 3}`,
-                backgroundColor: coloresCanchas[i % coloresCanchas.length],
-              }}
-            >
-              <div
-                style={{
-                  backgroundColor: coloresCanchas[i % coloresCanchas.length],
-                  filter: 'brightness(120%)',
-                  height: '4vh',
-                }}
-              >
-                <p> {el.nombre} </p>
-              </div>{' '}
-            </div>
-          ))}
-          {reservas.map((el) => (
-            <Reserva
-              key={el.reservaId}
-              datos={el}
-              canchas={canchas}
-              today={moment(selectedDate).format('YYYY-MM-DD')}
-              setReservaDetail={setReservaDetail}
-              setClaseDetail={setClaseDetail}
-              setAlumnos={setAlumnosDeLaClase}
-              setProfe={setProfeClase}
-            />
-          ))}
-        </div>
-        <LoaderSpinner
-          active={reservasIsLoading}
-          containerClass={'homeLoaderNew'}
-          loaderClass={'homeLoaderSpinner'}
-        />
-      </div>
-      */}
     </>
   )
 }
