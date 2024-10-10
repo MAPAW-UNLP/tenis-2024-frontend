@@ -197,7 +197,7 @@ export const ProfesorDetail = ({
               {feedback.nombreFBCorrecto === false ||
                 feedback.telefonoFBCorrecto === false ||
                 feedback.emailFBCorrecto === false ||
-                feedback.valorHoraFB === false? (
+                feedback.valorHoraFB.isValid  === false? (
                 <button
                   id="profesor-edit-disabled"
                   type="button"

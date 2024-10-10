@@ -306,15 +306,16 @@ export const Profesores = () => {
   }
 
   const handleChangeValorHora = (e, checkDisabled) => {
-    const shouldIStartDisabled = checkDisabled
-    const valorHora = e.target.value
-    setProfesorForm({ ...profesorForm, [e.target.name]: valorHora, isValid: false,})
-    if (valorHora > 0) {
+    const shouldIStartDisabled = checkDisabled;
+    const valorHora = parseFloat(e.target.value); // Convertir a número flotante
+    setProfesorForm({ ...profesorForm, [e.target.name]: valorHora, isValid: false });
+  
+    if (valorHora > 0 && Number.isInteger(valorHora)) { // Validar que sea mayor que 0 y entero
       setFeedback({
         ...feedback,
         valorHoraFB: { isValid: true, text: 'Valor válido', color: '#7CBD1E' },
-      })
-    } else {
+      });
+    } else if (valorHora <= 0) {
       setFeedback({
         ...feedback,
         valorHoraFB: {
@@ -322,9 +323,18 @@ export const Profesores = () => {
           text: 'El valor debe ser mayor que 0',
           color: '#CC3636',
         },
-      })
+      });
+    } else {
+      setFeedback({
+        ...feedback,
+        valorHoraFB: {
+          isValid: false,
+          text: 'El valor debe ser un número entero',
+          color: '#CC3636',
+        },
+      });
     }
-  }
+  };
 
   // Si todos los feefbacks son correctos entonces habilito boton para AGREGAR PROFESOR
   useEffect(() => {

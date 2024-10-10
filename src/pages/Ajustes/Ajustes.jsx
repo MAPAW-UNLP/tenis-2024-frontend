@@ -62,6 +62,19 @@ export const Ajustes = () => {
       [tipo.id]: nuevoImporte,
     }))
 
+    // Validar si el valor es permitido (no vacío y numérico)
+  const valorPermitido = nuevoImporte.length > 0 && !isNaN(nuevoImporte);
+
+  // Comparar el valor formateado con el importe original para ver si hay cambios
+  const mismoValor = nuevoImporte === String(tipo.importe);
+
+  // Si el valor es permitido y es diferente al valor original, habilitar el botón
+  if (valorPermitido && !mismoValor) {
+    setBotonHabilitado(true);
+  } else {
+    setBotonHabilitado(false); // Deshabilitar si no es válido o si es el mismo valor
+  }
+
     // Actualizar la vista localmente
     setTipoClases((prevTipoClases) =>
       prevTipoClases.map((tipoClase) =>
@@ -86,6 +99,10 @@ export const Ajustes = () => {
         console.error('Error al actualizar el importe:', error)
       }
     }
+    // Limpiar el estado de cambios temporales y deshabilitar el botón
+    setTempChanges({});
+    setBotonHabilitado(false); // Deshabilitar el botón nuevamente
+    setCargando(false);
     await fetchTipoClases()
   }
 
@@ -245,7 +262,7 @@ export const Ajustes = () => {
             width="20em"
             centrado
             onClick={handleConfirmarCambios}
-            disabled={false}
+            disabled={!botonHabilitado}
           >
             Confirmar cambios
           </GenericButtonDisabled>
