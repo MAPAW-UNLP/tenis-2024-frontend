@@ -84,6 +84,24 @@
   align-items: center; /* Asegura que el contenido de las celdas esté centrado verticalmente */
 }
 
+.new-profesor-inside-title {
+  font-family: var(--normal-text);
+  color: var(--neutral-black);
+  font-size: 3em; /* Aumenta el tamaño de la fuente */
+  font-weight: bolder;
+  text-align: center;
+  margin-top: 0.8em;
+}
+
+.new-profesor-inside-text {
+  font-family: var(--normal-text);
+  color: var(--neutral-black);
+  font-size: 1.2em; /* Aumenta un poco el tamaño de la fuente */
+  font-weight: bolder;
+  margin-top: 0.8em;
+  text-align: center; /* Asegura que el texto también esté centrado */
+}
+
 #edit-profesor-btn {
   width: 50%;
   border-radius: 12px;
