@@ -69,16 +69,6 @@ export const Ajustes = () => {
       [tipo.id]: nuevoImporte,
     }))
 
-    const valorOriginal = valoresOriginales[tipo.id]
-    const valorPermitido = nuevoImporte.length > 0 && !isNaN(nuevoImporte)
-    const mismoValor = nuevoImporte === String(valorOriginal)
-
-    if (valorPermitido && !mismoValor) {
-      setBotonHabilitado(true)
-    } else {
-      setBotonHabilitado(false) // Deshabilitar si no es válido o si es el mismo valor
-    }
-
     // Actualizar solo la vista localmente para mostrar el valor temporal
     setTipoClases((prevTipoClases) =>
       prevTipoClases.map((tipoClase) =>
@@ -88,6 +78,16 @@ export const Ajustes = () => {
       )
     )
   }
+
+  useEffect(() => {
+    // Revisa si hay algún valor en tempChanges que sea diferente al original
+    const hayCambios = Object.keys(tempChanges).some(
+      (id) => tempChanges[id] !== String(valoresOriginales[id])
+    )
+
+    // Habilitar o deshabilitar el botón según si hay cambios
+    setBotonHabilitado(hayCambios)
+  }, [tempChanges, valoresOriginales])
 
   const handleConfirmarCambios = async () => {
     setCargando(true)
