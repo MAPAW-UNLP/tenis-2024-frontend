@@ -41,9 +41,12 @@ function Proveedores() {
   const activarFormulario = () => {
     setMostrarPopup(true)
   }
-  const ocultarFormulario = () => {
+  const ocultarFormulario = (bool = false) => {
     setMostrarPopup(false)
     setEditModal(false)
+    if (bool === true) {
+      update()
+    }
   }
 
   const handleTrash = (id) => {
@@ -51,8 +54,11 @@ function Proveedores() {
     setIdProveedor(id)
   }
 
-  const handleClose = () => {
+  const handleClose = (bool = false) => {
     setmodalEliminar(false)
+    if (bool === true) {
+      update()
+    }
   }
 
   let listado
@@ -143,8 +149,11 @@ function Proveedores() {
             Nombre
           </span>
           <span style={{ fontSize: '1.8em', width: 200, textAlign: 'center' }}>
-            Telefono
+            Teléfono
           </span>
+          <span></span>
+          <span></span>
+          <span></span>
           <span></span>
         </div>
         {loading ? (
@@ -162,11 +171,11 @@ function Proveedores() {
                   <div key={p.id} className="proveedores-item-list">
                     <p>{p.nombre}</p>
                     <p>{p.telefono}</p>
-                    <button className="edit-proveedor-btn">
-                      <FontAwesomeIcon
-                        icon={faUserEdit}
-                        onClick={() => openEditModal(p)}
-                      />
+                    <button
+                      className="edit-proveedor-btn"
+                      onClick={() => openEditModal(p)}
+                    >
+                      <FontAwesomeIcon icon={faUserEdit} />
                     </button>
                     <div
                       className="botones-proveedor"
@@ -190,7 +199,6 @@ function Proveedores() {
           <AgregarProveedor
             handleCloseForm={ocultarFormulario}
             proveedores={proveedores}
-            updateList={update}
           />
         )}
         {editModal && (
@@ -204,7 +212,6 @@ function Proveedores() {
             idProveedor={idProveedor}
             isOpen={modalEliminar}
             handleClose={handleClose}
-            upgrade={update}
           />
         )}
       </div>

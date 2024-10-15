@@ -60,6 +60,25 @@ const useInputValidation = (
     return { valid: true, message: 'Teléfono válido.' }
   }
 
+  const validateProveedor = (nombre) => {
+    if (nombre === '') {
+      return {
+        valid: false,
+        message: 'Debe seleccionar algun proveedor de la lista.',
+      }
+    }
+    return { valid: true, message: 'Proveedor seleccionado correctamente.' }
+  }
+
+  const validateMonto = (monto) => {
+    if (monto === '') {
+      return { valid: false, message: 'El monto no puede ser vacio.' }
+    } else if (Number(monto) <= 0) {
+      return { valid: false, message: 'El monto ingresado debe ser mayor a 0.' }
+    }
+    return { valid: true, message: 'Monto valido.' }
+  }
+
   const validatePartialName = (nombre) => {
     const pattern = /^[A-Za-z\s]+$/ // Solo letras y espacios
     if (nombre === '') {
@@ -99,7 +118,11 @@ const useInputValidation = (
     if (!partial) {
       return type === 'nombre'
         ? validateName(inputValue, proveedores)
-        : validateTelefono(inputValue)
+        : type === 'proveedor'
+          ? validateProveedor(inputValue)
+          : type === 'monto'
+            ? validateMonto(inputValue)
+            : validateTelefono(inputValue)
     }
 
     return type === 'nombre'

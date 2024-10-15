@@ -1,13 +1,9 @@
 import { useState } from 'react'
 import CancelButton from './CancelButton'
 import ConfirmButton from './ConfirmButton'
+import { wait } from 'components/Utils/Functions'
 
-const EliminarProveedor = ({
-  idProveedor,
-  isOpen,
-  handleClose,
-  upgrade = () => {},
-}) => {
+const EliminarProveedor = ({ idProveedor, isOpen, handleClose }) => {
   const [loading, setLoading] = useState(false)
   const [activePopup, setActivePopup] = useState(false)
 
@@ -19,10 +15,10 @@ const EliminarProveedor = ({
         method: 'DELETE',
       }
     )
-    setLoading(false)
     setActivePopup(true)
-    handleClose()
-    upgrade()
+    await wait(2000)
+    setLoading(false)
+    handleClose(true)
   }
 
   if (!isOpen) return null
