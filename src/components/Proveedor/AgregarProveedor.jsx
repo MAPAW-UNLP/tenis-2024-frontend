@@ -1,12 +1,9 @@
 import React, { useState } from 'react'
 import InputReComponent from '../Utils/InputReComponent'
 import useInputValidation from 'hooks/Proveedores/useInputValidation'
+import { wait } from 'components/Utils/Functions'
 
-function AgregarProveedor({
-  handleCloseForm,
-  proveedores = [],
-  updateList = () => {},
-}) {
+function AgregarProveedor({ handleCloseForm, proveedores = [] }) {
   const [proveedorForm, setProveedorForm] = useState({
     nombre: '',
     telefono: '',
@@ -34,7 +31,7 @@ function AgregarProveedor({
     return !(nombreValid && telefonoValid && !loading)
   }
 
-  const addProveedor = (e) => {
+  const addProveedor = async (e) => {
     e.preventDefault()
 
     setLoading(true)
@@ -49,17 +46,18 @@ function AgregarProveedor({
       body: JSON.stringify(data),
     }
 
-    fetch(`http://localhost:8083/api/proveedor`, requestOptions)
-      .then((response) => response.json())
-      .then(
-        () => setShowSuccessPopup(true),
-        setTimeout(() => {
-          setShowSuccessPopup(false)
-          handleCloseForm()
-          setLoading(false)
-          updateList()
-        }, 4000)
-      )
+    const response = await fetch(
+      `http://localhost:8083/api/proveedor`,
+      requestOptions
+    )
+    await response.json()
+    setShowSuccessPopup(true)
+
+    await wait(2000)
+
+    setShowSuccessPopup(false)
+    setLoading(false)
+    handleCloseForm(true)
   }
 
   return (

@@ -30,3 +30,11 @@ export const validateEmail = (email) => {
     /^(?:[^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*|"[^\n"]+")@(?:[^<>()[\].,;:\s@"]+\.)+[^<>()[\]\.,;:\s@"]{2,63}$/i
   return emailRegex.test(email)
 }
+
+export const wait = (time) => {
+  return new Promise((res, _) => {
+    setTimeout(() => {
+      res()
+    }, time)
+  })
+}
