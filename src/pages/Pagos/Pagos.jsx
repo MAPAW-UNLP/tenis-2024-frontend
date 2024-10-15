@@ -49,7 +49,7 @@ export const Pagos = () => {
 
   // Actualiza los datos del formulario para agregar un PAGO
   const handleChangeFormData = (e) => {
-    if (e.target.name === 'personaId') {
+    if (e.target.name === 'personaId' || e.target.name === 'proveedorId') {
       // El valor de la persona seleccionada
       const personaSeleccionada = e.target[e.target.selectedIndex].text
 
@@ -98,7 +98,22 @@ export const Pagos = () => {
     setActive(false)
     setLoadingFetch(true)
 
-    if (pagoAddForm.personaId) {
+    if (pagoAddForm.proveedorId && pagoAddForm.proveedorId != '') {
+      const requestOptions = {
+        method: 'POST',
+        body: JSON.stringify({
+          idProveedor: pagoAddForm.proveedorId,
+          concepto: pagoAddForm.concepto,
+          monto: pagoAddForm.monto,
+          descripcion: pagoAddForm.descripcion,
+          fecha: moment().format('YYYY/MM/DD'),
+        }),
+      }
+
+      fetch(`${URL_BASE}nuevo_pago`, requestOptions)
+        .then((response) => response.json())
+        .then(() => setActPagos((v) => !v))
+    } else if (pagoAddForm.personaId) {
       const requestOptions = {
         method: 'POST',
         body: JSON.stringify({
@@ -164,6 +179,7 @@ export const Pagos = () => {
           movimientoAddForm={pagoAddForm}
           handleChangeFormData={handleChangeFormData}
           personas={profesores}
+          proveedores={[]}
           movimientoName={'Pago'}
           movimientoOptions={movimientoOptions}
         />
