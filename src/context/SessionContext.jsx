@@ -22,8 +22,12 @@ export function SessionProvider({ children }) {
     if (isLoggedIn()) navigate('/')
   }, [isLoggedIn, navigate, session])
 
-  function logIn() {
-    setSession('sesión iniciada :D')
+  function logIn(detail) {
+    setSession({
+      id: detail.id,
+      roles: detail.roles,
+      rolPorDefecto: detail.rolPorDefecto,
+    })
   }
 
   function logOut() {
@@ -31,11 +35,12 @@ export function SessionProvider({ children }) {
     Swal.fire({
       position: 'bottom-end',
       icon: 'success',
+      iconColor: '#d18b3d',
       title: 'Se cerro la sesión',
       showConfirmButton: false,
       timer: 6000,
-      background: '#B22222',
-      color: 'white',
+      background: '#fc9e33',
+      color: 'black',
       toast: true,
       customClass: {
         popup: 'small-alert',

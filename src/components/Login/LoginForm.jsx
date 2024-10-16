@@ -54,7 +54,7 @@ const LoginForm = () => {
       .then((response) => response.json())
       .then((data) => {
         if (data.rta === 'ok') {
-          logIn()
+          logIn(data.detail)
           setActiveLoader(false)
           navigate('../inicio')
           Swal.fire({

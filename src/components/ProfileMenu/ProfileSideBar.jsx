@@ -6,11 +6,14 @@ import '../../styles/alerts.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes, faUser } from '@fortawesome/free-solid-svg-icons'
 import { useSession } from '../../hooks/useSession'
+
 const ProfileSideBar = () => {
   const URL_BASE = 'http://localhost:8083/api/'
   const [isOpen, setIsOpen] = useState(false)
   const [expanded, setExpanded] = useState(false)
   const { logOut } = useSession()
+  const { logIn } = useSession()
+  const { session } = useSession()
   const toggleSidebar = () => {
     setIsOpen(!isOpen)
     setExpanded(false)
@@ -23,13 +26,18 @@ const ProfileSideBar = () => {
   const handleChangeRole = (option) => {
     const requestOptions = {
       method: 'PUT',
-      body: JSON.stringify({ id: 1, rolPorDefecto: option }),
+      body: JSON.stringify({ id: session.id, rolPorDefecto: option }),
     }
     console.log(requestOptions)
     fetch(`${URL_BASE}usuario`, requestOptions)
       .then((response) => response.json())
       .then((data) => {
         if (data.rta === 'ok') {
+          logIn({
+            id: session.id,
+            roles: session.roles,
+            rolPorDefecto: option,
+          })
           Swal.fire({
             position: 'bottom-end',
             icon: 'success',
@@ -74,32 +82,31 @@ const ProfileSideBar = () => {
         </button>
         <div className="profile-sidebar-container">
           <h2 className="h2-sidebar">Opciones del Perfil</h2>
-          <button
-            className="list-toggle options-sidebar"
-            onClick={handleRolesClick}
-          >
-            Roles
-          </button>
-          {expanded && (
+          {session.roles.length > 1 && (
+            <button
+              className="list-toggle options-sidebar"
+              onClick={handleRolesClick}
+            >
+              Roles
+            </button>
+          )}
+
+          {expanded && session.roles.length > 1 && (
             <ul className="options-list">
-              <li
-                onClick={() => handleChangeRole('ROLE_ADMIN')}
-                className="options-sidebar"
-              >
-                Admin
-              </li>
-              <li
-                onClick={() => handleChangeRole('ROLE_PROFESOR')}
-                className="options-sidebar"
-              >
-                Profesor
-              </li>
-              <li
-                onClick={() => handleChangeRole('ROLE_ALUMNO')}
-                className="options-sidebar"
-              >
-                Cliente
-              </li>
+              {session.roles.map((role) => (
+                <li
+                  key={role}
+                  onClick={() => handleChangeRole(role)}
+                  className="options-sidebar"
+                  style={{
+                    fontWeight:
+                      role === session.rolPorDefecto ? 'bold' : 'normal',
+                  }}
+                >
+                  {role.replace('ROLE_', '').charAt(0).toUpperCase() +
+                    role.replace('ROLE_', '').slice(1).toLowerCase()}
+                </li>
+              ))}
             </ul>
           )}
           <Link
