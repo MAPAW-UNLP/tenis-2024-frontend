@@ -39,6 +39,9 @@ const ClaseDetails = ({ isVisible, onClose, reserva }) => {
 
   // Función para formatear la fecha
   const formateoFecha = (fecha) => {
+    if (!fecha) {
+      return false; // o el valor que consideres apropiado en caso de que no haya fecha
+    }
     const numeroDia = new Date(fecha).getDay()
     const nombreDia = dias[numeroDia]
 
@@ -48,8 +51,12 @@ const ClaseDetails = ({ isVisible, onClose, reserva }) => {
 
   // Función para verificar si la clase ya pasó
   const clasePasada = (fecha) => {
-    return fecha.split('-').join('') < moment(new Date()).format('YYYYMMDD')
+    if (!fecha) {
+      return false; // o el valor que consideres apropiado en caso de que no haya fecha
+    }
+    return fecha.split('-').join('') < moment(new Date()).format('YYYYMMDD');
   }
+  
 
   // Funciones para manejar la edición de la clase
   const handleDeleteAlumno = (indexItem) => {
@@ -184,11 +191,9 @@ const ClaseDetails = ({ isVisible, onClose, reserva }) => {
         )}
 
         <div id="clase-detail-profesor" className="clase-caja">
-          <h3>Profesor</h3>
-          <div id="profesor-label">
-            <p id="profesor">ID del profesor: </p>{' '}
-            {/*TDOO mostrar el nombre, no el id*/}
-            <p className="clase-detail-nombre">{reserva.profesorId}</p>
+        <h3>Profesor: {reserva.titular ? reserva.titular.nombre : ''}</h3>
+        <div id="profesor-label">
+            <p className="clase-detail-nombre">Cambiar profesor</p>
           </div>
           {!clasePasada(reserva.fecha) && (
             <select

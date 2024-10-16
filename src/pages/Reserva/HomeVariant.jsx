@@ -6,13 +6,15 @@ import moment from 'moment'
 // API
 import { getAlumnos } from 'api/alumnos'
 import { getCanchas } from 'api/canchas'
-import { getProfesores } from 'api/profesores'
+import { getProfesores, getClasesProfesor} from 'api/profesores'
 import { getReservas } from 'api/reservas'
+
 
 // Components
 import LoaderSpinner from 'components/LoaderSpinner'
 import AlquilerDetails from 'components/Reserva/AlquilerDetails'
 import CalendarPicker from 'components/Reserva/CalendarComponent'
+import SelectComponent from 'components/Utils/SelectComponent'
 import ClaseDetails from 'components/Reserva/ClaseDetails'
 // import Reserva from 'components/Reserva/Reserva'
 import NavBar from 'pages/Navbar/NavBar'
@@ -66,100 +68,110 @@ const coloresCanchas = [
   '#94F5C5',
 ]
 
-const Home = () => {
-  const [canchas, setCanchas] = useState([])
-  const [reservas, setReservas] = useState([])
-  const [reservasIsLoading, setReservasIsLoading] = useState(true) // Spinner
 
-  const [profesores, setProfesores] = useState([])
+
+const Home = () => {
+  const [canchas, setCanchas] = useState([]);
+  const [reservas, setReservas] = useState([]); // Reservas generales
+  const [clasesReservas, setClasesReservas] = useState([]); // Reservas de clases
+  const [profesores, setProfesores] = useState([]);
+  const [isLoading, setIsLoading] = useState(true); 
 
   useEffect(() => {
-    setReservasIsLoading(true)
-    getProfesores().then((data) => setProfesores(ordenarPorNombre(data)))
-    getCanchas().then((data) => setCanchas(data.detail))
-    getReservas()
-      .then((data) => setReservas(data.detail))
-      .then(() => setReservasIsLoading(false))
-  }, [])
+    ;(async () => {
+      setIsLoading(true)
+      const [profesores, canchas, reservas] = await Promise.all([getProfesores(), getCanchas(), getReservas()])
+      setProfesores(ordenarPorNombre(profesores))
+      setCanchas(canchas.detail)
+      setReservas(reservas.detail)
+      setIsLoading(false)
+    })()
+  }, []);
 
   return (
     <div id="home-component">
       <NavBar title={'Tennis app'} />
-      {reservasIsLoading ? (
+      {isLoading && (
         <div style={{ position: 'relative' }}>
-          <LoaderSpinner
-            active={reservasIsLoading}
-            containerClass={'homeLoader'}
-            loaderClass={'homeLoaderSpinner'}
-          />
+          <LoaderSpinner active={isLoading} containerClass={'homeLoader'} loaderClass={'homeLoaderSpinner'} />
         </div>
-      ) : (
-        <HomeBody
-          canchas={canchas}
-          profesores={profesores}
-          reservas={reservas}
-          reservasIsLoading={reservasIsLoading}
-        />
       )}
+      <HomeBody
+        canchas={canchas}
+        profesores={profesores}
+        reservas={reservas}
+        clasesReservas={clasesReservas} // Pasar las reservas de clases
+        setClasesReservas={setClasesReservas} // Pasar setter de clases
+        isLoading={isLoading}
+        setIsLoading={setIsLoading}
+      />
     </div>
-  )
-}
+  );
+};
 
-function HomeBody({ reservas, canchas, profesores, reservasIsLoading }) {
-  const [reservasDelDia, setReservasDelDia] = useState([])
-  const [reservaDetail, setReservaDetail] = useState({})
-  const [alquilerDetailsIsVisible, setAlquilerDetailsIsVisible] =
-    useState(false)
-  const [selectedDate, setSelectedDate] = useState(Date.now())
+function HomeBody({ reservas, clasesReservas, setClasesReservas, canchas, profesores, isLoading, setIsLoading }) {  
+  const [reservasDelDia, setReservasDelDia] = useState([]);
+  const [reservaDetail, setReservaDetail] = useState({});
+  const [alquilerDetailsIsVisible, setAlquilerDetailsIsVisible] = useState(false);
+  const [isClaseDetailsVisible, setIsClaseDetailsVisible] = useState(false);
 
-  const [claseDetail, setClaseDetail] = useState({})
-  const [profesorSeleccionado, setProfesorSeleccionado] = useState('')
+  const [selectedDate, setSelectedDate] = useState(Date.now());
+  const [claseDetail, setClaseDetail] = useState({});
+  const [profesorSeleccionado, setProfesorSeleccionado] = useState('');
 
-  const navigate = useNavigate()
-
-  const handleBuscarClases = () => {
-    if (!profesorSeleccionado || !selectedDate) {
-      alert('Debe seleccionar un profesor y una fecha.')
-      return
-    }
-
-    const formattedDate = moment(selectedDate).format('YYYY-MM-DD')
-    const url = `http://localhost:8083/api/clases-profesor?persona_id=${profesorSeleccionado}&fecha=${formattedDate}`
-
-    fetch(url)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log('Clases encontradas:', data)
-        // Aquí puedes manejar los resultados obtenidos
-      })
-      .catch((error) => console.error('Error fetching clases:', error))
-  }
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if (reservasIsLoading) return
+    if (isLoading) return; 
+    console.log("AAAAAAAAAAAA", clasesReservas.data);   
+    if (profesorSeleccionado  && clasesReservas.data) {
+      setReservasDelDia(clasesReservas.data.length > 0 
+        ? organizarReservasPorCancha(clasesReservas.data, canchas, selectedDate) : []);
+    } else {
+      const reservasDia = organizarReservasPorCancha(reservas, canchas, selectedDate);
+      setReservasDelDia(reservasDia);
+    }
+  }, [canchas, reservas, clasesReservas, isLoading, selectedDate, profesorSeleccionado]);
+  
 
-    const reservasDia = reservas.reduce((acc, reserva) => {
-      if (
-        reserva.fecha === moment(selectedDate).format('YYYY-MM-DD') &&
-        reserva.estado === 'ASIGNADO'
-      ) {
-        if (!acc[reserva.canchaId]) {
-          acc[reserva.canchaId] = []
-        }
-        const cancha = canchas.find((c) => c.id === reserva.canchaId)
-        const reservaConCancha = {
-          ...reserva,
-          canchaNombre: cancha ? cancha.nombre : 'Desconocida',
-        }
-        console.log('Reserva con canchaNombre:', reservaConCancha) // Log
-        acc[reserva.canchaId].push(reservaConCancha)
+  if (isLoading) return null
+
+  const organizarReservasPorCancha = (reservas, canchas, selectedDate) => {
+    const selectedDateFormatted = moment(selectedDate).format('YYYY-MM-DD');
+    return reservas.reduce((acc, reserva) => {
+      const reservaFecha = moment(reserva.fecha).format('YYYY-MM-DD');
+      if (reservaFecha === selectedDateFormatted) {
+        if (!acc[reserva.canchaId]) acc[reserva.canchaId] = [];
+        const cancha = canchas.find((c) => c.id === reserva.canchaId);
+        acc[reserva.canchaId].push({ ...reserva, canchaNombre: cancha ? cancha.nombre : 'Desconocida' });
       }
-      return acc
-    }, {})
+      return acc;
+    }, {});
+  };
 
-    setReservasDelDia(reservasDia)
-  }, [canchas, reservas, reservasIsLoading, selectedDate])
 
+  const handleBuscarClases = async () => {
+    if (!profesorSeleccionado || !selectedDate) {
+      alert('Debe seleccionar un profesor y una fecha.');
+      return;
+    }
+    
+    setIsLoading(true);
+    const formattedDate = moment(selectedDate).format('YYYY-MM-DD');
+    const clasesProfe = await getClasesProfesor(profesorSeleccionado, formattedDate);
+    if (clasesProfe.data && clasesProfe.data.length > 0) {
+      console.log("entro")
+      const clasesDelDia = organizarReservasPorCancha(clasesProfe.data, canchas, selectedDate);
+      console.log("CLASES DEL DIA",clasesDelDia)
+      setClasesReservas(clasesProfe);
+      setReservasDelDia(clasesProfe); // Actualiza las reservas del día solo si hay clases
+    } else {
+      setClasesReservas([]); // Limpia clases si no hay clases para el profesor seleccionado
+    }
+    
+    setIsLoading(false);
+  };
+  
   if (canchas.length === 0) {
     return (
       <div style={{ marginTop: '6rem' }}>
@@ -175,23 +187,34 @@ function HomeBody({ reservas, canchas, profesores, reservasIsLoading }) {
 
   return (
     <>
-      <NavBar title={'Tennis app'} />
-      {alquilerDetailsIsVisible && (
-        <AlquilerDetails
-          isVisible={alquilerDetailsIsVisible}
-          onClose={() => setAlquilerDetailsIsVisible(false)}
-          reserva={reservaDetail}
-          setReservaDetail={setReservaDetail}
-        />
-      )}
-      {claseDetail && Object.keys(claseDetail).length > 0 && (
-        <ClaseDetails
-          isVisible={claseDetail && Object.keys(claseDetail).length > 0}
-          onClose={() => setClaseDetail({})}
-          reserva={claseDetail}
-        />
-      )}
-
+      <AlquilerDetails
+        isVisible={alquilerDetailsIsVisible}
+        onClose={() => setAlquilerDetailsIsVisible(false)}
+        reserva={reservaDetail}
+        setReservaDetail={setReservaDetail}
+      />
+      <ClaseDetails
+        isVisible={isClaseDetailsVisible}
+        onClose={() => setIsClaseDetailsVisible(false)}
+        reserva={claseDetail}
+      /> 
+      <div>
+            <label htmlFor="profesor-select">Seleccionar Profesor:</label>
+            <select
+              id="profesor-select"
+              value={profesorSeleccionado}
+              onChange={(e) => setProfesorSeleccionado(e.target.value)}
+            >
+              <option value="" disabled>Seleccione un profesor</option>
+              {profesores.map((profesor) => (
+                <option key={profesor.id} value={profesor.id}>
+                  {profesor.nombre}
+                </option>
+              ))}
+            </select>
+              <button onClick={handleBuscarClases}>Aceptar</button>
+            </div>
+            
       <Dashboard
         header={
           <div className="home__dashboard-header">
@@ -201,22 +224,6 @@ function HomeBody({ reservas, canchas, profesores, reservasIsLoading }) {
             >
               <FontAwesomeIcon icon={faPlusCircle} />
             </button>
-            <div>
-              <label htmlFor="profesor-select">Seleccionar Profesor:</label>
-              <select
-                id="profesor-select"
-                value={profesorSeleccionado}
-                onChange={(e) => setProfesorSeleccionado(e.target.value)}
-              >
-                <option value="">Seleccione un profesor</option>
-                {profesores.map((profesor) => (
-                  <option key={profesor.id} value={profesor.id}>
-                    {profesor.nombre}
-                  </option>
-                ))}
-              </select>
-              <button onClick={handleBuscarClases}>Aceptar</button>
-            </div>
             <div className="home__date">
               <CalendarPicker
                 selectedDate={selectedDate}
@@ -273,19 +280,19 @@ function HomeBody({ reservas, canchas, profesores, reservasIsLoading }) {
             {horas.map((hora) => (
               <Dashboard.Row key={`${cancha.nombre}-${hora}`}></Dashboard.Row>
             ))}
-            {/* Mostrar los eventos para esa cancha */}
             {reservasDelDia[cancha.id] &&
               reservasDelDia[cancha.id].map((reserva) => (
                 <ReservaDashboardItem
-                  key={reserva.reservaId}
-                  reserva={reserva}
+                key={reserva.reservaId} 
+                reserva={reserva}
                   onClick={() => {
-                    setReservaDetail(reserva)
                     if (reserva.tipo === 'ALQUILER') {
+                      setReservaDetail(reserva)
                       setAlquilerDetailsIsVisible(true)
                     } else {
-                      console.log('CLIQUEO ', reserva) // Verifica el objeto reserva
+                      setIsClaseDetailsVisible(true)
                       setClaseDetail(reserva)
+                      console.log('CLIQUEO ', reserva) // Verifica el objeto reserva
                     }
                   }}
                 />
