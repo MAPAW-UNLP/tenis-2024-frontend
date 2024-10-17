@@ -34,6 +34,12 @@
   font-weight: 300;
 }
 
+@media (max-width: 1200px) {
+  #navBar-list {
+    display: none;
+  }
+}
+
 #navBar-component h1 {
   text-align: center;
   margin-top: 15vh;
