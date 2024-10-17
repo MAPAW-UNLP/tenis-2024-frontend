@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import { useSession } from '../../hooks/useSession'
 import NavBar from '../Navbar/NavBar'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faTableTennis,
   faUser,
