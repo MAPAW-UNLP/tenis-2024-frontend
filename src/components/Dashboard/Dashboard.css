@@ -61,8 +61,16 @@
   box-shadow: inset 0px -1px 0px hsla(0, 0%, 96%, 0.85);
 }
 
+.dashboard__row.dashboard__row--light:nth-child(odd) {
+  box-shadow: inset 0px -1px 0px hsla(0, 0%, 50%, 0.85);
+}
+
 .dashboard__row:nth-child(even) {
   box-shadow: inset 0px -1px 0px hsla(0, 0%, 96%, 0.35);
+}
+
+.dashboard__row.dashboard__row--light:nth-child(even) {
+  box-shadow: inset 0px -1px 0px hsla(0, 0%, 60%, 0.35);
 }
 
 .dashboard__row[data-header='true'] {
