@@ -122,16 +122,21 @@ function HomeBody({ reservas, clasesReservas, setClasesReservas, canchas, profes
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isLoading) return; 
-    console.log("AAAAAAAAAAAA", clasesReservas.data);   
-    if (profesorSeleccionado  && clasesReservas.data) {
-      setReservasDelDia(clasesReservas.data.length > 0 
-        ? organizarReservasPorCancha(clasesReservas.data, canchas, selectedDate) : []);
+    if (isLoading) return;
+  
+    if (profesorSeleccionado && clasesReservas && clasesReservas.data && clasesReservas.data.length > 0) {
+      const clasesDelDia = organizarReservasPorCancha(clasesReservas.data, canchas, selectedDate);
+      setReservasDelDia(clasesDelDia);
+    } else if (profesorSeleccionado && (!clasesReservas || !clasesReservas.data || clasesReservas.data.length === 0)) {
+      // Limpia las reservas si no hay clases para el profesor
+      setReservasDelDia([]);
     } else {
       const reservasDia = organizarReservasPorCancha(reservas, canchas, selectedDate);
       setReservasDelDia(reservasDia);
     }
-  }, [canchas, reservas, clasesReservas, isLoading, selectedDate, profesorSeleccionado]);
+  }, [profesorSeleccionado, clasesReservas, reservas, canchas, selectedDate, isLoading]);
+  
+  
   
 
   if (isLoading) return null
@@ -156,21 +161,26 @@ function HomeBody({ reservas, clasesReservas, setClasesReservas, canchas, profes
       return;
     }
     
+    setReservasDelDia([]);  
+    setClasesReservas([]);
+
     setIsLoading(true);
     const formattedDate = moment(selectedDate).format('YYYY-MM-DD');
     const clasesProfe = await getClasesProfesor(profesorSeleccionado, formattedDate);
-    if (clasesProfe.data && clasesProfe.data.length > 0) {
-      console.log("entro")
-      const clasesDelDia = organizarReservasPorCancha(clasesProfe.data, canchas, selectedDate);
-      console.log("CLASES DEL DIA",clasesDelDia)
-      setClasesReservas(clasesProfe);
-      setReservasDelDia(clasesProfe); // Actualiza las reservas del día solo si hay clases
-    } else {
-      setClasesReservas([]); // Limpia clases si no hay clases para el profesor seleccionado
-    }
     
+    if (clasesProfe.data && clasesProfe.data.length > 0) {
+      const clasesDelDia = organizarReservasPorCancha(clasesProfe.data, canchas, selectedDate);
+      setClasesReservas(clasesProfe);
+      setReservasDelDia(clasesDelDia); // Actualiza las reservas del día con las clases del profesor
+    } else {
+      // Si no hay clases del profesor, limpia las reservas del día
+      setClasesReservas([]); 
+      setReservasDelDia([]);
+    }
+  
     setIsLoading(false);
   };
+  
   
   if (canchas.length === 0) {
     return (
@@ -198,22 +208,28 @@ function HomeBody({ reservas, clasesReservas, setClasesReservas, canchas, profes
         onClose={() => setIsClaseDetailsVisible(false)}
         reserva={claseDetail}
       /> 
-      <div>
-            <label htmlFor="profesor-select">Seleccionar Profesor:</label>
-            <select
-              id="profesor-select"
-              value={profesorSeleccionado}
-              onChange={(e) => setProfesorSeleccionado(e.target.value)}
-            >
-              <option value="" disabled>Seleccione un profesor</option>
-              {profesores.map((profesor) => (
-                <option key={profesor.id} value={profesor.id}>
-                  {profesor.nombre}
-                </option>
-              ))}
-            </select>
-              <button onClick={handleBuscarClases}>Aceptar</button>
-            </div>
+      <div className="profesor-select-container">
+  <label htmlFor="profesor-select" className="profesor-label">
+    Seleccionar Profesor:
+  </label>
+  <select
+    id="profesor-select"
+    value={profesorSeleccionado}
+    onChange={(e) => setProfesorSeleccionado(e.target.value)}
+    className="profesor-select"
+  >
+    <option value="" disabled>Seleccione un profesor</option>
+    {profesores.map((profesor) => (
+      <option key={profesor.id} value={profesor.id}>
+        {profesor.nombre}
+      </option>
+    ))}
+  </select>
+  <button onClick={handleBuscarClases} className="profesor-btn">
+    Aceptar
+  </button>
+</div>
+
             
       <Dashboard
         header={

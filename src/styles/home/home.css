@@ -108,3 +108,50 @@
 .action:hover span {
   transform: translateX(4px);
 }
+
+.profesor-select-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0.1% auto; /* Margen vertical reducido */
+  padding: 20px;
+  max-width: 300px; /* Tamaño máximo del contenedor */
+  background-color: #f0fff4cb; /* Fondo verde muy claro */
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Sombra para darle un toque más atractivo */
+}
+
+.profesor-label {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #008000; /* Verde claro */
+  margin-bottom: 1rem;
+}
+
+.profesor-select {
+  padding: 0.5rem 1rem;
+  border: 2px solid #90ee90; /* Borde verde claro */
+  border-radius: 5px;
+  background-color: #ffffff; /* Fondo blanco */
+  color: #008000; /* Texto verde claro */
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+.profesor-btn {
+  padding: 0.5rem 1rem;
+  background-color: #ffcc99; /* Naranja claro */
+  border: none;
+  border-radius: 5px;
+  color: #ffffff;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 50%; /* Botón de ancho completo */
+}
+
+.profesor-btn:hover {
+  background-color: #ff9933; /* Naranja más intenso al hacer hover */
+}
