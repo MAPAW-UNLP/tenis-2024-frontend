@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import { useSession } from '../../hooks/useSession'
 import NavBar from '../Navbar/NavBar'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faTableTennis,
   faUser,
@@ -9,9 +8,11 @@ import {
   faUserTie,
   faDollarSign,
   faGear,
+  faTools,
 } from '@fortawesome/free-solid-svg-icons'
 
 import '../../styles/home/home.css'
+import Card from 'components/Home/Card'
 
 export const HomeRe = () => {
   const navigate = useNavigate()
@@ -31,67 +32,24 @@ export const HomeRe = () => {
           justifyContent: 'center',
           marginTop: '2em',
           marginBottom: '2em',
+          gap: '1em',
         }}
       >
-        <div
-          className="card movimientosCard"
-          style={{ marginRight: '1em' }}
-          onClick={() => handleRedirect('../movimientos')}
-        >
-          <div
-            className="image"
-            style={{ backgroundColor: '#94f5c5', position: 'relative' }}
-          >
-            <div style={{ fontSize: '5em', color: '#5d5d5d' }}>
-              <FontAwesomeIcon
-                icon={faDollarSign}
-                style={{
-                  position: 'absolute',
-                  left: '41%',
-                  top: '0',
-                  bottom: '0',
-                  margin: 'auto',
-                }}
-              />
-            </div>
-          </div>
-          <div className="content">
-            <span className="title" style={{ color: '#94f5c5' }}>
-              Movimientos
-            </span>
-            <p className="desc">Movimiento de dinero y manejo de cobros</p>
-          </div>
-        </div>
+        <Card
+          title="movimientos"
+          description="Movimiento de dinero y manejo de cobros"
+          customColor="#94f5c5"
+          icon={faDollarSign}
+          className="movimientosCard"
+        />
 
-        <div
-          className="card reservasCard"
-          style={{ marginRight: '1em' }}
-          onClick={() => handleRedirect('../reservas')}
-        >
-          <div
-            className="image"
-            style={{ backgroundColor: '#ffa500', position: 'relative' }}
-          >
-            <div style={{ fontSize: '5em', color: '#5d5d5d' }}>
-              <FontAwesomeIcon
-                icon={faCalendar}
-                style={{
-                  position: 'absolute',
-                  left: '38%',
-                  top: '0',
-                  bottom: '0',
-                  margin: 'auto',
-                }}
-              />
-            </div>
-          </div>
-          <div className="content">
-            <span className="title" style={{ color: '#ffa500' }}>
-              Reservas
-            </span>
-            <p className="desc">Reservación de alquileres y clases</p>
-          </div>
-        </div>
+        <Card
+          title="reservas"
+          description="Reservación de alquileres y clases"
+          customColor="#ffa500"
+          icon={faCalendar}
+          className="reservasCard"
+        />
 
         {user.rolPorDefecto === 'ROLE_ADMIN' && (
           <>
@@ -214,6 +172,13 @@ export const HomeRe = () => {
                 <p className="desc">Configuracion de valores</p>
               </div>
             </div>
+            <Card
+              title="proveedores"
+              description="Gestión de proveedores"
+              customColor="#32CD32"
+              icon={faTools}
+              className="proveedoresCard"
+            />
           </>
         )}
       </div>

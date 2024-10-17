@@ -15,7 +15,7 @@ export const Pagos = () => {
   const [active, setActive] = useState(false)
   const [pagos, setPagos] = useState([])
   const [actPagos, setActPagos] = useState(false)
-
+  const [proveedores, setProveedores] = useState([])
   const [profesores, setProfesores] = useState([])
   const [pagosLoader, setPagosLoader] = useState(true) // Spinner
   const [loadingFetch, setLoadingFetch] = useState() // Spinner despues de cargar un cobro
@@ -35,6 +35,9 @@ export const Pagos = () => {
       .then((response) => response.json())
       .then((data) => setProfesores(ordenarPorNombre(data)))
 
+    fetch(`${URL_BASE}proveedor`, requestOptions)
+      .then((response) => response.json())
+      .then((data) => setProveedores(ordenarPorNombre(data)))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [actPagos])
 
@@ -49,7 +52,7 @@ export const Pagos = () => {
 
   // Actualiza los datos del formulario para agregar un PAGO
   const handleChangeFormData = (e) => {
-    if (e.target.name === 'personaId') {
+    if (e.target.name === 'personaId' || e.target.name === 'proveedorId') {
       // El valor de la persona seleccionada
       const personaSeleccionada = e.target[e.target.selectedIndex].text
 
@@ -98,7 +101,22 @@ export const Pagos = () => {
     setActive(false)
     setLoadingFetch(true)
 
-    if (pagoAddForm.personaId) {
+    if (pagoAddForm.proveedorId && pagoAddForm.proveedorId !== '') {
+      const requestOptions = {
+        method: 'POST',
+        body: JSON.stringify({
+          idProveedor: pagoAddForm.proveedorId,
+          concepto: pagoAddForm.concepto,
+          monto: pagoAddForm.monto,
+          descripcion: pagoAddForm.descripcion,
+          fecha: moment().format('YYYY/MM/DD'),
+        }),
+      }
+
+      fetch(`${URL_BASE}nuevo_pago`, requestOptions)
+        .then((response) => response.json())
+        .then(() => setActPagos((v) => !v))
+    } else if (pagoAddForm.personaId) {
       const requestOptions = {
         method: 'POST',
         body: JSON.stringify({
@@ -164,6 +182,7 @@ export const Pagos = () => {
           movimientoAddForm={pagoAddForm}
           handleChangeFormData={handleChangeFormData}
           personas={profesores}
+          proveedores={proveedores}
           movimientoName={'Pago'}
           movimientoOptions={movimientoOptions}
         />

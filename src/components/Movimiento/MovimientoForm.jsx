@@ -9,6 +9,7 @@ export const MovimientoForm = ({
   handleCloseForm,
   submitMovimientoForm,
   personas,
+  proveedores,
   handleChangeFormData,
   movimientoAddForm,
   movimientoOptions,
@@ -22,6 +23,7 @@ export const MovimientoForm = ({
     movimientoAddForm.personaId = ''
     movimientoAddForm.tipoClaseId = ''
     movimientoAddForm.personaSeleccionada = ''
+    movimientoAddForm.descripcion = ''
   }
 
   // RFuncion para revisar si todos los inputs estan completos antes de hacer el envio
@@ -73,6 +75,10 @@ export const MovimientoForm = ({
     if (movimientoAddForm.concepto === '1') {
       if (!movimientoAddForm.personaId)
         verify.push('Debe seleccionar un profesor')
+    } else if (movimientoAddForm.concepto === '2') {
+      if (!movimientoAddForm.proveedorId) {
+        verify.push('Debe seleccionar un proveedor')
+      }
     }
     if (!movimientoAddForm.descripcion)
       verify.push('La descripcion no puede estar vacia')
@@ -138,6 +144,19 @@ export const MovimientoForm = ({
                 </select>
               </>
             )}
+          </>
+        ) : movimientoAddForm.concepto === '2' ? (
+          <>
+            <label htmlFor="proveedorId" className="movimiento-form-label">
+              {' '}
+              *{' '}
+            </label>
+            <SelectReComponent
+              name={'proveedorId'}
+              onChange={handleChangeFormData}
+              options={proveedores}
+              placeholder={`Seleccionar proveedor.`}
+            />
           </>
         ) : (
           handleResetOptions()
