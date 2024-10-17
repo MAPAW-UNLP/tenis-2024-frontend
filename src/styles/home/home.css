@@ -120,6 +120,7 @@
   background-color: #f0fff4cb; /* Fondo verde muy claro */
   border-radius: 10px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Sombra para darle un toque más atractivo */
+  font-family: var(--normal-text);
 }
 
 .profesor-label {
@@ -142,7 +143,7 @@
 
 .profesor-btn {
   padding: 0.5rem 1rem;
-  background-color: #ffcc99; /* Naranja claro */
+  background-color: #ff9933; /* Naranja más intenso al hacer hover */
   border: none;
   border-radius: 5px;
   color: #ffffff;
@@ -153,5 +154,5 @@
 }
 
 .profesor-btn:hover {
-  background-color: #ff9933; /* Naranja más intenso al hacer hover */
+  background-color: #ffcc99; /* Naranja claro */
 }
