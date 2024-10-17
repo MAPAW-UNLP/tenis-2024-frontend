@@ -1,206 +1,231 @@
 import { useState, useEffect } from 'react'
 import NavBar from '../Navbar/NavBar'
-
 import '../../styles/ajustes/ajustes.css'
 import { GenericButton } from '../../components/Utils/GenericButton'
 import LoaderSpinner from '../../components/LoaderSpinner'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import { GenericButtonDisabled } from '../../components/Utils/GenericButtonDisabled'
+import FormularioTipoClase from '../../components/Clase/AgregarTipoClase'
 
 export const Ajustes = () => {
   const URL_BASE = `http://localhost:8083/api/`
-  const [profesores, setProfesores] = useState([])
   const [tipoClases, setTipoClases] = useState([])
+  const [valoresOriginales, setValoresOriginales] = useState({})
   const [cargando, setCargando] = useState(true)
+  const [tempChanges, setTempChanges] = useState({})
+  const [mensajeUsuario, setMensajeUsuario] = useState('')
+  const [tipoClasePorBorrar, setTipoClasePorBorrar] = useState(null) // Tipo de clase a eliminar
+  const [botonHabilitado, setBotonHabilitado] = useState(false)
+  const [mostrarFormulario, setMostrarFormulario] = useState(false)
 
   useEffect(() => {
-    const requestOptions = {
-      method: 'GET',
-    }
-
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`${URL_BASE}profesoress`, requestOptions)
-        const data = await response.json()
-        setProfesores(data)
-        setCargando(false)
-      } catch (error) {
-        console.error('Error al obtener datos desde la BD', error)
-        setCargando(false)
-      }
-    }
-
-    const fetchTipoClases = async () => {
-      try {
-        const response = await fetch(`${URL_BASE}clases`, requestOptions)
-        const data = await response.json()
-        setTipoClases(data)
-        setCargando(false)
-      } catch (error) {
-        console.error('Error al obtener datos desde la BD', error)
-        setCargando(false)
-      }
-    }
-
     fetchTipoClases()
-    fetchData()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  // Handler para guardar los valores en el estado de profesor (con el nuevo valor en caso de ser cambiado)
-  const handleProfesorChange = (nombre, valor) => {
-    setProfesores((prevProfesores) => {
-      const nuevosProfesores = prevProfesores.map((profesor) =>
-        profesor.nombre === nombre.nombre
-          ? { ...profesor, valor: valor.substring(1) }
-          : profesor
-      )
-      return nuevosProfesores
-    })
+  const fetchTipoClases = async () => {
+    setCargando(true)
+    try {
+      const response = await fetch(`${URL_BASE}clases`, { method: 'GET' })
+      const data = await response.json()
+      setTipoClases(data)
+      // Almacenar los valores originales de importe
+      const originales = {}
+      data.forEach((clase) => {
+        originales[clase.id] = clase.importe
+      })
+      setValoresOriginales(originales)
+    } catch (error) {
+      console.error('Error al obtener datos desde la BD', error)
+    } finally {
+      setCargando(false)
+    }
   }
 
-  // Handler para actualizar (de ser necesario) los valores de los importes de las clases
+  const handleAgregarTipoClase = async (nuevoTipoClase) => {
+    setCargando(true)
+
+    const response = await fetch(`${URL_BASE}addClase`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(nuevoTipoClase),
+    })
+
+    const data = await response.json()
+
+    if (data.status === 'ok') {
+      console.log('Tipo de clase creado exitosamente')
+      await fetchTipoClases() // Recargar los tipos de clase
+    } else {
+      console.error(data.message)
+      setCargando(false)
+    }
+  }
+
   const handleTipoClaseChange = (tipo, valor) => {
-    setTipoClases((prevTipoClases) => {
-      const nuevosTipoClase = prevTipoClases.map((tipoClase) =>
-        tipoClase.tipo === tipo.tipo
-          ? { ...tipoClase, importe: valor.substring(1) }
+    const nuevoImporte = valor.replace(/\D/g, '') // Solo permite números enteros
+    setTempChanges((prev) => ({
+      ...prev,
+      [tipo.id]: nuevoImporte,
+    }))
+
+    // Actualizar solo la vista localmente para mostrar el valor temporal
+    setTipoClases((prevTipoClases) =>
+      prevTipoClases.map((tipoClase) =>
+        tipoClase.id === tipo.id
+          ? { ...tipoClase, importe: nuevoImporte }
           : tipoClase
       )
-      return nuevosTipoClase
-    })
+    )
   }
 
-  // Handler para actualizar el valor por defecto que viene desde la configuracion
-  const handleDefaultValueChange = (nombre, valor) => {}
+  useEffect(() => {
+    // Revisa si hay algún valor en tempChanges que sea diferente al original
+    const hayCambios = Object.keys(tempChanges).some(
+      (id) => tempChanges[id] !== String(valoresOriginales[id])
+    )
+
+    // Habilitar o deshabilitar el botón según si hay cambios
+    setBotonHabilitado(hayCambios)
+  }, [tempChanges, valoresOriginales])
+
+  const handleConfirmarCambios = async () => {
+    setCargando(true)
+    for (const idTipoClase in tempChanges) {
+      const nuevoImporte = tempChanges[idTipoClase]
+      try {
+        await fetch(`${URL_BASE}modClase`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: idTipoClase, importe: nuevoImporte }),
+        })
+      } catch (error) {
+        console.error('Error al actualizar el importe:', error)
+      }
+    }
+    // Limpiar el estado de cambios temporales y deshabilitar el botón
+    setTempChanges({})
+    setBotonHabilitado(false)
+    setCargando(false)
+    await fetchTipoClases()
+  }
+
+  const handleEliminarTipoClase = (tipoClase) => {
+    setTipoClasePorBorrar(tipoClase)
+    setMensajeUsuario(
+      <span style={{ fontSize: '1.2em' }}>
+        ¿Está seguro de que quiere eliminar la clase:{' '}
+        <span style={{ color: 'red' }}>{tipoClase.tipo}</span>?<br></br> Esta
+        acción no se puede deshacer.
+      </span>
+    )
+    document.getElementById('mensajesUsuario').style.display = 'flex'
+  }
+
+  const handleCerrarMensaje = () => {
+    setMensajeUsuario('')
+    setTipoClasePorBorrar(null)
+    document.getElementById('mensajesUsuario').style.display = 'none'
+  }
+
+  const handleAceptarBorrado = async () => {
+    handleCerrarMensaje()
+    if (!tipoClasePorBorrar) return
+
+    setCargando(true)
+    const response = await fetch(`${URL_BASE}bajaClase`, {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: tipoClasePorBorrar.id }),
+    })
+    const data = await response.json()
+    if (data.status === 'ok') {
+      console.log('Tipo de clase eliminado exitosamente')
+      await fetchTipoClases() // Recargar los datos después de eliminar
+    } else {
+      console.error(data.message)
+      setCargando(false)
+    }
+  }
 
   return (
-    <>
-      <div id="ajustes-component">
-        <NavBar title={'Ajustes'} />
-        {cargando ? (
-          <LoaderSpinner
-            active={cargando}
-            containerClass={'canchasLoader'}
-            loaderClass={'canchasLoaderSpinner'}
-          />
-        ) : (
-          <div
-            className="container-ajustes"
-            style={{ backgroundColor: '#ffffff' }}
-          >
-            <div className="table-head-ajustes">
-              <span style={{ fontSize: '1.8em' }}>Valores</span>
+    <div id="ajustes-component">
+      <NavBar title={'Ajustes'} />
+      {cargando ? (
+        <LoaderSpinner
+          active={cargando}
+          containerClass={'canchasLoader'}
+          loaderClass={'canchasLoaderSpinner'}
+        />
+      ) : (
+        <div
+          className="container-ajustes"
+          style={{ backgroundColor: '#ffffff' }}
+        >
+          <div className="table-head-ajustes">
+            <span style={{ fontSize: '1.8em' }}>Valores</span>
+          </div>
+          <div className="container-table-ajustes">
+            <GenericButton
+              marginBottom={'0.5em'}
+              backgroundColor={'#92bc1e'}
+              color="white"
+              borderRadius="1em"
+              onClick={() => setMostrarFormulario(true)}
+            >
+              Crear tipo de clase
+            </GenericButton>
+
+            {mostrarFormulario && (
+              <FormularioTipoClase
+                onClose={() => setMostrarFormulario(false)}
+                onSubmit={handleAgregarTipoClase}
+              />
+            )}
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-around',
+                backgroundColor: '#78a1ca',
+                borderRadius: '1em',
+                marginBottom: '.5em',
+                height: '2.5em',
+              }}
+            >
+              <div
+                className="table-cell-ajustes"
+                style={{
+                  alignSelf: 'center',
+                  fontFamily: 'var(--title-text)',
+                  color: 'var(--neutral-white-text)',
+                  fontSize: '1.2em',
+                }}
+              >
+                Tipo de clase
+              </div>
+              <div
+                className="table-cell-ajustes"
+                style={{
+                  alignSelf: 'center',
+                  fontFamily: 'var(--title-text)',
+                  color: 'var(--neutral-white-text)',
+                  fontSize: '1.2em',
+                }}
+              >
+                Valor
+              </div>
             </div>
-            <div className="container-table-ajustes">
-              {/* Lista de tipos de clase */}
+
+            {tipoClases.map((tipoClase) => (
               <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-around',
-                  backgroundColor: '#78a1ca',
-                  borderRadius: '1em',
-                  marginBottom: '.5em',
-                  height: '2.5em',
-                }}
+                className="table-row-ajustes"
+                key={`tipoClase-${tipoClase.id}`}
               >
-                <div
-                  className="table-cell-ajustes"
-                  style={{
-                    alignSelf: 'center',
-                    fontFamily: 'var(--title-text)',
-                    color: 'var(--neutral-white-text)',
-                    fontSize: '1.2em',
-                  }}
-                >
-                  Tipo de clase
-                </div>
-                <div
-                  className="table-cell-ajustes"
-                  style={{
-                    alignSelf: 'center',
-                    fontFamily: 'var(--title-text)',
-                    color: 'var(--neutral-white-text)',
-                    fontSize: '1.2em',
-                  }}
-                >
-                  Valor
-                </div>
-              </div>
-
-              {tipoClases.map((tipoClase) => (
-                <div
-                  className="table-row-ajustes"
-                  key={`tipoClase-${tipoClase.id}`}
-                >
-                  <div
-                    className="table-cell-ajustes"
-                    style={{ color: '#5d5d5d' }}
-                  >
-                    {tipoClase.tipo}
-                  </div>
-                  <div
-                    className="table-cell-ajustes"
-                    style={{ color: '#5d5d5d' }}
-                  >
-                    <input
-                      type="text"
-                      className="table-input-ajustes"
-                      style={{
-                        backgroundColor: '#d9d9d9',
-                        border: 'none',
-                        color: '#5d5d5d',
-                        fontSize: 'inherit',
-                      }}
-                      value={'$' + (tipoClase.importe || '')}
-                      onChange={(e) =>
-                        handleTipoClaseChange(tipoClase, e.target.value)
-                      }
-                    />
-                  </div>
-                </div>
-              ))}
-
-              {/* Lista de profesores */}
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-around',
-                  backgroundColor: '#78a1ca',
-                  borderRadius: '1em',
-                  marginTop: '1em',
-                  marginBottom: '.5em',
-                  height: '2.5em',
-                }}
-              >
-                <div
-                  className="table-cell-ajustes"
-                  style={{
-                    alignSelf: 'center',
-                    fontFamily: 'var(--title-text)',
-                    color: 'var(--neutral-white-text)',
-                    fontSize: '1.2em',
-                  }}
-                >
-                  Profesor
-                </div>
-                <div
-                  className="table-cell-ajustes"
-                  style={{
-                    alignSelf: 'center',
-                    fontFamily: 'var(--title-text)',
-                    color: 'var(--neutral-white-text)',
-                    fontSize: '1.2em',
-                  }}
-                >
-                  Valor de hora
-                </div>
-              </div>
-
-              <div className="table-row-ajustes">
                 <div
                   className="table-cell-ajustes"
                   style={{ color: '#5d5d5d' }}
                 >
-                  Valor por defecto
+                  {tipoClase.tipo}
                 </div>
                 <div
                   className="table-cell-ajustes"
@@ -215,58 +240,62 @@ export const Ajustes = () => {
                       color: '#5d5d5d',
                       fontSize: 'inherit',
                     }}
-                    value={'$1000'}
-                    onChange={(e) => handleDefaultValueChange(e)}
+                    value={'$' + (tipoClase.importe || '')}
+                    onChange={(e) =>
+                      handleTipoClaseChange(tipoClase, e.target.value)
+                    }
+                  />
+                  <FontAwesomeIcon
+                    icon={faTrashAlt}
+                    style={{
+                      cursor: 'pointer',
+                      marginLeft: '10px',
+                      color: 'red',
+                    }}
+                    onClick={() => handleEliminarTipoClase(tipoClase)}
                   />
                 </div>
               </div>
-              {profesores.map((profesor) => (
-                <div
-                  className="table-row-ajustes"
-                  key={`profesor-${profesor.id}`}
-                >
-                  <div
-                    className="table-cell-ajustes"
-                    style={{ color: '#5d5d5d' }}
-                  >
-                    {profesor.nombre}
-                  </div>
-                  <div
-                    className="table-cell-ajustes"
-                    style={{ color: '#5d5d5d' }}
-                  >
-                    <input
-                      type="text"
-                      className="table-input-ajustes"
-                      style={{
-                        backgroundColor: '#d9d9d9',
-                        border: 'none',
-                        color: '#5d5d5d',
-                        fontSize: 'inherit',
-                      }}
-                      value={'$' + (profesor.valor || '')}
-                      onChange={(e) =>
-                        handleProfesorChange(profesor, e.target.value)
-                      }
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
-            <GenericButton
-              marginBottom={'1.5em'}
-              backgroundColor={'#92bc1e'}
-              color="white"
-              borderRadius="1em"
-              width="20em"
-              centrado
-              onClick={() => console.log('Jeje')}
-            >
-              Confirmar cambios
-            </GenericButton>
+            ))}
           </div>
-        )}
+          <GenericButtonDisabled
+            marginBottom={'1.5em'}
+            backgroundColor={'#92bc1e'}
+            color="white"
+            borderRadius="1em"
+            width="20em"
+            centrado
+            onClick={handleConfirmarCambios}
+            disabled={!botonHabilitado}
+          >
+            Confirmar cambios
+          </GenericButtonDisabled>
+        </div>
+      )}
+
+      {/* Mensaje de confirmación */}
+      <div id="mensajesUsuario" style={{ display: 'none' }}>
+        <p>{mensajeUsuario}</p>
+        <GenericButton
+          id="button-aceptarMensaje"
+          onClick={handleAceptarBorrado}
+          className="botones-MensajesUsuario"
+          backgroundColor="#FF0000"
+          width="200px"
+          height="70px"
+        >
+          Aceptar
+        </GenericButton>
+        <GenericButton
+          id="button-cerrarMensaje"
+          onClick={handleCerrarMensaje}
+          className="botones-MensajesUsuario"
+          width="200px"
+          height="70px"
+        >
+          Cancelar
+        </GenericButton>
       </div>
-    </>
+    </div>
   )
 }

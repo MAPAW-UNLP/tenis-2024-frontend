@@ -42,6 +42,7 @@ export const Profesores = () => {
     nombre: '',
     telefono: '',
     email: '',
+    valorHora: '',
   })
 
   const [feedback, setFeedback] = useState({
@@ -51,33 +52,41 @@ export const Profesores = () => {
     nombreFBCorrecto: null,
     telefonoFBCorrecto: null,
     emailFBCorrecto: null,
+    valorHoraFB: { isValid: false, text: '', color: '' },
   })
 
   useEffect(() => {
     const requestOptions = {
       method: 'GET',
     }
+    setProfesoresLoader(true); // Activa el loader antes de la petición
     fetch(`${URL_BASE}profesoress`, requestOptions)
       .then((response) => response.json())
       .then((data) => setProfesores(ordenarPorNombre(data)))
-      .then(() => setProfesoresLoader(() => false))
+      .finally(() => setProfesoresLoader(false)); // Desactiva el loader cuando termina la petición
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [actProfesores])
 
   // EDICION DE PROFESOR
   useEffect(() => {
     if (willEdit) {
+      // Verificar el estado de profesorForm en consola antes de continuar
+      console.log("Datos del formulario:", profesorForm);
+      setLoadingDetails(true); // Activa el loader antes de la petición
       fetch(`${URL_BASE}profesorr?profesorId=${profeDetail.id}`)
         .then((response) => response.json())
         .then((data) => setProfeDetail(data))
         .then(
           (profesorForm.nombre = profeDetail.nombre),
           (profesorForm.email = profeDetail.email),
-          (profesorForm.telefono = profeDetail.telefono)
+          (profesorForm.telefono = profeDetail.telefono),
+          (profesorForm.valorHora = profeDetail.valorHora)
         )
         .then(() => setActiveDetail(true))
-        .then(() => setLoadingDetails(false))
+        .finally(() => setLoadingDetails(false)); // Desactiva el loader cuando termina la petición
     }
+    // Verificar el estado de profesorForm en consola antes de continuar
+    console.log("Datos del formulario:", profesorForm);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [willEdit])
 
@@ -101,12 +110,13 @@ export const Profesores = () => {
       nextInput = document.getElementById(emailInputName)
 
     if (nombreProfesor === '') {
-      setFeedback({ ...feedback, nombreFB: feedbackStructure })
+      setFeedback({ ...feedback, nombreFB: feedbackStructure, isValid: false })
       if (shouldIStartDisabled) {
         nextInput.disabled = true
         submitBtn.disabled = true
         setFeedback({
           ...feedback,
+          isValid: false,
           nombreFBCorrecto: false,
           nombreFB: { ...feedback.nombreFB, text: '', color: '' },
         })
@@ -119,6 +129,7 @@ export const Profesores = () => {
             nombreFBCorrecto: true,
             nombreFB: {
               ...feedback.nombreFB,
+              isValid: true,
               text: 'El nombre de profesor es correcto',
               color: '#7CBD1E',
             },
@@ -130,6 +141,7 @@ export const Profesores = () => {
             nombreFBCorrecto: false,
             nombreFB: {
               ...feedback.nombreFB,
+              isValid: false,
               text: 'El nombre de profesor ya existe',
               color: '#CC3636',
             },
@@ -145,6 +157,7 @@ export const Profesores = () => {
           nombreFBCorrecto: false,
           nombreFB: {
             ...feedback.nombreFB,
+            isValid: false,
             text: 'Escriba un nombre de profesor sin numeros',
             color: '#CC3636',
           },
@@ -167,7 +180,7 @@ export const Profesores = () => {
     const submitBtn = document.getElementById(submitButtonName)
     const shouldIStartDisabled = checkDisabled // Con esto pregunto, deberia considerar este valor/input?
 
-    setProfesorForm({ ...profesorForm, [e.target.name]: emailProfesor })
+    setProfesorForm({ ...profesorForm, [e.target.name]: emailProfesor, isValid: false, })
     let nextInput
     if (shouldIStartDisabled)
       nextInput = document.getElementById(telefonoInputName)
@@ -179,6 +192,7 @@ export const Profesores = () => {
         submitBtn.disabled = true
         setFeedback({
           ...feedback,
+          isValid: false,
           emailFBCorrecto: false,
           emailFB: { ...feedback.emailFB, text: '', color: '' },
         })
@@ -191,6 +205,7 @@ export const Profesores = () => {
             emailFBCorrecto: true,
             emailFB: {
               ...feedback.emailFB,
+              isValid: true,
               text: 'El email ingresado es correcto',
               color: '#7CBD1E',
             },
@@ -199,9 +214,11 @@ export const Profesores = () => {
         } else {
           setFeedback({
             ...feedback,
+            isValid: false,
             emailFBCorrecto: false,
             emailFB: {
               ...feedback.emailFB,
+              isValid: false,
               text: 'El email ingresado ya existe',
               color: '#CC3636',
             },
@@ -217,6 +234,7 @@ export const Profesores = () => {
           emailFBCorrecto: false,
           emailFB: {
             ...feedback.emailFB,
+            isValid: false,
             text: 'Ingrese una direccion de email valida',
             color: '#CC3636',
           },
@@ -229,22 +247,29 @@ export const Profesores = () => {
     }
   }
 
-  const handleChangePhone = (e, submitButtonName, checkDisabled) => {
+  const handleChangePhone = (
+    e,
+    submitButtonName,
+    valorHoraInput,
+    checkDisabled
+  ) => {
     const pattern = '^[0-9]+$'
 
+    const submitBtn = document.getElementById(submitButtonName)
     const telefonoProfesor = e.target.value
     setProfesorForm({ ...profesorForm, [e.target.name]: telefonoProfesor })
 
-    let submitBtn = document.getElementById(submitButtonName)
+    let nextInput = document.getElementById(valorHoraInput)
     const shouldIStartDisabled = checkDisabled
 
     if (telefonoProfesor === '') {
-      setFeedback({ ...feedback, telefonoFB: feedbackStructure })
+      setFeedback({ ...feedback, telefonoFB: feedbackStructure, isValid: false, })
       if (shouldIStartDisabled) {
-        submitBtn.disabled = true
+        nextInput.disabled = true
         setFeedback({
           ...feedback,
           telefonoFBCorrecto: false,
+          isValid: false,
           telefonoFB: { ...feedback.telefonoFB, text: '', color: '' },
         })
       }
@@ -258,25 +283,58 @@ export const Profesores = () => {
           telefonoFBCorrecto: true,
           telefonoFB: {
             ...feedback.telefonoFB,
+            isValid: true,
             text: 'El nummero de telefono es correcto',
             color: '#7CBD1E',
           },
         })
-        shouldIStartDisabled && (submitBtn.disabled = false)
+        shouldIStartDisabled && (nextInput.disabled = false)
       } else {
         setFeedback({
           ...feedback,
           telefonoFBCorrecto: false,
           telefonoFB: {
             ...feedback.telefonoFB,
+            isValid: false,
             text: 'Solo numeros, minimo 7',
             color: '#CC3636',
           },
         })
-        shouldIStartDisabled && (submitBtn.disabled = true)
+        shouldIStartDisabled && (nextInput.disabled = true)
       }
     }
   }
+
+  const handleChangeValorHora = (e, checkDisabled) => {
+    const shouldIStartDisabled = checkDisabled;
+    const valorHora = parseFloat(e.target.value); // Convertir a número flotante
+    setProfesorForm({ ...profesorForm, [e.target.name]: valorHora, isValid: false });
+
+    if (valorHora > 0 && Number.isInteger(valorHora)) { // Validar que sea mayor que 0 y entero
+      setFeedback({
+        ...feedback,
+        valorHoraFB: { isValid: true, text: 'Valor válido', color: '#7CBD1E' },
+      });
+    } else if (valorHora <= 0) {
+      setFeedback({
+        ...feedback,
+        valorHoraFB: {
+          isValid: false,
+          text: 'El valor debe ser mayor que 0',
+          color: '#CC3636',
+        },
+      });
+    } else {
+      setFeedback({
+        ...feedback,
+        valorHoraFB: {
+          isValid: false,
+          text: 'El valor debe ser un número entero',
+          color: '#CC3636',
+        },
+      });
+    }
+  };
 
   // Si todos los feefbacks son correctos entonces habilito boton para AGREGAR PROFESOR
   useEffect(() => {
@@ -284,6 +342,7 @@ export const Profesores = () => {
       feedback.nombreFBCorrecto &&
       feedback.emailFBCorrecto &&
       feedback.telefonoFBCorrecto &&
+      feedback.valorHoraFB &&
       document.getElementById('profesor-add-form-addBtn') !== null
     ) {
       let addBtn = document.getElementById('profesor-add-form-addBtn')
@@ -294,24 +353,30 @@ export const Profesores = () => {
 
   const submitProfesorForm = (e) => {
     e.preventDefault()
+    // Verificar el estado de profesorForm en consola antes de continuar
+    console.log("Datos del formulario:", profesorForm);
+
     setFeedback({
       nombreFB: feedbackStructure,
       telefonoFB: feedbackStructure,
       emailFB: feedbackStructure,
+      valorHoraFB: feedbackStructure,
     })
 
     setProfesoresLoader((prevValue) => !prevValue)
     setActive(false)
     const requestOptions = {
       method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         nombre: profesorForm.nombre,
         telefono: profesorForm.telefono,
         email: profesorForm.email,
+        valorHora: profesorForm.valorHora,
       }),
     }
 
-    fetch(`${URL_BASE}profesorr`, requestOptions)
+    fetch(`${URL_BASE}profesorr/add`, requestOptions)
       .then((response) => response.json())
       .then(() => setActProfesores((v) => !v))
   }
@@ -326,43 +391,48 @@ export const Profesores = () => {
       nombre: '',
       telefono: '',
       email: '',
-    })
+      valorHora: '',
+    });
 
     setFeedback({
       nombreFB: feedbackStructure,
       telefonoFB: feedbackStructure,
       emailFB: feedbackStructure,
+      valorHoraFB: feedbackStructure,
       telefonoFBCorrecto: null,
       nombreFBCorrecto: null,
       emailFBCorrecto: null,
+      valorHoraFB: { isValid: false, text: '', color: '' },
     })
   }
 
   return (
     <div id="profesores-component">
       <NavBar title={'Profesores'} />
-      <div id="profesores-component-mainContent">
-        <GenericLargeButton
-          title={'Crear nuevo profesor'}
-          doSomething={() => setActive(true)}
+      {profesoresLoader ? (
+        <LoaderSpinner
+          active={profesoresLoader}
+          containerClass={'canchasLoader'}
+          loaderClass={'canchasLoaderSpinner'}
         />
-        <AgregarProfesor
-          active={active}
-          handleCloseForm={handleCloseForm}
-          handleChangeName={handleChangeName}
-          handleChangeEmail={handleChangeEmail}
-          handleChangePhone={handleChangePhone}
-          feedback={feedback}
-          submitProfesorForm={submitProfesorForm}
-        />
-
-        {profesoresLoader ? (
-          <LoaderSpinner
-            active={profesoresLoader}
-            containerClass={'canchasLoader'}
-            loaderClass={'canchasLoaderSpinner'}
+      ) : (
+        <div id="profesores-component-mainContent">
+          <GenericLargeButton
+            title={'Crear nuevo profesor'}
+            doSomething={() => setActive(true)}
           />
-        ) : (
+          <AgregarProfesor
+            active={active}
+            handleCloseForm={handleCloseForm}
+            handleChangeName={handleChangeName}
+            handleChangeEmail={handleChangeEmail}
+            handleChangePhone={handleChangePhone}
+            handleChangeValorHora={handleChangeValorHora}
+            feedback={feedback}
+            submitProfesorForm={submitProfesorForm}
+          />
+
+
           <div id="profesores-list-component">
             <ProfesorDetail
               activeDetail={activeDetail}
@@ -372,6 +442,7 @@ export const Profesores = () => {
               handleChangeName={handleChangeName}
               handleChangePhone={handleChangePhone}
               handleChangeEmail={handleChangeEmail}
+              handleChangeValorHora={handleChangeValorHora}
               feedback={feedback}
               setProfesorForm={setProfesorForm}
               profesorForm={profesorForm}
@@ -388,8 +459,8 @@ export const Profesores = () => {
               loadingDetails={loadingDetails}
             />
           </div>
-        )}
-      </div>
+
+        </div>)}
     </div>
   )
 }

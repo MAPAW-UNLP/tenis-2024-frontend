@@ -42,6 +42,7 @@ export const ProfesoresList = ({
         <p>Nombre</p>
         <p>Telefono</p>
         <p>Email</p>
+        <p>Valor/Hora</p>
         <div id="profesores-searchbar">
           <FontAwesomeIcon id="magnify-icon" icon={faMagnifyingGlass} />
           <InputComponent
@@ -52,17 +53,21 @@ export const ProfesoresList = ({
         </div>
       </div>
       <div id="profesores-list">
-        {profesoresFiltrados.map((p) => (
-          <Profesor
-            key={p.id}
-            info={p}
-            setProfeDetail={setProfeDetail}
-            profeDetail={profeDetail}
-            setWillEdit={setWillEdit}
-            loadingDetails={loadingDetails}
-            setLoadingDetails={setLoadingDetails}
-          />
-        ))}
+        {profesoresFiltrados.length > 0 ? (
+          profesoresFiltrados.map((p) => (
+            <Profesor
+              key={p.id}
+              info={p}
+              setProfeDetail={setProfeDetail}
+              profeDetail={profeDetail}
+              setWillEdit={setWillEdit}
+              loadingDetails={loadingDetails}
+              setLoadingDetails={setLoadingDetails}
+            />
+          ))
+        ) : (
+          <p className="new-profesor-inside-title">Aun no se ha registrado ningún profesor.</p>
+        )}
       </div>
     </>
   )
