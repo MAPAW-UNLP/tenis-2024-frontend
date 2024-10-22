@@ -6,8 +6,9 @@ import AgregarProveedor from 'components/Proveedor/AgregarProveedor'
 import { UpdateProveedor } from 'components/Proveedor/UpdateProveedor'
 import { faUserEdit } from '@fortawesome/free-solid-svg-icons'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
-import Button from 'components/Proveedor/Button'
+import { faMoneyBill } from '@fortawesome/free-solid-svg-icons'
 import EliminarProveedor from 'components/Proveedor/EliminarProveedor'
+import AgregarPago from 'components/Proveedor/AgregarPago'
 
 function Proveedores() {
   const URL_BASE = `http://localhost:8083/api/`
@@ -16,6 +17,7 @@ function Proveedores() {
 
   const [proveedores, setProveedores] = useState([])
   const [mostrarPopup, setMostrarPopup] = useState(false)
+  const [payModal, setPayModal] = useState(false)
   const [modalEliminar, setmodalEliminar] = useState(false)
   const [editModal, setEditModal] = useState(false)
   const [proveedor, setProveedor] = useState({})
@@ -41,9 +43,26 @@ function Proveedores() {
   const activarFormulario = () => {
     setMostrarPopup(true)
   }
+
   const ocultarFormulario = (bool = false) => {
     setMostrarPopup(false)
     setEditModal(false)
+    if (bool === true) {
+      update()
+    }
+  }
+
+  const openFormPay = (p) => {
+    setPayModal(true)
+    setProveedor({
+      id: p.id,
+      nombre: p.nombre,
+      telefono: p.telefono,
+    })
+  }
+
+  const closeFormPay = (bool = false) => {
+    setPayModal(false)
     if (bool === true) {
       update()
     }
@@ -183,7 +202,12 @@ function Proveedores() {
                     >
                       <FontAwesomeIcon icon={faTrash} className="trash-icon" />
                     </div>
-                    <span></span>
+                    <button
+                      className="pay-proveedor-btn"
+                      onClick={openFormPay(p)}
+                    >
+                      <FontAwesomeIcon icon={faMoneyBill} />
+                    </button>
                   </div>
                 )
               })}
@@ -212,6 +236,12 @@ function Proveedores() {
             idProveedor={idProveedor}
             isOpen={modalEliminar}
             handleClose={handleClose}
+          />
+        )}
+        {payModal && (
+          <AgregarPago
+            handleCloseForm={closeFormPay}
+            proveedorFijo={proveedor}
           />
         )}
       </div>
