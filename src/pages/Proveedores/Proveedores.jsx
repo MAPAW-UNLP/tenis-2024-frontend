@@ -204,7 +204,7 @@ function Proveedores() {
                     </div>
                     <button
                       className="pay-proveedor-btn"
-                      onClick={openFormPay(p)}
+                      onClick={() => openFormPay(p)}
                     >
                       <FontAwesomeIcon icon={faMoneyBill} />
                     </button>

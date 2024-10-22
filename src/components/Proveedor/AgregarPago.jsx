@@ -71,8 +71,8 @@ function AgregarPago({
         <div className="inputlabel">
           <InputReComponent
             type={'text'}
-            value={proveedorFijo.nombre}
-            readOnly
+            defaultValue={proveedorFijo.nombre}
+            readOnly={true}
             className="proveedor-add-form-input"
           />
         </div>
@@ -88,6 +88,7 @@ function AgregarPago({
               setDescripcion(e.target.value)
             }}
             value={descripcion}
+            defaultValue={`Pago a: ${proveedorFijo.nombre}`}
           />
         </div>
 

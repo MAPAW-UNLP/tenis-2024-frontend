@@ -9,6 +9,7 @@ const InputReComponent = ({
   deshabilitado,
   min,
   max,
+  readOnly,
 }) => {
   return (
     <input
@@ -23,6 +24,7 @@ const InputReComponent = ({
       minLength={min}
       maxLength={max}
       min={min}
+      readOnly={readOnly}
     />
   )
 }
