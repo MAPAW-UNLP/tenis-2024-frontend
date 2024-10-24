@@ -1,3 +1,55 @@
+.home__dashboard-header {
+  background-color: var(--neutral-black);
+  color: var(--neutral-white-text);
+  height: 100%;
+  display: flex;
+  align-items: center;
+
+  & .home__btn-add {
+    all: unset;
+    height: 100%;
+    width: 6rem;
+    background-color: var(--accent-green);
+    text-align: center;
+    font-size: 1.5em;
+    cursor: pointer;
+    transition: all ease-in-out 0.15s;
+
+    &:hover {
+      background-color: var(--accent-yellow);
+      color: var(--neutral-black);
+    }
+  }
+
+  & .home__date {
+    margin: 0 auto;
+  }
+}
+
+.dashboard__row.home__hora--main,
+.dashboard__row.home__cancha {
+  font-weight: bolder;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dashboard__row.home__hora {
+  font-size: 0.85rem;
+  text-align: center;
+  padding: 0.25rem 0 0 0.25rem;
+
+  &.home__hora--hour {
+    font-weight: bolder;
+  }
+}
+
+.dashboard__row.home__cancha {
+  filter: brightness(120%);
+  color: var(--neutral-black);
+}
+
 #home-component {
   background-color: var(--primary-green);
   height: 120vh;
@@ -140,20 +192,6 @@
   background-color: var(--neutral-black); /* color of the scroll thumb */
   border-radius: 20px; /* roundness of the scroll thumb */
   border: 2px solid var(--neutral-white); /* creates padding around scroll thumb */
-}
-
-/* Home variante*/
-#table-panel-date {
-  display: flex;
-  width: 30vw;
-  justify-content: space-between;
-}
-
-#table-panel-date button {
-  background-color: var(--neutral-black);
-  border: none;
-  color: var(--accent-yellow);
-  font-size: 190%;
 }
 
 #home-content {

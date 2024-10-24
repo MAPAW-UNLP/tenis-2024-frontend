@@ -1,27 +1,26 @@
-const SelectComponent = ({
-  className,
-  id,
-  onChange,
-  options,
-  deshabilitado,
-  placeholder,
-}) => {
+import React from 'react'
+
+/**
+ * @typedef {{
+ *  displayValue: string
+ *  value: string
+ * }} SelectOptions
+ *
+ * @typedef {React.HTMLProps<HTMLSelectElement> & {
+ *  options: SelectOptions[]
+ *  placeholder: string
+ * }} SelectComponentProps
+ * @param {SelectComponentProps} props
+ */
+function SelectComponent({ options, placeholder, ...props }) {
   return (
-    <select
-      name=""
-      id={id}
-      className={className}
-      onChange={onChange}
-      disabled={deshabilitado}
-    >
-      <option value=""> {placeholder} </option>
-      {options.map((option, index) => (
-        <option
-          value={option.id}
-          id={`${option}-${index}`}
-          key={`${option}-${index}`}
-        >
-          {option.concepto}
+    <select {...props} defaultValue="">
+      <option value="" disabled>
+        {placeholder}
+      </option>
+      {options.map(({ displayValue, value }) => (
+        <option value={value} key={displayValue}>
+          {displayValue}
         </option>
       ))}
     </select>

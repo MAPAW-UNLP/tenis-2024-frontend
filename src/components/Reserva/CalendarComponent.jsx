@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import DatePicker, { registerLocale } from 'react-datepicker'
 import moment from 'moment'
 import es from 'date-fns/locale/es'
@@ -12,51 +11,33 @@ import '../../styles/calendar.css'
 
 registerLocale('es', es)
 
-const CalendarComponent = ({ today, setToday }) => {
-  const [startDate, setStartDate] = useState(new Date())
-
-  const setDate = (date) => {
-    const mes = ('0' + (date.getMonth() + 1)).slice(-2)
-    const dia = ('0' + date.getDate()).slice(-2)
-    const año = date.getFullYear()
-
-    setToday(`${año}-${mes}-${dia}`)
+const CalendarPicker = ({ selectedDate, setSelectedDate }) => {
+  function selectYesterday() {
+    setSelectedDate((date) => moment(date).subtract(1, 'day').valueOf())
   }
 
-  const yesterday = () => {
-    setStartDate(moment(startDate).subtract(1, 'day').toDate())
-    setDate(moment(startDate).subtract(1, 'day').toDate())
-  }
-
-  const tomorrow = () => {
-    setStartDate(moment(startDate).add(1, 'day').toDate())
-    setDate(moment(startDate).add(1, 'day').toDate())
+  function selectTomorrow() {
+    setSelectedDate((date) => moment(date).add(1, 'day').valueOf())
   }
 
   return (
-    <>
-      <button onClick={yesterday}>
-        {' '}
+    <div className="calendar-picker">
+      <button className="calendar-picker__btn" onClick={selectYesterday}>
         <FontAwesomeIcon icon={faCaretLeft} />
       </button>
       <DatePicker
-        id="date"
-        selected={startDate}
-        onChange={(date) => {
-          setStartDate(date)
-          setDate(date)
-        }}
-        locale="es"
         className="pickers"
+        selected={selectedDate}
+        onChange={setSelectedDate}
+        locale="es"
         dateFormat="dd 'de' MMMM"
         withPortal
       />
-      <button onClick={tomorrow}>
-        {' '}
+      <button className="calendar-picker__btn" onClick={selectTomorrow}>
         <FontAwesomeIcon icon={faCaretRight} />
       </button>
-    </>
+    </div>
   )
 }
 
-export default CalendarComponent
+export default CalendarPicker

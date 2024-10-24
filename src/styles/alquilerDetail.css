@@ -1,25 +1,25 @@
 #alquiler-detail-component {
-  box-shadow: -2px -4px 400px 600px rgba(0, 0, 0, 0.24);
-  background-color: var(--neutral-white);
+  /* box-shadow: -2px -4px 400px 600px rgba(0, 0, 0, 0.24); */
+  /* background-color: var(--neutral-white); */
   display: grid;
   grid-template-areas:
     'titulo'
     'detalles';
-  position: absolute;
+  /* position: absolute; */
   grid-column-gap: 10px;
   grid-row-gap: 10px;
-  top: 30%;
-  left: 30vw;
-  border-radius: 20px;
+  /* top: 30%; */
+  /* left: 30vw; */
+  /* border-radius: 20px; */
   width: 40vw;
-  z-index: 20;
+  /* z-index: 20; */
   text-align: center;
-  border: 5px solid var(--primary-blue);
-  background-color: var(--neutral-white);
-  cursor: default;
+  /* border: 5px solid var(--primary-blue); */
+  /* background-color: var(--neutral-white); */
+  /* cursor: default; */
 }
 
-#close-detail-btn {
+/* #close-detail-btn {
   position: absolute;
   font-family: var(--title-text);
   background: none;
@@ -35,7 +35,8 @@
   font-weight: bolder;
   color: #cc3636;
   cursor: pointer;
-}
+} */
+
 .clase-caja-alq {
   background-color: var(--primary-blue);
   border-radius: 20px;
@@ -267,7 +268,7 @@
   width: 90%;
   margin: auto;
   margin-top: -5vh;
-  margin-bottom: 3vh;
+  /* margin-bottom: 3vh; */
 }
 
 #alquiler-detail-guardar {
