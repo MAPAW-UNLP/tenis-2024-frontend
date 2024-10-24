@@ -1,9 +1,11 @@
 import NavBar from 'pages/Navbar/NavBar'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import '../../styles/proveedores.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import AgregarProveedor from 'components/Proveedor/AgregarProveedor'
+import { UpdateProveedor } from 'components/Proveedor/UpdateProveedor'
+import { faUserEdit } from '@fortawesome/free-solid-svg-icons'
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import Button from 'components/Proveedor/Button'
 import EliminarProveedor from 'components/Proveedor/EliminarProveedor'
 
@@ -15,6 +17,8 @@ function Proveedores() {
   const [proveedores, setProveedores] = useState([])
   const [mostrarPopup, setMostrarPopup] = useState(false)
   const [modalEliminar, setmodalEliminar] = useState(false)
+  const [editModal, setEditModal] = useState(false)
+  const [proveedor, setProveedor] = useState({})
   const [idProveedor, setIdProveedor] = useState(null)
   const [loading, setLoading] = useState(false)
   const [updateList, setUpdateList] = useState(false)
@@ -37,8 +41,12 @@ function Proveedores() {
   const activarFormulario = () => {
     setMostrarPopup(true)
   }
-  const ocultarFormulario = () => {
+  const ocultarFormulario = (bool = false) => {
     setMostrarPopup(false)
+    setEditModal(false)
+    if (bool === true) {
+      update()
+    }
   }
 
   const handleTrash = (id) => {
@@ -46,8 +54,11 @@ function Proveedores() {
     setIdProveedor(id)
   }
 
-  const handleClose = () => {
+  const handleClose = (bool = false) => {
     setmodalEliminar(false)
+    if (bool === true) {
+      update()
+    }
   }
 
   let listado
@@ -73,7 +84,7 @@ function Proveedores() {
   }
 
   const enableBtnBack = () => {
-    if (pagina == 0) {
+    if (pagina === 0) {
       return (
         <button className="btnSelectPage" disabled onClick={atras}>
           Atrás
@@ -100,6 +111,15 @@ function Proveedores() {
         Siguiente
       </button>
     )
+  }
+
+  const openEditModal = (p) => {
+    setProveedor({
+      id: p.id,
+      nombre: p.nombre,
+      telefono: p.telefono,
+    })
+    setEditModal(true)
   }
 
   return (
@@ -129,8 +149,11 @@ function Proveedores() {
             Nombre
           </span>
           <span style={{ fontSize: '1.8em', width: 200, textAlign: 'center' }}>
-            Telefono
+            Teléfono
           </span>
+          <span></span>
+          <span></span>
+          <span></span>
           <span></span>
         </div>
         {loading ? (
@@ -148,6 +171,12 @@ function Proveedores() {
                   <div key={p.id} className="proveedores-item-list">
                     <p>{p.nombre}</p>
                     <p>{p.telefono}</p>
+                    <button
+                      className="edit-proveedor-btn"
+                      onClick={() => openEditModal(p)}
+                    >
+                      <FontAwesomeIcon icon={faUserEdit} />
+                    </button>
                     <div
                       className="botones-proveedor"
                       onClick={() => handleTrash(p.id)}
@@ -170,7 +199,12 @@ function Proveedores() {
           <AgregarProveedor
             handleCloseForm={ocultarFormulario}
             proveedores={proveedores}
-            updateList={update}
+          />
+        )}
+        {editModal && (
+          <UpdateProveedor
+            handleCloseForm={ocultarFormulario}
+            proveedor={proveedor}
           />
         )}
         {modalEliminar && (
@@ -178,7 +212,6 @@ function Proveedores() {
             idProveedor={idProveedor}
             isOpen={modalEliminar}
             handleClose={handleClose}
-            upgrade={update}
           />
         )}
       </div>

@@ -7,6 +7,7 @@ export const AgregarMovimiento = ({
   movimientoAddForm,
   handleChangeFormData,
   personas,
+  proveedores = [],
   movimientoName,
   movimientoOptions,
   clasesOptions,
@@ -18,6 +19,7 @@ export const AgregarMovimiento = ({
           handleCloseForm={handleCloseForm}
           submitMovimientoForm={submitMovimientoForm}
           personas={personas}
+          proveedores={proveedores}
           handleChangeFormData={handleChangeFormData}
           movimientoAddForm={movimientoAddForm}
           movimientoOptions={movimientoOptions}

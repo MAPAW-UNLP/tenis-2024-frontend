@@ -19,6 +19,7 @@
     "react-select": "^5.6.0",
     "react-table": "^7.8.0",
     "styled-components": "^5.3.6",
+    "sweetalert2": "^11.14.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

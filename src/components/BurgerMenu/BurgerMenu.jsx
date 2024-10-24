@@ -1,19 +1,18 @@
-//react tools
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useEffect } from 'react'
-
-/* Components */
-import LinkItem from '../../components/LinkItem'
-import ProfileSideBar from '../../components/ProfileMenu/ProfileSideBar'
-import BurgerMenu from '../../components/BurgerMenu/BurgerMenu'
-
-import '../../styles/navbar.css'
-import '../../styles/burgermenu.css'
-
-import { useState } from 'react'
 import { useSession } from '../../hooks/useSession'
+import LinkItem from '../../components/LinkItem'
+import '../../styles/profilesidebar.css'
+import '../../styles/burgermenu.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons'
 
-const NavBar = ({ title }) => {
+const BurgerMenu = () => {
+  const [isOpen, setIsOpen] = useState(false)
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen)
+  }
   const [active, setActive] = useState('link')
   const { session } = useSession()
 
@@ -34,24 +33,37 @@ const NavBar = ({ title }) => {
   }, [active])
 
   return (
-    <div id="navBar-component">
-      <nav id="navBar">
-        <ul style={{ display: 'flex', justifyContent: 'flex-start' }}>
-          <li>
-            <BurgerMenu />
-          </li>
+    <div className="burger-menu">
+      {!isOpen && (
+        <button onClick={toggleSidebar} className="profile-button">
+          <FontAwesomeIcon icon={faBars} />
+        </button>
+      )}
+      <div className={`sidebar ${isOpen ? 'open' : ''}`}>
+        <button onClick={toggleSidebar} className="close-btn">
+          <FontAwesomeIcon icon={faTimes} />
+        </button>
+        <div className="profile-sidebar-container">
+          <h2 className="h2-sidebar">Opciones del Perfil</h2>
 
-          <li id="navBar-list" className="desktop-navbar">
-            <LinkItem to={'/inicio'} setActive={setActive} name={'Inicio'} />
+          <ul className="options-list">
+            <LinkItem
+              to={'/inicio'}
+              setActive={setActive}
+              name={'Inicio'}
+              className="options-sidebar"
+            />
             <LinkItem
               to={'/reservas'}
               setActive={setActive}
               name={'Reservas'}
+              className="options-sidebar"
             />
             <LinkItem
               to={'/movimientos'}
               setActive={setActive}
               name={'Movimientos'}
+              className="options-sidebar"
             />
 
             {(() => {
@@ -63,36 +75,43 @@ const NavBar = ({ title }) => {
                         to={'/crearClase'}
                         setActive={setActive}
                         name={'Crear clase'}
+                        className="options-sidebar"
                       />
                       <LinkItem
                         to={'/ausencias'}
                         setActive={setActive}
                         name={'Ausencias y suspenciones'}
+                        className="options-sidebar"
                       />
                       <LinkItem
                         to={'/canchas'}
                         setActive={setActive}
                         name={'Canchas'}
+                        className="options-sidebar"
                       />
                       <LinkItem
                         to={'/alumnos'}
                         setActive={setActive}
                         name={'Alumnos'}
+                        className="options-sidebar"
                       />
                       <LinkItem
                         to={'/profesores'}
                         setActive={setActive}
                         name={'Profesores'}
+                        className="options-sidebar"
                       />
                       <LinkItem
                         to={'/cobros'}
                         setActive={setActive}
                         name={'Cobros'}
+                        className="options-sidebar"
                       />
                       <LinkItem
                         to={'/ajustes'}
                         setActive={setActive}
                         name={'Ajustes'}
+                        className="options-sidebar"
                       />
                     </>
                   )
@@ -103,11 +122,13 @@ const NavBar = ({ title }) => {
                         to={'/crearClase'}
                         setActive={setActive}
                         name={'Crear clase'}
+                        className="options-sidebar"
                       />
                       <LinkItem
                         to={'/ausencias'}
                         setActive={setActive}
                         name={'Ausencias y suspenciones'}
+                        className="options-sidebar"
                       />
                     </>
                   )
@@ -121,15 +142,11 @@ const NavBar = ({ title }) => {
                   return null // Puedes agregar un mensaje de error o un componente por defecto aquí
               }
             })()}
-          </li>
-          <li style={{ marginLeft: 'auto', paddingRight: '5px' }}>
-            <ProfileSideBar />
-          </li>
-        </ul>
-      </nav>
-      <h1>{title}</h1>
+          </ul>
+        </div>
+      </div>
     </div>
   )
 }
 
-export default NavBar
+export default BurgerMenu

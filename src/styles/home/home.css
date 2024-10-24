@@ -16,48 +16,47 @@
 
 .movimientosCard:hover {
   box-shadow: 0px 10px 30px #94f5c5;
-  cursor: pointer;
   border: 5px solid #94f5c5;
-  border-radius: 21px;
 }
 
 .reservasCard:hover {
   box-shadow: 0px 10px 30px #ffa500;
-  cursor: pointer;
   border: 5px solid #ffa500;
-  border-radius: 21px;
 }
 
 .canchasCard:hover {
   box-shadow: 0px 10px 30px #ee82ee;
-  cursor: pointer;
   border: 5px solid #ee82ee;
-  border-radius: 21px;
 }
 
-.profesoresCard:hover {
+.profesoresCard:hover,
+.proveedoresCard:hover {
   box-shadow: 0px 10px 30px #bceb3c;
-  cursor: pointer;
   border: 5px solid #bceb3c;
-  border-radius: 21px;
+}
+
+.proveedoresCard:hover {
+  box-shadow: 0px 10px 30px #32cd32;
+  border: 5px solid #32cd32;
 }
 
 .alumnosCard:hover {
   box-shadow: 0px 10px 30px #add8e6;
-  cursor: pointer;
   border: 5px solid #add8e6;
-  border-radius: 21px;
 }
 
 .ajustesCard:hover {
   box-shadow: 0px 10px 30px #78a1ca;
-  cursor: pointer;
   border: 5px solid #78a1ca;
-  border-radius: 21px;
 }
 
 .card a {
   text-decoration: none;
+}
+
+.card:hover {
+  cursor: pointer;
+  border-radius: 21px;
 }
 
 .content {
@@ -70,6 +69,9 @@
   height: 150px;
   border-top-right-radius: 15px;
   border-top-left-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .title {
@@ -78,6 +80,7 @@
   font-weight: 600;
   font-family: var(--title-text);
   font-size: 300%;
+  text-transform: capitalize;
 }
 
 .desc {
