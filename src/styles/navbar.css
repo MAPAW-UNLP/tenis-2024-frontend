@@ -33,17 +33,11 @@
   position: relative;
   font-weight: 300;
 }
-#navBar-list li {
-  margin-right: 3%;
-}
-#navBar-list li:first-child {
-  margin-left: 1%;
-}
 
-#navBar-list li:last-child {
-  position: absolute;
-  right: 0;
-  color: var(--accent-tennis-green);
+@media (max-width: 1200px) {
+  #navBar-list {
+    display: none;
+  }
 }
 
 #navBar-component h1 {
@@ -99,5 +93,5 @@
 
 .linkCerrarSesion {
   text-decoration: none;
-  color: var(--accent-tennis-green);
+  color: white;
 }
