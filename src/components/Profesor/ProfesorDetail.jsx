@@ -11,6 +11,7 @@ export const ProfesorDetail = ({
   handleChangeName,
   handleChangePhone,
   handleChangeEmail,
+  handleChangeValorHora,
   feedback,
   clearState,
   setWillEdit,
@@ -45,6 +46,7 @@ export const ProfesorDetail = ({
     const nombreProfe = document.getElementById('nombreProfesor').value
     const telProfe = document.getElementById('telefonoProfesor').value
     const emailProfe = document.getElementById('emailProfesor').value
+    const valorHoraProfe = document.getElementById('valorHoraProfesor').value
 
     const data = {
       id: profeDetail.id,
@@ -59,13 +61,17 @@ export const ProfesorDetail = ({
     emailProfe === ''
       ? (data.email = profeDetail.email)
       : (data.email = emailProfe)
+    valorHoraProfe === ''
+      ? (data.valorHora = profeDetail.valorHora)
+      : (data.valorHora = valorHoraProfe)
 
     const requestOptions = {
       method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
     }
 
-    fetch(`${URL_BASE}profesorr`, requestOptions)
+    fetch(`${URL_BASE}profesorr/update`, requestOptions)
       .then((response) => response.json())
       .then(() => setWaitingUpdate(false))
       .then(() => handleCloseForm())
@@ -83,6 +89,10 @@ export const ProfesorDetail = ({
           </button>
           <h2>Editar Profesor</h2>
           <div className="inputlabel">
+            <label htmlFor="nombreInput" className="profesor-edit-label">
+              Nombre:{' '}
+              <span style={{ color: 'green', marginLeft: '0.1rem' }}>*</span>
+            </label>
             <InputReComponent
               type={'text'}
               id={'nombreProfesor'}
@@ -103,6 +113,10 @@ export const ProfesorDetail = ({
           </div>
 
           <div className="inputlabel">
+            <label htmlFor="emailInput" className="profesor-edit-label">
+              Email:{' '}
+              <span style={{ color: 'green', marginLeft: '0.1rem' }}>*</span>
+            </label>
             <InputReComponent
               type={'text'}
               id={'emailProfesor'}
@@ -123,6 +137,10 @@ export const ProfesorDetail = ({
           </div>
 
           <div className="inputlabel">
+            <label htmlFor="telefonoInput" className="profesor-edit-label">
+              Telefono:{' '}
+              <span style={{ color: 'green', marginLeft: '0.1rem' }}>*</span>
+            </label>
             <InputReComponent
               type={'text'}
               name={'telefono'}
@@ -144,6 +162,30 @@ export const ProfesorDetail = ({
             </p>
           </div>
 
+          <div className="inputlabel">
+            <label htmlFor="valorHoraInput" className="profesor-edit-label">
+              Valor/Hora:{' '}
+              <span style={{ color: 'green', marginLeft: '0.1rem' }}>*</span>
+            </label>
+            <InputReComponent
+              type={'number'}
+              name={'valorHora'}
+              id={'valorHoraProfesor'}
+              className={'profesor-add-form-input'}
+              placeholder={profeDetail.valorHora}
+              defaultValue={profeDetail.valorHora}
+              onChangeFuncion={(e) =>
+                handleChangeValorHora(e, 'clase-detail-guardar', true)
+              }
+            />
+            <p
+              className="feedbackInline"
+              style={{ color: feedback.valorHoraFB.color }}
+            >
+              {feedback.valorHoraFB.text}
+            </p>
+          </div>
+
           {waitingUpdate ? (
             <LoadingSpinner
               active={waitingUpdate}
@@ -151,12 +193,13 @@ export const ProfesorDetail = ({
               loaderClass={'loader'}
             />
           ) : (
-            <div id="clase-detail-btns">
+            <div id="profesor-edit-buttons">
               {feedback.nombreFBCorrecto === false ||
-              feedback.telefonoFBCorrecto === false ||
-              feedback.emailFBCorrecto === false ? (
+                feedback.telefonoFBCorrecto === false ||
+                feedback.emailFBCorrecto === false ||
+                feedback.valorHoraFB.isValid  === false? (
                 <button
-                  id="clase-detail-disabled"
+                  id="profesor-edit-disabled"
                   type="button"
                   disabled={true}
                 >
@@ -164,12 +207,12 @@ export const ProfesorDetail = ({
                   Guardar{' '}
                 </button>
               ) : (
-                <button id="clase-detail-guardar" onClick={actualizar}>
+                <button id="profesor-button-guardar" onClick={actualizar}>
                   {' '}
                   Guardar{' '}
                 </button>
               )}
-              <button id="clase-detail-cancelar" onClick={handleCloseForm}>
+              <button id="profesor-button-cancelar" onClick={handleCloseForm}>
                 {' '}
                 Cancelar{' '}
               </button>

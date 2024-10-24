@@ -1,0 +1,110 @@
+.modal-background {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+  z-index: 1000; /* Asegura de que esté por encima de otros elementos */
+}
+
+.new-clase-add-form {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%; /* El formulario ocupa todo el ancho disponible */
+  background-color: var(--neutral-white);
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 20px; /* Bordes redondeados */
+  background-color: var(--neutral-white); /* Color de fondo */
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para el pop-up */
+  width: 80%;
+  max-width: 600px;
+  height: auto;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+/*Titulo */
+.modal-content h2 {
+  width: 100%;
+  margin-top: 0;
+  background-color: var(--neutral-white);
+  color: var(--neutral-black);
+  font-size: 2.2rem; /* Ajustado a rem para mejor escalabilidad */
+  text-align: center;
+  font-family: var(--title-text);
+}
+
+.modal-content label {
+  font-family: var(--normal-text);
+  font-size: 1.5em;
+  margin-bottom: 1vh;
+  width: 100%; /* El label ocupa todo el ancho */
+  color: var(--neutral-black);
+}
+
+.modal-content input {
+  width: 100%; /* El input ocupa todo el ancho */
+  font-family: var(--normal-text);
+  height: 2.2rem; /* Altura relativa */
+  margin-bottom: 15px; /* Margen inferior */
+  font-size: large;
+  background-color: var(--neutral-white);
+  border: 1.5px solid #d9d9d9;
+  color: var(--neutral-black);
+  border-radius: 0.2em; /* Bordes redondeados */
+  transition:
+    border-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out;
+}
+
+.modal-content button {
+  width: 100%; /* El botón ocupa todo el ancho */
+  background-color: var(--accent-green);
+  height: 5rem; /* Altura fija para los botones */
+  border: none;
+  border-radius: 20px; /* Bordes redondeados */
+  cursor: pointer;
+  color: var(--neutral-white);
+  font-size: 2em;
+  font-weight: bolder;
+  margin-top: 10px; /* Espaciado entre botones */
+}
+
+.modal-content button:hover {
+  background-color: darkgreen; /* Cambia a un verde más oscuro al pasar el mouse */
+}
+
+.new-clase-add-form-label {
+  margin-top: 1em;
+  display: flex;
+  justify-content: left;
+  width: 100%; /* El label ocupa todo el ancho */
+  margin-bottom: 5px; /* Espaciado entre la etiqueta y el input */
+}
+.modal-content .cancel-button {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 2em;
+  transition: background-color 0.3s ease;
+}
+
+.modal-content .cancel-button:hover {
+  background-color: darkred;
+}

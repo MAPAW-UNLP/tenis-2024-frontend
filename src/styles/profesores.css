@@ -8,9 +8,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-
-  width: 70vw;
-  /* Cambiar aca a 35vw si queremos algo compatible con las canchas */
+  width: 70vw; /* Cambiar a 35vw si queremos algo compatible con las canchas */
   margin: auto;
   margin-top: 5vh;
   align-items: center;
@@ -28,7 +26,7 @@
 #profesores-list-options {
   height: 8vh;
   display: grid;
-  grid-template-columns: 20% 20% 20% 40%;
+  grid-template-columns: 20% 20% 20% 20% 20%; /* Adjusted to fit the search bar */
   align-content: center;
   align-items: center;
   justify-content: center;
@@ -40,6 +38,7 @@
   border-top-left-radius: 2px;
   border-top-right-radius: 2px;
 }
+
 #profesores-list-options :first-child {
   margin-left: 0.5em;
 }
@@ -51,9 +50,8 @@
 
 #profesores-searchbar input {
   width: 100%;
-
   font-family: var(--normal-text);
-  font-size: 100%;
+  font-size: 90%;
   border-radius: 10px;
   border: 1px solid var(--neutral-black);
   color: var(--neutral-black);
@@ -75,14 +73,33 @@
 
 .profesor-info {
   display: grid;
-  grid-template-columns: 20% 20% 40% 20%;
-  margin: 0.5%;
+  grid-template-columns: 20% 20% 20% 20% 20%;
+  margin: 0.6%;
   padding: 1%;
   border-radius: 12px;
   background-color: var(--neutral-black);
   color: var(--neutral-white-text);
   font-family: var(--normal-text);
   font-size: 110%;
+  align-items: center; /* Asegura que el contenido de las celdas esté centrado verticalmente */
+}
+
+.new-profesor-inside-title {
+  font-family: var(--normal-text);
+  color: var(--neutral-black);
+  font-size: 3em; /* Aumenta el tamaño de la fuente */
+  font-weight: bolder;
+  text-align: center;
+  margin-top: 0.8em;
+}
+
+.new-profesor-inside-text {
+  font-family: var(--normal-text);
+  color: var(--neutral-black);
+  font-size: 1.2em; /* Aumenta un poco el tamaño de la fuente */
+  font-weight: bolder;
+  margin-top: 0.8em;
+  text-align: center; /* Asegura que el texto también esté centrado */
 }
 
 #edit-profesor-btn {
@@ -103,17 +120,23 @@
   font-size: 130%;
   cursor: pointer;
 }
+
 /* Form */
 #profesor-add-component {
   background-color: var(--neutral-white);
   display: flex;
   flex-direction: column;
-  position: absolute;
+  align-items: center;
+  position: fixed;
   top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   border-radius: 20px;
-  width: 40vw;
+  width: 30vw; /* Ajusta el ancho para hacerlo más pequeño */
+  max-width: 500px; /* Puedes añadir un máximo si es necesario */
   z-index: 20;
   box-shadow: -2px -4px 400px 600px rgba(0, 0, 0, 0.24);
+  padding: 20px;
 }
 
 #close-profesor-add-form {
@@ -129,15 +152,14 @@
   cursor: pointer;
 }
 
-#close-profesor-add-form:hover {
-  font-size: 175%;
-  font-weight: bolder;
-  color: #cc3636;
+#profesor-add-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 #profesor-add-component h2 {
   width: 100%;
-
   margin-top: 3vh;
   background-color: var(--neutral-white);
   color: var(--neutral-black);
@@ -155,24 +177,38 @@
   background-color: var(--neutral-white);
 }
 
+/* Ajustar el tamaño y el estilo de los inputs */
 .profesor-add-form-input {
   font-family: var(--normal-text);
   margin-bottom: 15px;
-  width: 90%;
-  margin: 2vh 2vw;
-  height: 2.2rem;
-  border-radius: 2px;
-  font-size: large;
+  width: 100%; /* Asegúrate de que todos tengan el mismo ancho */
+  height: 3rem; /* Altura coherente */
+  border-radius: 10px; /* Consistencia en el diseño */
+  font-size: 1rem; /* Ajustar para que coincida */
   background-color: var(--neutral-white);
-  border: 1px solid lightgrey;
   color: var(--neutral-black);
-  padding-left: 5px;
+  padding: 10px; /* Suficiente padding para que se vea bien */
+  border: 1px solid var(--neutral-black); /* Borde visible */
   transition: all 0.5s ease;
 }
 
+/* Ajustes para los labels */
+.profesor-add-form-label,
+.profesor-edit-label {
+  font-family: var(--normal-text);
+  margin-bottom: 15px;
+  width: 100%;
+  height: auto; /* Cambiado a auto para ajustarse mejor al contenido */
+  font-size: 1.5rem; /* Ajustado para mayor claridad */
+  background-color: var(--neutral-white);
+  color: var(--neutral-black);
+  padding: 10px; /* Mantener padding para mejorar la apariencia */
+  border: none; /* Sin borde */
+}
+
 .profesor-add-form-input:focus {
-  border: none;
-  outline: 2px solid var(--accent-green);
+  border: 1px solid var(--accent-green); /* Border color on focus */
+  outline: none; /* Remove default outline */
 }
 
 .profesor-add-form-input:disabled {
@@ -183,22 +219,29 @@
 #profesor-add-form-addBtn {
   width: 100%;
   background-color: var(--accent-green);
-  height: 5rem;
+  height: 3rem; /* Adjusted height */
   border: none;
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
+  border-radius: 10px; /* Adjusted radius */
   cursor: pointer;
+  font-size: 1rem; /* Adjusted font size */
+  transition: background-color 0.3s; /* Transition effect */
+}
+
+/* Hover para el botón */
+#profesor-add-form-addBtn:hover {
+  background-color: darken(var(--accent-green), 10%); /* Efecto de hover */
 }
 
 #profesor-add-form-addBtn:disabled {
   background-color: var(--neutral-black);
 }
+
 .inputlabel {
   width: 90%;
   position: relative;
 }
-/*  */
 
+/* Scrollbar para la lista de profesores */
 #profesores-list {
   min-height: 100%;
   max-height: 60vh;
@@ -226,24 +269,29 @@
   font-family: var(--normal-text);
   position: absolute;
   top: 0;
-  left: 2vw;
-  /* border: 1px solid red; */
+  left: 2vw; /* border: 1px solid red; */
   font-size: 80%;
   transition: all 0.2s ease;
 }
-/*Detail*/
+
+/* Detail */
 #profesor-edit-component {
   background-color: var(--neutral-white);
   display: flex;
   flex-direction: column;
-  position: absolute;
+  align-items: center;
+  position: fixed;
   top: 50%;
-  left: 35%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   border-radius: 20px;
-  width: 35vw;
+  width: 30vw; /* Ajusta el ancho para hacerlo más pequeño */
+  max-width: 500px; /* Puedes añadir un máximo si es necesario */
   z-index: 20;
   box-shadow: -2px -4px 400px 600px rgba(0, 0, 0, 0.24);
+  padding: 20px;
 }
+
 #profesor-edit-component h2 {
   width: 100%;
   margin-top: 3vh;
@@ -253,10 +301,91 @@
   text-align: center;
   font-family: var(--title-text);
 }
-#profesor-edit-component .inputlabel {
-  width: 100%;
+
+/* Estilos para los labels */
+.profesor-edit-label {
+  font-family: var(--normal-text);
+  margin-bottom: 15px;
+  width: 100%; /* Asegúrate de que este también tenga el 100% o un valor específico */
+  height: auto;
+  font-size: 1.5rem;
+  background-color: var(--neutral-white);
+  color: var(--neutral-black);
+  padding: 10px;
+  border: none;
 }
-#nombreProfesor,
-#telefonoProfesor {
-  color: black;
+
+/* Estilos para los inputs */
+.profesor-add-form-input,
+.profesor-edit-form-input {
+  font-family: var(--normal-text);
+  margin-bottom: 15px;
+  width: 100%; /* Asegúrate de que todos tengan el mismo ancho */
+  height: 3rem; /* Altura coherente */
+  border-radius: 10px; /* Consistencia en el diseño */
+  font-size: 1rem; /* Ajustar para que coincida */
+  background-color: var(--neutral-white);
+  color: var(--neutral-black);
+  padding: 10px; /* Suficiente padding para que se vea bien */
+  border: 1px solid var(--neutral-black); /* Borde visible */
+  transition: all 0.5s ease;
+}
+
+/* Estilos para los botones */
+#profesor-button-guardar,
+#profesor-button-cancelar {
+  width: 100%; /* Asegura que ocupen todo el ancho */
+  display: inline-flex; /* Cambia a inline-flex para que se ajuste al contenido */
+  justify-content: center; /* Centra el contenido dentro del botón */
+  height: 3rem; /* Asegúrate de que los botones tengan una altura adecuada */
+  padding: 10px 20px; /* Ajusta el padding según sea necesario */
+  border-radius: 10px; /* Bordes redondeados */
+  margin: 10px 0; /* Espacio entre botones */
+  font-size: 1rem; /* Tamaño de fuente */
+  cursor: pointer; /* Cursor de puntero */
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Transición suave */
+}
+
+#profesor-button-guardar {
+  background-color: var(--accent-green);
+  color: var(--neutral-white);
+}
+
+#profesor-button-guardar:hover {
+  background-color: var(--accent-tennis-green);
+}
+
+#profesor-button-cancelar {
+  background-color: var(--neutral-white-text);
+  color: var(--neutral-black);
+  border: 1px solid #c6c6c6;
+}
+
+#profesor-button-cancelar:hover {
+  background-color: var(--neutral-black);
+  color: var(--neutral-white);
+}
+
+.profesor-edit-buttons {
+  display: flex;
+  justify-content: space-between;
+  width: 100%; /* O usa un valor específico que se ajuste a tu diseño */
+  margin-top: 1em;
+}
+
+#profesor-edit-disabled {
+  grid-area: botonA;
+  width: 100%;
+  /* height: 4vh; */
+  height: 2.2em;
+  border-radius: 15px;
+  margin: auto;
+  margin-bottom: 10px;
+  margin-top: 2vh;
+  font-size: 140%;
+  border: none;
+  /* border: 1px solid var(--neutral-black); */
+  /* box-shadow: 0px 2px 5px var(--neutral-black); */
+  color: rgb(197, 197, 197);
+  background-color: var(--neutral-black);
 }

@@ -1,7 +1,7 @@
 //Fontawesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
-
+import '../../styles/ajustes/tipoClaseForm.css'
 import InputReComponent from '../Utils/InputReComponent'
 
 const AgregarProfesor = ({
@@ -10,9 +10,17 @@ const AgregarProfesor = ({
   handleChangeName,
   handleChangeEmail,
   handleChangePhone,
+  handleChangeValorHora,
   feedback,
   submitProfesorForm,
 }) => {
+  // Comprobar si el formulario está listo para ser enviado
+  const isFormValid =
+    feedback.nombreFB.isValid &&
+    feedback.emailFB.isValid &&
+    feedback.telefonoFB.isValid &&
+    feedback.valorHoraFB.isValid; // Verificar que el 
+    console.log("Is Form Valid: ", isFormValid);
   return (
     <>
       {active && (
@@ -23,11 +31,14 @@ const AgregarProfesor = ({
           <h2>Nuevo Profesor</h2>
           <form id="alumno-add-form" onSubmit={submitProfesorForm}>
             <div className="inputlabel">
+              <label htmlFor="nombreInput" className="profesor-add-form-label">
+                Nombre:{' '}
+                <span style={{ color: 'green', marginLeft: '0.1rem' }}>*</span>
+              </label>
               <InputReComponent
                 type={'text'}
                 name={'nombre'}
                 className={'profesor-add-form-input'}
-                placeholder={'Nombre'}
                 onChangeFuncion={(e) =>
                   handleChangeName(
                     e,
@@ -45,12 +56,15 @@ const AgregarProfesor = ({
               </p>
             </div>
             <div className="inputlabel">
+              <label htmlFor="emailInput" className="profesor-add-form-label">
+                Email:{' '}
+                <span style={{ color: 'green', marginLeft: '0.1rem' }}>*</span>
+              </label>
               <InputReComponent
                 type={'text'}
                 name={'email'}
                 id={'emailInput'}
                 className={'profesor-add-form-input'}
-                placeholder={'Email'}
                 onChangeFuncion={(e) =>
                   handleChangeEmail(
                     e,
@@ -69,14 +83,17 @@ const AgregarProfesor = ({
               </p>
             </div>
             <div className="inputlabel">
+              <label htmlFor="telefonoInput"className="profesor-add-form-label">
+                Telefono:{' '}
+                <span style={{ color: 'green', marginLeft: '0.1rem' }}>*</span>
+              </label>
               <InputReComponent
                 type={'text'}
                 name={'telefono'}
                 id={'telefonoInput'}
                 className={'profesor-add-form-input'}
-                placeholder={'Telefono'}
                 onChangeFuncion={(e) =>
-                  handleChangePhone(e, 'profesor-add-form-addBtn', true)
+                  handleChangePhone(e, 'profesor-add-form-addBtn','valorHoraInput', true)
                 }
                 deshabilitado={true}
                 min={7}
@@ -89,8 +106,44 @@ const AgregarProfesor = ({
                 {feedback.telefonoFB.text}
               </p>
             </div>
-            <button disabled id="profesor-add-form-addBtn" type="sumbit">
-              <FontAwesomeIcon id="canchas-add-form-btn" icon={faPlusCircle} />
+            <div className="inputlabel">
+              <label htmlFor="valorHoraInput"className="profesor-add-form-label">
+                Valor/Hora:{' '}
+                <span style={{ color: 'green', marginLeft: '0.1rem' }}>*</span>
+              </label>
+              <InputReComponent
+                type={'number'}
+                name={'valorHora'}
+                id={'valorHoraInput'}
+                className={'profesor-add-form-input'}
+                onChangeFuncion={(e) =>
+                  handleChangeValorHora(e,'profesor-add-form-addBtn', true)
+                }
+                deshabilitado={true}
+              />
+              <p
+                className="feedbackInline"
+                style={{ color: feedback.valorHoraFB.color }}
+              >
+                {feedback.valorHoraFB.text}
+              </p>
+            </div>
+            <button
+              id="profesor-button-guardar"
+              type="submit"
+              disabled={!isFormValid} // Habilitar solo si el formulario es válido
+            >
+              Guardar
+            </button>
+            <button
+              id="profesor-button-cancelar"
+              type="button"
+              onClick={(e) => {
+                e.preventDefault(); // Evitar cualquier acción de envío
+                handleCloseForm(); // Cierra el formulario
+              }}
+            >
+              Cancelar
             </button>
           </form>
         </div>
