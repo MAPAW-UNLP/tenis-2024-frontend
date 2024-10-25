@@ -9,6 +9,7 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import { faMoneyBill } from '@fortawesome/free-solid-svg-icons'
 import EliminarProveedor from 'components/Proveedor/EliminarProveedor'
 import AgregarPago from 'components/Proveedor/AgregarPago'
+import LoaderSpinner from 'components/LoaderSpinner'
 
 function Proveedores() {
   const URL_BASE = `http://localhost:8083/api/`
@@ -63,9 +64,6 @@ function Proveedores() {
 
   const closeFormPay = (bool = false) => {
     setPayModal(false)
-    if (bool === true) {
-      update()
-    }
   }
 
   const handleTrash = (id) => {
@@ -176,12 +174,11 @@ function Proveedores() {
           <span></span>
         </div>
         {loading ? (
-          <div className="container-table-proveedores">
-            <div
-              className="spinner"
-              style={{ position: 'relative', marginTop: '10%' }}
-            ></div>
-          </div>
+          <LoaderSpinner
+            active={loading}
+            containerClass={'canchasLoader'}
+            loaderClass={'canchasLoaderSpinner'}
+          />
         ) : (
           <>
             <div className="container-table-proveedores">

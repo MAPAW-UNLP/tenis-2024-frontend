@@ -22,7 +22,9 @@ function AgregarPago({
 
   const [showSuccessPopup, setShowSuccessPopup] = useState(false)
   const [loading, setLoading] = useState(false)
-  const [descripcion, setDescripcion] = useState('')
+  const [descripcion, setDescripcion] = useState(
+    `Pago a: ${proveedorFijo.nombre}`
+  )
 
   const habilitarBoton = () => {
     return !(montoValid && !loading)
@@ -88,7 +90,7 @@ function AgregarPago({
               setDescripcion(e.target.value)
             }}
             value={descripcion}
-            defaultValue={`Pago a: ${proveedorFijo.nombre}`}
+            defaultValue={descripcion}
           />
         </div>
 
