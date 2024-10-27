@@ -8,6 +8,7 @@ import { faUserEdit } from '@fortawesome/free-solid-svg-icons'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import Button from 'components/Proveedor/Button'
 import EliminarProveedor from 'components/Proveedor/EliminarProveedor'
+import { ShowProveedor } from '../../components/Proveedor/ShowProveedor'
 
 function Proveedores() {
   const URL_BASE = `http://localhost:8083/api/`
@@ -23,6 +24,7 @@ function Proveedores() {
   const [loading, setLoading] = useState(false)
   const [updateList, setUpdateList] = useState(false)
   const [pagina, setPagina] = useState(0)
+  const [modalShow, setModalShow] = useState(false)
 
   const totalDePaginas = proveedores.length / CANT_FILAS
 
@@ -59,6 +61,10 @@ function Proveedores() {
     if (bool === true) {
       update()
     }
+  }
+
+  const closeShow = () => {
+    setModalShow(false)
   }
 
   let listado
@@ -122,6 +128,11 @@ function Proveedores() {
     setEditModal(true)
   }
 
+  const openShowModal = (id) => {
+    setIdProveedor(id)
+    setModalShow(true)
+  }
+
   return (
     <div id="proveedores-component">
       <NavBar title={'Proveedores'} />
@@ -168,7 +179,11 @@ function Proveedores() {
             <div className="container-table-proveedores">
               {listado.map((p) => {
                 return (
-                  <div key={p.id} className="proveedores-item-list">
+                  <div
+                    key={p.id}
+                    className="proveedores-item-list"
+                    onClick={() => openShowModal(p.id)}
+                  >
                     <p>{p.nombre}</p>
                     <p>{p.telefono}</p>
                     <button
@@ -212,6 +227,13 @@ function Proveedores() {
             idProveedor={idProveedor}
             isOpen={modalEliminar}
             handleClose={handleClose}
+          />
+        )}
+        {modalShow && (
+          <ShowProveedor
+            isOpen={modalShow}
+            handleClose={closeShow}
+            idProveedor={idProveedor}
           />
         )}
       </div>
