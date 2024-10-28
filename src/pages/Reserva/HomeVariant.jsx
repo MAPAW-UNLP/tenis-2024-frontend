@@ -263,6 +263,7 @@ function HomeBody({
       <Dashboard
         header={
           <div className="home__dashboard-header">
+            <div style={{ width: '6rem' }}></div>
             <div className="home__date">
               <CalendarPicker
                 selectedDate={selectedDate}

@@ -35,7 +35,7 @@ const CalendarPicker = ({ selectedDate, setSelectedDate }) => {
           selected={selectedDate}
           onChange={setSelectedDate}
           locale="es"
-          dateFormat="dd 'de' MMMM"
+          dateFormat="dd 'de' MMMM',' yyyy"
           withPortal
         />
         <FontAwesomeIcon icon={faCaretDown} />
