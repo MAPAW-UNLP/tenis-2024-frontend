@@ -13,7 +13,7 @@
 .home__header {
   max-width: 1600px;
   margin: 0 auto;
-  padding: 1rem;
+  padding: 1rem 1rem 0;
   font-family: var(--normal-text);
   position: relative;
 }

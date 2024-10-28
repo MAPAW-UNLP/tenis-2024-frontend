@@ -4,7 +4,11 @@ import es from 'date-fns/locale/es'
 
 //Font awesome component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCaretRight, faCaretLeft } from '@fortawesome/free-solid-svg-icons'
+import {
+  faCaretRight,
+  faCaretLeft,
+  faCaretDown,
+} from '@fortawesome/free-solid-svg-icons'
 
 import 'react-datepicker/dist/react-datepicker.css'
 import '../../styles/calendar.css'
@@ -25,14 +29,17 @@ const CalendarPicker = ({ selectedDate, setSelectedDate }) => {
       <button className="calendar-picker__btn" onClick={selectYesterday}>
         <FontAwesomeIcon icon={faCaretLeft} />
       </button>
-      <DatePicker
-        className="pickers"
-        selected={selectedDate}
-        onChange={setSelectedDate}
-        locale="es"
-        dateFormat="dd 'de' MMMM"
-        withPortal
-      />
+      <div className="calendar-picker__date">
+        <DatePicker
+          className="pickers"
+          selected={selectedDate}
+          onChange={setSelectedDate}
+          locale="es"
+          dateFormat="dd 'de' MMMM"
+          withPortal
+        />
+        <FontAwesomeIcon icon={faCaretDown} />
+      </div>
       <button className="calendar-picker__btn" onClick={selectTomorrow}>
         <FontAwesomeIcon icon={faCaretRight} />
       </button>

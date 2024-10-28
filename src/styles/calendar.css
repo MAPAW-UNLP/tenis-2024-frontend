@@ -2,6 +2,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 1rem;
 }
 
 .calendar-picker__btn {
@@ -16,6 +17,28 @@
   }
 }
 
+.calendar-picker__date {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.calendar-picker__date:hover {
+  color: var(--accent-yellow);
+  cursor: pointer;
+
+  .pickers {
+    color: var(--accent-yellow);
+    cursor: pointer;
+  }
+
+  .pickers:focus {
+    outline: none;
+    border: none;
+    color: var(--accent-yellow);
+  }
+}
+
 .calendar-picker .pickers {
   background-color: var(--neutral-black);
   font-family: var(--title-text);
@@ -24,17 +47,8 @@
   text-align: center;
   border: none;
   transition: all 0.2s ease;
-}
-
-.calendar-picker .pickers:hover {
-  color: var(--accent-yellow);
-  cursor: pointer;
-}
-
-.calendar-picker .pickers:focus {
-  outline: none;
-  border: none;
-  color: var(--accent-yellow);
+  text-align-last: center;
+  width: 10rem;
 }
 
 /*

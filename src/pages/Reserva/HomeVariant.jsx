@@ -227,16 +227,6 @@ function HomeBody({
       />
 
       <div className="home__header">
-        <div className="home__btn-add-wrapper">
-          <button
-            className="home__btn-add"
-            onClick={() => navigate('../nuevaReserva')}
-          >
-            <span>Crear reserva</span>
-            <FontAwesomeIcon icon={faPlus} />
-          </button>
-        </div>
-
         <div className="profesor-select-container">
           <label htmlFor="profesor-select" className="profesor-label">
             Filtrar por profesor
@@ -256,6 +246,16 @@ function HomeBody({
           </select>
           <button onClick={handleBuscarClases} className="profesor-btn">
             Aceptar
+          </button>
+        </div>
+
+        <div className="home__btn-add-wrapper">
+          <button
+            className="home__btn-add"
+            onClick={() => navigate('../nuevaReserva')}
+          >
+            <span>Crear reserva</span>
+            <FontAwesomeIcon icon={faPlus} />
           </button>
         </div>
       </div>
