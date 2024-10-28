@@ -17,6 +17,8 @@ import Select from 'react-select'
 //Fontawesome icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
+import { getAlumnos } from 'api/alumnos'
+import { getCanchas } from 'api/canchas'
 
 // Url base de datos
 const URL_BASE = `http://localhost:8083/api/`
@@ -38,9 +40,7 @@ const CrearClase = () => {
   const [alumnosSelec, setAlumnosSelec] = useState([])
 
   const [alumnos, setAlumnos] = useState([])
-  const [actAlumnos, setActAlumnos] = useState(false)
   const [canchas, setCanchas] = useState([])
-  const [actCanchas, setActCanchas] = useState(false)
 
   // Dia formateado para HTML
   const mes = ('0' + (new Date().getMonth() + 1)).slice(-2)
@@ -50,25 +50,9 @@ const CrearClase = () => {
 
   // GET alumnos
   useEffect(() => {
-    const requestOptions = {
-      method: 'GET',
-    }
-    fetch(`${URL_BASE}alumnos`, requestOptions)
-      .then((response) => response.json())
-      .then((data) => setAlumnos(ordenarPorNombre(data.detail)))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [actAlumnos])
-
-  // GET canchas
-  useEffect(() => {
-    const requestOptions = {
-      method: 'GET',
-    }
-    fetch(`${URL_BASE}canchas`, requestOptions)
-      .then((response) => response.json())
-      .then((data) => setCanchas(data.detail))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [actCanchas])
+    getAlumnos().then((data) => setAlumnos(ordenarPorNombre(data)))
+    getCanchas().then((data) => setCanchas(data.detail))
+  }, [])
 
   // Manejadores (handles) de las variables que son enviadas a la BD.
   // En orden: Fecha inicio, repeticion, fecha fin, hora inicio, hora fin, cancha, alumnos.
@@ -132,21 +116,6 @@ const CrearClase = () => {
     setCancha(e.target.value)
   }
 
-  const handleSelectorAlumnosChange = (event) => {
-    // Manejador de los checkbox para cada alumno.
-    // Agrega los alumnos marcados (chequed) a un arreglo.
-    const { value, checked } = event.target
-
-    // Actualiza el estado según si el checkbox está marcado o desmarcado
-    if (checked) {
-      setAlumnosSelec([...alumnosSelec, value])
-    } else {
-      setAlumnosSelec(
-        alumnosSelec.filter((alumno) => !alumno.startsWith(value))
-      )
-    }
-  }
-
   // <-------------- Funciones extras --------------->
 
   // Esta funcion separa los nombres de los alumnos de sus ID para enviarselo a la BD.
@@ -177,18 +146,16 @@ const CrearClase = () => {
               "alumnos": [2, 3, 4]
     */
 
-    // Como la base de datos espera solo los ID de los alumnos se los separa de su nombre
-    const alumnosId = convertirAlumnosEnId()
-
     // Comprueba si se pickearon los elementos necesarios (y minimos) para hacer el submit
     if (
       fechaInicio === '' ||
       horaInicio === '' ||
       horaFin === '' ||
-      cancha === ''
+      cancha === '' ||
+      alumnosSelec.length === 0
     ) {
       handleMostrarMensaje('Complete los campos obligatorios (marcados con *)')
-      return [] // Retorna antes de hacer el fetch
+      return // Retorna antes de hacer el fetch
     }
 
     // Muestra un mensaje de cargando y no permite clickear el boton de submit otra vez
@@ -208,7 +175,7 @@ const CrearClase = () => {
         hora_fin: horaFin,
         repite: repeticion,
         cancha_id: cancha,
-        alumnos: alumnosId,
+        alumnos: alumnosSelec.map(({ value }) => value),
       }),
     }
     fetch(`${URL_BASE}profesor-reserva`, requestOptions)
@@ -217,10 +184,6 @@ const CrearClase = () => {
     //.finally((response) => console.log(response.json()));
     // Aca deberia actualizar las clases de la app
     //.finally((response) => setActClases((v) => !v));
-  }
-
-  const handleChangeAlumnoMultSelect = (e) => {
-    console.log('Selecciono alumno ', e)
   }
 
   // El siguiente segmento de código se utiliza para mostrarle mensajes al usuario.
@@ -246,7 +209,7 @@ const CrearClase = () => {
     // Cuando se "acepta" se cierran los mensajes,
     // en caso de que se haya creado la clase sin problemas, redirecciona al usuario al inicio
     // (La manera en que se chequea si se creo la clase es bastante improvisada, se puede mejorar)
-    if (mensajeUsuario == 'Reserva registrada con éxito') {
+    if (mensajeUsuario === 'Reserva registrada con éxito') {
       navigate('/inicio')
     }
     const mensajesUsuario = document.getElementById('mensajesUsuario')
@@ -275,12 +238,19 @@ const CrearClase = () => {
               min={today}
             />
             <SelectComponent
-              className={'inputReserva'}
-              id={'selectorRepeticion'}
+              className="inputReserva"
+              id="selectorRepeticion"
               onChange={handleRepeticionChange}
-              options={['No se repite', 'Todas las semanas', 'Todos los meses']}
-              deshabilitado={true}
-              placeholder={'Seleccionar tipo de repetición'}
+              disabled={true}
+              placeholder="Seleccionar tipo de repetición"
+              options={[
+                { displayValue: 'No se repite', value: 'No se repite' },
+                {
+                  displayValue: 'Todas las semanas',
+                  value: 'Todas las semanas',
+                },
+                { displayValue: 'Todos los meses', value: 'Todos los meses' },
+              ]}
             />
             <h5>Fecha fin</h5>
             <InputComponent
@@ -321,7 +291,7 @@ const CrearClase = () => {
             <Select
               className="inputReserva"
               isMulti
-              onChange={handleChangeAlumnoMultSelect}
+              onChange={setAlumnosSelec}
               options={alumnos.map((el) => ({
                 label: el.nombre,
                 value: el.id,

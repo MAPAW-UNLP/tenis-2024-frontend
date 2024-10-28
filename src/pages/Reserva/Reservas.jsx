@@ -209,11 +209,11 @@ export const Reservas = () => {
     const requestOptions = {
       method: 'GET',
     }
-    fetch(`${URL_BASE}profesores`, requestOptions)
+    fetch(`${URL_BASE}profesoress`, requestOptions)
       .then((response) => response.json())
       .then((data) => setProfesores(ordenarPorNombre(data)))
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [actProfesores])
+  }, [])
 
   useEffect(() => {
     const requestOptions = {
@@ -221,9 +221,9 @@ export const Reservas = () => {
     }
     fetch(`${URL_BASE}alumnos`, requestOptions)
       .then((response) => response.json())
-      .then((data) => setAlumnos(ordenarPorNombre(data.detail)))
+      .then((data) => setAlumnos(data))
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [actAlumnos])
+  }, [])
 
   return (
     <div id="reservas-component">
@@ -235,13 +235,17 @@ export const Reservas = () => {
         <h2>Nueva reserva</h2>
         <form action="" id="reserva-form" onSubmit={handleSubmitContinue}>
           <SelectComponent
-            className={'inputReserva'}
-            id={'selectedReservaType'}
+            className="inputReserva"
+            id="selectedReservaType"
             onChange={handleTypeChange}
-            options={['Alquiler', 'Clase']}
-            deshabilitado={false}
-            placeholder={'Seleccionar Tipo de Reserva'}
+            disabled={false}
+            placeholder="Seleccionar Tipo de Reserva"
+            options={[
+              { displayValue: 'Alquiler', value: 'Alquiler' },
+              { displayValue: 'Clase', value: 'Clase' },
+            ]}
           />
+
           <InputComponent
             type={'date'}
             id={'fecha'}

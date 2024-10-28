@@ -1,6 +1,17 @@
 #clase-detail-component {
+  /*
   box-shadow: -2px -4px 400px 600px rgba(0, 0, 0, 0.24);
   background-color: var(--neutral-white);
+  position: absolute;
+  top: 30%;
+  left: 30vw;
+  border-radius: 20px;
+  z-index: 20;
+  border: 5px solid var(--primary-green);
+  background-color: var(--neutral-white);
+
+  */
+
   display: grid;
   grid-template-areas:
     'titulo titulo'
@@ -10,15 +21,8 @@
   grid-row-gap: 10px;
   grid-template-columns: 47% 47%;
   justify-content: center;
-  position: absolute;
-  top: 30%;
-  left: 30vw;
-  border-radius: 20px;
   width: 40vw;
-  z-index: 20;
   text-align: center;
-  border: 5px solid var(--primary-green);
-  background-color: var(--neutral-white);
   cursor: default;
   transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }

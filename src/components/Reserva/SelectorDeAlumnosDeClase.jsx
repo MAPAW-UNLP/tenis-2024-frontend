@@ -5,14 +5,15 @@ const SelectorDeAlumnosDeClase = ({
   setAlumnosDeLaClase,
   alumnosDeLaClase,
 }) => {
-  const [alumnosFiltrados, setAlumnosFiltrados] = useState(alumnos)
+  // Inicializa con un array vacío para evitar errores de mapeo
+  const [alumnosFiltrados, setAlumnosFiltrados] = useState([])
 
   const handleChangeAlumnos = (e) => {
     const Posibles = alumnos.filter((a) =>
       a.nombre.toUpperCase().includes(e.target.value.toUpperCase())
     )
     if (e.target.value === '') {
-      setAlumnosFiltrados(alumnos)
+      setAlumnosFiltrados(alumnos || [])
     } else {
       setAlumnosFiltrados(Posibles)
     }
@@ -29,7 +30,7 @@ const SelectorDeAlumnosDeClase = ({
   }
 
   useEffect(() => {
-    setAlumnosFiltrados(alumnos)
+    setAlumnosFiltrados(alumnos || [])
   }, [alumnos])
 
   return (
