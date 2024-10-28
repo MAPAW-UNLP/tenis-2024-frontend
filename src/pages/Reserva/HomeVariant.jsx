@@ -23,7 +23,7 @@ import { ordenarPorNombre } from 'components/Utils/Functions'
 import NotFound404 from 'components/NotFound404/NotFound404'
 
 // Fontawesome
-import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import 'styles/home.css'
@@ -226,37 +226,43 @@ function HomeBody({
         reserva={claseDetail}
       />
 
-      <div className="profesor-select-container">
-        <label htmlFor="profesor-select" className="profesor-label">
-          Filtrar por profesor
-        </label>
-        <select
-          id="profesor-select"
-          value={profesorSeleccionado}
-          onChange={(e) => setProfesorSeleccionado(e.target.value)}
-          className="profesor-select"
-        >
-          <option value="todos">Todas las clases y reservas</option>
-          {profesores.map((profesor) => (
-            <option key={profesor.id} value={profesor.id}>
-              Clases de {profesor.nombre}
-            </option>
-          ))}
-        </select>
-        <button onClick={handleBuscarClases} className="profesor-btn">
-          Aceptar
-        </button>
+      <div className="home__header">
+        <div className="home__btn-add-wrapper">
+          <button
+            className="home__btn-add"
+            onClick={() => navigate('../nuevaReserva')}
+          >
+            <span>Crear reserva</span>
+            <FontAwesomeIcon icon={faPlus} />
+          </button>
+        </div>
+
+        <div className="profesor-select-container">
+          <label htmlFor="profesor-select" className="profesor-label">
+            Filtrar por profesor
+          </label>
+          <select
+            id="profesor-select"
+            value={profesorSeleccionado}
+            onChange={(e) => setProfesorSeleccionado(e.target.value)}
+            className="profesor-select"
+          >
+            <option value="todos">Todas las clases y reservas</option>
+            {profesores.map((profesor) => (
+              <option key={profesor.id} value={profesor.id}>
+                Clases de {profesor.nombre}
+              </option>
+            ))}
+          </select>
+          <button onClick={handleBuscarClases} className="profesor-btn">
+            Aceptar
+          </button>
+        </div>
       </div>
 
       <Dashboard
         header={
           <div className="home__dashboard-header">
-            <button
-              className="home__btn-add"
-              onClick={() => navigate('../nuevaReserva')}
-            >
-              <FontAwesomeIcon icon={faPlusCircle} />
-            </button>
             <div className="home__date">
               <CalendarPicker
                 selectedDate={selectedDate}
