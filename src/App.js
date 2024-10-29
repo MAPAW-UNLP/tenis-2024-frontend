@@ -25,6 +25,7 @@ import './styles/App.css'
 import { Routes, Route } from 'react-router-dom'
 import { Ajustes } from './pages/Ajustes/Ajustes'
 import { AlumnosNew } from './pages/Alumno/AlumnosNew'
+import ProfesorHomePage from 'pages/Profesor/ProfesorHomePage'
 
 function App() {
   return (
@@ -57,6 +58,7 @@ function App() {
             element={<SolicitudesAusencias />}
           />
           <Route path="/ausencias" element={<Ausencias />} />
+          <Route path="/profesor/:id" element={<ProfesorHomePage />} />
         </Routes>
       </div>
     </>
