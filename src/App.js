@@ -27,6 +27,7 @@ import { Routes, Route } from 'react-router-dom'
 import { Ajustes } from './pages/Ajustes/Ajustes'
 import { AlumnosNew } from './pages/Alumno/AlumnosNew'
 import ProfesorHomePage from 'pages/Profesor/ProfesorHomePage'
+import { AjustesHome } from 'pages/Ajustes/AjustesHome'
 
 function App() {
   return (
@@ -49,6 +50,7 @@ function App() {
           <Route path="/crearClase" element={<CrearClase />} />
           <Route path="/ajustes" element={<Ajustes />} />
           <Route path="/itemsAlquiler" element={<ItemsAlquiler />} />
+          <Route path="/ajustesHome" element={<AjustesHome />} />
           <Route path="/periodoAusencia" element={<PeriodoAusencia />} />
           <Route path="/suspencionClase" element={<SuspencionClase />} />
           <Route

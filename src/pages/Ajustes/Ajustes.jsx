@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { GenericButtonDisabled } from '../../components/Utils/GenericButtonDisabled'
 import FormularioTipoClase from '../../components/Clase/AgregarTipoClase'
+import Swal from 'sweetalert2'
 
 export const Ajustes = () => {
   const URL_BASE = `http://localhost:8083/api/`
@@ -56,8 +57,34 @@ export const Ajustes = () => {
     if (data.status === 'ok') {
       console.log('Tipo de clase creado exitosamente')
       await fetchTipoClases() // Recargar los tipos de clase
+      Swal.fire({
+        position: 'top',
+        icon: 'success',
+        title: 'Tipo de clase creado exitosamente',
+        showConfirmButton: false,
+        timer: 4000,
+        background: '#4CAF50',
+        color: 'white',
+        toast: true,
+        customClass: {
+          popup: 'small-alert',
+        },
+      })
     } else {
       console.error(data.message)
+      Swal.fire({
+        position: 'bottom-end',
+        icon: 'error',
+        title: 'Error al crear un Tipo de clase.',
+        showConfirmButton: false,
+        timer: 4000,
+        background: '#F44336',
+        color: 'white',
+        toast: true,
+        customClass: {
+          popup: 'small-alert',
+        },
+      })
       setCargando(false)
     }
   }
@@ -142,15 +169,41 @@ export const Ajustes = () => {
     if (data.status === 'ok') {
       console.log('Tipo de clase eliminado exitosamente')
       await fetchTipoClases() // Recargar los datos después de eliminar
+      Swal.fire({
+        position: 'top',
+        icon: 'success',
+        title: 'Tipo de clase eliminado exitosamente',
+        showConfirmButton: false,
+        timer: 4000,
+        background: '#4CAF50',
+        color: 'white',
+        toast: true,
+        customClass: {
+          popup: 'small-alert',
+        },
+      })
     } else {
       console.error(data.message)
       setCargando(false)
+      Swal.fire({
+        position: 'top',
+        icon: 'error',
+        title: 'Error al eliminar la clase',
+        showConfirmButton: false,
+        timer: 4000,
+        background: '#F44336',
+        color: 'white',
+        toast: true,
+        customClass: {
+          popup: 'small-alert',
+        },
+      })
     }
   }
 
   return (
     <div id="ajustes-component">
-      <NavBar title={'Ajustes'} />
+      <NavBar title={'Tipos de clase'} />
       {cargando ? (
         <LoaderSpinner
           active={cargando}
