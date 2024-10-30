@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { GenericButtonDisabled } from '../../components/Utils/GenericButtonDisabled'
 import FormularioItemAlquiler from 'components/Item/AgregarItemAlquiler'
+import Swal from 'sweetalert2'
 
 export const ItemsAlquiler = () => {
   const URL_BASE = `http://localhost:8083/api/`
@@ -56,8 +57,34 @@ export const ItemsAlquiler = () => {
     if (data.status === 'ok') {
       console.log('Item agrego exitosamente')
       await fetchItemAlquiler() // Recargar los items
+      Swal.fire({
+        position: 'top',
+        icon: 'success',
+        title: 'Item agregado',
+        showConfirmButton: false,
+        timer: 4000,
+        background: '#4CAF50',
+        color: 'white',
+        toast: true,
+        customClass: {
+          popup: 'small-alert',
+        },
+      })
     } else {
       console.error(data.message)
+      Swal.fire({
+        position: 'bottom-end',
+        icon: 'error',
+        title: 'Error al agregar item',
+        showConfirmButton: false,
+        timer: 4000,
+        background: '#F44336',
+        color: 'white',
+        toast: true,
+        customClass: {
+          popup: 'small-alert',
+        },
+      })
       setCargando(false)
     }
   }
@@ -142,9 +169,35 @@ export const ItemsAlquiler = () => {
     if (data.status === 'ok') {
       console.log('Item eliminado exitosamente')
       await fetchItemAlquiler() // Recargar los datos después de eliminar
+      Swal.fire({
+        position: 'top',
+        icon: 'success',
+        title: 'Item eliminado',
+        showConfirmButton: false,
+        timer: 4000,
+        background: '#4CAF50',
+        color: 'white',
+        toast: true,
+        customClass: {
+          popup: 'small-alert',
+        },
+      })
     } else {
       console.error(data.message)
       setCargando(false)
+      Swal.fire({
+        position: 'top',
+        icon: 'error',
+        title: 'Error al eliminar item',
+        showConfirmButton: false,
+        timer: 4000,
+        background: '#F44336',
+        color: 'white',
+        toast: true,
+        customClass: {
+          popup: 'small-alert',
+        },
+      })
     }
   }
 
