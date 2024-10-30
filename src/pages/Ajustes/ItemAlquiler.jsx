@@ -15,7 +15,7 @@ export const ItemsAlquiler = () => {
   const [cargando, setCargando] = useState(true)
   const [tempChanges, setTempChanges] = useState({})
   const [mensajeUsuario, setMensajeUsuario] = useState('')
-  const [itemPorBorrar, setItemPorBorrar] = useState(null) // Tipo de clase a eliminar
+  const [itemPorBorrar, setItemPorBorrar] = useState(null) // Item a eliminar
   const [botonHabilitado, setBotonHabilitado] = useState(false)
   const [mostrarFormulario, setMostrarFormulario] = useState(false)
 
@@ -55,7 +55,7 @@ export const ItemsAlquiler = () => {
 
     if (data.status === 'ok') {
       console.log('Item agrego exitosamente')
-      await fetchItemAlquiler() // Recargar los tipos de clase
+      await fetchItemAlquiler() // Recargar los items
     } else {
       console.error(data.message)
       setCargando(false)
