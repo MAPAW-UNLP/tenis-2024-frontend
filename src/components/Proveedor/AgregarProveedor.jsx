@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import InputReComponent from '../Utils/InputReComponent'
 import useInputValidation from 'hooks/Proveedores/useInputValidation'
 import { wait } from 'components/Utils/Functions'
+import LoaderSpinner from 'components/LoaderSpinner'
 
 function AgregarProveedor({ handleCloseForm, proveedores = [] }) {
   const [proveedorForm, setProveedorForm] = useState({
@@ -110,7 +111,13 @@ function AgregarProveedor({ handleCloseForm, proveedores = [] }) {
             <p className="textoBotonCancelar">Cancelar</p>
           </button>
         </div>
-        {loading && <div className="spinner"></div>}
+        {loading && (
+          <LoaderSpinner
+            active={loading}
+            containerClass={'contenedorLogin'}
+            loaderClass={'loader'}
+          />
+        )}
       </form>
       {showSuccessPopup && (
         <div className="popup">¡Proveedor agregado con éxito!</div>
