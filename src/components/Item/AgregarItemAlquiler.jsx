@@ -17,10 +17,10 @@ const FormularioItemAlquiler = ({ onClose, onSubmit }) => {
       importe: '',
     }
 
-    if (tipo.trim() === '') {
+    if (desc.trim() === '') {
       nuevosErrores.desc = '*Debes ingresar la descripcion del item.'
     } else if (desc.length > MAX_LENGTH) {
-      nuevosErrores.tipo = `*La descripción no debe exceder ${MAX_LENGTH} caracteres`
+      nuevosErrores.desc = `*La descripción no debe exceder ${MAX_LENGTH} caracteres`
     }
 
     if (importe === '') {
@@ -60,7 +60,7 @@ const FormularioItemAlquiler = ({ onClose, onSubmit }) => {
               onChange={(e) => seItem(e.target.value.toUpperCase())}
               className="new-clase-input"
             />
-            {errores.tipo && <p style={{ color: 'red' }}>{errores.tipo}</p>}
+            {errores.desc && <p style={{ color: 'red' }}>{errores.desc}</p>}
           </div>
           <div>
             <label htmlFor="importe" className="new-clase-add-form-label">

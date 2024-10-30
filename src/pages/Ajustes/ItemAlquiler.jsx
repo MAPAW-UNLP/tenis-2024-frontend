@@ -6,7 +6,7 @@ import LoaderSpinner from '../../components/LoaderSpinner'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { GenericButtonDisabled } from '../../components/Utils/GenericButtonDisabled'
-import FormularioTipoClase from '../../components/Clase/AgregarTipoClase'
+import FormularioItemAlquiler from 'components/Item/AgregarItemAlquiler'
 
 export const ItemsAlquiler = () => {
   const URL_BASE = `http://localhost:8083/api/`
@@ -177,7 +177,7 @@ export const ItemsAlquiler = () => {
             </GenericButton>
 
             {mostrarFormulario && (
-              <FormularioTipoClase
+              <FormularioItemAlquiler
                 onClose={() => setMostrarFormulario(false)}
                 onSubmit={handleAddItemAlquiler}
               />
