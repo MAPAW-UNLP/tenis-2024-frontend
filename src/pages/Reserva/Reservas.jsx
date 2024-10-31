@@ -219,7 +219,7 @@ export const Reservas = () => {
     const requestOptions = {
       method: 'GET',
     }
-    fetch(`${URL_BASE}alumnos`, requestOptions)
+    fetch(`${URL_BASE}clientes`, requestOptions)
       .then((response) => response.json())
       .then((data) => setAlumnos(data))
     // eslint-disable-next-line react-hooks/exhaustive-deps

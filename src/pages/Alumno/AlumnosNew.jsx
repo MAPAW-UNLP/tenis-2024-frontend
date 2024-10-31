@@ -60,7 +60,7 @@ export const AlumnosNew = () => {
     const requestOptions = {
       method: 'GET',
     }
-    fetch(`${URL_BASE}alumnos`, requestOptions)
+    fetch(`${URL_BASE}clientes`, requestOptions)
       .then((response) => response.json())
       .then((data) => {
         setAlumnos(data.length !== 0 ? ordenarPorNombre(data) : data)
@@ -75,7 +75,7 @@ export const AlumnosNew = () => {
   // y por ultimo vuelve a poner en false el estado que maneja el spinner de carga
   useEffect(() => {
     if (actAlu !== '') {
-      fetch(`${URL_BASE}alumno?alumnoId=${actAlu.id}`)
+      fetch(`${URL_BASE}cliente?alumnoId=${actAlu.id}`)
         .then((response) => response.json())
         .then((data) => setAluDetail(data))
         .then(() => setLoadingDetails(false))
@@ -102,7 +102,7 @@ export const AlumnosNew = () => {
       }),
     }
 
-    fetch(`${URL_BASE}alumno`, requestOptions)
+    fetch(`${URL_BASE}cliente`, requestOptions)
       .then((response) => response.json())
       .then(() => setActAlumnos((v) => !v))
       .then(clearState)
@@ -122,7 +122,7 @@ export const AlumnosNew = () => {
       }),
     }
 
-    fetch(`${URL_BASE}alumno`, requestOptions)
+    fetch(`${URL_BASE}cliente`, requestOptions)
       .then((response) => response.json())
       .then(() => setActAlumnos((v) => !v))
       .then(() => setActAlu({ id: actAlu.id }))
