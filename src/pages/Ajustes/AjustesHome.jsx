@@ -1,8 +1,10 @@
 import { useNavigate } from 'react-router-dom'
 import { useSession } from '../../hooks/useSession'
 import NavBar from '../Navbar/NavBar'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faGear, faTableTennis } from '@fortawesome/free-solid-svg-icons'
+import {
+  ItemsIcon,
+  ClaseIcon,
+} from '../../components/items/ajustesHome/AjustesHomeIcons.js'
 
 import '../../styles/ajustes/ajustesHome.css'
 
@@ -39,16 +41,7 @@ export const AjustesHome = () => {
                 style={{ backgroundColor: '#DFC531', position: 'relative' }}
               >
                 <div style={{ fontSize: '5em', color: '#5d5d5d' }}>
-                  <FontAwesomeIcon
-                    icon={faTableTennis}
-                    style={{
-                      position: 'absolute',
-                      left: '37%',
-                      top: '0',
-                      bottom: '0',
-                      margin: 'auto',
-                    }}
-                  />
+                  <ItemsIcon className="ajustes-icon" />
                 </div>
               </div>
               <div className="content">
@@ -71,16 +64,7 @@ export const AjustesHome = () => {
                 style={{ backgroundColor: '#45C824', position: 'relative' }}
               >
                 <div style={{ fontSize: '5em', color: '#5d5d5d' }}>
-                  <FontAwesomeIcon
-                    icon={faGear}
-                    style={{
-                      position: 'absolute',
-                      left: '35%',
-                      top: '0',
-                      bottom: '0',
-                      margin: 'auto',
-                    }}
-                  />
+                  <ClaseIcon className="ajustes-icon" />
                 </div>
               </div>
               <div className="content">
