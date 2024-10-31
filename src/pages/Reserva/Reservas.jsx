@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+
 //styles
 import '../../styles/reservas.css'
 
@@ -12,6 +13,7 @@ import AlquilerFormComponent from '../../components/Utils/Alquiler/AlquilerFormC
 import ClaseFormComponent from '../../components/Utils/Alquiler/ClaseFormComponent'
 import InputComponent from '../../components/Utils/InputComponent'
 import SelectComponent from '../../components/Utils/SelectComponent'
+import Swal from 'sweetalert2'
 
 //Fontawesome icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -42,6 +44,7 @@ export const Reservas = () => {
   const [cancha, setCancha] = useState('')
   const [canchas, setCanchas] = useState([])
   const [actCanchas, setActCanchas] = useState(false)
+  const [errors, setErrors] = useState({})
 
   //con estos campos verificar actualizar el select de cancha solo mostrando las posibles
   const [dia, setDia] = useState('')
@@ -124,17 +127,30 @@ export const Reservas = () => {
   const handleSubmitContinue = (e) => {
     e.preventDefault()
     const reservaType = document.getElementById('selectedReservaType')
-    if (reservaType.value == 'Alquiler') {
+    if (reservaType.value === 'Alquiler') {
       setAlquilerOp(true)
       setClaseOp(false)
     }
-    if (reservaType.value == 'Clase') {
+    if (reservaType.value === 'Clase') {
       setAlquilerOp(false)
       setClaseOp(true)
     }
   }
 
+  const validate = (reserva) => {
+    return (
+      reserva.cancha_id &&
+      reserva.persona_id &&
+      reserva.tipo &&
+      reserva.hora_ini &&
+      reserva.hora_fin &&
+      reserva.fecha
+    ) // &&(0 < reserva.grupo_ids.lenght))
+    //falta la condicion de que haya al menos un alumno pero esta rota el path para crearlos
+  }
+
   const canchasDisponibles = () => {
+    //arreglar
     //este algoritmo se por un lado se queda con los nombres de las canchas no disponibles y luego devuelve los nombres de las canchas que no aparecen en el primer arrreglo
     const nombresCanchasNoDisponibles = reservas
       .map((reserva) => {
@@ -164,7 +180,6 @@ export const Reservas = () => {
   }
 
   const handleAddReserva = () => {
-    const URL_BASE = `http://localhost:8083/api/`
     const reserva = {
       nombre: nombre,
       telefono: telefono,
@@ -178,21 +193,46 @@ export const Reservas = () => {
       grupo_ids: grupoIds,
       tipo: tipoClase,
     }
-    const form_data = new FormData()
 
-    for (var r in reserva) {
-      console.log('form reserva ', r, reserva[r])
-      form_data.append(r, reserva[r])
+    // Llamar a validate con el objeto reserva
+    console.log('Validando reserva:', reserva)
+
+    if (validate(reserva)) {
+      const form_data = new FormData()
+
+      for (const key in reserva) {
+        console.log('Form reserva ', key, reserva[key])
+        form_data.append(key, reserva[key])
+      }
+
+      const requestOptions = {
+        method: 'POST',
+        body: form_data,
+      }
+
+      fetch(`${URL_BASE}reserva`, requestOptions)
+        .then(async (response) => {
+          const result = await response.json()
+          console.log(result)
+          const message = result.detail || 'Ocurrió un error desconocido.'
+          if (response.ok) {
+            Swal.fire('Éxito', message, 'success') // Cambiado aquí
+            setActReservas((prev) => !prev)
+            navigate('../reservas') // Solo navega si la respuesta fue exitosa
+          } else {
+            Swal.fire('Error', message, 'error') // Cambiado aquí
+          }
+        })
+        .catch((error) => {
+          Swal.fire('Error', 'Error de conexión con el servidor.', 'error') // Cambiado aquí
+          console.error('Error:', error)
+        })
+        .finally(() => {
+          setReservasLoader(true)
+        })
+    } else {
+      Swal.fire('Atención', 'Complete todos los campos', 'warning') // Cambiado aquí
     }
-    console.log('form data', form_data)
-    const requestOptions = {
-      method: 'POST',
-      body: form_data,
-    }
-    fetch(`${URL_BASE}reserva`, requestOptions)
-      .then((response) => setActReservas((v) => !v))
-      .then(setReservasLoader(true))
-      .finally(navigate('../reservas'))
   }
 
   useEffect(() => {

@@ -81,7 +81,7 @@ const ProfileSideBar = () => {
           <FontAwesomeIcon icon={faTimes} />
         </button>
         <div className="profile-sidebar-container">
-          <h2 className="h2-sidebar">Opciones del Perfil</h2>
+          {/* <h2 className="h2-sidebar">Opciones del Perfil</h2>
           {session.roles.length > 1 && (
             <button
               className="list-toggle options-sidebar"
@@ -89,7 +89,7 @@ const ProfileSideBar = () => {
             >
               Roles
             </button>
-          )}
+          )} */}
 
           {expanded && session.roles.length > 1 && (
             <ul className="options-list">
