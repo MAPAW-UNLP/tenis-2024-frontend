@@ -45,13 +45,13 @@
 
 .table-row-ajustes {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   padding: 0.6em;
   width: 100%;
 }
 
 .table-cell-ajustes {
-  width: 50%;
+  flex: 1;
   text-align: center;
   font-family: var(--title-text);
   letter-spacing: 1px;

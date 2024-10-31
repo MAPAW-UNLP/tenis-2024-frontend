@@ -4,7 +4,7 @@ import '../../styles/ajustes/ajustes.css'
 import { GenericButton } from '../../components/Utils/GenericButton'
 import LoaderSpinner from '../../components/LoaderSpinner'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { GenericButtonDisabled } from '../../components/Utils/GenericButtonDisabled'
 import FormularioItemAlquiler from 'components/Item/AgregarItemAlquiler'
 import Swal from 'sweetalert2'
@@ -19,6 +19,7 @@ export const ItemsAlquiler = () => {
   const [itemPorBorrar, setItemPorBorrar] = useState(null) // Item a eliminar
   const [botonHabilitado, setBotonHabilitado] = useState(false)
   const [mostrarFormulario, setMostrarFormulario] = useState(false)
+  const [itemEditar, setItemEditar] = useState(null)
 
   useEffect(() => {
     fetchItemAlquiler()
@@ -46,8 +47,12 @@ export const ItemsAlquiler = () => {
   const handleAddItemAlquiler = async (nuevoItem) => {
     setCargando(true)
 
-    const response = await fetch(`${URL_BASE}addItemAlquiler`, {
-      method: 'POST',
+    const method = nuevoItem.id ? 'PUT' : 'POST'
+    const url = nuevoItem.id
+      ? `${URL_BASE}modItemAlquiler`
+      : `${URL_BASE}addItemAlquiler`
+    const response = await fetch(url, {
+      method: method,
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(nuevoItem),
     })
@@ -55,12 +60,12 @@ export const ItemsAlquiler = () => {
     const data = await response.json()
 
     if (data.status === 'ok') {
-      console.log('Item agrego exitosamente')
+      console.log('Item agregado exitosamente')
       await fetchItemAlquiler() // Recargar los items
       Swal.fire({
         position: 'top',
         icon: 'success',
-        title: 'Item agregado',
+        title: nuevoItem.id ? 'Item actualizado' : 'Item agregado',
         showConfirmButton: false,
         timer: 4000,
         background: '#4CAF50',
@@ -75,7 +80,7 @@ export const ItemsAlquiler = () => {
       Swal.fire({
         position: 'bottom-end',
         icon: 'error',
-        title: 'Error al agregar item',
+        title: nuevoItem.id ? 'Error al editar item' : 'Error al agregar item',
         showConfirmButton: false,
         timer: 4000,
         background: '#F44336',
@@ -233,6 +238,7 @@ export const ItemsAlquiler = () => {
               <FormularioItemAlquiler
                 onClose={() => setMostrarFormulario(false)}
                 onSubmit={handleAddItemAlquiler}
+                item={itemEditar}
               />
             )}
             <div
@@ -284,6 +290,7 @@ export const ItemsAlquiler = () => {
                   <input
                     type="text"
                     className="table-input-ajustes"
+                    disabled={true}
                     style={{
                       backgroundColor: '#d9d9d9',
                       border: 'none',
@@ -292,6 +299,18 @@ export const ItemsAlquiler = () => {
                     }}
                     value={'$' + (item.importe || '')}
                     onChange={(e) => handleItemChange(item, e.target.value)}
+                  />
+                  <FontAwesomeIcon
+                    icon={faEdit}
+                    style={{
+                      cursor: 'pointer',
+                      marginLeft: '10px',
+                      color: '#2170DF',
+                    }}
+                    onClick={() => {
+                      setMostrarFormulario(true)
+                      setItemEditar(item)
+                    }}
                   />
                   <FontAwesomeIcon
                     icon={faTrashAlt}
@@ -306,18 +325,6 @@ export const ItemsAlquiler = () => {
               </div>
             ))}
           </div>
-          <GenericButtonDisabled
-            marginBottom={'1.5em'}
-            backgroundColor={'#92bc1e'}
-            color="white"
-            borderRadius="1em"
-            width="20em"
-            centrado
-            onClick={handleConfirmarCambios}
-            disabled={!botonHabilitado}
-          >
-            Confirmar cambios
-          </GenericButtonDisabled>
         </div>
       )}
 

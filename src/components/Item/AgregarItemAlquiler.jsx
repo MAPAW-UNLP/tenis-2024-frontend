@@ -1,13 +1,33 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { GenericButton } from '../../components/Utils/GenericButton'
 import '../../styles/ajustes/tipoClaseForm.css'
 
-const FormularioItemAlquiler = ({ onClose, onSubmit }) => {
-  const [desc, seItem] = useState('')
+const FormularioItemAlquiler = ({ onClose, onSubmit, item }) => {
+  const [desc, setItem] = useState('')
   const [importe, setImporte] = useState('')
   const [errores, setErrores] = useState({ desc: false, importe: false })
+  const [botonHabilitado, setBotonHabilitado] = useState(true)
 
   const MAX_LENGTH = 50
+
+  useEffect(() => {
+    if (item) {
+      setItem(item.description)
+      setImporte(item.importe)
+    } else {
+      setItem('')
+      setImporte('')
+    }
+  }, [item])
+
+  useEffect(() => {
+    // Comprobar si los valores actuales son iguales a los del ítem
+    if (item) {
+      const unchanged =
+        desc.trim() === item.description && importe == item.importe
+      setBotonHabilitado(!unchanged)
+    }
+  }, [desc, importe, item])
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -26,7 +46,7 @@ const FormularioItemAlquiler = ({ onClose, onSubmit }) => {
     if (importe === '') {
       nuevosErrores.importe = '*Debes ingresar el importe'
     } else if (!Number.isInteger(Number(importe)) || parseFloat(importe) <= 0) {
-      nuevosErrores.importe = '*El importe debe ser un número  mayor a 0'
+      nuevosErrores.importe = '*El importe debe ser un número mayor a 0'
     }
 
     setErrores(nuevosErrores)
@@ -34,8 +54,13 @@ const FormularioItemAlquiler = ({ onClose, onSubmit }) => {
     // Si hay algún error, no enviar el formulario
     if (nuevosErrores.desc || nuevosErrores.importe) return
 
-    onSubmit({ desc, importe: parseInt(importe) })
+    onSubmit({ id: item?.id, desc, importe: parseInt(importe) })
     onClose()
+  }
+
+  const handleDescChange = (e) => {
+    const value = e.target.value.toUpperCase()
+    setItem(value)
   }
 
   const handleImporteChange = (e) => {
@@ -46,7 +71,7 @@ const FormularioItemAlquiler = ({ onClose, onSubmit }) => {
   return (
     <div className="modal-background">
       <div className="modal-content">
-        <h2>Agregar nuevo Item</h2>
+        <h2>{item ? 'Editar Item' : 'Agregar nuevo Item'}</h2>
         <form className="new-clase-add-form" onSubmit={handleSubmit}>
           <div>
             <label htmlFor="desc" className="new-clase-add-form-label">
@@ -57,7 +82,8 @@ const FormularioItemAlquiler = ({ onClose, onSubmit }) => {
               id="desc"
               type="text"
               value={desc}
-              onChange={(e) => seItem(e.target.value.toUpperCase())}
+              placeholder={item ? item.description : ''}
+              onChange={handleDescChange}
               className="new-clase-input"
             />
             {errores.desc && <p style={{ color: 'red' }}>{errores.desc}</p>}
@@ -70,14 +96,22 @@ const FormularioItemAlquiler = ({ onClose, onSubmit }) => {
             <input
               id="importe"
               type="text" // Cambiado a "text" para aplicar la regex
+              placeholder={item ? item.importe : ''}
               value={importe}
-              onChange={handleImporteChange} // Usar la nueva función
+              onChange={handleImporteChange}
             />
             {errores.importe && (
               <p style={{ color: 'red' }}>{errores.importe}</p>
             )}
           </div>
-          <button>Crear</button>
+          <button
+            className={
+              botonHabilitado ? 'boton-habilitado' : 'boton-deshabilitado'
+            }
+            disabled={!botonHabilitado}
+          >
+            {item ? 'Editar' : 'Crear'}
+          </button>
           <button type="button" className="cancel-button" onClick={onClose}>
             Cancelar
           </button>

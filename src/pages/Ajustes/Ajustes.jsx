@@ -287,6 +287,7 @@ export const Ajustes = () => {
                   <input
                     type="text"
                     className="table-input-ajustes"
+                    disabled={true}
                     style={{
                       backgroundColor: '#d9d9d9',
                       border: 'none',

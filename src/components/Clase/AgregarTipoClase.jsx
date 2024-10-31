@@ -1,13 +1,32 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { GenericButton } from '../../components/Utils/GenericButton'
 import '../../styles/ajustes/tipoClaseForm.css'
 
-const FormularioTipoClase = ({ onClose, onSubmit }) => {
+const FormularioTipoClase = ({ onClose, onSubmit, tipoClase }) => {
   const [tipo, setTipo] = useState('')
   const [importe, setImporte] = useState('')
   const [errores, setErrores] = useState({ tipo: false, importe: false })
+  const [botonHabilitado, setBotonHabilitado] = useState(true)
 
   const MAX_LENGTH = 20
+
+  useEffect(() => {
+    if (tipoClase) {
+      setTipo(tipoClase.tipo)
+      setImporte(tipoClase.importe)
+    } else {
+      setTipo('')
+      setImporte('')
+    }
+  }, [tipoClase])
+
+  useEffect(() => {
+    if (tipoClase) {
+      const unchanged =
+        tipo.trim() === tipoClase.tipo && importe == tipoClase.importe
+      setBotonHabilitado(!unchanged)
+    }
+  }, [tipo, importe, tipoClase])
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -34,7 +53,7 @@ const FormularioTipoClase = ({ onClose, onSubmit }) => {
     // Si hay algún error, no enviar el formulario
     if (nuevosErrores.tipo || nuevosErrores.importe) return
 
-    onSubmit({ tipo, importe: parseInt(importe) })
+    onSubmit({ id: tipoClase?.id, tipo, importe: parseInt(importe) })
     onClose()
   }
 
@@ -46,7 +65,10 @@ const FormularioTipoClase = ({ onClose, onSubmit }) => {
   return (
     <div className="modal-background">
       <div className="modal-content">
-        <h2>Crear nuevo tipo de clase</h2>
+        <h2>
+          {' '}
+          {tipoClase ? 'Editar tipo de clase' : 'Crear nuevo tipo de clase'}
+        </h2>
         <form className="new-clase-add-form" onSubmit={handleSubmit}>
           <div>
             <label htmlFor="tipo" className="new-clase-add-form-label">
@@ -57,6 +79,7 @@ const FormularioTipoClase = ({ onClose, onSubmit }) => {
               id="tipo"
               type="text"
               value={tipo}
+              placeholder={tipoClase ? tipoClase.tipo : ''}
               onChange={(e) => setTipo(e.target.value.toUpperCase())}
               className="new-clase-input"
             />
@@ -71,13 +94,21 @@ const FormularioTipoClase = ({ onClose, onSubmit }) => {
               id="importe"
               type="text" // Cambiado a "text" para aplicar la regex
               value={importe}
+              placeholder={tipoClase ? tipoClase.importe : ''}
               onChange={handleImporteChange} // Usar la nueva función
             />
             {errores.importe && (
               <p style={{ color: 'red' }}>{errores.importe}</p>
             )}
           </div>
-          <button>Crear</button>
+          <button
+            className={
+              botonHabilitado ? 'boton-habilitado' : 'boton-deshabilitado'
+            }
+            disabled={!botonHabilitado}
+          >
+            {tipoClase ? 'Editar' : 'Crear'}{' '}
+          </button>
           <button type="button" className="cancel-button" onClick={onClose}>
             Cancelar
           </button>
