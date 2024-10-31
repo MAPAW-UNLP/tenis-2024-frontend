@@ -37,9 +37,9 @@ const NavBar = ({ title }) => {
     <div id="navBar-component">
       <nav id="navBar">
         <ul style={{ display: 'flex', justifyContent: 'flex-start' }}>
-          <li>
+          <div>
             <BurgerMenu />
-          </li>
+          </div>
 
           <li id="navBar-list" className="desktop-navbar">
             <LinkItem to={'/inicio'} setActive={setActive} name={'Inicio'} />
@@ -122,9 +122,9 @@ const NavBar = ({ title }) => {
               }
             })()}
           </li>
-          <li style={{ marginLeft: 'auto', paddingRight: '5px' }}>
+          <div style={{ marginLeft: 'auto', paddingRight: '5px' }}>
             <ProfileSideBar />
-          </li>
+          </div>
         </ul>
       </nav>
       <h1>{title}</h1>
