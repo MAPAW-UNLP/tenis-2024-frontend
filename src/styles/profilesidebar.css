@@ -25,7 +25,15 @@
   border: none;
   color: white;
   cursor: pointer;
-  font-size: 24px;
+  font-size: 36px;
+  margin: 10px 10px 0 0;
+}
+
+@media (max-width: 1200px) {
+  .profile-button {
+    font-size: 32px;
+    margin: 2px 8px 0 0;
+  }
 }
 
 .close-btn {
