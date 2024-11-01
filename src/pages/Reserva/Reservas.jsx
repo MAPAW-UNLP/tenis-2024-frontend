@@ -14,6 +14,7 @@ import ClaseFormComponent from '../../components/Utils/Alquiler/ClaseFormCompone
 import InputComponent from '../../components/Utils/InputComponent'
 import SelectComponent from '../../components/Utils/SelectComponent'
 import Swal from 'sweetalert2'
+import LoaderSpinner from 'components/LoaderSpinner'
 
 //Fontawesome icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -180,6 +181,7 @@ export const Reservas = () => {
   }
 
   const handleAddReserva = () => {
+    setReservasLoader(true) // Activar el loader al iniciar la solicitud
     const reserva = {
       nombre: nombre,
       telefono: telefono,
@@ -228,10 +230,11 @@ export const Reservas = () => {
           console.error('Error:', error)
         })
         .finally(() => {
-          setReservasLoader(true)
+          setReservasLoader(false)
         })
     } else {
       Swal.fire('Atención', 'Complete todos los campos', 'warning') // Cambiado aquí
+      setReservasLoader(false)
     }
   }
 
@@ -269,10 +272,33 @@ export const Reservas = () => {
     <div id="reservas-component">
       <NavBar title={'Reservas'} />
       <div id="reserva-nuevaReserva">
+        {reservasLoader && (
+          <div
+            style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              width: '100vw',
+              height: '100vh',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: 'rgba(0, 0, 0, 0.75)', // Fondo oscuro semitransparente
+              zIndex: 1000, // Asegura que esté sobre otros elementos
+            }}
+          >
+            <LoaderSpinner
+              active={reservasLoader}
+              containerClass={'homeLoader'}
+              loaderClass={'homeLoaderSpinner'}
+            />
+          </div>
+        )}
         <button id="clase-closeBTN" onClick={() => navigate('../reservas')}>
           x
         </button>
         <h2>Nueva reserva</h2>
+
         <form action="" id="reserva-form" onSubmit={handleSubmitContinue}>
           <SelectComponent
             className="inputReserva"
@@ -295,9 +321,6 @@ export const Reservas = () => {
             deshabilitado={true}
             min={today}
           />
-          {/*  LA IDEA ES USAR LOS COMENTADOS
-                <SelectComponent className={'inputReserva'} id={'horaInicio'} onChange={handleSetHoraInicio} options={horas} deshabilitado={false}/>
-                <SelectComponent className={'inputReserva'} id={'horaInicio'} onChange={handleSetHoraFin} options={horas} deshabilitado={false}/> */}
 
           <SelectHoraInicio
             id={'horaInicio'}
@@ -310,6 +333,7 @@ export const Reservas = () => {
             setHoraFin={setHoraFin}
             horaInicio={horaInicio}
           />
+
           {alquilerOp && (
             <AlquilerFormComponent
               active={alquilerOp}
@@ -321,6 +345,7 @@ export const Reservas = () => {
               setTelefono={setTelefono}
             />
           )}
+
           {claseOp && (
             <ClaseFormComponent
               active={claseOp}
@@ -342,10 +367,10 @@ export const Reservas = () => {
               setTipoClase={setTipoClase}
             />
           )}
+
           {!alquilerOp && !claseOp && (
             <button id="continue-btn" disabled>
-              {' '}
-              <FontAwesomeIcon id="next-icon" icon={faChevronRight} />{' '}
+              <FontAwesomeIcon id="next-icon" icon={faChevronRight} />
             </button>
           )}
         </form>
