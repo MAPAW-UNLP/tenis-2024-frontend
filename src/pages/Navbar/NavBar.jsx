@@ -41,7 +41,7 @@ const NavBar = ({ title }) => {
             <BurgerMenu />
           </div>
 
-          <li id="navBar-list" className="desktop-navbar">
+          <ul id="navBar-list" className="desktop-navbar">
             <LinkItem to={'/inicio'} setActive={setActive} name={'Inicio'} />
             <LinkItem
               to={'/reservas'}
@@ -121,7 +121,7 @@ const NavBar = ({ title }) => {
                   return null // Puedes agregar un mensaje de error o un componente por defecto aquí
               }
             })()}
-          </li>
+          </ul>
           <div style={{ marginLeft: 'auto', paddingRight: '5px' }}>
             <ProfileSideBar />
           </div>
