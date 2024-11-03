@@ -6,6 +6,7 @@ import LoaderSpinner from 'components/LoaderSpinner'
 import Dashboard from 'components/Dashboard/Dashboard'
 import CalendarPicker from 'components/Reserva/CalendarComponent'
 import ClaseDashboardItem from 'components/Clase/ClaseDashboardItem'
+import { toHaveDisplayValue } from '@testing-library/jest-dom/dist/matchers'
 
 const horas = [
   '08:00',
@@ -132,6 +133,14 @@ const dias = [
 //   ],
 // }
 
+const getCurrentDate = () => {
+  const today = new Date()
+  const year = today.getFullYear()
+  const month = today.getMonth() + 1
+  const date = today.getDate()
+  return year + '-' + month + '-' + date
+}
+
 const CalendarioProximasClases = () => {
   const URL_BASE = 'http://localhost:8083/api/'
   const { session } = useSession()
@@ -140,7 +149,7 @@ const CalendarioProximasClases = () => {
   const [clases, setClases] = useState()
   const params = new URLSearchParams({
     clienteId: session.id,
-    startDate: '2024-11-08',
+    startDate: getCurrentDate(),
   })
   const getNextClases = () => {
     fetch(`${URL_BASE}cliente/next-clases?${params.toString()}`, {
