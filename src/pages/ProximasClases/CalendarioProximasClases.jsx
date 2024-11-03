@@ -47,90 +47,90 @@ const dias = [
   'Domingo',
 ]
 
-const clasesJSON = {
-  Domingo: [
-    {
-      id: 1,
-      tipo: 'GRUPAL',
-      importe: 100,
-      fecha: '2024-11-03',
-      hora_ini: '09:00:00',
-      hora_fin: '10:00:00',
-      profesor: 'profeuno',
-      cancha: 'Cancha 1',
-    },
-    {
-      id: 2,
-      tipo: 'INDIVIDUAL',
-      importe: 100,
-      fecha: '2024-11-03',
-      hora_ini: '12:00:00',
-      hora_fin: '13:00:00',
-      profesor: 'profeuno',
-      cancha: 'Cancha 1',
-    },
-  ],
-  Lunes: [
-    {
-      id: 3,
-      tipo: 'INDIVIDUAL',
-      importe: 100,
-      fecha: '2024-11-03',
-      hora_ini: '09:00:00',
-      hora_fin: '10:00:00',
-      profesor: 'profeuno',
-      cancha: 'Cancha 1',
-    },
-  ],
-  Martes: [],
-  Miercoles: [
-    {
-      id: 4,
-      tipo: 'GRUPAL',
-      importe: 100,
-      fecha: '2024-11-03',
-      hora_ini: '09:00:00',
-      hora_fin: '10:00:00',
-      profesor: 'profeuno',
-      cancha: 'Cancha 1',
-    },
-  ],
-  Jueves: [],
-  Viernes: [
-    {
-      id: 5,
-      tipo: 'INDIVIDUAL',
-      importe: 100,
-      fecha: '2024-11-03',
-      hora_ini: '09:00:00',
-      hora_fin: '10:00:00',
-      profesor: 'profeuno',
-      cancha: 'Cancha 1',
-    },
-  ],
-  Sabado: [
-    {
-      id: 6,
-      tipo: 'INDIVIDUAL',
-      importe: 100,
-      fecha: '2024-11-03',
-      hora_ini: '09:00:00',
-      hora_fin: '10:00:00',
-      profesor: 'profeuno',
-      cancha: 'Cancha 1',
-    },
-    {
-      id: 7,
-      tipo: 'GRUPAL',
-      importe: 100,
-      fecha: '2024-11-03',
-      hora_ini: '11:00:00',
-      hora_fin: '12:00:00',
-      profesor: 'profeuno',
-      cancha: 'Cancha 1',
-    },
-  ],
-}
+// const clasesJSON = {
+//   Domingo: [
+//     {
+//       id: 1,
+//       tipo: 'GRUPAL',
+//       importe: 100,
+//       fecha: '2024-11-03',
+//       hora_ini: '09:00:00',
+//       hora_fin: '10:00:00',
+//       profesor: 'profeuno',
+//       cancha: 'Cancha 1',
+//     },
+//     {
+//       id: 2,
+//       tipo: 'INDIVIDUAL',
+//       importe: 100,
+//       fecha: '2024-11-03',
+//       hora_ini: '12:00:00',
+//       hora_fin: '13:00:00',
+//       profesor: 'profeuno',
+//       cancha: 'Cancha 1',
+//     },
+//   ],
+//   Lunes: [
+//     {
+//       id: 3,
+//       tipo: 'INDIVIDUAL',
+//       importe: 100,
+//       fecha: '2024-11-03',
+//       hora_ini: '09:00:00',
+//       hora_fin: '10:00:00',
+//       profesor: 'profeuno',
+//       cancha: 'Cancha 1',
+//     },
+//   ],
+//   Martes: [],
+//   Miercoles: [
+//     {
+//       id: 4,
+//       tipo: 'GRUPAL',
+//       importe: 100,
+//       fecha: '2024-11-03',
+//       hora_ini: '09:00:00',
+//       hora_fin: '10:00:00',
+//       profesor: 'profeuno',
+//       cancha: 'Cancha 1',
+//     },
+//   ],
+//   Jueves: [],
+//   Viernes: [
+//     {
+//       id: 5,
+//       tipo: 'INDIVIDUAL',
+//       importe: 100,
+//       fecha: '2024-11-03',
+//       hora_ini: '09:00:00',
+//       hora_fin: '10:00:00',
+//       profesor: 'profeuno',
+//       cancha: 'Cancha 1',
+//     },
+//   ],
+//   Sabado: [
+//     {
+//       id: 6,
+//       tipo: 'INDIVIDUAL',
+//       importe: 100,
+//       fecha: '2024-11-03',
+//       hora_ini: '09:00:00',
+//       hora_fin: '10:00:00',
+//       profesor: 'profeuno',
+//       cancha: 'Cancha 1',
+//     },
+//     {
+//       id: 7,
+//       tipo: 'GRUPAL',
+//       importe: 100,
+//       fecha: '2024-11-03',
+//       hora_ini: '11:00:00',
+//       hora_fin: '12:00:00',
+//       profesor: 'profeuno',
+//       cancha: 'Cancha 1',
+//     },
+//   ],
+// }
 
 const CalendarioProximasClases = () => {
   const URL_BASE = 'http://localhost:8083/api/'
@@ -154,7 +154,7 @@ const CalendarioProximasClases = () => {
         if (data.rta === 'ok') {
           setIsLoading(false)
           console.log(data.detail)
-          setClases(clasesJSON)
+          setClases(data.detail)
         } else {
           console.log('not ok')
         }
