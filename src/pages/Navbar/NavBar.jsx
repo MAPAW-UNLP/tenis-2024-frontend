@@ -114,7 +114,11 @@ const NavBar = ({ title }) => {
                 case 'ROLE_CLIENTE':
                   return (
                     <>
-                      {/* // Queda disponible para funciones exclusivas de cliente */}
+                      <LinkItem
+                        to={'/clases'}
+                        setActive={setActive}
+                        name={'Clases'}
+                      />
                     </>
                   )
                 default:
