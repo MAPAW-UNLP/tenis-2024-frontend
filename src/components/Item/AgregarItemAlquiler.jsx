@@ -76,13 +76,13 @@ const FormularioItemAlquiler = ({ onClose, onSubmit, item }) => {
           <div>
             <label htmlFor="desc" className="new-clase-add-form-label">
               Nombre:{' '}
-              <span style={{ color: 'green', marginLeft: '1.8rem' }}>*</span>
+              <span style={{ color: 'red', marginLeft: '1.8rem' }}>*</span>
             </label>
             <input
               id="desc"
               type="text"
               value={desc}
-              placeholder={item ? item.description : ''}
+              placeholder={item ? item.description : 'ZAPATILLAS '}
               onChange={handleDescChange}
               className="new-clase-input"
             />
@@ -90,13 +90,22 @@ const FormularioItemAlquiler = ({ onClose, onSubmit, item }) => {
           </div>
           <div>
             <label htmlFor="importe" className="new-clase-add-form-label">
-              $Importe:
-              <span style={{ color: 'green', marginLeft: '1rem' }}> *</span>
+              <span
+                style={{
+                  fontWeight: 'bold',
+                  fontSize: '1em',
+                  color: 'dark green',
+                }}
+              >
+                $
+              </span>{' '}
+              Importe:
+              <span style={{ color: 'red', marginLeft: '1rem' }}> *</span>
             </label>
             <input
               id="importe"
               type="text" // Cambiado a "text" para aplicar la regex
-              placeholder={item ? item.importe : ''}
+              placeholder={item ? item.importe : '1500'}
               value={importe}
               onChange={handleImporteChange}
             />

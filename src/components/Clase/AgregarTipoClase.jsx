@@ -73,13 +73,13 @@ const FormularioTipoClase = ({ onClose, onSubmit, tipoClase }) => {
           <div>
             <label htmlFor="tipo" className="new-clase-add-form-label">
               Nombre:{' '}
-              <span style={{ color: 'green', marginLeft: '1.8rem' }}>*</span>
+              <span style={{ color: 'red', marginLeft: '1.8rem' }}>*</span>
             </label>
             <input
               id="tipo"
               type="text"
               value={tipo}
-              placeholder={tipoClase ? tipoClase.tipo : ''}
+              placeholder={tipoClase ? tipoClase.tipo : 'MIXTA'}
               onChange={(e) => setTipo(e.target.value.toUpperCase())}
               className="new-clase-input"
             />
@@ -87,15 +87,24 @@ const FormularioTipoClase = ({ onClose, onSubmit, tipoClase }) => {
           </div>
           <div>
             <label htmlFor="importe" className="new-clase-add-form-label">
-              $Importe:
-              <span style={{ color: 'green', marginLeft: '1rem' }}> *</span>
+              <span
+                style={{
+                  fontWeight: 'bold',
+                  fontSize: '1em',
+                  color: ' green',
+                }}
+              >
+                $
+              </span>{' '}
+              Importe:
+              <span style={{ color: 'red', marginLeft: '1rem' }}> *</span>
             </label>
             <input
               id="importe"
               type="text" // Cambiado a "text" para aplicar la regex
               value={importe}
-              placeholder={tipoClase ? tipoClase.importe : ''}
-              onChange={handleImporteChange} // Usar la nueva función
+              placeholder={tipoClase ? tipoClase.importe : '500'}
+              onChange={handleImporteChange}
             />
             {errores.importe && (
               <p style={{ color: 'red' }}>{errores.importe}</p>

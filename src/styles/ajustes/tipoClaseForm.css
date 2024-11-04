@@ -52,7 +52,7 @@
   font-size: 1.5em;
   margin-bottom: 1vh;
   width: 100%; /* El label ocupa todo el ancho */
-  color: var(--neutral-black);
+  color: black;
 }
 
 .modal-content input {
@@ -62,24 +62,29 @@
   margin-bottom: 15px; /* Margen inferior */
   font-size: large;
   background-color: var(--neutral-white);
-  border: 1.5px solid #d9d9d9;
+  border: 1.7px solid black;
   color: var(--neutral-black);
-  border-radius: 0.2em; /* Bordes redondeados */
+  border-radius: 0.4em; /* Bordes redondeados */
+  padding-left: 10px;
   transition:
     border-color 0.15s ease-in-out,
     box-shadow 0.15s ease-in-out;
 }
 
+.modal-content ::placeholder {
+  color: rgba(128, 128, 128, 0.7);
+}
+
 .modal-content button {
   width: 100%; /* El botón ocupa todo el ancho */
-  height: 5rem; /* Altura fija para los botones */
+  height: 3.5rem; /* Altura fija para los botones */
   border: none;
   border-radius: 20px; /* Bordes redondeados */
   cursor: pointer;
   color: var(--neutral-white);
   font-size: 2em;
   font-weight: bolder;
-  margin-top: 10px; /* Espaciado entre botones */
+  margin-top: 15px; /* Espaciado entre botones */
 }
 
 .new-clase-add-form-label {
