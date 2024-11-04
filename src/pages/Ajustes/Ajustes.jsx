@@ -4,7 +4,7 @@ import '../../styles/ajustes/ajustes.css'
 import { GenericButton } from '../../components/Utils/GenericButton'
 import LoaderSpinner from '../../components/LoaderSpinner'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import { faTrashAlt, faEdit } from '@fortawesome/free-solid-svg-icons'
 import { GenericButtonDisabled } from '../../components/Utils/GenericButtonDisabled'
 import FormularioTipoClase from '../../components/Clase/AgregarTipoClase'
 import Swal from 'sweetalert2'
@@ -19,6 +19,7 @@ export const Ajustes = () => {
   const [tipoClasePorBorrar, setTipoClasePorBorrar] = useState(null) // Tipo de clase a eliminar
   const [botonHabilitado, setBotonHabilitado] = useState(false)
   const [mostrarFormulario, setMostrarFormulario] = useState(false)
+  const [tipoClaseEditar, setTipoClaseEditar] = useState(null)
 
   useEffect(() => {
     fetchTipoClases()
@@ -45,9 +46,13 @@ export const Ajustes = () => {
 
   const handleAgregarTipoClase = async (nuevoTipoClase) => {
     setCargando(true)
+    const method = nuevoTipoClase.id ? 'PUT' : 'POST'
+    const url = nuevoTipoClase.id
+      ? `${URL_BASE}modClase`
+      : `${URL_BASE}addClase`
 
-    const response = await fetch(`${URL_BASE}addClase`, {
-      method: 'POST',
+    const response = await fetch(url, {
+      method: method,
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(nuevoTipoClase),
     })
@@ -60,7 +65,9 @@ export const Ajustes = () => {
       Swal.fire({
         position: 'top',
         icon: 'success',
-        title: 'Tipo de clase creado exitosamente',
+        title: nuevoTipoClase.id
+          ? 'Tipo de clase editado'
+          : 'Tipo de clase creado',
         showConfirmButton: false,
         timer: 4000,
         background: '#4CAF50',
@@ -75,7 +82,9 @@ export const Ajustes = () => {
       Swal.fire({
         position: 'bottom-end',
         icon: 'error',
-        title: 'Error al crear un Tipo de clase.',
+        title: nuevoTipoClase.id
+          ? 'Errorl al editar Tipo de clase'
+          : 'Error al crear un Tipo de clase.',
         showConfirmButton: false,
         timer: 4000,
         background: '#F44336',
@@ -89,6 +98,7 @@ export const Ajustes = () => {
     }
   }
 
+  /**
   const handleTipoClaseChange = (tipo, valor) => {
     const nuevoImporte = valor.replace(/\D/g, '') // Solo permite números enteros
     setTempChanges((prev) => ({
@@ -136,6 +146,7 @@ export const Ajustes = () => {
     setCargando(false)
     await fetchTipoClases()
   }
+     */
 
   const handleEliminarTipoClase = (tipoClase) => {
     setTipoClasePorBorrar(tipoClase)
@@ -231,8 +242,12 @@ export const Ajustes = () => {
 
             {mostrarFormulario && (
               <FormularioTipoClase
-                onClose={() => setMostrarFormulario(false)}
+                onClose={() => {
+                  setMostrarFormulario(false)
+                  setTipoClaseEditar(null)
+                }}
                 onSubmit={handleAgregarTipoClase}
+                tipoClase={tipoClaseEditar}
               />
             )}
             <div
@@ -295,9 +310,21 @@ export const Ajustes = () => {
                       fontSize: 'inherit',
                     }}
                     value={'$' + (tipoClase.importe || '')}
-                    onChange={(e) =>
+                    /**        onChange={(e) =>
                       handleTipoClaseChange(tipoClase, e.target.value)
-                    }
+                    }*/
+                  />
+                  <FontAwesomeIcon
+                    icon={faEdit}
+                    style={{
+                      cursor: 'pointer',
+                      marginLeft: '10px',
+                      color: '#2170DF',
+                    }}
+                    onClick={() => {
+                      setMostrarFormulario(true)
+                      setTipoClaseEditar(tipoClase)
+                    }}
                   />
                   <FontAwesomeIcon
                     icon={faTrashAlt}
@@ -312,18 +339,6 @@ export const Ajustes = () => {
               </div>
             ))}
           </div>
-          <GenericButtonDisabled
-            marginBottom={'1.5em'}
-            backgroundColor={'#92bc1e'}
-            color="white"
-            borderRadius="1em"
-            width="20em"
-            centrado
-            onClick={handleConfirmarCambios}
-            disabled={!botonHabilitado}
-          >
-            Confirmar cambios
-          </GenericButtonDisabled>
         </div>
       )}
 

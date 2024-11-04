@@ -94,6 +94,7 @@ export const ItemsAlquiler = () => {
     }
   }
 
+  /** 
   const handleItemChange = (item, valor) => {
     const nuevoImporte = valor.replace(/\D/g, '') // Solo permite números enteros
     setTempChanges((prev) => ({
@@ -141,6 +142,7 @@ export const ItemsAlquiler = () => {
     setCargando(false)
     await fetchItemAlquiler()
   }
+    */
 
   const handleEliminarItem = (item) => {
     setItemPorBorrar(item)
@@ -236,7 +238,10 @@ export const ItemsAlquiler = () => {
 
             {mostrarFormulario && (
               <FormularioItemAlquiler
-                onClose={() => setMostrarFormulario(false)}
+                onClose={() => {
+                  setMostrarFormulario(false)
+                  setItemEditar(null)
+                }}
                 onSubmit={handleAddItemAlquiler}
                 item={itemEditar}
               />
@@ -298,7 +303,7 @@ export const ItemsAlquiler = () => {
                       fontSize: 'inherit',
                     }}
                     value={'$' + (item.importe || '')}
-                    onChange={(e) => handleItemChange(item, e.target.value)}
+                    /*onChange={(e) => handleItemChange(item, e.target.value)} **/
                   />
                   <FontAwesomeIcon
                     icon={faEdit}
