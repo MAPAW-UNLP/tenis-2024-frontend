@@ -8,7 +8,7 @@ import {
 
 import '../../styles/ajustes/ajustesHome.css'
 
-export const AjustesHome = () => {
+export const Precios = () => {
   const navigate = useNavigate()
   const handleRedirect = (link) => {
     navigate(link)
