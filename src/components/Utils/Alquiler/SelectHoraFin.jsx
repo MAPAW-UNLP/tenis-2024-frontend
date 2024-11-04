@@ -37,10 +37,10 @@ const SelectHoraFin = ({ id, className, setHoraFin, horaInicio }) => {
 
   const handleChangeHoraFin = (e) => {
     setHoraFin(e.target.value)
-    const nextInput = document.getElementById('continue-btn')
-    e.target.value === ''
-      ? (nextInput.disabled = true)
-      : (nextInput.disabled = false)
+    // const nextInput = document.getElementById('continue-btn')
+    // e.target.value === ''
+    //   ? (nextInput.disabled = true)
+    //   : (nextInput.disabled = false)
   }
   return (
     <>

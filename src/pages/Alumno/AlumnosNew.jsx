@@ -75,12 +75,12 @@ export const AlumnosNew = () => {
   // y por ultimo vuelve a poner en false el estado que maneja el spinner de carga
   useEffect(() => {
     if (actAlu !== '') {
-      fetch(`${URL_BASE}cliente?alumnoId=${actAlu.id}`)
+      fetch(`${URL_BASE}cliente?clienteId=${actAlu.id}`)
         .then((response) => response.json())
         .then((data) => setAluDetail(data))
         .then(() => setLoadingDetails(false))
 
-      fetch(`${URL_BASE}cobros_por_alumno_v2?alumnoId=${actAlu.id}`)
+      fetch(`${URL_BASE}cobros_por_cliente_v2?clienteId=${actAlu.id}`)
         .then((response) => response.json())
         .then((data) => setCobrosActUser(data))
         .then(() => setActiveDetails(true))
