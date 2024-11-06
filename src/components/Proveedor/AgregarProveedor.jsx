@@ -111,13 +111,7 @@ function AgregarProveedor({ handleCloseForm, proveedores = [] }) {
             <p className="textoBotonCancelar">Cancelar</p>
           </button>
         </div>
-        {loading && (
-          <LoaderSpinner
-            active={loading}
-            containerClass={'contenedorLogin'}
-            loaderClass={'loader'}
-          />
-        )}
+        {loading && <div className="spinner"></div>}
       </form>
       {showSuccessPopup && (
         <div className="popup">¡Proveedor agregado con éxito!</div>
