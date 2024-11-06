@@ -1,10 +1,18 @@
 export const ProveedorPagosDetail = ({ pago }) => {
   return (
-    <>
-      <p>{pago.nombreProveedor}</p>
-      <p>{pago.monto}</p>
-      <p>{pago.fecha}</p>
-      <p>{pago.descripcion}</p>
-    </>
+    <div className="pago-detail">
+      <p>
+        <strong>Proveedor:</strong> {pago.nombreProveedor}
+      </p>
+      <p>
+        <strong>Monto:</strong> ${pago.monto}
+      </p>
+      <p>
+        <strong>Fecha:</strong> {pago.fecha}
+      </p>
+      <p>
+        <strong>Descripción:</strong> {pago.descripcion}
+      </p>
+    </div>
   )
 }

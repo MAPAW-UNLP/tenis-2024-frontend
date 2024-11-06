@@ -1,47 +1,64 @@
 import { useEffect, useState } from 'react'
 import { ProveedorPagosDetail } from './ProveedorPagosDetail'
+import '../../styles/proveedores.css'
 
-export const ShowProveedor = ({ handleClose, idProveedor }) => {
+export const ShowProveedor = ({ handleClose, idProveedor, proveedor }) => {
   const URL_BASE = `http://localhost:8083/api`
 
-  const [proveedor, setProveedor] = useState({})
   const [proveedorPayments, setProveedorPayments] = useState([])
-
-  const fetchProveedor = async () => {
-    await fetch(`${URL_BASE}/proveedor/${idProveedor}`)
-      .then((response) => response.json())
-      .then((data) => {
-        setProveedor(data)
-      })
-  }
+  const [loading, setLoading] = useState(true)
 
   const fetchProveedorPayments = async () => {
+    setLoading(true)
     await fetch(`${URL_BASE}/pagos_por_proveedor/${idProveedor}`)
       .then((response) => response.json())
       .then((data) => {
-        setProveedorPayments(data)
+        const sortedPayments = data.sort(
+          (a, b) => new Date(b.fecha) - new Date(a.fecha)
+        )
+        const lastTwoPayments = sortedPayments.slice(0, 2)
+        setProveedorPayments(lastTwoPayments)
       })
   }
 
   useEffect(() => {
-    fetchProveedor()
     fetchProveedorPayments()
   })
   return (
-    <div id="proveedor-add-component">
-      <button id="close-proveedor-add-form" onClick={handleClose}>
+    <div id="proveedor-add-component" className="show-proveedor">
+      <button
+        id="close-proveedor-add-form"
+        className="close-btn"
+        onClick={handleClose}
+      >
         x
       </button>
-      <div>
-        <h2>Nombre:</h2>
-        <p>{proveedor.nombre}</p>
-        <h2>Telefono:</h2>
-        <p>{proveedor.telefono}</p>
-        {proveedorPayments.length > 0 ? (
-          proveedorPayments.map((pago) => <ProveedorPagosDetail pago={pago} />)
-        ) : (
-          <div>No hay pago asociados a este proveedor</div>
-        )}
+      <div className="show-proveedor">
+        <div className="provider-details-container">
+          <div className="provider-info">
+            <h2>Nombre:</h2>
+            <p>{proveedor.nombre}</p>
+            <h2>Telefono:</h2>
+            <p>{proveedor.telefono}</p>
+          </div>
+          <div className="provider-payments">
+            <h2>Pagos asociados</h2>
+            {loading ? (
+              <div className="container-table-proveedores">
+                <div
+                  className="spinner"
+                  style={{ position: 'relative', marginTop: '10%' }}
+                ></div>
+              </div>
+            ) : proveedorPayments.length > 0 ? (
+              proveedorPayments.map((pago) => (
+                <ProveedorPagosDetail key={pago.id} pago={pago} />
+              ))
+            ) : (
+              <div>No hay pagos asociados a este proveedor</div>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   )

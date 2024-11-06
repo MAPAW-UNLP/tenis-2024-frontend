@@ -128,8 +128,12 @@ function Proveedores() {
     setEditModal(true)
   }
 
-  const openShowModal = (id) => {
+  const openShowModal = (id, name, cellphone) => {
     setIdProveedor(id)
+    setProveedor({
+      nombre: name,
+      telefono: cellphone,
+    })
     setModalShow(true)
   }
 
@@ -182,7 +186,7 @@ function Proveedores() {
                   <div
                     key={p.id}
                     className="proveedores-item-list"
-                    onClick={() => openShowModal(p.id)}
+                    onClick={() => openShowModal(p.id, p.nombre, p.telefono)}
                   >
                     <p>{p.nombre}</p>
                     <p>{p.telefono}</p>
@@ -234,6 +238,7 @@ function Proveedores() {
             isOpen={modalShow}
             handleClose={closeShow}
             idProveedor={idProveedor}
+            proveedor={proveedor}
           />
         )}
       </div>

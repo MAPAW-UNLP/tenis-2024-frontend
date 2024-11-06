@@ -533,3 +533,122 @@
   font-weight: 300;
   padding-left: 30px;
 }
+
+.provider-details-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: white;
+  gap: 20px;
+}
+
+.provider-info {
+  padding: 20px;
+  border-right: 2px solid #ccc;
+  text-align: left;
+}
+
+.provider-info h2 {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin: 0 0 10px 0;
+}
+
+.provider-info p {
+  font-size: 1em;
+  margin: 0;
+  padding: 5px 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.provider-payments {
+  padding: 20px;
+  background-color: #5d5d5d;
+  color: white;
+  border-radius: 10px;
+  text-align: center;
+}
+
+#proveedores-component .provider-payments h2 {
+  margin-top: 0;
+  background-color: #5d5d5d;
+  color: white;
+}
+
+#proveedores-component .provider-info {
+  padding: 20px;
+  border-right: 2px solid #ccc;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#proveedores-component .provider-info h2 {
+  margin: 0;
+}
+
+#proveedores-component .provider-info p {
+  margin: 0;
+  padding: 5px 0;
+  font-size: 1em;
+}
+
+.pago-detail {
+  padding: 10px;
+  margin-top: 10px;
+  background-color: #d3d3d3;
+  border-radius: 5px;
+  text-align: left;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.pago-detail p {
+  font-size: 0.9em;
+  margin: 5px 0;
+}
+
+.pago-detail {
+  padding: 15px;
+  margin-top: 10px;
+  background-color: #e0e0e0;
+  border-radius: 8px;
+  text-align: left;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.pago-detail p {
+  font-size: 0.95em;
+  color: #333;
+  margin: 5px 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.pago-detail p strong {
+  font-weight: bold;
+  color: #444;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+#proveedor-add-component .show-proveedor {
+  position: relative;
+  padding-top: 20px;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: transparent;
+  border: none;
+  font-size: 1.2em;
+  font-weight: bold;
+  cursor: pointer;
+  color: #ff0000;
+}
+
+.close-btn:hover {
+  color: #d10000;
+}
