@@ -4,10 +4,8 @@ import { useSession } from '../../hooks/useSession'
 // Components
 import LoaderSpinner from 'components/LoaderSpinner'
 import Dashboard from 'components/Dashboard/Dashboard'
-import CalendarPicker from 'components/Reserva/CalendarComponent'
 import ClaseDashboardItem from 'components/Clase/ClaseDashboardItem'
-import { toHaveDisplayValue } from '@testing-library/jest-dom/dist/matchers'
-
+import TablaProximasClases from './TablaProximasClases'
 const horas = [
   '08:00',
   '08:30',
@@ -141,12 +139,31 @@ const getCurrentDate = () => {
   return year + '-' + month + '-' + date
 }
 
+const useMediaQuery = (query) => {
+  const [matches, setMatches] = useState(false)
+
+  useEffect(() => {
+    const media = window.matchMedia(query)
+
+    const handleChange = () => setMatches(media.matches)
+
+    setMatches(media.matches)
+
+    media.addEventListener('change', handleChange)
+
+    return () => media.removeEventListener('change', handleChange)
+  }, [query])
+
+  return matches
+}
+
 const CalendarioProximasClases = () => {
   const URL_BASE = 'http://localhost:8083/api/'
   const { session } = useSession()
   const [isLoading, setIsLoading] = useState(true)
   const [selectedDate, setSelectedDate] = useState(Date.now())
   const [clases, setClases] = useState()
+  const isMobile = useMediaQuery('(max-width: 1000px)')
   const params = new URLSearchParams({
     clienteId: session.id,
     startDate: getCurrentDate(),
@@ -162,7 +179,6 @@ const CalendarioProximasClases = () => {
       .then((data) => {
         if (data.rta === 'ok') {
           setIsLoading(false)
-          console.log(data.detail)
           setClases(data.detail)
         } else {
           console.log('not ok')
@@ -176,7 +192,7 @@ const CalendarioProximasClases = () => {
 
   return (
     <>
-      {isLoading && (
+      {isLoading ? (
         <div style={{ position: 'relative' }}>
           <LoaderSpinner
             active={isLoading}
@@ -184,8 +200,7 @@ const CalendarioProximasClases = () => {
             loaderClass={'homeLoaderSpinner'}
           />
         </div>
-      )}
-      {!isLoading && (
+      ) : !isLoading && !isMobile ? (
         <Dashboard header={<div className="home__dashboard-header"></div>}>
           <Dashboard.Col first={true} sticky={true}>
             <Dashboard.Row
@@ -240,6 +255,8 @@ const CalendarioProximasClases = () => {
             </Dashboard.Col>
           ))}
         </Dashboard>
+      ) : (
+        <TablaProximasClases clases={clases} />
       )}
     </>
   )
