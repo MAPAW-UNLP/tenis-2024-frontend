@@ -57,6 +57,11 @@ const FormularioTipoClase = ({ onClose, onSubmit, tipoClase }) => {
     onClose()
   }
 
+  const handleTipoChange = (e) => {
+    const value = e.target.value.toUpperCase()
+    setTipo(value)
+  }
+
   const handleImporteChange = (e) => {
     const valor = e.target.value.replace(/[^0-9]/g, '') // Permitir solo dígitos
     setImporte(valor)
@@ -80,7 +85,7 @@ const FormularioTipoClase = ({ onClose, onSubmit, tipoClase }) => {
               type="text"
               value={tipo}
               placeholder={tipoClase ? tipoClase.tipo : 'MIXTA'}
-              onChange={(e) => setTipo(e.target.value.toUpperCase())}
+              onChange={handleTipoChange}
               className="new-clase-input"
             />
             {errores.tipo && <p style={{ color: 'red' }}>{errores.tipo}</p>}
