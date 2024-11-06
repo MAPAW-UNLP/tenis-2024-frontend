@@ -63,7 +63,7 @@ export const ItemsAlquiler = () => {
       console.log('Item agregado exitosamente')
       await fetchItemAlquiler() // Recargar los items
       Swal.fire({
-        position: 'top',
+        position: 'bottom-right',
         icon: 'success',
         title: nuevoItem.id ? 'Item actualizado' : 'Item agregado',
         showConfirmButton: false,
@@ -78,7 +78,7 @@ export const ItemsAlquiler = () => {
     } else {
       console.error(data.message)
       Swal.fire({
-        position: 'bottom-end',
+        position: 'bottom-right',
         icon: 'error',
         title: nuevoItem.id ? 'Error al editar item' : 'Error al agregar item',
         showConfirmButton: false,
@@ -177,7 +177,7 @@ export const ItemsAlquiler = () => {
       console.log('Item eliminado exitosamente')
       await fetchItemAlquiler() // Recargar los datos después de eliminar
       Swal.fire({
-        position: 'top',
+        position: 'bottom-right',
         icon: 'success',
         title: 'Item eliminado',
         showConfirmButton: false,
@@ -193,7 +193,7 @@ export const ItemsAlquiler = () => {
       console.error(data.message)
       setCargando(false)
       Swal.fire({
-        position: 'top',
+        position: 'bottom-right',
         icon: 'error',
         title: 'Error al eliminar item',
         showConfirmButton: false,
