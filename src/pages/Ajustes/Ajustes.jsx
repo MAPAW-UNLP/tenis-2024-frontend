@@ -63,11 +63,9 @@ export const Ajustes = () => {
       console.log('Tipo de clase creado exitosamente')
       await fetchTipoClases() // Recargar los tipos de clase
       Swal.fire({
-        position: 'top',
+        position: 'bottom-right',
         icon: 'success',
-        title: nuevoTipoClase.id
-          ? 'Tipo de clase editado'
-          : 'Tipo de clase creado',
+        title: nuevoTipoClase.id ? 'Clase editado' : 'Clase creado',
         showConfirmButton: false,
         timer: 4000,
         background: '#4CAF50',
@@ -83,8 +81,8 @@ export const Ajustes = () => {
         position: 'bottom-end',
         icon: 'error',
         title: nuevoTipoClase.id
-          ? 'Errorl al editar Tipo de clase'
-          : 'Error al crear un Tipo de clase.',
+          ? 'Error al editar clase'
+          : 'Error al crear clase.',
         showConfirmButton: false,
         timer: 4000,
         background: '#F44336',
@@ -178,12 +176,12 @@ export const Ajustes = () => {
     })
     const data = await response.json()
     if (data.status === 'ok') {
-      console.log('Tipo de clase eliminado exitosamente')
+      console.log('Clase eliminada exitosamente')
       await fetchTipoClases() // Recargar los datos después de eliminar
       Swal.fire({
-        position: 'top',
+        position: 'bottom-right',
         icon: 'success',
-        title: 'Tipo de clase eliminado exitosamente',
+        title: 'Clase eliminada exitosamente',
         showConfirmButton: false,
         timer: 4000,
         background: '#4CAF50',
@@ -197,7 +195,7 @@ export const Ajustes = () => {
       console.error(data.message)
       setCargando(false)
       Swal.fire({
-        position: 'top',
+        position: 'bottom-right',
         icon: 'error',
         title: 'Error al eliminar la clase',
         showConfirmButton: false,
@@ -214,7 +212,7 @@ export const Ajustes = () => {
 
   return (
     <div id="ajustes-component">
-      <NavBar title={'Tipos de clase'} />
+      <NavBar title={'Clases'} />
       {cargando ? (
         <LoaderSpinner
           active={cargando}
@@ -237,7 +235,7 @@ export const Ajustes = () => {
               borderRadius="1em"
               onClick={() => setMostrarFormulario(true)}
             >
-              Crear tipo de clase
+              Crear clase
             </GenericButton>
 
             {mostrarFormulario && (
@@ -269,7 +267,7 @@ export const Ajustes = () => {
                   fontSize: '1.2em',
                 }}
               >
-                Tipo de clase
+                Clase
               </div>
               <div
                 className="table-cell-ajustes"

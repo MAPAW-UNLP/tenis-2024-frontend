@@ -69,7 +69,7 @@ export const Precios = () => {
               </div>
               <div className="content">
                 <span className="title" style={{ color: '#BCEB3C' }}>
-                  Tipo de Clase
+                  Clases
                 </span>
                 <p className="desc">
                   Crea y personaliza diferentes tipos de clases

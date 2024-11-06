@@ -70,10 +70,7 @@ const FormularioTipoClase = ({ onClose, onSubmit, tipoClase }) => {
   return (
     <div className="modal-background">
       <div className="modal-content">
-        <h2>
-          {' '}
-          {tipoClase ? 'Editar tipo de clase' : 'Crear nuevo tipo de clase'}
-        </h2>
+        <h2> {tipoClase ? 'Editar clase' : 'Crear clase'}</h2>
         <form className="new-clase-add-form" onSubmit={handleSubmit}>
           <div>
             <label htmlFor="tipo" className="new-clase-add-form-label">
