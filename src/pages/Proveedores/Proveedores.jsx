@@ -6,7 +6,7 @@ import AgregarProveedor from 'components/Proveedor/AgregarProveedor'
 import { UpdateProveedor } from 'components/Proveedor/UpdateProveedor'
 import { faUserEdit } from '@fortawesome/free-solid-svg-icons'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
-import { faMoneyBill } from '@fortawesome/free-solid-svg-icons'
+import { faMoneyBillAlt } from '@fortawesome/free-solid-svg-icons'
 import EliminarProveedor from 'components/Proveedor/EliminarProveedor'
 import AgregarPago from 'components/Proveedor/AgregarPago'
 import LoaderSpinner from 'components/LoaderSpinner'
@@ -169,8 +169,9 @@ function Proveedores() {
             Teléfono
           </span>
           <span></span>
-          <span></span>
-          <span></span>
+          <span style={{ fontSize: '1.8em', width: 200, textAlign: 'center' }}>
+            Acciones
+          </span>
           <span></span>
         </div>
         {loading ? (
@@ -189,21 +190,24 @@ function Proveedores() {
                     <p>{p.telefono}</p>
                     <button
                       className="edit-proveedor-btn"
+                      title="Modificar proveedor"
                       onClick={() => openEditModal(p)}
                     >
                       <FontAwesomeIcon icon={faUserEdit} />
                     </button>
-                    <div
-                      className="botones-proveedor"
+                    <button
+                      className="delete-proveedor-btn"
+                      title="Eliminar proveedor"
                       onClick={() => handleTrash(p.id)}
                     >
-                      <FontAwesomeIcon icon={faTrash} className="trash-icon" />
-                    </div>
+                      <FontAwesomeIcon icon={faTrash} />
+                    </button>
                     <button
                       className="pay-proveedor-btn"
+                      title="Realizar pago a proveedor"
                       onClick={() => openFormPay(p)}
                     >
-                      <FontAwesomeIcon icon={faMoneyBill} />
+                      <FontAwesomeIcon icon={faMoneyBillAlt} />
                     </button>
                   </div>
                 )

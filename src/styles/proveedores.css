@@ -184,6 +184,46 @@
   cursor: pointer;
 }
 
+.pay-proveedor-btn {
+  width: 5%;
+  border-radius: 12px;
+  height: 2rem;
+  background-color: #9dcc1d;
+  font-size: 120%;
+  color: var(--neutral-black);
+  border: none;
+  box-shadow: 0px 5px 20px var(--neutral-black);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: pointer;
+}
+
+.pay-proveedor-btn:hover {
+  box-shadow: 0px 4px 25px #94f5c5;
+  height: 2rem;
+  font-size: 130%;
+  cursor: pointer;
+}
+
+.delete-proveedor-btn {
+  width: 5%;
+  border-radius: 12px;
+  height: 2rem;
+  background-color: cornflowerblue;
+  font-size: 120%;
+  color: var(--neutral-black);
+  border: none;
+  box-shadow: 0px 5px 20px var(--neutral-black);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: pointer;
+}
+
+.delete-proveedor-btn:hover {
+  box-shadow: 0px 4px 25px #94f5c5;
+  height: 2rem;
+  font-size: 130%;
+  cursor: pointer;
+}
+
 /* Spinner */
 .spinner {
   border: 8px solid rgba(255, 255, 255, 0.3);
@@ -472,6 +512,13 @@
   border: none;
   box-shadow: 0px 5px 20px var(--neutral-black);
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: pointer;
+}
+
+.edit-proveedor-btn:hover {
+  box-shadow: 0px 4px 25px #94f5c5;
+  height: 2rem;
+  font-size: 130%;
   cursor: pointer;
 }
 
