@@ -146,7 +146,7 @@ export const HomeRe = () => {
 
             <div
               className="card ajustesCard bottom"
-              onClick={() => handleRedirect('../ajustesHome')}
+              onClick={() => handleRedirect('../precios')}
             >
               <div
                 className="image"
