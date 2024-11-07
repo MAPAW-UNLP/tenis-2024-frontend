@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import InputReComponent from '../Utils/InputReComponent'
 import useInputValidation from 'hooks/Proveedores/useInputValidation'
 import { wait } from 'components/Utils/Functions'
+import LoaderSpinner from 'components/LoaderSpinner'
 
 function AgregarProveedor({ handleCloseForm, proveedores = [] }) {
   const [proveedorForm, setProveedorForm] = useState({

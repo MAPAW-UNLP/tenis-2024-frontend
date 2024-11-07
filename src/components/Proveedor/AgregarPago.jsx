@@ -1,25 +1,17 @@
 import React, { useState } from 'react'
+import moment from 'moment'
 import InputReComponent from '../Utils/InputReComponent'
 import useInputValidation from 'hooks/Proveedores/useInputValidation'
 import { wait } from 'components/Utils/Functions'
 
 function AgregarPago({
   handleCloseForm,
-  proveedores = [], // Este arreglo contendrá los proveedores
-  updateList = () => {},
+  proveedorFijo, // Este arreglo contendrá los proveedores
 }) {
   const [pagoForm, setPagoForm] = useState({
-    proveedor: '',
     descripcion: '',
     monto: '',
   })
-
-  const {
-    value: proveedor,
-    feedback: proveedorFeedback,
-    isValid: proveedorValid,
-    handleChange: handleChangeProveedor,
-  } = useInputValidation('', 'proveedor', setPagoForm, 'proveedor', proveedores)
 
   const {
     value: monto,
@@ -30,10 +22,12 @@ function AgregarPago({
 
   const [showSuccessPopup, setShowSuccessPopup] = useState(false)
   const [loading, setLoading] = useState(false)
-  const [descripcion, setDescripcion] = useState('')
+  const [descripcion, setDescripcion] = useState(
+    `Pago a: ${proveedorFijo.nombre}`
+  )
 
   const habilitarBoton = () => {
-    return !(proveedorValid && montoValid && !loading)
+    return !(montoValid && !loading)
   }
 
   const addPago = async (e) => {
@@ -42,9 +36,11 @@ function AgregarPago({
     setLoading(true)
 
     const data = {
-      idProveedor: pagoForm.proveedor,
+      idProveedor: proveedorFijo.id,
+      concepto: 2,
       descripcion: descripcion,
       monto: pagoForm.monto,
+      fecha: moment().format('YYYY/MM/DD'),
     }
 
     const requestOptions = {
@@ -53,7 +49,7 @@ function AgregarPago({
     }
 
     const response = await fetch(
-      `http://localhost:8083/api/pagosProveedor`,
+      `http://localhost:8083/api/nuevo_pago`,
       requestOptions
     )
     await response.json()
@@ -63,8 +59,7 @@ function AgregarPago({
 
     setShowSuccessPopup(false)
     setLoading(false)
-    updateList()
-    handleCloseForm()
+    handleCloseForm(true)
   }
 
   return (
@@ -76,25 +71,12 @@ function AgregarPago({
       <form onSubmit={addPago}>
         <label className="textoFormulario">Proveedor</label>
         <div className="inputlabel">
-          <select
-            name="proveedor"
+          <InputReComponent
+            type={'text'}
+            defaultValue={proveedorFijo.nombre}
+            readOnly={true}
             className="proveedor-add-form-input"
-            value={proveedor}
-            onChange={handleChangeProveedor}
-          >
-            <option value="">Seleccionar Proveedor</option>
-            {proveedores.map((prov) => (
-              <option key={prov.id} value={prov.id}>
-                {prov.nombre}
-              </option>
-            ))}
-          </select>
-          <p
-            className="feedbackInline"
-            style={{ color: proveedorFeedback.color }}
-          >
-            {proveedorFeedback.text}
-          </p>
+          />
         </div>
 
         <label className="textoFormulario">Descripción</label>
@@ -108,6 +90,7 @@ function AgregarPago({
               setDescripcion(e.target.value)
             }}
             value={descripcion}
+            defaultValue={descripcion}
           />
         </div>
 

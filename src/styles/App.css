@@ -20,3 +20,13 @@
   --title-text: 'Oswald', sans-serif;
   --normal-text: 'Roboto', sans-serif;
 }
+
+.text-ellipsis {
+  white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+  overflow: hidden; /* Oculta el texto que no cabe en el contenedor */
+  text-overflow: ellipsis; /* Muestra "..." cuando el texto se desborda */
+  /*
+    Para que funcione bien el elemento sobre el que se
+    aplica el ellipsis tiene que tener un width definido.
+  */
+}

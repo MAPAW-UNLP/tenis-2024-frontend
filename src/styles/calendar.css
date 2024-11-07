@@ -1,24 +1,48 @@
-.pickers {
+.calendar-picker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.calendar-picker__btn {
+  all: unset;
+  color: var(--accent-green);
+  cursor: pointer;
+  font-size: 2rem;
+  transition: all ease-in-out 0.15s;
+
+  &:hover {
+    color: var(--accent-yellow);
+  }
+}
+
+.calendar-picker .pickers {
   background-color: var(--neutral-black);
   font-family: var(--title-text);
   color: var(--neutral-white-text);
   font-size: 130%;
   text-align: center;
   border: none;
-  transition: all 0.5s ease;
+  transition: all 0.2s ease;
 }
 
-.pickers:hover {
+.calendar-picker .pickers:hover {
   color: var(--accent-yellow);
   cursor: pointer;
 }
 
-.pickers:focus {
+.calendar-picker .pickers:focus {
   outline: none;
   border: none;
   color: var(--accent-yellow);
 }
 
+/*
+  Probablemente todo esto se puede borrar, pero no estoy seguro.
+  Lo dejo comentado para que sea fácil recuperarlo en caso
+  de ser necesario.
+*/
+/* 
 .ayercitoOculto {
   font-family: var(--title-text);
   color: var(--neutral-white-text);
@@ -41,3 +65,4 @@
 #table-panel-date button {
   cursor: pointer;
 }
+*/

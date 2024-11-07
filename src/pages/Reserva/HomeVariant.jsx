@@ -1,236 +1,338 @@
-import { useState, useEffect } from 'react'
-//react router
+// Libraries
+import { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import moment from 'moment'
 
-//components
-import NavBar from '../Navbar/NavBar'
-import Reserva from '../../components/Reserva/Reserva'
-import LoaderSpinner from '../../components/LoaderSpinner'
-import CalendarComponent from '../../components/Reserva/CalendarComponent'
-import AlquilerDetails from '../../components/Reserva/AlquilerDetails'
-import ClaseDetails from '../../components/Reserva/ClaseDetails'
-//Fontawesome
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+// API
+import { getAlumnos } from 'api/alumnos'
+import { getCanchas } from 'api/canchas'
+import { getProfesores, getClasesProfesor } from 'api/profesores'
+import { getReservas } from 'api/reservas'
+
+// Components
+import LoaderSpinner from 'components/LoaderSpinner'
+import AlquilerDetails from 'components/Reserva/AlquilerDetails'
+import CalendarPicker from 'components/Reserva/CalendarComponent'
+import SelectComponent from 'components/Utils/SelectComponent'
+import ClaseDetails from 'components/Reserva/ClaseDetails'
+// import Reserva from 'components/Reserva/Reserva'
+import NavBar from 'pages/Navbar/NavBar'
+import Dashboard from 'components/Dashboard/Dashboard'
+import ReservaDashboardItem from 'components/Reserva/ReservaDashboardItem'
+import { ordenarPorNombre } from 'components/Utils/Functions'
+import NotFound404 from 'components/NotFound404/NotFound404'
+
+// Fontawesome
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-import { ordenarPorNombre } from '../../components/Utils/Functions'
-import '../../styles/home.css'
+import 'styles/home.css'
 
-const Home = () => {
-  const URL_BASE = `http://localhost:8083/api/`
+const horas = [
+  '08:00',
+  '08:30',
+  '09:00',
+  '09:30',
+  '10:00',
+  '10:30',
+  '11:00',
+  '11:30',
+  '12:00',
+  '12:30',
+  '13:00',
+  '13:30',
+  '14:00',
+  '14:30',
+  '15:00',
+  '15:30',
+  '16:00',
+  '16:30',
+  '17:00',
+  '17:30',
+  '18:00',
+  '18:30',
+  '19:00',
+  '19:30',
+  '20:00',
+  '20:30',
+  '21:00',
+]
 
-  //Todo esto es para manejar una fecha visible para el usuario
-  const horas = [
-    '8:00',
-    '8:30',
-    '9:00',
-    '9:30',
-    '10:00',
-    '10:30',
-    '11:00',
-    '11:30',
-    '12:00',
-    '12:30',
-    '13:00',
-    '13:30',
-    '14:00',
-    '14:30',
-    '15:00',
-    '15:30',
-    '16:00',
-    '16:30',
-    '17:00',
-    '17:30',
-    '18:00',
-    '18:30',
-    '19:00',
-    '19:30',
-    '20:00',
-    '20:30',
-    '21:00',
-  ]
-  const coloresCanchas = [
-    '#FFA500',
-    '#FFC0CB',
-    '#90EE90',
-    '#FFFFE0',
-    '#ADD8E6',
-    '#EE82EE',
-    '#94F5C5',
-  ]
-  //cositas para formatear el dia
-  const mes = ('0' + (new Date().getMonth() + 1)).slice(-2)
-  const dia = ('0' + new Date().getDate()).slice(-2)
-  const año = new Date().getFullYear()
-  const DateToday = `${año}-${mes}-${dia}`
+const coloresCanchas = [
+  '#FFA500',
+  '#FFC0CB',
+  '#90EE90',
+  '#ADD8E6',
+  '#EE82EE',
+  '#94F5C5',
+]
 
-  const [today, setToday] = useState(DateToday)
+function organizarReservasPorCancha(reservas, canchas, selectedDate) {
+  const selectedDateFormatted = moment(selectedDate).format('YYYY-MM-DD')
+  return reservas.reduce((acc, reserva) => {
+    const reservaFecha = moment(reserva.fecha).format('YYYY-MM-DD')
+    if (reservaFecha === selectedDateFormatted) {
+      if (!acc[reserva.canchaId]) acc[reserva.canchaId] = []
+      const cancha = canchas.find((c) => c.id === reserva.canchaId)
+      acc[reserva.canchaId].push({
+        ...reserva,
+        canchaNombre: cancha ? cancha.nombre : 'Desconocida',
+      })
+    }
+    return acc
+  }, {})
+}
 
-  //alumnos de la clase
-  const [alumnosDeLaClase, setAlumnosDeLaClase] = useState([])
-
-  const [profeClase, setProfeClase] = useState('')
-
-  //Details
-  const [reservaDetail, setReservaDetail] = useState({})
-  const [claseDetail, setClaseDetail] = useState({})
-
-  const navigate = useNavigate()
-
-  // Refactor desde home para reservas
-  const [reservas, setReservas] = useState([])
-  const [reservasLoader, setReservasLoader] = useState(false) // Spinner
-  const [actReservas, setActReservas] = useState(false)
+export default function Home() {
   const [canchas, setCanchas] = useState([])
-  const [alumnos, setAlumnos] = useState([])
+  const [reservas, setReservas] = useState([]) // Reservas generales
+  const [clasesReservas, setClasesReservas] = useState([]) // Reservas de clases
   const [profesores, setProfesores] = useState([])
-  const [actProfesores, setActProfesores] = useState(false)
-  const [actCanchas, setActCanchas] = useState(false)
-  const [actAlumnos, setActAlumnos] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    const requestOptions = {
-      method: 'GET',
-    }
-    fetch(`${URL_BASE}profesores`, requestOptions)
-      .then((response) => response.json())
-      .then((data) => setProfesores(ordenarPorNombre(data)))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [actProfesores])
-
-  useEffect(() => {
-    const requestOptions = {
-      method: 'GET',
-    }
-    fetch(`${URL_BASE}canchas`, requestOptions)
-      .then((response) => response.json())
-      .then((data) => setCanchas(data.detail))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [actCanchas])
-
-  useEffect(() => {
-    const requestOptions = {
-      method: 'GET',
-    }
-    fetch(`${URL_BASE}alumnos`, requestOptions)
-      .then((response) => response.json())
-      .then((data) => setAlumnos(ordenarPorNombre(data.detail)))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [actAlumnos])
-
-  useEffect(() => {
-    const requestOptions = {
-      method: 'GET',
-    }
-    fetch(`${URL_BASE}reservas`, requestOptions)
-      .then(setReservasLoader(true))
-      .then((response) => response.json())
-      .then((data) => setReservas(data.detail))
-      .then(() => setReservasLoader((v) => false))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [actReservas])
+    ;(async () => {
+      setIsLoading(true)
+      const [profesores, canchas, reservas] = await Promise.all([
+        getProfesores(),
+        getCanchas(),
+        getReservas(),
+      ])
+      setProfesores(ordenarPorNombre(profesores))
+      setCanchas(canchas.detail)
+      setReservas(reservas.detail)
+      setIsLoading(false)
+    })()
+  }, [])
 
   return (
     <div id="home-component">
       <NavBar title={'Tennis app'} />
-      {/* <VistaSemanal canchas={canchas} reservas={reservas}/> */}
-      <AlquilerDetails
-        reserva={reservaDetail}
-        diaReserva={today}
-        setReservaDetail={setReservaDetail}
-      />
-      <ClaseDetails
-        reserva={claseDetail}
-        diaReserva={today}
-        setClaseDetail={setClaseDetail}
-        alumnosDeLaClase={alumnosDeLaClase}
-        setAlumnosDeLaClase={setAlumnosDeLaClase}
-        profeClase={profeClase}
-        setProfeClase={setProfeClase}
-        alumnos={alumnos}
+      {isLoading && (
+        <div style={{ position: 'relative' }}>
+          <LoaderSpinner
+            active={isLoading}
+            containerClass={'homeLoader'}
+            loaderClass={'homeLoaderSpinner'}
+          />
+        </div>
+      )}
+      <HomeBody
+        canchas={canchas}
         profesores={profesores}
-        setActReservas={setActReservas}
+        reservas={reservas}
+        clasesReservas={clasesReservas} // Pasar las reservas de clases
+        setClasesReservas={setClasesReservas} // Pasar setter de clases
+        isLoading={isLoading}
+        setIsLoading={setIsLoading}
       />
-      {/* <LoaderSpinner active={reservasLoader} containerClass={'homeLoader'} loaderClass={'homeLoaderSpinner'}/> */}
-
-      <div id="table-component">
-        <div id="table-options">
-          <button
-            id="home-addReservaBtn"
-            onClick={() => navigate('../nuevaReserva')}
-          >
-            {' '}
-            <FontAwesomeIcon id="reserva-add-btn" icon={faPlusCircle} />
-          </button>
-
-          <div id="table-panel-date">
-            <CalendarComponent today={today} setToday={setToday} />
-          </div>
-          {/* Aca iria el selector */}
-        </div>
-        <div
-          id="table-grid"
-          style={{
-            display: 'grid',
-            gridTemplateColumns: `13vw repeat(${canchas.length}, 1fr)`,
-            gridTemplateRows: `repeat(${horas.length + 1}, 1fr)`,
-          }}
-        >
-          <div id="hora" style={{ gridArea: '1/1/2/2' }}>
-            Hora
-          </div>
-
-          {horas.map((el, i) => (
-            <div
-              className="horas"
-              key={i}
-              style={{ gridArea: `${i + 2}/1/${i + 3}/2` }}
-            >
-              {' '}
-              {el}{' '}
-            </div>
-          ))}
-          {canchas.map((el, i) => (
-            <div
-              className="canchas"
-              key={el.id}
-              style={{
-                gridArea: `1/${i + 2} / ${horas.length}/${i + 3}`,
-                backgroundColor: coloresCanchas[i % coloresCanchas.length],
-              }}
-            >
-              <div
-                style={{
-                  backgroundColor: coloresCanchas[i % coloresCanchas.length],
-                  filter: 'brightness(120%)',
-                  height: '4vh',
-                }}
-              >
-                <p> {el.nombre} </p>
-              </div>{' '}
-            </div>
-          ))}
-          {reservas.map((el) => (
-            <Reserva
-              key={el.reservaId}
-              datos={el}
-              canchas={canchas}
-              today={today}
-              setReservaDetail={setReservaDetail}
-              setClaseDetail={setClaseDetail}
-              setAlumnos={setAlumnosDeLaClase}
-              setProfe={setProfeClase}
-            />
-          ))}
-        </div>
-        <LoaderSpinner
-          active={reservasLoader}
-          containerClass={'homeLoaderNew'}
-          loaderClass={'homeLoaderSpinner'}
-        />
-      </div>
     </div>
   )
 }
 
-export default Home
+function HomeBody({
+  reservas,
+  clasesReservas,
+  setClasesReservas,
+  canchas,
+  profesores,
+  isLoading,
+  setIsLoading,
+}) {
+  const [reservasDelDia, setReservasDelDia] = useState([])
+  const [reservaDetail, setReservaDetail] = useState({})
+  const [alquilerDetailsIsVisible, setAlquilerDetailsIsVisible] =
+    useState(false)
+  const [isClaseDetailsVisible, setIsClaseDetailsVisible] = useState(false)
+
+  const [selectedDate, setSelectedDate] = useState(Date.now())
+  const [claseDetail, setClaseDetail] = useState({})
+  const [profesorSeleccionado, setProfesorSeleccionado] = useState('todos')
+
+  const navigate = useNavigate()
+
+  const handleBuscarClases = useCallback(async () => {
+    if (!profesorSeleccionado || !selectedDate) {
+      alert('Debe seleccionar un profesor y una fecha.')
+      return
+    }
+
+    setIsLoading(true)
+
+    if (profesorSeleccionado === 'todos') {
+      const reservasDia = organizarReservasPorCancha(
+        reservas,
+        canchas,
+        selectedDate
+      )
+      setReservasDelDia(reservasDia)
+    } else if (profesorSeleccionado === 'reservas') {
+    } else {
+      const clasesProfe = await getClasesProfesor(
+        profesorSeleccionado,
+        moment(selectedDate).format('YYYY-MM-DD')
+      )
+
+      if (clasesProfe?.data?.length > 0) {
+        const clasesDelDia = organizarReservasPorCancha(
+          clasesProfe.data,
+          canchas,
+          selectedDate
+        )
+        setClasesReservas(clasesProfe)
+        setReservasDelDia(clasesDelDia)
+      }
+    }
+    setIsLoading(false)
+  }, [
+    canchas,
+    profesorSeleccionado,
+    reservas,
+    selectedDate,
+    setClasesReservas,
+    setIsLoading,
+  ])
+
+  useEffect(() => {
+    handleBuscarClases()
+  }, [handleBuscarClases])
+
+  if (isLoading) return null
+
+  if (canchas.length === 0) {
+    return (
+      <div style={{ marginTop: '6rem' }}>
+        <NotFound404
+          title="¡Oops! No encontramos canchas de tenis"
+          description="Parece que todavía no hay canchas de tenis disponibles en este complejo. No te preocupes, puedes agregarlas fácilmente."
+          btnText="Añadir una nueva cancha"
+          onCallToAction={() => navigate('../canchas')}
+        />
+      </div>
+    )
+  }
+
+  return (
+    <>
+      <AlquilerDetails
+        isVisible={alquilerDetailsIsVisible}
+        onClose={() => setAlquilerDetailsIsVisible(false)}
+        reserva={reservaDetail}
+        setReservaDetail={setReservaDetail}
+      />
+      <ClaseDetails
+        isVisible={isClaseDetailsVisible}
+        onClose={() => setIsClaseDetailsVisible(false)}
+        reserva={claseDetail}
+      />
+
+      <div className="profesor-select-container">
+        <label htmlFor="profesor-select" className="profesor-label">
+          Filtrar por profesor
+        </label>
+        <select
+          id="profesor-select"
+          value={profesorSeleccionado}
+          onChange={(e) => setProfesorSeleccionado(e.target.value)}
+          className="profesor-select"
+        >
+          <option value="todos">Todas las clases y reservas</option>
+          {profesores.map((profesor) => (
+            <option key={profesor.id} value={profesor.id}>
+              Clases de {profesor.nombre}
+            </option>
+          ))}
+        </select>
+        <button onClick={handleBuscarClases} className="profesor-btn">
+          Aceptar
+        </button>
+      </div>
+
+      <Dashboard
+        header={
+          <div className="home__dashboard-header">
+            <button
+              className="home__btn-add"
+              onClick={() => navigate('../nuevaReserva')}
+            >
+              <FontAwesomeIcon icon={faPlusCircle} />
+            </button>
+            <div className="home__date">
+              <CalendarPicker
+                selectedDate={selectedDate}
+                setSelectedDate={setSelectedDate}
+              />
+            </div>
+          </div>
+        }
+      >
+        <Dashboard.Col first={true} sticky={true}>
+          <Dashboard.Row
+            header={true}
+            sticky={true}
+            className="home__hora--main"
+          >
+            Hora
+          </Dashboard.Row>
+          {horas.map((hora, i) => (
+            <Dashboard.Row
+              key={hora}
+              header={true}
+              className={`home__hora ${i % 2 === 0 ? 'home__hora--hour' : 'home__hora--half'}`}
+            >
+              {hora}
+            </Dashboard.Row>
+          ))}
+        </Dashboard.Col>
+        {canchas.map((cancha, i) => (
+          <Dashboard.Col
+            key={cancha.nombre}
+            style={{
+              backgroundColor: coloresCanchas[i % (coloresCanchas.length - 1)],
+            }}
+          >
+            <Dashboard.Row
+              header={true}
+              sticky={true}
+              className="home__cancha"
+              style={{
+                backgroundColor:
+                  coloresCanchas[i % (coloresCanchas.length - 1)],
+              }}
+            >
+              <span
+                className="text-ellipsis"
+                style={{ maxWidth: '100%' }}
+                title={cancha.nombre}
+              >
+                {cancha.nombre}
+              </span>
+            </Dashboard.Row>
+
+            {/* Rellenar con celdas vacías para armar la grilla  */}
+            {horas.map((hora) => (
+              <Dashboard.Row key={`${cancha.nombre}-${hora}`}></Dashboard.Row>
+            ))}
+            {reservasDelDia[cancha.id] &&
+              reservasDelDia[cancha.id].map((reserva) => (
+                <ReservaDashboardItem
+                  key={reserva.reservaId}
+                  reserva={reserva}
+                  onClick={() => {
+                    if (reserva.tipo === 'ALQUILER') {
+                      setReservaDetail(reserva)
+                      setAlquilerDetailsIsVisible(true)
+                    } else {
+                      setIsClaseDetailsVisible(true)
+                      setClaseDetail(reserva)
+                      console.log('CLIQUEO ', reserva) // Verifica el objeto reserva
+                    }
+                  }}
+                />
+              ))}
+          </Dashboard.Col>
+        ))}
+      </Dashboard>
+    </>
+  )
+}

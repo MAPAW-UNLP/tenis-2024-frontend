@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+
 //styles
 import '../../styles/reservas.css'
 
@@ -12,6 +13,8 @@ import AlquilerFormComponent from '../../components/Utils/Alquiler/AlquilerFormC
 import ClaseFormComponent from '../../components/Utils/Alquiler/ClaseFormComponent'
 import InputComponent from '../../components/Utils/InputComponent'
 import SelectComponent from '../../components/Utils/SelectComponent'
+import Swal from 'sweetalert2'
+import LoaderSpinner from 'components/LoaderSpinner'
 
 //Fontawesome icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -42,6 +45,7 @@ export const Reservas = () => {
   const [cancha, setCancha] = useState('')
   const [canchas, setCanchas] = useState([])
   const [actCanchas, setActCanchas] = useState(false)
+  const [errors, setErrors] = useState({})
 
   //con estos campos verificar actualizar el select de cancha solo mostrando las posibles
   const [dia, setDia] = useState('')
@@ -124,17 +128,30 @@ export const Reservas = () => {
   const handleSubmitContinue = (e) => {
     e.preventDefault()
     const reservaType = document.getElementById('selectedReservaType')
-    if (reservaType.value == 'Alquiler') {
+    if (reservaType.value === 'Alquiler') {
       setAlquilerOp(true)
       setClaseOp(false)
     }
-    if (reservaType.value == 'Clase') {
+    if (reservaType.value === 'Clase') {
       setAlquilerOp(false)
       setClaseOp(true)
     }
   }
 
+  const validate = (reserva) => {
+    return (
+      reserva.cancha_id &&
+      reserva.persona_id &&
+      reserva.tipo &&
+      reserva.hora_ini &&
+      reserva.hora_fin &&
+      reserva.fecha
+    ) // &&(0 < reserva.grupo_ids.lenght))
+    //falta la condicion de que haya al menos un alumno pero esta rota el path para crearlos
+  }
+
   const canchasDisponibles = () => {
+    //arreglar
     //este algoritmo se por un lado se queda con los nombres de las canchas no disponibles y luego devuelve los nombres de las canchas que no aparecen en el primer arrreglo
     const nombresCanchasNoDisponibles = reservas
       .map((reserva) => {
@@ -164,35 +181,61 @@ export const Reservas = () => {
   }
 
   const handleAddReserva = () => {
-    const URL_BASE = `http://localhost:8083/api/`
+    setReservasLoader(true) // Activar el loader al iniciar la solicitud
     const reserva = {
       nombre: nombre,
       telefono: telefono,
       fecha: dia,
       cancha_id: cancha,
-      hora_ini: horaInicio,
-      hora_fin: horaFin,
+      hora_ini: `${horaInicio}:00`,
+      hora_fin: `${horaFin}:00`,
       persona_id: profesorSel,
       replica: replica,
       estado_id: 0,
       grupo_ids: grupoIds,
       tipo: tipoClase,
     }
-    const form_data = new FormData()
 
-    for (var r in reserva) {
-      console.log('form reserva ', r, reserva[r])
-      form_data.append(r, reserva[r])
+    // Llamar a validate con el objeto reserva
+    console.log('Validando reserva:', reserva)
+
+    if (validate(reserva)) {
+      const form_data = new FormData()
+
+      for (const key in reserva) {
+        console.log('Form reserva ', key, reserva[key])
+        form_data.append(key, reserva[key])
+      }
+
+      const requestOptions = {
+        method: 'POST',
+        body: form_data,
+      }
+
+      fetch(`${URL_BASE}reserva`, requestOptions)
+        .then(async (response) => {
+          const result = await response.json()
+          console.log(result)
+          const message = result.detail || 'Ocurrió un error desconocido.'
+          if (response.ok) {
+            Swal.fire('Éxito', message, 'success') // Cambiado aquí
+            setActReservas((prev) => !prev)
+            navigate('../reservas') // Solo navega si la respuesta fue exitosa
+          } else {
+            Swal.fire('Error', message, 'error') // Cambiado aquí
+          }
+        })
+        .catch((error) => {
+          Swal.fire('Error', 'Error de conexión con el servidor.', 'error') // Cambiado aquí
+          console.error('Error:', error)
+        })
+        .finally(() => {
+          setReservasLoader(false)
+        })
+    } else {
+      Swal.fire('Atención', 'Complete todos los campos', 'warning') // Cambiado aquí
+      setReservasLoader(false)
     }
-    console.log('form data', form_data)
-    const requestOptions = {
-      method: 'POST',
-      body: form_data,
-    }
-    fetch(`${URL_BASE}reserva`, requestOptions)
-      .then((response) => setActReservas((v) => !v))
-      .then(setReservasLoader(true))
-      .finally(navigate('../reservas'))
   }
 
   useEffect(() => {
@@ -209,39 +252,66 @@ export const Reservas = () => {
     const requestOptions = {
       method: 'GET',
     }
-    fetch(`${URL_BASE}profesores`, requestOptions)
+    fetch(`${URL_BASE}profesoress`, requestOptions)
       .then((response) => response.json())
       .then((data) => setProfesores(ordenarPorNombre(data)))
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [actProfesores])
+  }, [])
 
   useEffect(() => {
     const requestOptions = {
       method: 'GET',
     }
-    fetch(`${URL_BASE}alumnos`, requestOptions)
+    fetch(`${URL_BASE}clientes`, requestOptions)
       .then((response) => response.json())
-      .then((data) => setAlumnos(ordenarPorNombre(data.detail)))
+      .then((data) => setAlumnos(data))
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [actAlumnos])
+  }, [])
 
   return (
     <div id="reservas-component">
       <NavBar title={'Reservas'} />
       <div id="reserva-nuevaReserva">
+        {reservasLoader && (
+          <div
+            style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              width: '100vw',
+              height: '100vh',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: 'rgba(0, 0, 0, 0.75)', // Fondo oscuro semitransparente
+              zIndex: 1000, // Asegura que esté sobre otros elementos
+            }}
+          >
+            <LoaderSpinner
+              active={reservasLoader}
+              containerClass={'homeLoader'}
+              loaderClass={'homeLoaderSpinner'}
+            />
+          </div>
+        )}
         <button id="clase-closeBTN" onClick={() => navigate('../reservas')}>
           x
         </button>
         <h2>Nueva reserva</h2>
+
         <form action="" id="reserva-form" onSubmit={handleSubmitContinue}>
           <SelectComponent
-            className={'inputReserva'}
-            id={'selectedReservaType'}
+            className="inputReserva"
+            id="selectedReservaType"
             onChange={handleTypeChange}
-            options={['Alquiler', 'Clase']}
-            deshabilitado={false}
-            placeholder={'Seleccionar Tipo de Reserva'}
+            disabled={false}
+            placeholder="Seleccionar Tipo de Reserva"
+            options={[
+              { displayValue: 'Alquiler', value: 'Alquiler' },
+              { displayValue: 'Clase', value: 'Clase' },
+            ]}
           />
+
           <InputComponent
             type={'date'}
             id={'fecha'}
@@ -251,9 +321,6 @@ export const Reservas = () => {
             deshabilitado={true}
             min={today}
           />
-          {/*  LA IDEA ES USAR LOS COMENTADOS
-                <SelectComponent className={'inputReserva'} id={'horaInicio'} onChange={handleSetHoraInicio} options={horas} deshabilitado={false}/>
-                <SelectComponent className={'inputReserva'} id={'horaInicio'} onChange={handleSetHoraFin} options={horas} deshabilitado={false}/> */}
 
           <SelectHoraInicio
             id={'horaInicio'}
@@ -266,6 +333,7 @@ export const Reservas = () => {
             setHoraFin={setHoraFin}
             horaInicio={horaInicio}
           />
+
           {alquilerOp && (
             <AlquilerFormComponent
               active={alquilerOp}
@@ -277,6 +345,7 @@ export const Reservas = () => {
               setTelefono={setTelefono}
             />
           )}
+
           {claseOp && (
             <ClaseFormComponent
               active={claseOp}
@@ -298,10 +367,10 @@ export const Reservas = () => {
               setTipoClase={setTipoClase}
             />
           )}
+
           {!alquilerOp && !claseOp && (
             <button id="continue-btn" disabled>
-              {' '}
-              <FontAwesomeIcon id="next-icon" icon={faChevronRight} />{' '}
+              <FontAwesomeIcon id="next-icon" icon={faChevronRight} />
             </button>
           )}
         </form>

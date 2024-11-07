@@ -14,12 +14,12 @@ export function SessionProvider({ children }) {
   const [session, setSession] = useLocalStorage('session', '')
 
   const isLoggedIn = useCallback(() => {
-    return session === ''
+    return session !== ''
   }, [session])
 
   useEffect(() => {
     // Si no tiene sesión iniciada enviar al log in
-    if (isLoggedIn()) navigate('/')
+    if (!isLoggedIn()) navigate('/')
   }, [isLoggedIn, navigate, session])
 
   function logIn(detail) {
