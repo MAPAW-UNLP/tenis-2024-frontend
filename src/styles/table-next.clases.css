@@ -20,7 +20,7 @@
 }
 
 .table-body .table-row:nth-child(even) {
-  background-color: #c2b9b0;
+  background-color: #cb9242;
 }
 
 @media (max-width: 630px) {
