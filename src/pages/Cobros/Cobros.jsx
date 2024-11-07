@@ -31,7 +31,7 @@ export const Cobros = () => {
       .then(() => setCobrosLoader(() => false))
       .then(() => setLoadingFetch(false))
 
-    fetch(`${URL_BASE}alumnos`, requestOptions)
+    fetch(`${URL_BASE}clientes`, requestOptions)
       .then((response) => response.json())
       .then((data) => setAlumnos(ordenarPorNombre(data)))
 

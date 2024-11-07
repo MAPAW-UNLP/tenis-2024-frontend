@@ -37,11 +37,11 @@ const NavBar = ({ title }) => {
     <div id="navBar-component">
       <nav id="navBar">
         <ul style={{ display: 'flex', justifyContent: 'flex-start' }}>
-          <li>
+          <div>
             <BurgerMenu />
-          </li>
+          </div>
 
-          <li id="navBar-list" className="desktop-navbar">
+          <ul id="navBar-list" className="desktop-navbar">
             <LinkItem to={'/inicio'} setActive={setActive} name={'Inicio'} />
             <LinkItem
               to={'/reservas'}
@@ -114,17 +114,21 @@ const NavBar = ({ title }) => {
                 case 'ROLE_CLIENTE':
                   return (
                     <>
-                      {/* // Queda disponible para funciones exclusivas de cliente */}
+                      <LinkItem
+                        to={'/clases'}
+                        setActive={setActive}
+                        name={'Clases'}
+                      />
                     </>
                   )
                 default:
                   return null // Puedes agregar un mensaje de error o un componente por defecto aquí
               }
             })()}
-          </li>
-          <li style={{ marginLeft: 'auto', paddingRight: '5px' }}>
+          </ul>
+          <div style={{ marginLeft: 'auto', paddingRight: '5px' }}>
             <ProfileSideBar />
-          </li>
+          </div>
         </ul>
       </nav>
       <h1>{title}</h1>

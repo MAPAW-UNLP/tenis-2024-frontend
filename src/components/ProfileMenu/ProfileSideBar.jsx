@@ -38,6 +38,7 @@ const ProfileSideBar = () => {
             roles: session.roles,
             rolPorDefecto: option,
           })
+          setIsOpen(!isOpen)
           Swal.fire({
             position: 'bottom-end',
             icon: 'success',

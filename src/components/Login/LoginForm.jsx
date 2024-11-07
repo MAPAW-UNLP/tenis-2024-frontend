@@ -56,7 +56,11 @@ const LoginForm = () => {
         if (data.rta === 'ok') {
           logIn(data.detail)
           setActiveLoader(false)
-          navigate('../inicio')
+          if (data.detail.rolPorDefecto === 'ROLE_CLIENTE') {
+            navigate('../clases')
+          } else {
+            navigate('../inicio')
+          }
           Swal.fire({
             position: 'bottom-end',
             icon: 'success',
