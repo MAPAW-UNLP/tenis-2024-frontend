@@ -61,6 +61,8 @@ export default function ReservaDashboardItem({ reserva, onClick }) {
     itemRef.current.style.height = style.height
   }
 
+  console.log(reserva)
+
   return (
     <div
       className="item-reserva"
@@ -88,8 +90,11 @@ export default function ReservaDashboardItem({ reserva, onClick }) {
             {reserva.titular.nombre}
           </p>
         )}
-        <p className="item-reserva__rol">
-          {reserva.tipo === 'ALQUILER' ? 'Cliente' : 'Profesor'}
+        <p
+          className="item-reserva__rol text-ellipsis"
+          title={reserva.canchaNombre}
+        >
+          {reserva.canchaNombre}
         </p>
         <p className="item-reserva__horarios">
           {reserva.horaIni} - {reserva.horaFin}
