@@ -242,12 +242,12 @@ function Proveedores() {
             <div className="container-table-proveedores">
               {filteredAndSortedProveedores().map((p) => {
                 return (
-                  <div
-                    key={p.id}
-                    className="proveedores-item-list"
-                    onClick={() => openShowModal(p.id, p.nombre, p.telefono)}
-                  >
-                    <p>{p.nombre}</p>
+                  <div key={p.id} className="proveedores-item-list">
+                    <p
+                      onClick={() => openShowModal(p.id, p.nombre, p.telefono)}
+                    >
+                      {p.nombre}
+                    </p>
                     <p>{p.telefono}</p>
                     <button
                       className="edit-proveedor-btn"
