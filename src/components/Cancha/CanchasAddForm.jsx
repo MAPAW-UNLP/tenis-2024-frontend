@@ -1,11 +1,9 @@
-import React from 'react';
-
 //Fontawesome
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 
 //Components
-import FeedbackText from '../FeedbackText';
+import FeedbackText from '../FeedbackText'
 
 const CanchasAddForm = ({
   actived,
@@ -15,9 +13,8 @@ const CanchasAddForm = ({
   handleCloseForm,
   feedBack,
   nombreCancha,
-  option
+  option,
 }) => {
-
   return (
     <>
       {actived && (
@@ -63,7 +60,7 @@ const CanchasAddForm = ({
         </div>
       )}
     </>
-  );
-};
+  )
+}
 
-export default CanchasAddForm;
+export default CanchasAddForm

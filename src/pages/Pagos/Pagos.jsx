@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import moment from 'moment';
+import { useState, useEffect } from 'react'
+import moment from 'moment'
 import NavBar from '../Navbar/NavBar'
 import { MovimientoTable } from '../../components/Movimiento/MovimientoTable'
 import { AgregarMovimiento } from '../../components/Movimiento/AgregarMovimiento'
@@ -9,22 +9,22 @@ import LoaderSpinner from '../../components/LoaderSpinner'
 
 import '../../styles/movimiento/movimiento.css'
 
-export const Pagos = ({ setSesion }) => {
-  const URL_BASE = `http://localhost:8083/api/`;
+export const Pagos = () => {
+  const URL_BASE = `http://localhost:8083/api/`
 
-  const [active, setActive] = useState(false);
-  const [pagos, setPagos] = useState([]);
-  const [actPagos, setActPagos] = useState(false);
-
-  const [profesores, setProfesores] = useState([]);
-  const [pagosLoader, setPagosLoader] = useState(true); // Spinner
+  const [active, setActive] = useState(false)
+  const [pagos, setPagos] = useState([])
+  const [actPagos, setActPagos] = useState(false)
+  const [proveedores, setProveedores] = useState([])
+  const [profesores, setProfesores] = useState([])
+  const [pagosLoader, setPagosLoader] = useState(true) // Spinner
   const [loadingFetch, setLoadingFetch] = useState() // Spinner despues de cargar un cobro
 
-  // Trae todos los PAGOS 
+  // Trae todos los PAGOS
   useEffect(() => {
     const requestOptions = {
       method: 'GET',
-    };
+    }
     fetch(`${URL_BASE}pagos`, requestOptions)
       .then((response) => response.json())
       .then((data) => setPagos(data))
@@ -35,8 +35,11 @@ export const Pagos = ({ setSesion }) => {
       .then((response) => response.json())
       .then((data) => setProfesores(ordenarPorNombre(data)))
 
+    fetch(`${URL_BASE}proveedor`, requestOptions)
+      .then((response) => response.json())
+      .then((data) => setProveedores(ordenarPorNombre(data)))
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [actPagos]);
+  }, [actPagos])
 
   // Estado para el formulario de "Agregar Pago"
   const [pagoAddForm, setPagoAddForm] = useState({
@@ -44,39 +47,38 @@ export const Pagos = ({ setSesion }) => {
     personaSeleccionada: '',
     concepto: '',
     monto: '',
-    descripcion: ''
+    descripcion: '',
   })
 
   // Actualiza los datos del formulario para agregar un PAGO
   const handleChangeFormData = (e) => {
-    if (e.target.name === 'personaId') {
+    if (e.target.name === 'personaId' || e.target.name === 'proveedorId') {
       // El valor de la persona seleccionada
-      const personaSeleccionada = e.target[e.target.selectedIndex].text;
+      const personaSeleccionada = e.target[e.target.selectedIndex].text
 
       // Si no seleccionamos ningun alumno resetamos el input a cadena vacia ("")
-      if (e.target.value === "") {
+      if (e.target.value === '') {
         setPagoAddForm({
           ...pagoAddForm,
-          'personaSeleccionada': "",
+          personaSeleccionada: '',
           [e.target.name]: e.target.value,
-          'descripcion': ""
-        });
+          descripcion: '',
+        })
       }
       // Si tenemos que setear personaId con un valor != vacio --> entonces agarramos el valor de option y lo
       // seteamos en el formulario del estado
       else {
         setPagoAddForm({
           ...pagoAddForm,
-          'personaSeleccionada': personaSeleccionada,
+          personaSeleccionada: personaSeleccionada,
           [e.target.name]: e.target.value,
-          'descripcion': `Pago a: ${personaSeleccionada}`
-        });
+          descripcion: `Pago a: ${personaSeleccionada}`,
+        })
       }
+    } else {
+      setPagoAddForm({ ...pagoAddForm, [e.target.name]: e.target.value })
     }
-    else {
-      setPagoAddForm({ ...pagoAddForm, [e.target.name]: e.target.value });
-    }
-  };
+  }
 
   // Reseteo el formulario de PAGO
   const resetPagoAddForm = () => {
@@ -85,21 +87,36 @@ export const Pagos = ({ setSesion }) => {
       personaSeleccionada: '',
       concepto: '',
       monto: '',
-      descripcion: ''
+      descripcion: '',
     })
   }
 
   // Funcion para cerrar el formulario de creacion de PAGO
   const handleCloseForm = () => {
     resetPagoAddForm()
-    setActive(false);
-  };
+    setActive(false)
+  }
 
   const submitPagoForm = (event) => {
-    setActive(false);
+    setActive(false)
     setLoadingFetch(true)
 
-    if (pagoAddForm.personaId) {
+    if (pagoAddForm.proveedorId && pagoAddForm.proveedorId !== '') {
+      const requestOptions = {
+        method: 'POST',
+        body: JSON.stringify({
+          idProveedor: pagoAddForm.proveedorId,
+          concepto: pagoAddForm.concepto,
+          monto: pagoAddForm.monto,
+          descripcion: pagoAddForm.descripcion,
+          fecha: moment().format('YYYY/MM/DD'),
+        }),
+      }
+
+      fetch(`${URL_BASE}nuevo_pago`, requestOptions)
+        .then((response) => response.json())
+        .then(() => setActPagos((v) => !v))
+    } else if (pagoAddForm.personaId) {
       const requestOptions = {
         method: 'POST',
         body: JSON.stringify({
@@ -109,13 +126,12 @@ export const Pagos = ({ setSesion }) => {
           descripcion: pagoAddForm.descripcion,
           fecha: moment().format('YYYY/MM/DD'),
         }),
-      };
+      }
 
       fetch(`${URL_BASE}nuevo_pago`, requestOptions)
         .then((response) => response.json())
-        .then(() => setActPagos((v) => !v));
-    }
-    else {
+        .then(() => setActPagos((v) => !v))
+    } else {
       const requestOptions = {
         method: 'POST',
         body: JSON.stringify({
@@ -124,11 +140,11 @@ export const Pagos = ({ setSesion }) => {
           descripcion: pagoAddForm.descripcion,
           fecha: moment().format('YYYY/MM/DD'),
         }),
-      };
+      }
 
       fetch(`${URL_BASE}nuevo_pago`, requestOptions)
         .then((response) => response.json())
-        .then(() => setActPagos((v) => !v));
+        .then(() => setActPagos((v) => !v))
     }
 
     resetPagoAddForm()
@@ -138,33 +154,48 @@ export const Pagos = ({ setSesion }) => {
   const movimientoOptions = [
     {
       id: 1,
-      concepto: "Profesor"
+      concepto: 'Profesor',
     },
     {
       id: 2,
-      concepto: "Proveedor"
+      concepto: 'Proveedor',
     },
     {
       id: 3,
-      concepto: "Varios"
-    }
-  ];
+      concepto: 'Varios',
+    },
+  ]
 
   return (
-    <div className='movimiento-component'>
-      <NavBar title={'Pagos'} setSesion={setSesion} />
-      <div className='movimiento-component-mainContent'>
-        <GenericLargeButton doSomething={() => setActive(true)} title={"Crear nuevo pago"} />
+    <div className="movimiento-component">
+      <NavBar title={'Pagos'} />
+      <div className="movimiento-component-mainContent">
+        <GenericLargeButton
+          doSomething={() => setActive(true)}
+          title={'Crear nuevo pago'}
+        />
 
-        <AgregarMovimiento active={active} handleCloseForm={handleCloseForm} submitMovimientoForm={submitPagoForm}
-          movimientoAddForm={pagoAddForm} handleChangeFormData={handleChangeFormData} personas={profesores}
-          movimientoName={"Pago"} movimientoOptions={movimientoOptions} />
+        <AgregarMovimiento
+          active={active}
+          handleCloseForm={handleCloseForm}
+          submitMovimientoForm={submitPagoForm}
+          movimientoAddForm={pagoAddForm}
+          handleChangeFormData={handleChangeFormData}
+          personas={profesores}
+          proveedores={proveedores}
+          movimientoName={'Pago'}
+          movimientoOptions={movimientoOptions}
+        />
 
-        {pagosLoader ?
-          <LoaderSpinner active={pagosLoader} containerClass={'canchasLoader'} loaderClass={'canchasLoaderSpinner'} />
-          :
+        {pagosLoader ? (
+          <LoaderSpinner
+            active={pagosLoader}
+            containerClass={'canchasLoader'}
+            loaderClass={'canchasLoaderSpinner'}
+          />
+        ) : (
           <MovimientoTable movimientos={pagos} loadingFetch={loadingFetch} />
-        }
+        )}
       </div>
     </div>
   )

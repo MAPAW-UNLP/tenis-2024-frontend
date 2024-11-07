@@ -1,6 +1,15 @@
-import React from 'react'
-
-const InputReComponent = ({type, name, id, className, placeholder, defaultValue, onChangeFuncion, deshabilitado, min, max }) => {
+const InputReComponent = ({
+  type,
+  name,
+  id,
+  className,
+  placeholder,
+  defaultValue,
+  onChangeFuncion,
+  deshabilitado,
+  min,
+  max,
+}) => {
   return (
     <input
       type={type}
@@ -15,7 +24,7 @@ const InputReComponent = ({type, name, id, className, placeholder, defaultValue,
       maxLength={max}
       min={min}
     />
-  );
+  )
 }
 
 export default InputReComponent

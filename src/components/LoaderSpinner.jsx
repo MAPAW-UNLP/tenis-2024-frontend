@@ -1,14 +1,13 @@
-import React from 'react'
 import '../styles/loader.css'
 
-const LoaderSpinner = ({active, containerClass, loaderClass}) => {
+const LoaderSpinner = ({ active, containerClass, loaderClass }) => {
   return (
     <>
-        {active && 
-          <div id={containerClass}>
-            <div className={loaderClass} id='loader'/>
-          </div>
-        }
+      {active && (
+        <div id={containerClass}>
+          <div className={loaderClass} id="loader" />
+        </div>
+      )}
     </>
   )
 }
