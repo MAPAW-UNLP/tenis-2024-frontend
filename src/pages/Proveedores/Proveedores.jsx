@@ -12,6 +12,8 @@ import EliminarProveedor from 'components/Proveedor/EliminarProveedor'
 import AgregarPago from 'components/Proveedor/AgregarPago'
 import LoaderSpinner from 'components/LoaderSpinner'
 import InputComponent from 'components/Utils/InputComponent'
+import { ShowProveedor } from '../../components/Proveedor/ShowProveedor'
+
 
 function Proveedores() {
   const URL_BASE = `http://localhost:8083/api/`
@@ -33,6 +35,7 @@ function Proveedores() {
     direction: 'asc',
   })
   const [searchQuery, setSearchQuery] = useState('')
+  const [modalShow, setModalShow] = useState(false)
 
   const totalDePaginas = Math.ceil(proveedores.length / CANT_FILAS)
 
@@ -83,6 +86,10 @@ function Proveedores() {
     if (bool === true) {
       update()
     }
+  }
+
+  const closeShow = () => {
+    setModalShow(false)
   }
 
   let listado
@@ -142,7 +149,6 @@ function Proveedores() {
     })
     setEditModal(true)
   }
-
   // Nueva función para obtener proveedores paginados, ordenados y filtrados
   const filteredAndSortedProveedores = () => {
     let lista = proveedores
@@ -174,6 +180,15 @@ function Proveedores() {
 
   const handleSearchNombre = (e) => {
     setSearchQuery(e.target.value)
+  }
+
+  const openShowModal = (id, name, cellphone) => {
+    setIdProveedor(id)
+    setProveedor({
+      nombre: name,
+      telefono: cellphone,
+    })
+    setModalShow(true)
   }
 
   return (
@@ -228,7 +243,11 @@ function Proveedores() {
             <div className="container-table-proveedores">
               {filteredAndSortedProveedores().map((p) => {
                 return (
-                  <div key={p.id} className="proveedores-item-list">
+                  <div
+                    key={p.id}
+                    className="proveedores-item-list"
+                    onClick={() => openShowModal(p.id, p.nombre, p.telefono)}
+                  >
                     <p>{p.nombre}</p>
                     <p>{p.telefono}</p>
                     <button
@@ -286,6 +305,13 @@ function Proveedores() {
           <AgregarPago
             handleCloseForm={closeFormPay}
             proveedorFijo={proveedor}
+
+        {modalShow && (
+          <ShowProveedor
+            isOpen={modalShow}
+            handleClose={closeShow}
+            idProveedor={idProveedor}
+            proveedor={proveedor}
           />
         )}
       </div>
