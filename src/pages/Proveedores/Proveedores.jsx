@@ -14,7 +14,6 @@ import LoaderSpinner from 'components/LoaderSpinner'
 import InputComponent from 'components/Utils/InputComponent'
 import { ShowProveedor } from '../../components/Proveedor/ShowProveedor'
 
-
 function Proveedores() {
   const URL_BASE = `http://localhost:8083/api/`
 
@@ -305,7 +304,8 @@ function Proveedores() {
           <AgregarPago
             handleCloseForm={closeFormPay}
             proveedorFijo={proveedor}
-
+          />
+        )}
         {modalShow && (
           <ShowProveedor
             isOpen={modalShow}
