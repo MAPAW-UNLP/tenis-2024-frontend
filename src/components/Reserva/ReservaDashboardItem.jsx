@@ -64,6 +64,7 @@ export default function ReservaDashboardItem({ reserva, onClick }) {
   return (
     <div
       className="item-reserva"
+      data-estado={reserva.estado}
       style={{ ...style, cursor: onClick ? 'pointer' : 'default' }}
       ref={itemRef}
       onMouseEnter={handleMouseEnter}
