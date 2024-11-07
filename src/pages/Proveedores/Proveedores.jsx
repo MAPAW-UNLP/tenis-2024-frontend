@@ -268,6 +268,7 @@ function Proveedores() {
                       title="Realizar pago a proveedor"
                       onClick={() => openFormPay(p)}
                     >
+                      +
                       <FontAwesomeIcon icon={faMoneyBillAlt} />
                     </button>
                   </div>

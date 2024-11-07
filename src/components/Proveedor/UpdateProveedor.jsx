@@ -83,7 +83,6 @@ export const UpdateProveedor = ({ handleCloseForm, proveedor = {} }) => {
             name={'nombre'}
             className={'proveedor-add-form-input'}
             onChangeFuncion={handleChangeName}
-            placeholder={nombre}
             value={nombre}
           />
           <p className="feedbackInline" style={{ color: nombreFeedback.color }}>
@@ -97,7 +96,6 @@ export const UpdateProveedor = ({ handleCloseForm, proveedor = {} }) => {
             name={'telefono'}
             className={'proveedor-add-form-input'}
             onChangeFuncion={handleChangeTelefono}
-            placeholder={telefono}
             value={telefono}
           />
           <p
