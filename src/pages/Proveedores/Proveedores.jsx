@@ -7,9 +7,11 @@ import { UpdateProveedor } from 'components/Proveedor/UpdateProveedor'
 import { faUserEdit } from '@fortawesome/free-solid-svg-icons'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import { faMoneyBillAlt } from '@fortawesome/free-solid-svg-icons'
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import EliminarProveedor from 'components/Proveedor/EliminarProveedor'
 import AgregarPago from 'components/Proveedor/AgregarPago'
 import LoaderSpinner from 'components/LoaderSpinner'
+import InputComponent from 'components/Utils/InputComponent'
 
 function Proveedores() {
   const URL_BASE = `http://localhost:8083/api/`
@@ -26,8 +28,13 @@ function Proveedores() {
   const [loading, setLoading] = useState(false)
   const [updateList, setUpdateList] = useState(false)
   const [pagina, setPagina] = useState(0)
+  const [sortOrder, setSortOrder] = useState({
+    field: 'nombre',
+    direction: 'asc',
+  })
+  const [searchQuery, setSearchQuery] = useState('')
 
-  const totalDePaginas = proveedores.length / CANT_FILAS
+  const totalDePaginas = Math.ceil(proveedores.length / CANT_FILAS)
 
   useEffect(() => {
     setLoading(true)
@@ -92,13 +99,10 @@ function Proveedores() {
     setUpdateList(!updateList)
   }
 
-  const atras = () => {
-    setPagina((prev) => prev - 1)
-  }
+  const atras = () => setPagina((prev) => Math.max(prev - 1, 0))
 
-  const siguiente = () => {
-    setPagina((prev) => prev + 1)
-  }
+  const siguiente = () =>
+    setPagina((prev) => Math.min(prev + 1, totalDePaginas - 1))
 
   const enableBtnBack = () => {
     if (pagina === 0) {
@@ -139,31 +143,70 @@ function Proveedores() {
     setEditModal(true)
   }
 
+  // Nueva función para obtener proveedores paginados, ordenados y filtrados
+  const filteredAndSortedProveedores = () => {
+    let lista = proveedores
+    if (searchQuery) {
+      lista = lista.filter((p) =>
+        p.nombre.toUpperCase().includes(searchQuery.toUpperCase())
+      )
+    }
+    lista = lista.sort((a, b) => {
+      const fieldA = a[sortOrder.field].toLowerCase()
+      const fieldB = b[sortOrder.field].toLowerCase()
+      if (fieldA < fieldB) return sortOrder.direction === 'asc' ? -1 : 1
+      if (fieldA > fieldB) return sortOrder.direction === 'asc' ? 1 : -1
+      return 0
+    })
+    return lista.slice(pagina * CANT_FILAS, (pagina + 1) * CANT_FILAS)
+  }
+
+  const handleSort = (field) => {
+    const isAscending =
+      sortOrder.field === field && sortOrder.direction === 'asc'
+    const direction = isAscending ? 'desc' : 'asc'
+    setSortOrder({ field, direction })
+  }
+
+  const getSortIcon = () => {
+    return sortOrder.direction === 'asc' ? '▲' : '▼'
+  }
+
+  const handleSearchNombre = (e) => {
+    setSearchQuery(e.target.value)
+  }
+
   return (
     <div id="proveedores-component">
       <NavBar title={'Proveedores'} />
       <div id="proveedores-component-mainContent">
-        <div className="botones-proveedor-main">
+        <div className="boton-add-and-search">
           <button className="btn-agregar-proveedor" onClick={activarFormulario}>
             Agregar nuevo Proveedor
           </button>
-          {/* <div
-                    
-                    id="proveedores-searchbar"
-                    className="list-options-header"
-                    style={{ width: 'unset' }}
-                >
-                    <FontAwesomeIcon id="magnify-icon" icon={faMagnifyingGlass} />
-                    <input
-                        type="text"
-                        placeholder="Busca un alumno"
-                        onChange={() => {}}
-                    />
-                </div> */}
+          <div className="nombre-searchbar">
+            <FontAwesomeIcon
+              className="nombre-magnify-icon"
+              icon={faMagnifyingGlass}
+            />
+            <InputComponent
+              type={'text'}
+              placeholder={'Buscar por nombre'}
+              onChangeFuncion={handleSearchNombre}
+            />
+          </div>
         </div>
         <div className="table-head-proveedores">
-          <span style={{ fontSize: '1.8em', width: 200, textAlign: 'center' }}>
-            Nombre
+          <span
+            style={{
+              fontSize: '1.8em',
+              width: 200,
+              textAlign: 'center',
+              cursor: 'pointer',
+            }}
+            onClick={() => handleSort('nombre')}
+          >
+            Nombre {getSortIcon()}
           </span>
           <span style={{ fontSize: '1.8em', width: 200, textAlign: 'center' }}>
             Teléfono
@@ -183,7 +226,7 @@ function Proveedores() {
         ) : (
           <>
             <div className="container-table-proveedores">
-              {listado.map((p) => {
+              {filteredAndSortedProveedores().map((p) => {
                 return (
                   <div key={p.id} className="proveedores-item-list">
                     <p>{p.nombre}</p>

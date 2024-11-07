@@ -302,7 +302,7 @@
   display: flex;
   flex-direction: column;
   position: absolute;
-  top: 50%;
+  top: 40%;
   border-radius: 20px;
   width: 40vw;
   z-index: 20;
@@ -579,4 +579,41 @@
   color: #000;
   font-weight: 300;
   padding-left: 30px;
+}
+
+.nombre-searchbar {
+  position: relative;
+}
+
+.nombre-searchbar input {
+  width: 300px;
+  height: 50px;
+  font-family: var(--normal-text);
+  font-size: 100%;
+  border-radius: 10px;
+  border: 1px solid var(--neutral-black);
+  color: var(--neutral-black);
+  padding-right: 2%;
+  transition: all 0.5s ease;
+}
+
+.nombre-searchbar input:focus {
+  outline: 2px solid var(--accent-green);
+  border: none;
+}
+
+.nombre-magnify-icon {
+  color: var(--neutral-black);
+  position: absolute;
+  top: 25%;
+  right: 2%;
+}
+
+.boton-add-and-search {
+  float: right;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 1.25rem;
 }
