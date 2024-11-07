@@ -248,9 +248,6 @@ function HomeBody({
               </option>
             ))}
           </select>
-          <button onClick={handleBuscarClases} className="profesor-btn">
-            Aceptar
-          </button>
         </div>
 
         <div className="home__btn-add-wrapper">
@@ -267,7 +264,6 @@ function HomeBody({
       <Dashboard
         header={
           <div className="home__dashboard-header">
-            <div style={{ width: '6rem' }}></div>
             <div className="home__date">
               <CalendarPicker
                 selectedDate={selectedDate}
