@@ -65,11 +65,19 @@ export default function ReservaDashboardItem({ reserva, onClick }) {
     <div
       className="item-reserva"
       data-estado={reserva.estado}
-      style={{ ...style, cursor: onClick ? 'pointer' : 'default' }}
+      style={{
+        ...style,
+        cursor:
+          reserva.estado === 'CANCELADO'
+            ? 'not-allowed'
+            : onClick
+              ? 'pointer'
+              : 'default',
+      }}
       ref={itemRef}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      onClick={onClick}
+      onClick={reserva.estado === 'CANCELADO' ? undefined : onClick}
     >
       <div className="item-reserva__data">
         {reserva.titular && (

@@ -15,8 +15,9 @@ import SelectorDeAlumnosDeClase from './SelectorDeAlumnosDeClase'
 
 // Styles
 import '../../styles/claseDetail.css'
+import Swal from 'sweetalert2'
 
-const ClaseDetails = ({ isVisible, onClose, reserva }) => {
+const ClaseDetails = ({ isVisible, onClose, reserva, setReservasDelDia }) => {
   const [active, setActive] = useState(false)
   const [horaInicio, setHoraInicio] = useState('')
   const [horaFinal, setHoraFinal] = useState('')
@@ -40,7 +41,7 @@ const ClaseDetails = ({ isVisible, onClose, reserva }) => {
   // Función para formatear la fecha
   const formateoFecha = (fecha) => {
     if (!fecha) {
-      return false; // o el valor que consideres apropiado en caso de que no haya fecha
+      return false // o el valor que consideres apropiado en caso de que no haya fecha
     }
     const numeroDia = new Date(fecha).getDay()
     const nombreDia = dias[numeroDia]
@@ -52,11 +53,10 @@ const ClaseDetails = ({ isVisible, onClose, reserva }) => {
   // Función para verificar si la clase ya pasó
   const clasePasada = (fecha) => {
     if (!fecha) {
-      return false; // o el valor que consideres apropiado en caso de que no haya fecha
+      return false // o el valor que consideres apropiado en caso de que no haya fecha
     }
-    return fecha.split('-').join('') < moment(new Date()).format('YYYYMMDD');
+    return fecha.split('-').join('') < moment(new Date()).format('YYYYMMDD')
   }
-  
 
   // Funciones para manejar la edición de la clase
   const handleDeleteAlumno = (indexItem) => {
@@ -113,6 +113,85 @@ const ClaseDetails = ({ isVisible, onClose, reserva }) => {
     setHoraInicio('')
     setDiaElegido('')
     setActProfe(null)
+  }
+
+  const suspenderClase = async () => {
+    const result = await Swal.fire({
+      icon: 'warning',
+      title: 'Suspender clase',
+      html: '¿Está seguro que desea suspender la clase?</span><br /><span style="color: #dc3741">Esta acción no se puede deshacer</span>',
+      showDenyButton: true,
+      denyButtonText: 'Suspender',
+      showCancelButton: true,
+      cancelButtonText: 'Cancelar',
+      showConfirmButton: false,
+    })
+    if (!result.isDenied) return
+
+    //x Suspender clase
+    //x Si ok:
+    //     actualizar el estado de la clase
+    //     cerrar modal
+    //x     mostrar mensaje ok
+    //x sino:
+    //x     mostar mensaje error
+
+    try {
+      const url = `${process.env.REACT_APP_BASE_URL}/suspender_reserva/${reserva.reservaId}`
+      const requestOptions = { method: 'PUT' }
+      const resp = await fetch(url, requestOptions)
+      const data = await resp.json()
+
+      if (data.rta === 'ok') {
+        // actualizar el estado de la clase
+        setReservasDelDia((prevReservas) => {
+          console.log('prevReservas', prevReservas)
+
+          return {
+            ...prevReservas,
+            [reserva.canchaId]: prevReservas[reserva.canchaId].map((r) =>
+              r.reservaId === reserva.reservaId
+                ? { ...r, estado: 'CANCELADO' }
+                : r
+            ),
+          }
+        })
+
+        onClose()
+
+        Swal.fire({
+          icon: 'success',
+          title: 'Clase suspendida con éxito',
+          toast: true,
+          position: 'top-end',
+          timer: 3000,
+          timerProgressBar: true,
+          showConfirmButton: false,
+        })
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Ocurrió un error al suspender la clase',
+          text: data.detail,
+          toast: true,
+          position: 'top-end',
+          timer: 3000,
+          timerProgressBar: true,
+          showConfirmButton: false,
+        })
+      }
+    } catch (e) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Ocurrió un error inesperado al suspender la clase',
+        text: 'Inténtelo más tarde',
+        toast: true,
+        position: 'top-end',
+        timer: 3000,
+        timerProgressBar: true,
+        showConfirmButton: false,
+      })
+    }
   }
 
   return (
@@ -191,8 +270,8 @@ const ClaseDetails = ({ isVisible, onClose, reserva }) => {
         )}
 
         <div id="clase-detail-profesor" className="clase-caja">
-        <h3>Profesor: {reserva.titular ? reserva.titular.nombre : ''}</h3>
-        <div id="profesor-label">
+          <h3>Profesor: {reserva.titular ? reserva.titular.nombre : ''}</h3>
+          <div id="profesor-label">
             <p className="clase-detail-nombre">Cambiar profesor</p>
           </div>
           {!clasePasada(reserva.fecha) && (
@@ -234,6 +313,9 @@ const ClaseDetails = ({ isVisible, onClose, reserva }) => {
             </button>
             <button id="clase-detail-cancelar" onClick={cerrarDetalles}>
               Cancelar
+            </button>
+            <button id="clase-detail-suspender" onClick={suspenderClase}>
+              Suspender
             </button>
           </div>
         )}
