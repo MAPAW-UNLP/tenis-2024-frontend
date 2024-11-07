@@ -4,6 +4,7 @@ export const AlumnosList = ({
   actAlu,
   setLoadingDetails,
   loadingDetails,
+  calcularDeuda,
 }) => {
   const LoadingSpinner = () => {
     return <div id="alumno-loading-spinner"></div>
@@ -47,6 +48,46 @@ export const AlumnosList = ({
                 />
               ) : (
                 alumno.nombre
+              )}
+            </div>
+
+            <div
+              className="table-cell-ajustes"
+              style={{
+                alignSelf: 'center',
+                fontFamily: 'var(--title-text)',
+                color: 'var(--neutral-white-text)',
+                fontSize: '1.5em',
+              }}
+            >
+              {loadingDetails && alumno.nombre === actAlu.nombre ? (
+                <LoadingSpinner
+                  active={loadingDetails}
+                  containerClass={'contenedorLogin'}
+                  loaderClass={'loader'}
+                />
+              ) : (
+                calcularDeuda(alumno).cantClases
+              )}
+            </div>
+
+            <div
+              className="table-cell-ajustes"
+              style={{
+                alignSelf: 'center',
+                fontFamily: 'var(--title-text)',
+                color: 'var(--neutral-white-text)',
+                fontSize: '1.5em',
+              }}
+            >
+              {loadingDetails && alumno.nombre === actAlu.nombre ? (
+                <LoadingSpinner
+                  active={loadingDetails}
+                  containerClass={'contenedorLogin'}
+                  loaderClass={'loader'}
+                />
+              ) : (
+                calcularDeuda(alumno).montoCobros
               )}
             </div>
           </div>
