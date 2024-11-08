@@ -146,7 +146,7 @@ export const HomeRe = () => {
 
             <div
               className="card ajustesCard bottom"
-              onClick={() => handleRedirect('../ajustes')}
+              onClick={() => handleRedirect('../precios')}
             >
               <div
                 className="image"
@@ -167,7 +167,7 @@ export const HomeRe = () => {
               </div>
               <div className="content">
                 <span className="title" style={{ color: '#78a1ca' }}>
-                  Ajustes
+                  Precios
                 </span>
 
                 <p className="desc">Configuracion de valores</p>
