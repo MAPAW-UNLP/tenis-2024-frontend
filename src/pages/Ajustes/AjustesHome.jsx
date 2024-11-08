@@ -1,11 +1,8 @@
 import { useNavigate } from 'react-router-dom'
 import { useSession } from '../../hooks/useSession'
 import NavBar from '../Navbar/NavBar'
-import {
-  ItemsIcon,
-  ClaseIcon,
-} from '../../components/items/ajustesHome/AjustesHomeIcons.js'
-
+import TipoClaseIcon from 'Img/TipoClasePage'
+import ItemPageIcon from '../../Img/ItemPage.js'
 import '../../styles/ajustes/ajustesHome.css'
 
 export const Precios = () => {
@@ -41,7 +38,7 @@ export const Precios = () => {
                 style={{ backgroundColor: '#DFC531', position: 'relative' }}
               >
                 <div style={{ fontSize: '5em', color: '#5d5d5d' }}>
-                  <ItemsIcon className="ajustes-icon" />
+                  <ItemPageIcon className="ajustes-icon" />
                 </div>
               </div>
               <div className="content">
@@ -64,7 +61,7 @@ export const Precios = () => {
                 style={{ backgroundColor: '#45C824', position: 'relative' }}
               >
                 <div style={{ fontSize: '5em', color: '#5d5d5d' }}>
-                  <ClaseIcon className="ajustes-icon" />
+                  <TipoClaseIcon className="ajustes-icon" />
                 </div>
               </div>
               <div className="content">

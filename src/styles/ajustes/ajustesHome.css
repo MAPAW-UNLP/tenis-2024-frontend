@@ -43,7 +43,7 @@
   border-top-left-radius: 15px;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: normal;
 }
 
 .title {
