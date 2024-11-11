@@ -91,9 +91,9 @@ const NavBar = ({ title }) => {
                         name={'Cobros'}
                       />
                       <LinkItem
-                        to={'/ajustes'}
+                        to={'/precios'}
                         setActive={setActive}
-                        name={'Ajustes'}
+                        name={'Precios'}
                       />
                     </>
                   )
