@@ -2,64 +2,65 @@ import { useEffect, useState } from 'react'
 import { GenericButton } from '../../components/Utils/GenericButton'
 import '../../styles/ajustes/tipoClaseForm.css'
 
-const FormularioTipoClase = ({ onClose, onSubmit, tipoClase }) => {
-  const [tipo, setTipo] = useState('')
+const FormularioItemAlquiler = ({ onClose, onSubmit, item }) => {
+  const [desc, setItem] = useState('')
   const [importe, setImporte] = useState('')
-  const [errores, setErrores] = useState({ tipo: false, importe: false })
+  const [errores, setErrores] = useState({ desc: false, importe: false })
   const [botonHabilitado, setBotonHabilitado] = useState(true)
 
-  const MAX_LENGTH = 20
+  const MAX_LENGTH = 50
 
   useEffect(() => {
-    if (tipoClase) {
-      setTipo(tipoClase.tipo)
-      setImporte(tipoClase.importe)
+    if (item) {
+      setItem(item.description)
+      setImporte(item.importe)
     } else {
-      setTipo('')
+      setItem('')
       setImporte('')
     }
-  }, [tipoClase])
+  }, [item])
 
   useEffect(() => {
-    if (tipoClase) {
+    // Comprobar si los valores actuales son iguales a los del ítem
+    if (item) {
       const unchanged =
-        tipo.trim() === tipoClase.tipo && importe == tipoClase.importe
+        desc.trim() === item.description && importe == item.importe
       setBotonHabilitado(!unchanged)
     }
-  }, [tipo, importe, tipoClase])
+  }, [desc, importe, item])
 
   const handleSubmit = (e) => {
     e.preventDefault()
 
     const nuevosErrores = {
-      tipo: '',
+      desc: '',
       importe: '',
     }
 
-    if (tipo.trim() === '') {
-      nuevosErrores.tipo = '*Debes ingresar el nombre'
-    } else if (tipo.length > MAX_LENGTH) {
-      nuevosErrores.tipo = `*El nombre no debe exceder ${MAX_LENGTH} caracteres`
+    if (desc.trim() === '') {
+      nuevosErrores.desc = '*Debes ingresar la descripcion del item.'
+    } else if (desc.length > MAX_LENGTH) {
+      nuevosErrores.desc = `*La descripción no debe exceder ${MAX_LENGTH} caracteres`
     }
 
     if (importe === '') {
       nuevosErrores.importe = '*Debes ingresar el importe'
     } else if (!Number.isInteger(Number(importe)) || parseFloat(importe) <= 0) {
-      nuevosErrores.importe = '*El importe debe ser un número  mayor a 0'
+      nuevosErrores.importe = '*El importe debe ser un número mayor a 0'
     }
 
     setErrores(nuevosErrores)
 
     // Si hay algún error, no enviar el formulario
-    if (nuevosErrores.tipo || nuevosErrores.importe) return
+    if (nuevosErrores.desc || nuevosErrores.importe) return
 
-    onSubmit({ id: tipoClase?.id, tipo, importe: parseInt(importe) })
+    onSubmit({ id: item?.id, desc, importe: parseInt(importe) })
     onClose()
   }
 
-  const handleTipoChange = (e) => {
+  const handleDescChange = (e) => {
     const value = e.target.value.toUpperCase()
-    setTipo(value)
+    setItem(value)
   }
 
   const handleImporteChange = (e) => {
@@ -70,22 +71,22 @@ const FormularioTipoClase = ({ onClose, onSubmit, tipoClase }) => {
   return (
     <div className="modal-background">
       <div className="modal-content">
-        <h2> {tipoClase ? 'Editar clase' : 'Crear clase'}</h2>
+        <h2>{item ? 'Editar Item' : 'Agregar nuevo Item'}</h2>
         <form className="new-clase-add-form" onSubmit={handleSubmit}>
           <div>
-            <label htmlFor="tipo" className="new-clase-add-form-label">
+            <label htmlFor="desc" className="new-clase-add-form-label">
               Nombre:{' '}
               <span style={{ color: 'red', marginLeft: '1.8rem' }}>*</span>
             </label>
             <input
-              id="tipo"
+              id="desc"
               type="text"
-              value={tipo}
-              placeholder={tipoClase ? tipoClase.tipo : 'MIXTA'}
-              onChange={handleTipoChange}
+              value={desc}
+              placeholder={item ? item.description : 'ZAPATILLAS '}
+              onChange={handleDescChange}
               className="new-clase-input"
             />
-            {errores.tipo && <p style={{ color: 'red' }}>{errores.tipo}</p>}
+            {errores.desc && <p style={{ color: 'red' }}>{errores.desc}</p>}
           </div>
           <div>
             <label htmlFor="importe" className="new-clase-add-form-label">
@@ -93,7 +94,7 @@ const FormularioTipoClase = ({ onClose, onSubmit, tipoClase }) => {
                 style={{
                   fontWeight: 'bold',
                   fontSize: '1em',
-                  color: ' green',
+                  color: 'dark green',
                 }}
               >
                 $
@@ -104,8 +105,8 @@ const FormularioTipoClase = ({ onClose, onSubmit, tipoClase }) => {
             <input
               id="importe"
               type="text" // Cambiado a "text" para aplicar la regex
+              placeholder={item ? item.importe : '1500'}
               value={importe}
-              placeholder={tipoClase ? tipoClase.importe : '500'}
               onChange={handleImporteChange}
             />
             {errores.importe && (
@@ -118,7 +119,7 @@ const FormularioTipoClase = ({ onClose, onSubmit, tipoClase }) => {
             }
             disabled={!botonHabilitado}
           >
-            {tipoClase ? 'Editar' : 'Crear'}{' '}
+            {item ? 'Editar' : 'Crear'}
           </button>
           <button type="button" className="cancel-button" onClick={onClose}>
             Cancelar
@@ -129,4 +130,4 @@ const FormularioTipoClase = ({ onClose, onSubmit, tipoClase }) => {
   )
 }
 
-export default FormularioTipoClase
+export default FormularioItemAlquiler

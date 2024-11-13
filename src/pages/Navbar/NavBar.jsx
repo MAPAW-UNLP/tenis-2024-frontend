@@ -60,9 +60,10 @@ const NavBar = ({ title }) => {
                   return (
                     <>
                       <LinkItem
-                        to={'/crearClase'}
+                        to={'/nuevaReserva'}
                         setActive={setActive}
-                        name={'Crear clase'}
+                        name={'Crear reserva'}
+                        className="options-sidebar"
                       />
                       <LinkItem
                         to={'/ausencias'}
@@ -90,9 +91,9 @@ const NavBar = ({ title }) => {
                         name={'Cobros'}
                       />
                       <LinkItem
-                        to={'/ajustes'}
+                        to={'/precios'}
                         setActive={setActive}
-                        name={'Ajustes'}
+                        name={'Precios'}
                       />
                     </>
                   )
@@ -100,9 +101,10 @@ const NavBar = ({ title }) => {
                   return (
                     <>
                       <LinkItem
-                        to={'/crearClase'}
+                        to={'/nuevaReserva'}
                         setActive={setActive}
-                        name={'Crear clase'}
+                        name={'Crear reserva'}
+                        className="options-sidebar"
                       />
                       <LinkItem
                         to={'/ausencias'}

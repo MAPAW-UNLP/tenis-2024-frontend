@@ -85,11 +85,11 @@
 
 .dashboard__col[data-sticky='true'] {
   left: 0;
-  z-index: 3;
+  z-index: 4;
   width: 2rem;
 }
 
 .dashboard__row[data-sticky='true'] {
   top: 0;
-  z-index: 2;
+  z-index: 3;
 }

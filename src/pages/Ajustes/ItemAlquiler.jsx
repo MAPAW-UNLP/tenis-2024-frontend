@@ -4,37 +4,37 @@ import '../../styles/ajustes/ajustes.css'
 import { GenericButton } from '../../components/Utils/GenericButton'
 import LoaderSpinner from '../../components/LoaderSpinner'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrashAlt, faEdit } from '@fortawesome/free-solid-svg-icons'
+import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { GenericButtonDisabled } from '../../components/Utils/GenericButtonDisabled'
-import FormularioTipoClase from '../../components/Clase/AgregarTipoClase'
+import FormularioItemAlquiler from 'components/Item/AgregarItemAlquiler'
 import Swal from 'sweetalert2'
 
-export const Ajustes = () => {
+export const ItemsAlquiler = () => {
   const URL_BASE = `http://localhost:8083/api/`
-  const [tipoClases, setTipoClases] = useState([])
+  const [itemAlquiler, setItemAlquiler] = useState([])
   const [valoresOriginales, setValoresOriginales] = useState({})
   const [cargando, setCargando] = useState(true)
   const [tempChanges, setTempChanges] = useState({})
   const [mensajeUsuario, setMensajeUsuario] = useState('')
-  const [tipoClasePorBorrar, setTipoClasePorBorrar] = useState(null) // Tipo de clase a eliminar
+  const [itemPorBorrar, setItemPorBorrar] = useState(null) // Item a eliminar
   const [botonHabilitado, setBotonHabilitado] = useState(false)
   const [mostrarFormulario, setMostrarFormulario] = useState(false)
-  const [tipoClaseEditar, setTipoClaseEditar] = useState(null)
+  const [itemEditar, setItemEditar] = useState(null)
 
   useEffect(() => {
-    fetchTipoClases()
+    fetchItemAlquiler()
   }, [])
 
-  const fetchTipoClases = async () => {
+  const fetchItemAlquiler = async () => {
     setCargando(true)
     try {
-      const response = await fetch(`${URL_BASE}clases`, { method: 'GET' })
+      const response = await fetch(`${URL_BASE}itemalquiler`, { method: 'GET' })
       const data = await response.json()
-      setTipoClases(data)
+      setItemAlquiler(data)
       // Almacenar los valores originales de importe
       const originales = {}
-      data.forEach((clase) => {
-        originales[clase.id] = clase.importe
+      data.forEach((item) => {
+        originales[item.id] = item.importe
       })
       setValoresOriginales(originales)
     } catch (error) {
@@ -44,28 +44,28 @@ export const Ajustes = () => {
     }
   }
 
-  const handleAgregarTipoClase = async (nuevoTipoClase) => {
+  const handleAddItemAlquiler = async (nuevoItem) => {
     setCargando(true)
-    const method = nuevoTipoClase.id ? 'PUT' : 'POST'
-    const url = nuevoTipoClase.id
-      ? `${URL_BASE}modClase`
-      : `${URL_BASE}addClase`
 
+    const method = nuevoItem.id ? 'PUT' : 'POST'
+    const url = nuevoItem.id
+      ? `${URL_BASE}modItemAlquiler`
+      : `${URL_BASE}addItemAlquiler`
     const response = await fetch(url, {
       method: method,
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(nuevoTipoClase),
+      body: JSON.stringify(nuevoItem),
     })
 
     const data = await response.json()
 
     if (data.status === 'ok') {
-      console.log('Tipo de clase creado exitosamente')
-      await fetchTipoClases() // Recargar los tipos de clase
+      console.log('Item agregado exitosamente')
+      await fetchItemAlquiler() // Recargar los items
       Swal.fire({
         position: 'bottom-right',
         icon: 'success',
-        title: nuevoTipoClase.id ? 'Clase editado' : 'Clase creado',
+        title: nuevoItem.id ? 'Item actualizado' : 'Item agregado',
         showConfirmButton: false,
         timer: 4000,
         background: '#4CAF50',
@@ -78,11 +78,9 @@ export const Ajustes = () => {
     } else {
       console.error(data.message)
       Swal.fire({
-        position: 'bottom-end',
+        position: 'bottom-right',
         icon: 'error',
-        title: nuevoTipoClase.id
-          ? 'Error al editar clase'
-          : 'Error al crear clase.',
+        title: nuevoItem.id ? 'Error al editar item' : 'Error al agregar item',
         showConfirmButton: false,
         timer: 4000,
         background: '#F44336',
@@ -96,20 +94,20 @@ export const Ajustes = () => {
     }
   }
 
-  /**
-  const handleTipoClaseChange = (tipo, valor) => {
+  /** 
+  const handleItemChange = (item, valor) => {
     const nuevoImporte = valor.replace(/\D/g, '') // Solo permite números enteros
     setTempChanges((prev) => ({
       ...prev,
-      [tipo.id]: nuevoImporte,
+      [item.id]: nuevoImporte,
     }))
 
     // Actualizar solo la vista localmente para mostrar el valor temporal
-    setTipoClases((prevTipoClases) =>
-      prevTipoClases.map((tipoClase) =>
-        tipoClase.id === tipo.id
-          ? { ...tipoClase, importe: nuevoImporte }
-          : tipoClase
+    setItemAlquiler((prevItem) =>
+      prevItem.map((itemAlquiler) =>
+        itemAlquiler.id === item.id
+          ? { ...itemAlquiler, importe: nuevoImporte }
+          : itemAlquiler
       )
     )
   }
@@ -126,13 +124,13 @@ export const Ajustes = () => {
 
   const handleConfirmarCambios = async () => {
     setCargando(true)
-    for (const idTipoClase in tempChanges) {
-      const nuevoImporte = tempChanges[idTipoClase]
+    for (const idItem in tempChanges) {
+      const nuevoImporte = tempChanges[idItem]
       try {
-        await fetch(`${URL_BASE}modClase`, {
+        await fetch(`${URL_BASE}modItemAlquiler`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ id: idTipoClase, importe: nuevoImporte }),
+          body: JSON.stringify({ id: idItem, importe: nuevoImporte }),
         })
       } catch (error) {
         console.error('Error al actualizar el importe:', error)
@@ -142,16 +140,16 @@ export const Ajustes = () => {
     setTempChanges({})
     setBotonHabilitado(false)
     setCargando(false)
-    await fetchTipoClases()
+    await fetchItemAlquiler()
   }
-     */
+    */
 
-  const handleEliminarTipoClase = (tipoClase) => {
-    setTipoClasePorBorrar(tipoClase)
+  const handleEliminarItem = (item) => {
+    setItemPorBorrar(item)
     setMensajeUsuario(
       <span style={{ fontSize: '1.2em' }}>
-        ¿Está seguro de que quiere eliminar la clase:{' '}
-        <span style={{ color: 'red' }}>{tipoClase.tipo}</span>?<br></br> Esta
+        ¿Está seguro de que quiere eliminar el item:{' '}
+        <span style={{ color: 'red' }}>{item.description}</span>?<br></br> Esta
         acción no se puede deshacer.
       </span>
     )
@@ -160,28 +158,28 @@ export const Ajustes = () => {
 
   const handleCerrarMensaje = () => {
     setMensajeUsuario('')
-    setTipoClasePorBorrar(null)
+    setItemPorBorrar(null)
     document.getElementById('mensajesUsuario').style.display = 'none'
   }
 
   const handleAceptarBorrado = async () => {
     handleCerrarMensaje()
-    if (!tipoClasePorBorrar) return
+    if (!itemPorBorrar) return
 
     setCargando(true)
-    const response = await fetch(`${URL_BASE}bajaClase`, {
+    const response = await fetch(`${URL_BASE}bajaItemAlquiler`, {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ id: tipoClasePorBorrar.id }),
+      body: JSON.stringify({ id: itemPorBorrar.id }),
     })
     const data = await response.json()
     if (data.status === 'ok') {
-      console.log('Clase eliminada exitosamente')
-      await fetchTipoClases() // Recargar los datos después de eliminar
+      console.log('Item eliminado exitosamente')
+      await fetchItemAlquiler() // Recargar los datos después de eliminar
       Swal.fire({
         position: 'bottom-right',
         icon: 'success',
-        title: 'Clase eliminada exitosamente',
+        title: 'Item eliminado',
         showConfirmButton: false,
         timer: 4000,
         background: '#4CAF50',
@@ -197,7 +195,7 @@ export const Ajustes = () => {
       Swal.fire({
         position: 'bottom-right',
         icon: 'error',
-        title: 'Error al eliminar la clase',
+        title: 'Error al eliminar item',
         showConfirmButton: false,
         timer: 4000,
         background: '#F44336',
@@ -212,7 +210,7 @@ export const Ajustes = () => {
 
   return (
     <div id="ajustes-component">
-      <NavBar title={'Clases'} />
+      <NavBar title={'Items'} />
       {cargando ? (
         <LoaderSpinner
           active={cargando}
@@ -235,17 +233,17 @@ export const Ajustes = () => {
               borderRadius="1em"
               onClick={() => setMostrarFormulario(true)}
             >
-              Crear clase
+              Agregar item
             </GenericButton>
 
             {mostrarFormulario && (
-              <FormularioTipoClase
+              <FormularioItemAlquiler
                 onClose={() => {
                   setMostrarFormulario(false)
-                  setTipoClaseEditar(null)
+                  setItemEditar(null)
                 }}
-                onSubmit={handleAgregarTipoClase}
-                tipoClase={tipoClaseEditar}
+                onSubmit={handleAddItemAlquiler}
+                item={itemEditar}
               />
             )}
             <div
@@ -267,7 +265,7 @@ export const Ajustes = () => {
                   fontSize: '1.2em',
                 }}
               >
-                Clase
+                Item
               </div>
               <div
                 className="table-cell-ajustes"
@@ -282,16 +280,13 @@ export const Ajustes = () => {
               </div>
             </div>
 
-            {tipoClases.map((tipoClase) => (
-              <div
-                className="table-row-ajustes"
-                key={`tipoClase-${tipoClase.id}`}
-              >
+            {itemAlquiler.map((item) => (
+              <div className="table-row-ajustes" key={`item-${item.id}`}>
                 <div
                   className="table-cell-ajustes"
                   style={{ color: '#5d5d5d' }}
                 >
-                  {tipoClase.tipo}
+                  {item.description}
                 </div>
                 <div
                   className="table-cell-ajustes"
@@ -307,10 +302,8 @@ export const Ajustes = () => {
                       color: '#5d5d5d',
                       fontSize: 'inherit',
                     }}
-                    value={'$' + (tipoClase.importe || '')}
-                    /**        onChange={(e) =>
-                      handleTipoClaseChange(tipoClase, e.target.value)
-                    }*/
+                    value={'$' + (item.importe || '')}
+                    /*onChange={(e) => handleItemChange(item, e.target.value)} **/
                   />
                   <FontAwesomeIcon
                     icon={faEdit}
@@ -321,7 +314,7 @@ export const Ajustes = () => {
                     }}
                     onClick={() => {
                       setMostrarFormulario(true)
-                      setTipoClaseEditar(tipoClase)
+                      setItemEditar(item)
                     }}
                   />
                   <FontAwesomeIcon
@@ -331,7 +324,7 @@ export const Ajustes = () => {
                       marginLeft: '10px',
                       color: 'red',
                     }}
-                    onClick={() => handleEliminarTipoClase(tipoClase)}
+                    onClick={() => handleEliminarItem(item)}
                   />
                 </div>
               </div>

@@ -7,13 +7,13 @@ import Proveedores from './pages/Proveedores/Proveedores'
 import { Cobros } from './pages/Cobros/Cobros'
 import { Pagos } from './pages/Pagos/Pagos'
 import { Balance } from './pages/Balance/Balance'
-import CrearClase from './pages/CrearClase'
 import { Movimientos } from './pages/Movimientos/Movimientos'
 import SuspencionClase from './pages/AusenciasSuspenciones/SuspencionClase'
 import PeriodoAusencia from './pages/AusenciasSuspenciones/PeriodoAusencia'
 import SolicitudesSuspencion from './pages/AusenciasSuspenciones/SolicitudesSuspencion'
 import SolicitudesAusencias from './pages/AusenciasSuspenciones/SolicitudesAusencias'
 import Ausencias from './pages/AusenciasSuspenciones/Ausencias'
+import { ItemsAlquiler } from 'pages/Ajustes/ItemAlquiler'
 
 //VarianteHome
 import HomeVariant from './pages/Reserva/HomeVariant'
@@ -26,6 +26,7 @@ import { Routes, Route } from 'react-router-dom'
 import { Ajustes } from './pages/Ajustes/Ajustes'
 import { AlumnosNew } from './pages/Alumno/AlumnosNew'
 import ProfesorHomePage from 'pages/Profesor/ProfesorHomePage'
+import { Precios } from 'pages/Ajustes/AjustesHome'
 import ProximasClases from './pages/ProximasClases/ProximasClases'
 
 function App() {
@@ -46,8 +47,9 @@ function App() {
           <Route path="/balance" element={<Balance />} />
           <Route path="/movimientos" element={<Movimientos />} />
           <Route path="/nuevaReserva" element={<Reservas />} />
-          <Route path="/crearClase" element={<CrearClase />} />
           <Route path="/ajustes" element={<Ajustes />} />
+          <Route path="/itemsAlquiler" element={<ItemsAlquiler />} />
+          <Route path="/precios" element={<Precios />} />
           <Route path="/periodoAusencia" element={<PeriodoAusencia />} />
           <Route path="/suspencionClase" element={<SuspencionClase />} />
           <Route
