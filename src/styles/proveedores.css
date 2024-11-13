@@ -581,7 +581,6 @@
   padding-left: 30px;
 }
 
-
 .nombre-searchbar {
   position: relative;
 }
@@ -617,6 +616,7 @@
   align-items: center;
   width: 100%;
   margin-bottom: 1.25rem;
+}
 
 .provider-details-container {
   display: grid;
