@@ -15,10 +15,7 @@
   margin-top: 2em;
   margin-bottom: 2em;
   border: 1px solid #5d5d5d;
-  border-top-left-radius: 1.1em;
-  border-top-right-radius: 1.1em;
-  border-bottom-left-radius: 1.1em;
-  border-bottom-right-radius: 1.1em;
+  border-radius: 1.1em;
 }
 
 .table-head-ajustes {
@@ -45,13 +42,13 @@
 
 .table-row-ajustes {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   padding: 0.6em;
   width: 100%;
 }
 
 .table-cell-ajustes {
-  width: 50%;
+  flex: 1;
   text-align: center;
   font-family: var(--title-text);
   letter-spacing: 1px;
@@ -69,4 +66,27 @@
   font-family: var(--title-text);
   letter-spacing: 1px;
   font-size: larger;
+}
+
+.image-ajustes {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #dfc531;
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  position: relative;
+}
+
+/* Estilos específicos para los iconos de ajustes */
+.ajustes-icon {
+  font-size: 3em; /* Ajusta el tamaño según sea necesario */
+  color: #5d5d5d;
+  position: relative;
+}
+
+.ajustes-icon svg {
+  font-size: 2.5em; /* Ajusta el tamaño del ícono aquí */
+  color: #5d5d5d;
 }
