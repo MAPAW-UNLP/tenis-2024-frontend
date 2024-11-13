@@ -1,29 +1,27 @@
 // Libraries
+import moment from 'moment'
 import { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import moment from 'moment'
 
 // API
-import { getAlumnos } from 'api/alumnos'
 import { getCanchas } from 'api/canchas'
-import { getProfesores, getClasesProfesor } from 'api/profesores'
+import { getClasesProfesor, getProfesores } from 'api/profesores'
 import { getReservas } from 'api/reservas'
 
 // Components
 import LoaderSpinner from 'components/LoaderSpinner'
 import AlquilerDetails from 'components/Reserva/AlquilerDetails'
 import CalendarPicker from 'components/Reserva/CalendarComponent'
-import SelectComponent from 'components/Utils/SelectComponent'
 import ClaseDetails from 'components/Reserva/ClaseDetails'
 // import Reserva from 'components/Reserva/Reserva'
-import NavBar from 'pages/Navbar/NavBar'
 import Dashboard from 'components/Dashboard/Dashboard'
+import NotFound404 from 'components/NotFound404/NotFound404'
 import ReservaDashboardItem from 'components/Reserva/ReservaDashboardItem'
 import { ordenarPorNombre } from 'components/Utils/Functions'
-import NotFound404 from 'components/NotFound404/NotFound404'
+import NavBar from 'pages/Navbar/NavBar'
 
 // Fontawesome
-import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import 'styles/home.css'
@@ -105,6 +103,9 @@ export default function Home() {
     })()
   }, [])
 
+  console.log('reservas', reservas)
+  console.log('clasesReservas', clasesReservas)
+
   return (
     <div id="home-component">
       <NavBar title={'Tennis app'} />
@@ -148,6 +149,8 @@ function HomeBody({
   const [selectedDate, setSelectedDate] = useState(Date.now())
   const [claseDetail, setClaseDetail] = useState({})
   const [profesorSeleccionado, setProfesorSeleccionado] = useState('todos')
+
+  console.log('reservasDelDia', reservasDelDia)
 
   const navigate = useNavigate()
 
@@ -224,39 +227,43 @@ function HomeBody({
         isVisible={isClaseDetailsVisible}
         onClose={() => setIsClaseDetailsVisible(false)}
         reserva={claseDetail}
+        setReservasDelDia={setReservasDelDia}
       />
 
-      <div className="profesor-select-container">
-        <label htmlFor="profesor-select" className="profesor-label">
-          Filtrar por profesor
-        </label>
-        <select
-          id="profesor-select"
-          value={profesorSeleccionado}
-          onChange={(e) => setProfesorSeleccionado(e.target.value)}
-          className="profesor-select"
-        >
-          <option value="todos">Todas las clases y reservas</option>
-          {profesores.map((profesor) => (
-            <option key={profesor.id} value={profesor.id}>
-              Clases de {profesor.nombre}
-            </option>
-          ))}
-        </select>
-        <button onClick={handleBuscarClases} className="profesor-btn">
-          Aceptar
-        </button>
+      <div className="home__header">
+        <div className="profesor-select-container">
+          <label htmlFor="profesor-select" className="profesor-label">
+            Filtrar por profesor
+          </label>
+          <select
+            id="profesor-select"
+            value={profesorSeleccionado}
+            onChange={(e) => setProfesorSeleccionado(e.target.value)}
+            className="profesor-select"
+          >
+            <option value="todos">Todas las clases y reservas</option>
+            {profesores.map((profesor) => (
+              <option key={profesor.id} value={profesor.id}>
+                Clases de {profesor.nombre}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className="home__btn-add-wrapper">
+          <button
+            className="home__btn-add"
+            onClick={() => navigate('../nuevaReserva')}
+          >
+            <span>Crear reserva</span>
+            <FontAwesomeIcon icon={faPlus} />
+          </button>
+        </div>
       </div>
 
       <Dashboard
         header={
           <div className="home__dashboard-header">
-            <button
-              className="home__btn-add"
-              onClick={() => navigate('../nuevaReserva')}
-            >
-              <FontAwesomeIcon icon={faPlusCircle} />
-            </button>
             <div className="home__date">
               <CalendarPicker
                 selectedDate={selectedDate}
@@ -325,7 +332,6 @@ function HomeBody({
                     } else {
                       setIsClaseDetailsVisible(true)
                       setClaseDetail(reserva)
-                      console.log('CLIQUEO ', reserva) // Verifica el objeto reserva
                     }
                   }}
                 />

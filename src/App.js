@@ -7,7 +7,6 @@ import Proveedores from './pages/Proveedores/Proveedores'
 import { Cobros } from './pages/Cobros/Cobros'
 import { Pagos } from './pages/Pagos/Pagos'
 import { Balance } from './pages/Balance/Balance'
-import CrearClase from './pages/CrearClase'
 import { Movimientos } from './pages/Movimientos/Movimientos'
 import SuspencionClase from './pages/AusenciasSuspenciones/SuspencionClase'
 import PeriodoAusencia from './pages/AusenciasSuspenciones/PeriodoAusencia'
@@ -48,7 +47,6 @@ function App() {
           <Route path="/balance" element={<Balance />} />
           <Route path="/movimientos" element={<Movimientos />} />
           <Route path="/nuevaReserva" element={<Reservas />} />
-          <Route path="/crearClase" element={<CrearClase />} />
           <Route path="/ajustes" element={<Ajustes />} />
           <Route path="/itemsAlquiler" element={<ItemsAlquiler />} />
           <Route path="/precios" element={<Precios />} />

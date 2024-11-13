@@ -61,14 +61,25 @@ export default function ReservaDashboardItem({ reserva, onClick }) {
     itemRef.current.style.height = style.height
   }
 
+  console.log(reserva)
+
   return (
     <div
       className="item-reserva"
-      style={{ ...style, cursor: onClick ? 'pointer' : 'default' }}
+      data-estado={reserva.estado}
+      style={{
+        ...style,
+        cursor:
+          reserva.estado === 'CANCELADO'
+            ? 'not-allowed'
+            : onClick
+              ? 'pointer'
+              : 'default',
+      }}
       ref={itemRef}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      onClick={onClick}
+      onClick={reserva.estado === 'CANCELADO' ? undefined : onClick}
     >
       <div className="item-reserva__data">
         {reserva.titular && (
@@ -79,8 +90,11 @@ export default function ReservaDashboardItem({ reserva, onClick }) {
             {reserva.titular.nombre}
           </p>
         )}
-        <p className="item-reserva__rol">
-          {reserva.tipo === 'ALQUILER' ? 'Cliente' : 'Profesor'}
+        <p
+          className="item-reserva__rol text-ellipsis"
+          title={reserva.canchaNombre}
+        >
+          {reserva.canchaNombre}
         </p>
         <p className="item-reserva__horarios">
           {reserva.horaIni} - {reserva.horaFin}
