@@ -5,24 +5,43 @@
   display: flex;
   align-items: center;
 
-  & .home__btn-add {
-    all: unset;
-    height: 100%;
-    width: 6rem;
-    background-color: var(--accent-green);
-    text-align: center;
-    font-size: 1.5em;
-    cursor: pointer;
-    transition: all ease-in-out 0.15s;
-
-    &:hover {
-      background-color: var(--accent-yellow);
-      color: var(--neutral-black);
-    }
-  }
-
   & .home__date {
     margin: 0 auto;
+  }
+}
+
+.home__header {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 1rem 1rem 0;
+  font-family: var(--normal-text);
+  position: relative;
+}
+
+.home__btn-add-wrapper {
+  display: flex;
+  justify-content: end;
+}
+
+.home__btn-add {
+  all: unset;
+  padding: 0.75rem 1.25rem;
+  border-radius: 0.5rem;
+
+  background-color: var(--accent-green);
+  color: var(--neutral-white-text);
+
+  font-family: var(--normal-text);
+  font-weight: bolder;
+  cursor: pointer;
+
+  transition: all ease-in-out 0.15s;
+  &:hover {
+    background-color: var(--accent-tennis-green);
+  }
+
+  & span {
+    padding-inline-end: 0.5rem;
   }
 }
 

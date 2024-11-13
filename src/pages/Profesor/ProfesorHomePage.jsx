@@ -1,4 +1,4 @@
-import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { getClasesProfesor, getProfesorById } from 'api/profesores'
 import Dashboard from 'components/Dashboard/Dashboard'
@@ -118,15 +118,22 @@ function ProfesorHomePageBody({ profesor, setProfesor }) {
 
   return (
     <>
+      <div className="home__header">
+        <div className="home__btn-add-wrapper">
+          <button
+            className="home__btn-add"
+            onClick={() => navigate('../nuevaReserva')}
+          >
+            <span>Crear reserva</span>
+            <FontAwesomeIcon icon={faPlus} />
+          </button>
+        </div>
+      </div>
+
       <Dashboard
         header={
           <div className="home__dashboard-header">
-            <button
-              className="home__btn-add"
-              onClick={() => alert('No funciona')}
-            >
-              <FontAwesomeIcon icon={faPlusCircle} />
-            </button>
+            <div style={{ width: '6rem' }}></div>
             <div className="home__date">
               <CalendarPicker
                 selectedDate={selectedDate}
@@ -155,12 +162,12 @@ function ProfesorHomePageBody({ profesor, setProfesor }) {
           ))}
         </Dashboard.Col>
 
-        <Dashboard.Col style={{ backgroundColor: '#' }}>
+        <Dashboard.Col style={{ backgroundColor: '#FFA500' }}>
           <Dashboard.Row
             header={true}
             sticky={true}
             className="home__cancha"
-            style={{ backgroundColor: 'hsl(0, 0%, 76%)' }}
+            style={{ backgroundColor: '#FFA500' }}
           >
             <span
               className="text-ellipsis"
