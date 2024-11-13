@@ -113,34 +113,18 @@ export const AlumnosNew = () => {
   }, [actAlumnos])
 
   const calcularDeuda = (cliente) => {
-    console.log('🚀 ~ calcularDeuda ~ cliente:', cliente.id)
-    console.log('🚀 ~ calcularDeuda ~ cliente.cobros:', cliente.cobros)
-
     const reservasPasadas = reservas.filter(
       (reserva) => new Date(reserva.fecha) < new Date()
     )
-    console.log('🚀 ~ calcularDeuda ~ reservasPasadas:', reservasPasadas)
-
-    console.log('🚀 ~ calcularDeuda ~ grupos:', grupos)
     const gruposCliente = grupos.filter(
       (grupo) => grupo.personaId === cliente.id
     )
-    console.log('🚀 ~ calcularDeuda ~ gruposCliente:', gruposCliente)
     const gruposPasadosCliente = gruposCliente.filter((grupo) =>
       reservasPasadas.find((reserva) => reserva.id === grupo.reservaId)
     )
 
-    console.log(
-      '🚀 ~ gruposPasadosCliente ~ gruposPasadosCliente:',
-      gruposPasadosCliente
-    )
-
     const reservasPasadasCliente = reservasPasadas.filter((reserva) =>
       gruposPasadosCliente.some((grupo) => grupo.reservaId === reserva.id)
-    )
-    console.log(
-      '🚀 ~ calcularDeuda ~ reservasPasadasCliente:',
-      reservasPasadasCliente
     )
 
     const cantClases = cliente.cobros.length - gruposPasadosCliente.length
@@ -156,8 +140,6 @@ export const AlumnosNew = () => {
 
     const montoCobros = reservasPasadasClienteReducidaPorHaberCobros.reduce(
       (acc, elem) => {
-        console.log('🚀 ~ elementoooooooooooooooooooooo:', elem)
-
         if (elem.idTipoClase === 1) {
           return acc + 50
         } else {

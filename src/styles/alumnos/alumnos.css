@@ -51,4 +51,6 @@
   box-shadow: 0px 1.5px 1px #48617a;
 }
 
-/* DETALLES DE ALUMNO */
+.deudor {
+  color: #ff0000;
+}
