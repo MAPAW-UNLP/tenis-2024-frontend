@@ -52,6 +52,18 @@ export const HomeRe = () => {
           className="reservasCard"
         />
 
+        {user.rolPorDefecto === 'ROLE_CLIENTE' && (
+          <>
+            <Card
+              title="historialpagos"
+              description="Historial de pagos del cliente"
+              customColor="#b994f5"
+              icon={faDollarSign}
+              className="historialPagosCard"
+            />
+          </>
+        )}
+
         {user.rolPorDefecto === 'ROLE_ADMIN' && (
           <>
             <div

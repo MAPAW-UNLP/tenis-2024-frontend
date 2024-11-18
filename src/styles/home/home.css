@@ -14,6 +14,11 @@
   margin-top: 1em;
 }
 
+.historialPagosCard:hover {
+  box-shadow: 0px 10px 30px #b994f5;
+  border: 5px solid #b994f5;
+}
+
 .movimientosCard:hover {
   box-shadow: 0px 10px 30px #94f5c5;
   border: 5px solid #94f5c5;

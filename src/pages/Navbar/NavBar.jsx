@@ -121,6 +121,11 @@ const NavBar = ({ title }) => {
                         setActive={setActive}
                         name={'Clases'}
                       />
+                      <LinkItem
+                        to={'/historialPagos'}
+                        setActive={setActive}
+                        name={'HistorialPagos'}
+                      />
                     </>
                   )
                 default:
