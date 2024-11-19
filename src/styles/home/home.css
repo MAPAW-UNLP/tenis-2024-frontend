@@ -50,6 +50,11 @@
   border: 5px solid #78a1ca;
 }
 
+.clasesCard:hover {
+  box-shadow: 0px 10px 30px #ee82ee;
+  border: 5px solid #ee82ee;
+}
+
 .card a {
   text-decoration: none;
 }
