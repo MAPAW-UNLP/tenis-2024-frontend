@@ -20,7 +20,7 @@
 }
 
 .table-body .table-row:nth-child(even) {
-  background-color: #cb9242;
+  background-color: #5d5d5d;
 }
 
 @media (max-width: 630px) {
@@ -67,4 +67,53 @@
   border-radius: 0.25rem;
   font-size: 1rem;
   text-align: center;
+}
+
+.input-date {
+  font-family: var(--normal-text);
+  height: 2.2rem;
+  border-radius: 2px;
+  font-size: large;
+  background-color: var(--neutral-white);
+  border: 1px solid lightgrey;
+  color: var(--neutral-black);
+  padding-left: 5px;
+  transition: all 0.5s ease;
+  cursor: pointer;
+  width: 80%;
+  margin-right: 10px;
+}
+
+.button-clases-head {
+  height: 2.5em;
+  width: 8em;
+  background-color: var(--accent-green);
+  border: none;
+  color: var(--neutral-white-text);
+  cursor: pointer;
+  font-size: 0.6em;
+  border-radius: 20px;
+  font-weight: bold;
+}
+
+.clases-container {
+  margin-top: 2vh;
+  width: 100%;
+  /* background-color: var(--neutral-black); */
+  cursor: default;
+  /* padding: 2.5px; */
+  max-height: 60vh;
+}
+
+.clases-head {
+  color: var(--neutral-black);
+  font-family: var(--title-text);
+  font-size: 1.5em;
+  /* padding-left: 15px; */
+  padding: 10px;
+  background-color: var(--neutral-white);
+  /* border: 2px; */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }

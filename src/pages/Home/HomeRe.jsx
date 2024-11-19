@@ -55,6 +55,13 @@ export const HomeRe = () => {
         {user.rolPorDefecto === 'ROLE_CLIENTE' && (
           <>
             <Card
+              title="clases"
+              description="Visualizar las próximas clases"
+              customColor="#ee82ee"
+              icon={faCalendar}
+              className="clasesCard"
+            />
+            <Card
               title="historialpagos"
               description="Historial de pagos del cliente"
               customColor="#b994f5"
