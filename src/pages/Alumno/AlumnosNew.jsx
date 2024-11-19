@@ -63,6 +63,11 @@ export const AlumnosNew = () => {
       try {
         const response = await fetch(`${URL_BASE}clientes`)
         const clientesData = await response.json()
+        const grupos = await fetch(`${URL_BASE}grupos`)
+        const gruposData = await grupos.json()
+        const reservas = await fetch(`${URL_BASE}reservas`)
+        const reservasData = await reservas.json()
+        console.log('🚀 ~ fetchClientesConCobros ~ reservasData:', reservasData)
 
         const clientesConCobros = await Promise.all(
           clientesData.map(async (cliente) => {
@@ -70,7 +75,13 @@ export const AlumnosNew = () => {
               `${URL_BASE}cobros_por_cliente?clienteId=${cliente.id}`
             )
             const cobrosData = await cobrosResponse.json()
-            return { ...cliente, cobros: cobrosData }
+            const newCliente = { ...cliente, cobros: cobrosData }
+            const deuda = calcularDeuda(
+              newCliente,
+              gruposData,
+              reservasData.detail
+            )
+            return { ...cliente, cobros: cobrosData, deuda }
           })
         )
 
@@ -107,40 +118,58 @@ export const AlumnosNew = () => {
       }
     }
 
-    fetchClientesConCobros()
     fetchGrupos()
     fetchReservas()
+    fetchClientesConCobros()
   }, [actAlumnos])
 
-  const calcularDeuda = (cliente) => {
-    const reservasPasadas = reservas.filter(
-      (reserva) => new Date(reserva.fecha) < new Date()
-    )
-    const gruposCliente = grupos.filter(
+  const calcularDeuda = (cliente, gruposData, reservasData) => {
+    console.log('🚀 ~ calcularDeuda ~ reservasData:', reservasData)
+    console.log('🚀 ~ calcularDeuda ~ grupos:', gruposData)
+
+    // const reservasData = reservasData.filter(
+    //   (reserva) => new Date(reserva.fecha) < new Date()
+    // )
+
+    const gruposCliente = gruposData.filter(
       (grupo) => grupo.personaId === cliente.id
     )
     const gruposPasadosCliente = gruposCliente.filter((grupo) =>
-      reservasPasadas.find((reserva) => reserva.id === grupo.reservaId)
+      reservasData.find((reserva) => reserva.reservaId === grupo.reservaId)
     )
 
-    const reservasPasadasCliente = reservasPasadas.filter((reserva) =>
-      gruposPasadosCliente.some((grupo) => grupo.reservaId === reserva.id)
+    const reservasDataCliente = reservasData.filter((reserva) =>
+      gruposPasadosCliente.some(
+        (grupo) => grupo.reservaId === reserva.reservaId
+      )
     )
 
     const cantClases = cliente.cobros.length - gruposPasadosCliente.length
+    console.log(
+      '🚀 ~ calcularDeuda ~ gruposPasadosCliente.length:',
+      gruposPasadosCliente.length
+    )
+    console.log(
+      '🚀 ~ calcularDeuda ~ cliente.cobros.length:',
+      cliente.cobros.length
+    )
+    console.log(
+      '🚀 ~ cliente.cobros.length ~ cantClases:',
+      cliente.cobros.length - gruposPasadosCliente.length
+    )
 
-    let reservasPasadasClienteReducidaPorHaberCobros =
-      reservasPasadasCliente.filter((reserva) =>
-        cliente.cobros.some((cobro) => cobro.clienteId === reserva.id)
-      )
+    let reservasDataClienteReducidaPorHaberCobros = reservasDataCliente.filter(
+      (reserva) =>
+        cliente.cobros.some((cobro) => cobro.clienteId === reserva.reservaId)
+    )
 
     if (cliente.cobros.length === 0) {
-      reservasPasadasClienteReducidaPorHaberCobros = reservasPasadasCliente
+      reservasDataClienteReducidaPorHaberCobros = reservasDataCliente
     }
 
-    const montoCobros = reservasPasadasClienteReducidaPorHaberCobros.reduce(
+    const montoCobros = reservasDataClienteReducidaPorHaberCobros.reduce(
       (acc, elem) => {
-        if (elem.idTipoClase === 1) {
+        if (elem.tipo === 1) {
           return acc + 50
         } else {
           return acc + 100
@@ -307,13 +336,9 @@ export const AlumnosNew = () => {
     }
 
     if (value === '2') {
-      setAlumnosFiltrados(() =>
-        alumnos.filter((a) => calcularDeuda(a).cantClases < 0)
-      )
+      setAlumnosFiltrados(() => alumnos.filter((a) => a.deuda.cantClases < 0))
     } else if (value === '3') {
-      setAlumnosFiltrados(() =>
-        alumnos.filter((a) => calcularDeuda(a).cantClases >= 0)
-      )
+      setAlumnosFiltrados(() => alumnos.filter((a) => a.deuda.cantClases >= 0))
     }
   }
 
@@ -408,6 +433,15 @@ export const AlumnosNew = () => {
                 loadingDetails={loadingDetails}
                 calcularDeuda={calcularDeuda}
               />
+
+              <div className="container-table-alumnos">
+                <span>Deuda total:</span>
+                <span>
+                  {alumnos.reduce((acc, elem) => {
+                    return acc + elem.deuda.montoCobros
+                  }, 0)}
+                </span>
+              </div>
             </div>
           </>
         )}

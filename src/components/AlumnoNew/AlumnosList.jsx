@@ -4,7 +4,6 @@ export const AlumnosList = ({
   actAlu,
   setLoadingDetails,
   loadingDetails,
-  calcularDeuda,
 }) => {
   const LoadingSpinner = () => {
     return <div id="alumno-loading-spinner"></div>
@@ -14,8 +13,6 @@ export const AlumnosList = ({
     <div className="container-table-alumnos">
       {alumnosFiltrados.length !== 0 ? (
         alumnosFiltrados.map((alumno) => {
-          const deuda = calcularDeuda(alumno) // Llamada única a calcularDeuda
-
           return (
             <div
               onClick={() => {
@@ -50,7 +47,7 @@ export const AlumnosList = ({
               </div>
 
               <div
-                className={`table-cell-ajustes ${deuda.cantClases < 0 ? 'deudor' : ''}`}
+                className={`table-cell-ajustes ${alumno.deuda.cantClases < 0 ? 'deudor' : ''}`}
                 style={{
                   alignSelf: 'center',
                   fontFamily: 'var(--title-text)',
@@ -61,12 +58,12 @@ export const AlumnosList = ({
                 {loadingDetails && alumno.nombre === actAlu.nombre ? (
                   <LoadingSpinner />
                 ) : (
-                  deuda.cantClases // Uso de la propiedad calculada
+                  alumno.deuda.cantClases // Uso de la propiedad calculada
                 )}
               </div>
 
               <div
-                className={`table-cell-ajustes ${deuda.deuda < 0 ? 'deudor' : ''}`}
+                className={`table-cell-ajustes ${alumno.deuda.cantClases < 0 ? 'deudor' : ''}`}
                 style={{
                   alignSelf: 'center',
                   fontFamily: 'var(--title-text)',
@@ -77,7 +74,7 @@ export const AlumnosList = ({
                 {loadingDetails && alumno.nombre === actAlu.nombre ? (
                   <LoadingSpinner />
                 ) : (
-                  deuda.montoCobros // Uso de la propiedad calculada
+                  alumno.deuda.montoCobros // Uso de la propiedad calculada
                 )}
               </div>
             </div>
