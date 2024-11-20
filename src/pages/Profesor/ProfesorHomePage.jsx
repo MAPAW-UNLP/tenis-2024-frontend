@@ -1,4 +1,4 @@
-import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import { faPlus, faMoneyCheckAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { getClasesProfesor, getProfesorById } from 'api/profesores'
 import Dashboard from 'components/Dashboard/Dashboard'
@@ -11,6 +11,7 @@ import moment from 'moment'
 import NavBar from 'pages/Navbar/NavBar'
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import CobrosProfesor from './CobrosProfesor'
 
 const horas = [
   '08:00',
@@ -61,6 +62,7 @@ function ProfesorHomePageBody({ profesor, setProfesor }) {
 
   const [isClaseDetailsVisible, setIsClaseDetailsVisible] = useState(false)
   const [claseDetail, setClaseDetail] = useState({})
+  const [isModalVisible, setModalVisible] = useState(false)
 
   const { id } = useParams()
   const navigate = useNavigate()
@@ -119,7 +121,7 @@ function ProfesorHomePageBody({ profesor, setProfesor }) {
   return (
     <>
       <div className="home__header">
-        <div className="home__btn-add-wrapper">
+        <div className="home__btn-wrapper">
           <button
             className="home__btn-add"
             onClick={() => navigate('../nuevaReserva')}
@@ -128,6 +130,24 @@ function ProfesorHomePageBody({ profesor, setProfesor }) {
             <FontAwesomeIcon icon={faPlus} />
           </button>
         </div>
+
+        <div className="home__btn-wrapper">
+          <button
+            className="home__btn-cobros"
+            onClick={() => setModalVisible(true)} // Abre el modal
+          >
+            <span>Ver mis cobros</span>
+            <FontAwesomeIcon icon={faMoneyCheckAlt} />
+          </button>
+          <div />
+        </div>
+
+        {/* Modal para ver los cobros */}
+        <CobrosProfesor
+          profesorId={profesor.id} // Asegúrate de que el ID del profesor esté disponible
+          isVisible={isModalVisible} // Controla la visibilidad del modal
+          onClose={() => setModalVisible(false)} // Cierra el modal
+        />
       </div>
 
       <Dashboard

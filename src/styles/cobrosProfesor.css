@@ -1,0 +1,87 @@
+.cobros-profesor {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background-color: #ffffff57;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 700px;
+  width: 100%;
+  margin: 0 auto;
+  height: 70vh;
+  min-width: 500px;
+  position: relative;
+  display: flex;
+  justify-content: flex-start;
+  overflow: hidden;
+}
+
+.loading-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  color: #555;
+  font-weight: bold;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(255, 255, 255, 0.8);
+  z-index: 2;
+}
+
+.error-text {
+  text-align: center;
+  font-size: 1.2rem;
+  color: red;
+  min-height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.cobros-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  flex-grow: 1;
+  margin-top: 10px;
+  position: relative;
+  z-index: 1;
+}
+
+.cobro-card {
+  background: linear-gradient(135deg, #f3cc82, #e4a95a);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.cobro-card:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+.cobro-info p {
+  margin: 8px 0;
+  font-size: 1.1rem;
+  color: #2c2c2c;
+  line-height: 1.5;
+}
+
+.cobro-info p strong {
+  color: #000;
+}
+
+.cobro-info p:first-child {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #e4761b;
+}
