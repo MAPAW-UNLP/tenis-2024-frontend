@@ -5,19 +5,16 @@ import { GenericButton } from '../../components/Utils/GenericButton'
 import LoaderSpinner from '../../components/LoaderSpinner'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
-import { GenericButtonDisabled } from '../../components/Utils/GenericButtonDisabled'
 import FormularioItemAlquiler from 'components/Item/AgregarItemAlquiler'
 import Swal from 'sweetalert2'
+import { itemAlquilerService } from 'api/itemalquiler'
 
 export const ItemsAlquiler = () => {
   const URL_BASE = `http://localhost:8083/api/`
   const [itemAlquiler, setItemAlquiler] = useState([])
-  const [valoresOriginales, setValoresOriginales] = useState({})
   const [cargando, setCargando] = useState(true)
-  const [tempChanges, setTempChanges] = useState({})
   const [mensajeUsuario, setMensajeUsuario] = useState('')
   const [itemPorBorrar, setItemPorBorrar] = useState(null) // Item a eliminar
-  const [botonHabilitado, setBotonHabilitado] = useState(false)
   const [mostrarFormulario, setMostrarFormulario] = useState(false)
   const [itemEditar, setItemEditar] = useState(null)
 
@@ -28,15 +25,8 @@ export const ItemsAlquiler = () => {
   const fetchItemAlquiler = async () => {
     setCargando(true)
     try {
-      const response = await fetch(`${URL_BASE}itemalquiler`, { method: 'GET' })
-      const data = await response.json()
+      const data = await itemAlquilerService.getItemAlquiler()
       setItemAlquiler(data)
-      // Almacenar los valores originales de importe
-      const originales = {}
-      data.forEach((item) => {
-        originales[item.id] = item.importe
-      })
-      setValoresOriginales(originales)
     } catch (error) {
       console.error('Error al obtener datos desde la BD', error)
     } finally {
@@ -46,19 +36,13 @@ export const ItemsAlquiler = () => {
 
   const handleAddItemAlquiler = async (nuevoItem) => {
     setCargando(true)
-
     const method = nuevoItem.id ? 'PUT' : 'POST'
-    const url = nuevoItem.id
-      ? `${URL_BASE}modItemAlquiler`
-      : `${URL_BASE}addItemAlquiler`
-    const response = await fetch(url, {
-      method: method,
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(nuevoItem),
-    })
-
-    const data = await response.json()
-
+    const url = nuevoItem.id ? `modItemAlquiler` : `addItemAlquiler`
+    const data = await itemAlquilerService.crearModificarItemAlquiler(
+      nuevoItem,
+      url,
+      method
+    )
     if (data.status === 'ok') {
       console.log('Item agregado exitosamente')
       await fetchItemAlquiler() // Recargar los items
@@ -94,56 +78,6 @@ export const ItemsAlquiler = () => {
     }
   }
 
-  /** 
-  const handleItemChange = (item, valor) => {
-    const nuevoImporte = valor.replace(/\D/g, '') // Solo permite números enteros
-    setTempChanges((prev) => ({
-      ...prev,
-      [item.id]: nuevoImporte,
-    }))
-
-    // Actualizar solo la vista localmente para mostrar el valor temporal
-    setItemAlquiler((prevItem) =>
-      prevItem.map((itemAlquiler) =>
-        itemAlquiler.id === item.id
-          ? { ...itemAlquiler, importe: nuevoImporte }
-          : itemAlquiler
-      )
-    )
-  }
-
-  useEffect(() => {
-    // Revisa si hay algún valor en tempChanges que sea diferente al original
-    const hayCambios = Object.keys(tempChanges).some(
-      (id) => tempChanges[id] !== String(valoresOriginales[id])
-    )
-
-    // Habilitar o deshabilitar el botón según si hay cambios
-    setBotonHabilitado(hayCambios)
-  }, [tempChanges, valoresOriginales])
-
-  const handleConfirmarCambios = async () => {
-    setCargando(true)
-    for (const idItem in tempChanges) {
-      const nuevoImporte = tempChanges[idItem]
-      try {
-        await fetch(`${URL_BASE}modItemAlquiler`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ id: idItem, importe: nuevoImporte }),
-        })
-      } catch (error) {
-        console.error('Error al actualizar el importe:', error)
-      }
-    }
-    // Limpiar el estado de cambios temporales y deshabilitar el botón
-    setTempChanges({})
-    setBotonHabilitado(false)
-    setCargando(false)
-    await fetchItemAlquiler()
-  }
-    */
-
   const handleEliminarItem = (item) => {
     setItemPorBorrar(item)
     setMensajeUsuario(
@@ -167,12 +101,7 @@ export const ItemsAlquiler = () => {
     if (!itemPorBorrar) return
 
     setCargando(true)
-    const response = await fetch(`${URL_BASE}bajaItemAlquiler`, {
-      method: 'DELETE',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ id: itemPorBorrar.id }),
-    })
-    const data = await response.json()
+    const data = await itemAlquilerService.borrarItemAlquiler(itemPorBorrar.id)
     if (data.status === 'ok') {
       console.log('Item eliminado exitosamente')
       await fetchItemAlquiler() // Recargar los datos después de eliminar
