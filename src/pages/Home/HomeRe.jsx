@@ -44,7 +44,7 @@ export const HomeRe = () => {
           icon={faDollarSign}
           className="movimientosCard"
         />
-      
+
         <Card
           title="reservas"
           description="Reservación de alquileres y clases"
@@ -53,16 +53,6 @@ export const HomeRe = () => {
           className="reservasCard"
         />
 
-      {user.rolPorDefecto === 'ROLE_CLIENTE' && (
-        <Card
-          title="clases"
-          description="Visualizar las próximas clases"
-          customColor="#ee82ee"
-          icon={faCalendar}
-          className="clasesCard"
-        />
-      )}
-      
         {user.rolPorDefecto === 'ROLE_ADMIN' && (
           <>
             <div
@@ -163,7 +153,7 @@ export const HomeRe = () => {
                 className="image"
                 style={{ backgroundColor: '#78a1ca', position: 'relative' }}
               >
-                <div style={{ fontSize: '5em', color: '#5d5d5d' }}>
+                <div style={{ fontSize: '1em', color: '#5d5d5d' }}>
                   <PreciosPageIcon className="ajustes-icon" />
                 </div>
               </div>
