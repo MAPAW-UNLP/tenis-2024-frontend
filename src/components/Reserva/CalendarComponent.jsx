@@ -4,14 +4,21 @@ import es from 'date-fns/locale/es'
 
 //Font awesome component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCaretRight, faCaretLeft } from '@fortawesome/free-solid-svg-icons'
+import {
+  faCaretRight,
+  faCaretLeft,
+  faCaretDown,
+} from '@fortawesome/free-solid-svg-icons'
 
 import 'react-datepicker/dist/react-datepicker.css'
 import '../../styles/calendar.css'
+import { useRef } from 'react'
 
 registerLocale('es', es)
 
 const CalendarPicker = ({ selectedDate, setSelectedDate }) => {
+  const datePickerRef = useRef()
+
   function selectYesterday() {
     setSelectedDate((date) => moment(date).subtract(1, 'day').valueOf())
   }
@@ -25,14 +32,26 @@ const CalendarPicker = ({ selectedDate, setSelectedDate }) => {
       <button className="calendar-picker__btn" onClick={selectYesterday}>
         <FontAwesomeIcon icon={faCaretLeft} />
       </button>
-      <DatePicker
-        className="pickers"
-        selected={selectedDate}
-        onChange={setSelectedDate}
-        locale="es"
-        dateFormat="dd 'de' MMMM"
-        withPortal
-      />
+      <div
+        className="calendar-picker__date"
+        onClick={() => {
+          // Abre el calendario si se hace click en el ícono
+          datePickerRef.current.onInputClick()
+        }}
+      >
+        <DatePicker
+          className="pickers"
+          selected={selectedDate}
+          onChange={setSelectedDate}
+          ref={datePickerRef}
+          locale="es"
+          dateFormat="dd 'de' MMMM',' yyyy"
+          withPortal
+          showMonthDropdown
+          showYearDropdown
+        />
+        <FontAwesomeIcon icon={faCaretDown} />
+      </div>
       <button className="calendar-picker__btn" onClick={selectTomorrow}>
         <FontAwesomeIcon icon={faCaretRight} />
       </button>

@@ -72,9 +72,9 @@ const BurgerMenu = () => {
                   return (
                     <>
                       <LinkItem
-                        to={'/crearClase'}
+                        to={'/nuevaReserva'}
                         setActive={setActive}
-                        name={'Crear clase'}
+                        name={'Crear reserva'}
                         className="options-sidebar"
                       />
                       <LinkItem
@@ -119,9 +119,9 @@ const BurgerMenu = () => {
                   return (
                     <>
                       <LinkItem
-                        to={'/crearClase'}
+                        to={'/nuevaReserva'}
                         setActive={setActive}
-                        name={'Crear clase'}
+                        name={'Crear reserva'}
                         className="options-sidebar"
                       />
                       <LinkItem
