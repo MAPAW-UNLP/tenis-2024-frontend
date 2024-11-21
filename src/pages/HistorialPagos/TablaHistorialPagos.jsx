@@ -3,7 +3,7 @@ import '../../styles/table-next.clases.css'
 
 const TableComponent = ({ data }) => {
   // Combine all rows from the data object
-  const allRows = Object.values(data).flat()
+  const allRows = Object.values(data.pagos).flat()
 
   return (
     <div className="table-container">

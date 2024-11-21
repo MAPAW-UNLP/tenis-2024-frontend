@@ -1,58 +1,100 @@
 const CLIENTE_URL = `${process.env.REACT_APP_BASE_URL}/cliente`
+const API_URL = `${process.env.REACT_APP_BASE_URL}/api`
 
-export function getHistorialPagos(id) {
+export function getHistorialPagos(id, params = {}) {
   const dataDefault = {
-    1: [
-      {
-        id: 1,
-        fecha: '2024-11-03',
-        concepto: 'Concepto 1',
-        importe: 100,
-      },
-    ],
-    2: [
-      {
-        id: 2,
-        fecha: '2024-11-03',
-        concepto: 'Concepto 2',
-        importe: 200,
-      },
-    ],
-    3: [
-      {
-        id: 3,
-        fecha: '2024-11-03',
-        concepto: 'Concepto 3',
-        importe: 300,
-      },
-    ],
-    4: [
-      {
-        id: 4,
-        fecha: '2024-11-03',
-        concepto: 'Concepto 4',
-        importe: 400,
-      },
-    ],
-    5: [
-      {
-        id: 5,
-        fecha: '2024-11-03',
-        concepto: 'Concepto 5',
-        importe: 500,
-      },
-    ],
-    6: [
-      {
-        id: 6,
-        fecha: '2024-11-03',
-        concepto: 'Concepto 6',
-        importe: 600,
-      },
-    ],
+    rta: 'ok',
+    detail: {
+      pagos: [
+        {
+          id: 1,
+          fecha: '2024-11-18',
+          concepto: 'clase x',
+          importe: 100,
+        },
+        {
+          id: 2,
+          fecha: '2024-11-01',
+          concepto: 'clase y',
+          importe: 400,
+        },
+        {
+          id: 3,
+          fecha: '2024-10-19',
+          concepto: 'clase b',
+          importe: 1000,
+        },
+        {
+          id: 4,
+          fecha: '2024-10-20',
+          concepto: 'clase c',
+          importe: 2000,
+        },
+        {
+          id: 5,
+          fecha: '2024-10-21',
+          concepto: 'clase d',
+          importe: 3000,
+        },
+        {
+          id: 6,
+          fecha: '2024-10-22',
+          concepto: 'pago x',
+          importe: 500,
+        },
+        {
+          id: 7,
+          fecha: '2024-10-23',
+          concepto: 'pago x',
+          importe: 600,
+        },
+        {
+          id: 8,
+          fecha: '2024-10-24',
+          concepto: 'pago x',
+          importe: 700,
+        },
+        {
+          id: 9,
+          fecha: '2024-10-25',
+          concepto: 'pago x',
+          importe: 800,
+        },
+        {
+          id: 10,
+          fecha: '2024-10-18',
+          concepto: 'pago x',
+          importe: 900,
+        },
+      ],
+      page: '1',
+      total: 16,
+      totalPages: 2,
+      nextPage: 2,
+      previousPage: null,
+    },
   }
 
-  return fetch(`${CLIENTE_URL}/historialpagos?clienteId=${id}`, {
+  const baseUrl = `${API_URL}/cobrosCliente`
+
+  const queryParams = {
+    cliente_id: id,
+    fecha_inicio: params.fecha_inicio || null,
+    fecha_fin: params.fecha_fin || null,
+    concepto: params.concepto || null,
+    monto: params.monto || null,
+    page: params.page || 1,
+  }
+
+  const queryString = Object.entries(queryParams)
+    .filter(([_, value]) => value != null)
+    .map(
+      ([key, value]) =>
+        `${encodeURIComponent(key)}=${encodeURIComponent(value)}`
+    )
+    .join('&')
+
+  return fetch(`${baseUrl}/?${queryString}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -63,10 +105,10 @@ export function getHistorialPagos(id) {
       if (data.rta === 'ok') {
         return data.detail
       } else {
-        return dataDefault
+        return dataDefault.detail
       }
     })
     .catch(() => {
-      return dataDefault
+      return dataDefault.detail
     })
 }
