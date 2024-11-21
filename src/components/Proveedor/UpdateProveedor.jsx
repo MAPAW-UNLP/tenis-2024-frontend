@@ -63,7 +63,7 @@ export const UpdateProveedor = ({ handleCloseForm, proveedor = {} }) => {
         () => setShowSuccessPopup(true),
         setTimeout(() => {
           setShowSuccessPopup(false)
-          handleCloseForm()
+          handleCloseForm(true)
           setLoading(false)
         }, 5000)
       )
