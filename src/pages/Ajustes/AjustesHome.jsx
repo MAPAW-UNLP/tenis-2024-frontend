@@ -30,14 +30,14 @@ export const Precios = () => {
           <>
             {/* Card for Items */}
             <div
-              className="card items"
+              className="card-precios items-precios"
               onClick={() => handleRedirect('../itemsAlquiler')}
             >
               <div
                 className="image"
                 style={{ backgroundColor: '#DFC531', position: 'relative' }}
               >
-                <div style={{ fontSize: '5em', color: '#5d5d5d' }}>
+                <div style={{ fontSize: '1em', color: '#5d5d5d' }}>
                   <ItemPageIcon className="ajustes-icon" />
                 </div>
               </div>
@@ -53,14 +53,14 @@ export const Precios = () => {
 
             {/* Card for Clase */}
             <div
-              className="card clase"
+              className="card-precios clase-precios"
               onClick={() => handleRedirect('../ajustes')}
             >
               <div
                 className="image"
                 style={{ backgroundColor: '#45C824', position: 'relative' }}
               >
-                <div style={{ fontSize: '5em', color: '#5d5d5d' }}>
+                <div style={{ fontSize: '1em', color: '#5d5d5d' }}>
                   <TipoClaseIcon className="ajustes-icon" />
                 </div>
               </div>
