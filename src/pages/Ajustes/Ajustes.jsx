@@ -8,16 +8,14 @@ import { faTrashAlt, faEdit } from '@fortawesome/free-solid-svg-icons'
 import { GenericButtonDisabled } from '../../components/Utils/GenericButtonDisabled'
 import FormularioTipoClase from '../../components/Clase/AgregarTipoClase'
 import Swal from 'sweetalert2'
+import { tipoClaseService } from 'api/tipoClase'
 
 export const Ajustes = () => {
   const URL_BASE = `http://localhost:8083/api/`
   const [tipoClases, setTipoClases] = useState([])
-  const [valoresOriginales, setValoresOriginales] = useState({})
   const [cargando, setCargando] = useState(true)
-  const [tempChanges, setTempChanges] = useState({})
   const [mensajeUsuario, setMensajeUsuario] = useState('')
   const [tipoClasePorBorrar, setTipoClasePorBorrar] = useState(null) // Tipo de clase a eliminar
-  const [botonHabilitado, setBotonHabilitado] = useState(false)
   const [mostrarFormulario, setMostrarFormulario] = useState(false)
   const [tipoClaseEditar, setTipoClaseEditar] = useState(null)
 
@@ -28,15 +26,9 @@ export const Ajustes = () => {
   const fetchTipoClases = async () => {
     setCargando(true)
     try {
-      const response = await fetch(`${URL_BASE}clases`, { method: 'GET' })
-      const data = await response.json()
+      const data = await tipoClaseService.getTipoClases()
       setTipoClases(data)
       // Almacenar los valores originales de importe
-      const originales = {}
-      data.forEach((clase) => {
-        originales[clase.id] = clase.importe
-      })
-      setValoresOriginales(originales)
     } catch (error) {
       console.error('Error al obtener datos desde la BD', error)
     } finally {
@@ -46,19 +38,20 @@ export const Ajustes = () => {
 
   const handleAgregarTipoClase = async (nuevoTipoClase) => {
     setCargando(true)
-    const method = nuevoTipoClase.id ? 'PUT' : 'POST'
-    const url = nuevoTipoClase.id
-      ? `${URL_BASE}modClase`
-      : `${URL_BASE}addClase`
-
-    const response = await fetch(url, {
-      method: method,
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(nuevoTipoClase),
-    })
-
-    const data = await response.json()
-
+    let data
+    if (nuevoTipoClase.id) {
+      data = await tipoClaseService.crearModificarTipoClase(
+        nuevoTipoClase,
+        'modClase',
+        'PUT'
+      )
+    } else {
+      data = await tipoClaseService.crearModificarTipoClase(
+        nuevoTipoClase,
+        'addClase',
+        'POST'
+      )
+    }
     if (data.status === 'ok') {
       console.log('Tipo de clase creado exitosamente')
       await fetchTipoClases() // Recargar los tipos de clase
@@ -96,56 +89,6 @@ export const Ajustes = () => {
     }
   }
 
-  /**
-  const handleTipoClaseChange = (tipo, valor) => {
-    const nuevoImporte = valor.replace(/\D/g, '') // Solo permite números enteros
-    setTempChanges((prev) => ({
-      ...prev,
-      [tipo.id]: nuevoImporte,
-    }))
-
-    // Actualizar solo la vista localmente para mostrar el valor temporal
-    setTipoClases((prevTipoClases) =>
-      prevTipoClases.map((tipoClase) =>
-        tipoClase.id === tipo.id
-          ? { ...tipoClase, importe: nuevoImporte }
-          : tipoClase
-      )
-    )
-  }
-
-  useEffect(() => {
-    // Revisa si hay algún valor en tempChanges que sea diferente al original
-    const hayCambios = Object.keys(tempChanges).some(
-      (id) => tempChanges[id] !== String(valoresOriginales[id])
-    )
-
-    // Habilitar o deshabilitar el botón según si hay cambios
-    setBotonHabilitado(hayCambios)
-  }, [tempChanges, valoresOriginales])
-
-  const handleConfirmarCambios = async () => {
-    setCargando(true)
-    for (const idTipoClase in tempChanges) {
-      const nuevoImporte = tempChanges[idTipoClase]
-      try {
-        await fetch(`${URL_BASE}modClase`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ id: idTipoClase, importe: nuevoImporte }),
-        })
-      } catch (error) {
-        console.error('Error al actualizar el importe:', error)
-      }
-    }
-    // Limpiar el estado de cambios temporales y deshabilitar el botón
-    setTempChanges({})
-    setBotonHabilitado(false)
-    setCargando(false)
-    await fetchTipoClases()
-  }
-     */
-
   const handleEliminarTipoClase = (tipoClase) => {
     setTipoClasePorBorrar(tipoClase)
     setMensajeUsuario(
@@ -167,14 +110,8 @@ export const Ajustes = () => {
   const handleAceptarBorrado = async () => {
     handleCerrarMensaje()
     if (!tipoClasePorBorrar) return
-
     setCargando(true)
-    const response = await fetch(`${URL_BASE}bajaClase`, {
-      method: 'DELETE',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ id: tipoClasePorBorrar.id }),
-    })
-    const data = await response.json()
+    const data = await tipoClaseService.borrarTipoClase(tipoClasePorBorrar.id)
     if (data.status === 'ok') {
       console.log('Clase eliminada exitosamente')
       await fetchTipoClases() // Recargar los datos después de eliminar
