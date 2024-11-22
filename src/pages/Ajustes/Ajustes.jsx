@@ -5,7 +5,7 @@ import { GenericButton } from '../../components/Utils/GenericButton'
 import LoaderSpinner from '../../components/LoaderSpinner'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashAlt, faEdit } from '@fortawesome/free-solid-svg-icons'
-import { GenericButtonDisabled } from '../../components/Utils/GenericButtonDisabled'
+import Button from 'components/Button/Button'
 import FormularioTipoClase from '../../components/Clase/AgregarTipoClase'
 import Swal from 'sweetalert2'
 import { tipoClaseService } from 'api/tipoClase'
@@ -165,15 +165,13 @@ export const Ajustes = () => {
             <span style={{ fontSize: '1.8em' }}>Valores</span>
           </div>
           <div className="container-table-ajustes">
-            <GenericButton
-              marginBottom={'0.5em'}
-              backgroundColor={'#92bc1e'}
-              color="white"
-              borderRadius="1em"
+            <Button
+              color="success"
+              size="md"
               onClick={() => setMostrarFormulario(true)}
             >
               Crear clase
-            </GenericButton>
+            </Button>
 
             {mostrarFormulario && (
               <FormularioTipoClase

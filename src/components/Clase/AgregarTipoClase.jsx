@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { GenericButton } from '../../components/Utils/GenericButton'
+import Button from 'components/Button/Button'
 import '../../styles/ajustes/tipoClaseForm.css'
 
 const FormularioTipoClase = ({ onClose, onSubmit, tipoClase }) => {
@@ -112,17 +112,17 @@ const FormularioTipoClase = ({ onClose, onSubmit, tipoClase }) => {
               <p style={{ color: 'red' }}>{errores.importe}</p>
             )}
           </div>
-          <button
+          <Button
             className={
               botonHabilitado ? 'boton-habilitado' : 'boton-deshabilitado'
             }
             disabled={!botonHabilitado}
           >
             {tipoClase ? 'Editar' : 'Crear'}{' '}
-          </button>
-          <button type="button" className="cancel-button" onClick={onClose}>
+          </Button>
+          <Button type="button" className="cancel-button" onClick={onClose}>
             Cancelar
-          </button>
+          </Button>
         </form>
       </div>
     </div>

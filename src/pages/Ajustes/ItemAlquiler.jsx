@@ -8,6 +8,7 @@ import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import FormularioItemAlquiler from 'components/Item/AgregarItemAlquiler'
 import Swal from 'sweetalert2'
 import { itemAlquilerService } from 'api/itemalquiler'
+import Button from 'components/Button/Button'
 
 export const ItemsAlquiler = () => {
   const URL_BASE = `http://localhost:8083/api/`
@@ -155,15 +156,13 @@ export const ItemsAlquiler = () => {
             <span style={{ fontSize: '1.8em' }}>Valores</span>
           </div>
           <div className="container-table-ajustes">
-            <GenericButton
-              marginBottom={'0.5em'}
-              backgroundColor={'#92bc1e'}
-              color="white"
-              borderRadius="1em"
+            <Button
+              color="success"
+              size="md"
               onClick={() => setMostrarFormulario(true)}
             >
               Agregar item
-            </GenericButton>
+            </Button>
 
             {mostrarFormulario && (
               <FormularioItemAlquiler
