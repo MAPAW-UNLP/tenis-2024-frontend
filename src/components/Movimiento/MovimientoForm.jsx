@@ -15,6 +15,7 @@ export const MovimientoForm = ({
   movimientoOptions,
   movimiento,
   clasesOptions,
+  itemOptions,
 }) => {
   // Arreglo de errores
   const [errors, setErrors] = useState([])
@@ -110,72 +111,114 @@ export const MovimientoForm = ({
           placeholder={'Concepto'}
         />
 
-        {/* Si es un alumno/profesor muestro desplegable con la lista de usuarios correspondiente.
-            Al seleccionar otra opcion reseteamos personaID del formulario para no enviarlo en el endpoint */}
-        {movimientoAddForm.concepto === '1' ? (
+        {/* Lógica para mostrar campos dinámicos basados en el concepto */}
+        {(() => {
+          switch (movimientoAddForm.concepto) {
+            case '1': // Alumno/Profesor
+              return (
+                <>
+                  <label htmlFor="personaId" className="movimiento-form-label">
+                    *{' '}
+                  </label>
+                  <SelectReComponent
+                    name={'personaId'}
+                    onChange={handleChangeFormData}
+                    options={personas}
+                    placeholder={`Seleccionar ${movimiento === 'Cobro' ? 'alumno' : 'profesor'}`}
+                  />
+                  {movimiento === 'Cobro' && (
+                    <>
+                      <label
+                        htmlFor="tipoClaseId"
+                        className="movimiento-form-label"
+                      >
+                        *{' '}
+                      </label>
+                      <select
+                        name={'tipoClaseId'}
+                        onChange={handleChangeFormData}
+                      >
+                        <option value="">Tipo de clase</option>
+                        {clasesOptions.map((option) => (
+                          <option
+                            value={option.id}
+                            id={`tipo-clase-${option.id}`}
+                            key={`tipo-clase-${option.id}`}
+                          >
+                            {option.tipo}
+                          </option>
+                        ))}
+                      </select>
+                    </>
+                  )}
+                </>
+              )
+
+            case '2': // Proveedor
+              return (
+                <>
+                  <label
+                    htmlFor="proveedorId"
+                    className="movimiento-form-label"
+                  >
+                    *{' '}
+                  </label>
+                  <SelectReComponent
+                    name={'proveedorId'}
+                    onChange={handleChangeFormData}
+                    options={proveedores}
+                    placeholder={`Seleccionar proveedor`}
+                  />
+                </>
+              )
+
+            case '3': // Item
+              return (
+                <>
+                  <label htmlFor="itemId" className="movimiento-form-label">
+                    *{' '}
+                  </label>
+                  <SelectReComponent
+                    name={'itemId'}
+                    onChange={handleChangeFormData}
+                    options={itemOptions || []}
+                    placeholder={`Seleccionar item`}
+                  />
+                  <label htmlFor="cantId" className="movimiento-form-label">
+                    *{' '}
+                  </label>
+                  <SelectReComponent
+                    name={'cantId'}
+                    onChange={handleChangeFormData}
+                    options={proveedores}
+                    placeholder={`Cantidad`}
+                  />
+                </>
+              )
+
+            default:
+              // Resetear las opciones si no hay un concepto válido
+              handleResetOptions()
+              return null
+          }
+        })()}
+
+        {movimientoAddForm.concepto !== '3' && (
           <>
-            <label htmlFor="personaId" className="movimiento-form-label">
-              {' '}
+            <label htmlFor="descripcion" className="movimiento-form-label">
               *{' '}
             </label>
-            <SelectReComponent
-              name={'personaId'}
-              onChange={handleChangeFormData}
-              options={personas}
-              placeholder={`Seleccionar ${movimiento === 'Cobro' ? 'alumno' : 'profesor'}`}
-            />
-            {movimiento === 'Cobro' && (
-              <>
-                <label htmlFor="tipoClaseId" className="movimiento-form-label">
-                  {' '}
-                  *{' '}
-                </label>
-                <select name={'tipoClaseId'} onChange={handleChangeFormData}>
-                  <option value=""> Tipo de clase </option>
-                  {clasesOptions.map((option) => (
-                    <option
-                      value={option.id}
-                      id={`tipo-clase-${option.id}`}
-                      key={`tipo-clase-${option.id}`}
-                    >
-                      {option.tipo}
-                    </option>
-                  ))}
-                </select>
-              </>
-            )}
-          </>
-        ) : movimientoAddForm.concepto === '2' ? (
-          <>
-            <label htmlFor="proveedorId" className="movimiento-form-label">
-              {' '}
-              *{' '}
-            </label>
-            <SelectReComponent
-              name={'proveedorId'}
-              onChange={handleChangeFormData}
-              options={proveedores}
-              placeholder={`Seleccionar proveedor.`}
+            <InputValueComponent
+              type={'text'}
+              name={'descripcion'}
+              onChangeFuncion={handleChangeFormData}
+              placeholder={'Descripción'}
+              value={movimientoAddForm.descripcion}
             />
           </>
-        ) : (
-          handleResetOptions()
         )}
 
-        <label htmlFor="descripcion" className="movimiento-form-label">
-          {' '}
-          *{' '}
-        </label>
-        <InputValueComponent
-          type={'text'}
-          name={'descripcion'}
-          onChangeFuncion={handleChangeFormData}
-          placeholder={'Descripcion'}
-          value={movimientoAddForm.descripcion}
-        />
-
         <label htmlFor="monto" className="movimiento-form-label">
-          {' '}
           *{' '}
         </label>
         <InputReComponent
@@ -202,8 +245,7 @@ export const MovimientoForm = ({
           style={{ marginTop: '.5em' }}
           onClick={handleCheckAddForm}
         >
-          {' '}
-          Aceptar{' '}
+          Aceptar
         </button>
       </form>
     </div>

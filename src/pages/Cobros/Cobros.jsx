@@ -8,6 +8,7 @@ import LoaderSpinner from '../../components/LoaderSpinner'
 import NavBar from '../Navbar/NavBar'
 
 import '../../styles/movimiento/movimiento.css'
+import { itemAlquilerService } from 'api/itemalquiler'
 
 export const Cobros = () => {
   const URL_BASE = `http://localhost:8083/api/`
@@ -17,25 +18,38 @@ export const Cobros = () => {
   const [actCobros, setActCobros] = useState(false)
 
   const [alumnos, setAlumnos] = useState([])
+  const [itemAlquiler, setItemAlquiler] = useState([])
   const [cobrosLoader, setCobrosLoader] = useState(true) // Spinner
   const [loadingFetch, setLoadingFetch] = useState() // Spinner despues de cargar un cobro
 
   // Trae todos los COBROS
   useEffect(() => {
-    const requestOptions = {
-      method: 'GET',
+    const fetchData = async () => {
+      const requestOptions = {
+        method: 'GET',
+      }
+
+      try {
+        const [cobrosData, clientesData, itemAlquilerData] = await Promise.all([
+          fetch(`${URL_BASE}cobros`, requestOptions).then((res) => res.json()),
+          fetch(`${URL_BASE}clientes`, requestOptions).then((res) =>
+            res.json()
+          ),
+          itemAlquilerService.getItemAlquiler(),
+        ])
+
+        setCobros(cobrosData)
+        setAlumnos(ordenarPorNombre(clientesData))
+        setItemAlquiler(itemAlquilerData)
+      } catch (error) {
+        console.error('Error fetching data:', error)
+      } finally {
+        setCobrosLoader(false)
+        setLoadingFetch(false)
+      }
     }
-    fetch(`${URL_BASE}cobros`, requestOptions)
-      .then((response) => response.json())
-      .then((data) => setCobros(data))
-      .then(() => setCobrosLoader(() => false))
-      .then(() => setLoadingFetch(false))
 
-    fetch(`${URL_BASE}clientes`, requestOptions)
-      .then((response) => response.json())
-      .then((data) => setAlumnos(ordenarPorNombre(data)))
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    fetchData()
   }, [actCobros])
 
   // Estado para el formulario de "Agregar Cobro"
@@ -145,6 +159,10 @@ export const Cobros = () => {
     },
     {
       id: 3,
+      concepto: 'Items',
+    },
+    {
+      id: 4,
       concepto: 'Varios',
     },
   ]
@@ -161,6 +179,14 @@ export const Cobros = () => {
       tipo: 'Grupal',
     },
   ]
+
+  const itemOptions =
+    itemAlquiler && itemAlquiler.length > 0
+      ? itemAlquiler.map((item) => ({
+          id: item.id,
+          concepto: item.description,
+        }))
+      : []
 
   return (
     <div className="movimiento-component">
@@ -181,6 +207,7 @@ export const Cobros = () => {
           movimientoName={'Cobro'}
           movimientoOptions={movimientoOptions}
           clasesOptions={clasesOptions}
+          itemOptions={itemOptions}
         />
 
         {cobrosLoader ? (
