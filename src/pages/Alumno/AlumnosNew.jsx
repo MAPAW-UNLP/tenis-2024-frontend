@@ -13,6 +13,10 @@ import { AlumnosList } from '../../components/AlumnoNew/AlumnosList'
 import { AgregarAlumno } from '../../components/AlumnoNew/AgregarAlumno'
 import { AlumnoDetails } from '../../components/AlumnoNew/AlumnoDetails'
 import { EditarAlumno } from '../../components/AlumnoNew/EditarAlumno'
+import { getReservas } from 'api/reservas'
+import { getGrupos } from 'api/grupos'
+import { getClientes } from 'api/clientes'
+import { getCobrosPorCliente } from 'api/cobros'
 
 export const AlumnosNew = () => {
   const URL_BASE = `http://localhost:8083/api/`
@@ -24,8 +28,6 @@ export const AlumnosNew = () => {
   const [active, setActive] = useState(false)
 
   const [alumnos, setAlumnos] = useState([])
-  const [grupos, setGrupos] = useState([])
-  const [reservas, setReservas] = useState([])
 
   // Spinner - loaders
   const [alumnosLoader, setAlumnosLoader] = useState(true) // Principal
@@ -59,29 +61,17 @@ export const AlumnosNew = () => {
   // useEffect principal para la obtencion de alumnos desde la BD
   useEffect(() => {
     const fetchClientesConCobros = async () => {
-      // setLoading(true)
       try {
-        const response = await fetch(`${URL_BASE}clientes`)
-        const clientesData = await response.json()
-        const grupos = await fetch(`${URL_BASE}grupos`)
-        const gruposData = await grupos.json()
-        const reservas = await fetch(`${URL_BASE}reservas`)
-        const reservasData = await reservas.json()
-        console.log('🚀 ~ fetchClientesConCobros ~ reservasData:', reservasData)
+        const clientes = await getClientes()
+        const grupos = await getGrupos()
+        const reservasData = await getReservas()
 
         const clientesConCobros = await Promise.all(
-          clientesData.map(async (cliente) => {
-            const cobrosResponse = await fetch(
-              `${URL_BASE}cobros_por_cliente?clienteId=${cliente.id}`
-            )
-            const cobrosData = await cobrosResponse.json()
-            const newCliente = { ...cliente, cobros: cobrosData }
-            const deuda = calcularDeuda(
-              newCliente,
-              gruposData,
-              reservasData.detail
-            )
-            return { ...cliente, cobros: cobrosData, deuda }
+          clientes.map(async (cliente) => {
+            const cobros = await getCobrosPorCliente(cliente.id)
+            const newCliente = { ...cliente, cobros: cobros }
+            const deuda = calcularDeuda(newCliente, grupos, reservasData.detail)
+            return { ...cliente, cobros, deuda }
           })
         )
 
@@ -93,45 +83,18 @@ export const AlumnosNew = () => {
         setAlumnosLoader(() => false)
       } catch (error) {
         console.error('Error al obtener clientes y cobros:', error)
-      } finally {
-        // setLoading(false)
       }
     }
 
-    const fetchGrupos = async () => {
-      try {
-        const response = await fetch(`${URL_BASE}grupos`)
-        const gruposData = await response.json()
-        setGrupos(gruposData)
-      } catch (error) {
-        console.error('Error al obtener grupos:', error)
-      }
-    }
-
-    const fetchReservas = async () => {
-      try {
-        const response = await fetch(`reservas.json`)
-        const reservasData = await response.json()
-        setReservas(reservasData)
-      } catch (error) {
-        console.error('Error al obtener reservas:', error)
-      }
-    }
-
-    fetchGrupos()
-    fetchReservas()
     fetchClientesConCobros()
   }, [actAlumnos])
 
-  const calcularDeuda = (cliente, gruposData, reservasData) => {
-    console.log('🚀 ~ calcularDeuda ~ reservasData:', reservasData)
-    console.log('🚀 ~ calcularDeuda ~ grupos:', gruposData)
-
+  const calcularDeuda = (cliente, grupos, reservasData) => {
     // const reservasData = reservasData.filter(
     //   (reserva) => new Date(reserva.fecha) < new Date()
     // )
 
-    const gruposCliente = gruposData.filter(
+    const gruposCliente = grupos.filter(
       (grupo) => grupo.personaId === cliente.id
     )
     const gruposPasadosCliente = gruposCliente.filter((grupo) =>
@@ -145,18 +108,6 @@ export const AlumnosNew = () => {
     )
 
     const cantClases = cliente.cobros.length - gruposPasadosCliente.length
-    console.log(
-      '🚀 ~ calcularDeuda ~ gruposPasadosCliente.length:',
-      gruposPasadosCliente.length
-    )
-    console.log(
-      '🚀 ~ calcularDeuda ~ cliente.cobros.length:',
-      cliente.cobros.length
-    )
-    console.log(
-      '🚀 ~ cliente.cobros.length ~ cantClases:',
-      cliente.cobros.length - gruposPasadosCliente.length
-    )
 
     let reservasDataClienteReducidaPorHaberCobros = reservasDataCliente.filter(
       (reserva) =>
@@ -177,8 +128,6 @@ export const AlumnosNew = () => {
       },
       0
     )
-
-    console.log('🚀 ~ montoCobros ~ montoCobros:', montoCobros)
 
     return {
       cantClases,
