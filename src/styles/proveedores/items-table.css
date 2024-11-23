@@ -1,0 +1,26 @@
+.proveedores-item-list {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background-color: #5d5d5d;
+  border-radius: 1em;
+  margin-bottom: 1em;
+  height: 2.5em;
+}
+
+.proveedores-item-list p {
+  font-family: var(--title-text);
+  color: var(--neutral-white-text);
+  text-align: center;
+  width: 200px;
+  font-size: 25px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.proveedores-item-list:hover {
+  cursor: pointer;
+  box-shadow: 0px 1.5px 1px #48617a;
+}
