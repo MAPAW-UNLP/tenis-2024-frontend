@@ -98,6 +98,7 @@
 
 #proveedor-add-component .show-proveedor {
   position: relative;
+  top: 25%;
   padding-top: 20px;
 }
 

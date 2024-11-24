@@ -20,11 +20,12 @@ export const ShowProveedor = ({ handleClose, idProveedor, proveedor }) => {
         const lastTwoPayments = sortedPayments.slice(0, 2)
         setProveedorPayments(lastTwoPayments)
       })
+    setLoading(false)
   }
 
   useEffect(() => {
     fetchProveedorPayments()
-  })
+  }, [])
   return (
     <div id="proveedor-add-component" className="show-proveedor">
       <button
