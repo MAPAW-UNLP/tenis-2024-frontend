@@ -1,6 +1,8 @@
 import NavBar from 'pages/Navbar/NavBar'
 import { useState } from 'react'
-import '../../styles/proveedores.css'
+import '../../styles/proveedores/main-component.css'
+import '../../styles/proveedores/background.css'
+
 import AgregarProveedor from 'components/Proveedor/AgregarProveedor'
 import { UpdateProveedor } from 'components/Proveedor/UpdateProveedor'
 import EliminarProveedor from 'components/Proveedor/EliminarProveedor'
@@ -13,6 +15,7 @@ import ProveedorTableHeader from 'components/Proveedor/ProveedorTableHead'
 import ProveedorList from 'components/Proveedor/ProveedorList'
 import AgregarYBuscarProveedor from 'components/Proveedor/AgregarYBuscarProveedor'
 import PaginationControls from 'components/Proveedor/PaginationControls'
+import { useModalManager } from 'hooks/Proveedores/useModalManager'
 
 function Proveedores() {
   const URL_BASE = `http://localhost:8083/api/`
@@ -23,62 +26,28 @@ function Proveedores() {
     CANT_FILAS,
     proveedores.length
   )
-
-  const [mostrarPopup, setMostrarPopup] = useState(false)
-  const [payModal, setPayModal] = useState(false)
-  const [modalEliminar, setmodalEliminar] = useState(false)
-  const [editModal, setEditModal] = useState(false)
-  const [modalShow, setModalShow] = useState(false)
-
-  const [proveedor, setProveedor] = useState({})
-  const [idProveedor, setIdProveedor] = useState(null)
+  const {
+    modals,
+    proveedor,
+    idProveedor,
+    actions: {
+      openFormAdd,
+      closeForm,
+      openFormEdit,
+      openFormPay,
+      closeFormPay,
+      openFormDelete,
+      closeFormDelete,
+      openFormShow,
+      closeFormShow,
+    },
+  } = useModalManager(update)
 
   const [sortOrder, setSortOrder] = useState({
     field: 'nombre',
     direction: 'asc',
   })
   const [searchQuery, setSearchQuery] = useState('')
-
-  const activarFormulario = () => {
-    setMostrarPopup(true)
-  }
-
-  const ocultarFormulario = (bool = false) => {
-    setMostrarPopup(false)
-    setEditModal(false)
-    if (bool === true) {
-      update()
-    }
-  }
-
-  const openFormPay = (p) => {
-    setPayModal(true)
-    setProveedor({
-      id: p.id,
-      nombre: p.nombre,
-      telefono: p.telefono,
-    })
-  }
-
-  const closeFormPay = (bool = false) => {
-    setPayModal(false)
-  }
-
-  const handleTrash = (id) => {
-    setmodalEliminar(true)
-    setIdProveedor(id)
-  }
-
-  const handleClose = (bool = false) => {
-    setmodalEliminar(false)
-    if (bool === true) {
-      update()
-    }
-  }
-
-  const closeShow = () => {
-    setModalShow(false)
-  }
 
   let listado
 
@@ -90,14 +59,6 @@ function Proveedores() {
   }
   filtrarArray(pagina)
 
-  const openEditModal = (p) => {
-    setProveedor({
-      id: p.id,
-      nombre: p.nombre,
-      telefono: p.telefono,
-    })
-    setEditModal(true)
-  }
   // Nueva función para obtener proveedores paginados, ordenados y filtrados
   const filteredAndSortedProveedores = () => {
     let lista = proveedores
@@ -127,21 +88,12 @@ function Proveedores() {
     setSearchQuery(e.target.value)
   }
 
-  const openShowModal = (id, name, cellphone) => {
-    setIdProveedor(id)
-    setProveedor({
-      nombre: name,
-      telefono: cellphone,
-    })
-    setModalShow(true)
-  }
-
   return (
     <div id="proveedores-component">
       <NavBar title={'Proveedores'} />
       <div id="proveedores-component-mainContent">
         <AgregarYBuscarProveedor
-          onAgregar={activarFormulario}
+          onAgregar={openFormAdd}
           onBuscar={handleSearchNombre}
         />
         <ProveedorTableHeader onSort={handleSort} sortOrder={sortOrder} />
@@ -155,12 +107,12 @@ function Proveedores() {
           <>
             <ProveedorList
               proveedores={filteredAndSortedProveedores()}
-              onEdit={openEditModal}
-              onDelete={handleTrash}
+              onEdit={openFormEdit}
+              onDelete={openFormDelete}
               onPay={openFormPay}
-              onShow={openShowModal}
+              onShow={openFormShow}
             />
-            <div style={{ display: 'flex', gap: 10 }}>
+            <div>
               <PaginationControls
                 pagina={pagina}
                 totalDePaginas={totalDePaginas}
@@ -171,35 +123,32 @@ function Proveedores() {
           </>
         )}
 
-        {mostrarPopup && (
+        {modals.addModal && (
           <AgregarProveedor
-            handleCloseForm={ocultarFormulario}
+            handleCloseForm={closeForm}
             proveedores={proveedores}
           />
         )}
-        {editModal && (
-          <UpdateProveedor
-            handleCloseForm={ocultarFormulario}
-            proveedor={proveedor}
-          />
+        {modals.editModal && (
+          <UpdateProveedor handleCloseForm={closeForm} proveedor={proveedor} />
         )}
-        {modalEliminar && (
+        {modals.deleteModal && (
           <EliminarProveedor
             idProveedor={idProveedor}
-            isOpen={modalEliminar}
-            handleClose={handleClose}
+            isOpen={modals.deleteModal}
+            handleClose={closeFormDelete}
           />
         )}
-        {payModal && (
+        {modals.payModal && (
           <AgregarPago
             handleCloseForm={closeFormPay}
             proveedorFijo={proveedor}
           />
         )}
-        {modalShow && (
+        {modals.showModal && (
           <ShowProveedor
-            isOpen={modalShow}
-            handleClose={closeShow}
+            isOpen={modals.showModal}
+            handleClose={closeFormShow}
             idProveedor={idProveedor}
             proveedor={proveedor}
           />

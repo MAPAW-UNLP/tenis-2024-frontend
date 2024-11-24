@@ -1,4 +1,5 @@
 import PaginationButton from 'components/Proveedor/PaginationButton'
+import '../../styles/proveedores/buttons-pagination.css'
 
 const PaginationControls = ({ pagina, totalDePaginas, atras, siguiente }) => {
   return (

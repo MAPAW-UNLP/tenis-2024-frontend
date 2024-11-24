@@ -1,3 +1,5 @@
+import '../../styles/proveedores/table.css'
+
 const ProveedorTableHeader = ({ onSort, sortOrder }) => (
   <div className="table-head-proveedores">
     <span

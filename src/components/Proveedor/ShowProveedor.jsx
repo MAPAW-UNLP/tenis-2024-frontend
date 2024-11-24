@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { ProveedorPagosDetail } from './ProveedorPagosDetail'
-import '../../styles/proveedores.css'
+import '../../styles/proveedores/detail.css'
+import '../../styles/proveedores/spinner.css'
 
 export const ShowProveedor = ({ handleClose, idProveedor, proveedor }) => {
   const URL_BASE = `http://localhost:8083/api`
