@@ -1,0 +1,22 @@
+.table-head-proveedores {
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-bottom: 1.3em;
+  font-family: var(--title-text);
+  color: var(--neutral-white-text);
+  background-color: #5d5d5d;
+  padding: 0.8em;
+  border-top-left-radius: 1em;
+  border-top-right-radius: 1em;
+}
+
+.container-table-proveedores {
+  width: 100%;
+  margin: 0 auto;
+  margin-bottom: 1.2em;
+  padding: 0.8em;
+  height: 300px;
+}

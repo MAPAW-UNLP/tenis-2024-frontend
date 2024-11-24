@@ -3,6 +3,85 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+:root {
+  /*
+    Los colores los armé usando https://uicolors.app/create.
+    Usar el valor *-500 como base.
+  */
+  --primary-50: #f7fde8;
+  --primary-100: #eafacd;
+  --primary-200: #d7f4a2;
+  --primary-300: #baeb6b;
+  --primary-400: #9fdd3e;
+  --primary-500: #7cbd1e;
+  --primary-600: #629c14;
+  --primary-700: #4b7714;
+  --primary-800: #3e5e16;
+  --primary-900: #355017;
+  --primary-950: #1a2c07;
+
+  --secondary-50: #fff8ed;
+  --secondary-100: #ffefd4;
+  --secondary-200: #ffdaa8;
+  --secondary-300: #ffbf71;
+  --secondary-400: #ff922b;
+  --secondary-500: #fe7a11;
+  --secondary-600: #ef5f07;
+  --secondary-700: #c64608;
+  --secondary-800: #9d380f;
+  --secondary-900: #7e3010;
+  --secondary-950: #441506;
+
+  --success-50: #f7fde8;
+  --success-100: #eafacd;
+  --success-200: #d6f5a1;
+  --success-300: #b9ec6a;
+  --success-400: #9ddf3c;
+  --success-500: #81c81e;
+  --success-600: #619d13;
+  --success-700: #4a7813;
+  --success-800: #3d5f15;
+  --success-900: #355017;
+  --success-950: #192c07;
+
+  --danger-50: #fff1f1;
+  --danger-100: #ffe0e0;
+  --danger-200: #ffc7c7;
+  --danger-300: #ffa0a0;
+  --danger-400: #ff6969;
+  --danger-500: #fa5252;
+  --danger-600: #e71b1b;
+  --danger-700: #c21313;
+  --danger-800: #a11313;
+  --danger-900: #851717;
+  --danger-950: #490606;
+
+  --warning-50: #fffceb;
+  --warning-100: #fff8c6;
+  --warning-200: #ffef88;
+  --warning-300: #ffe249;
+  --warning-400: #ffd11f;
+  --warning-500: #fab005;
+  --warning-600: #de8601;
+  --warning-700: #b85f05;
+  --warning-800: #95490b;
+  --warning-900: #7a3c0d;
+  --warning-950: #461f02;
+
+  --info-50: #f1f7fe;
+  --info-100: #e1eefd;
+  --info-200: #bddbfa;
+  --info-300: #83bff6;
+  --info-400: #419eef;
+  --info-500: #238be7;
+  --info-600: #0b65be;
+  --info-700: #0a509a;
+  --info-800: #0d457f;
+  --info-900: #113b69;
+  --info-950: #0b2546;
+}
+
 .App {
   --primary-blue: #336699;
   --primary-green: #339966;
@@ -15,7 +94,7 @@
 
   --accent-yellow: #f1f864;
   --accent-tennis-green: #bceb3c;
-  --accent-green: #7cbd1e;
+  --accent-green: var(--primary-400);
 
   --title-text: 'Oswald', sans-serif;
   --normal-text: 'Roboto', sans-serif;

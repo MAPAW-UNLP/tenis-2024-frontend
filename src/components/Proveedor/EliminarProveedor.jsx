@@ -2,6 +2,9 @@ import { useState } from 'react'
 import CancelButton from './CancelButton'
 import ConfirmButton from './ConfirmButton'
 import { wait } from 'components/Utils/Functions'
+import '../../styles/proveedores/delete.css'
+import '../../styles/proveedores/popup.css'
+import '../../styles/proveedores/spinner.css'
 
 const EliminarProveedor = ({ idProveedor, isOpen, handleClose }) => {
   const [loading, setLoading] = useState(false)

@@ -1,0 +1,48 @@
+.add-and-search-container {
+  float: right;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 1.25rem;
+}
+
+.add-proveedor-btn {
+  background-color: #7cbd1e;
+  color: #fff;
+  width: 300px;
+  height: 50px;
+  font-size: 20px;
+  border: none;
+  border-radius: 10px;
+  font-family: var(--title-text);
+  cursor: pointer;
+}
+
+.searchbar {
+  position: relative;
+}
+
+.searchbar input {
+  width: 300px;
+  height: 50px;
+  font-family: var(--normal-text);
+  font-size: 100%;
+  border-radius: 10px;
+  border: 1px solid var(--neutral-black);
+  color: var(--neutral-black);
+  padding-right: 2%;
+  transition: all 0.5s ease;
+}
+
+.searchbar input:focus {
+  outline: 2px solid var(--accent-green);
+  border: none;
+}
+
+.searchbar-icon {
+  color: var(--neutral-black);
+  position: absolute;
+  top: 25%;
+  right: 2%;
+}
