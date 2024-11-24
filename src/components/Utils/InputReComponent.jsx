@@ -10,6 +10,7 @@ const InputReComponent = ({
   min,
   max,
   readOnly,
+  value,
 }) => {
   return (
     <input
@@ -25,6 +26,7 @@ const InputReComponent = ({
       maxLength={max}
       min={min}
       readOnly={readOnly}
+      value={value}
     />
   )
 }

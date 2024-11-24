@@ -185,6 +185,7 @@ export const Cobros = () => {
       ? itemAlquiler.map((item) => ({
           id: item.id,
           concepto: item.description,
+          importe: item.importe,
         }))
       : []
 

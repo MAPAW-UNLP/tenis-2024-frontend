@@ -2,6 +2,7 @@ import InputReComponent from '../Utils/InputReComponent'
 import InputValueComponent from '../Utils/InputValueComponent'
 import SelectReComponent from '../Utils/SelectReComponent'
 import '../../styles/movimiento/movimientoForm.css'
+import { useEffect } from 'react'
 
 import { useState } from 'react'
 
@@ -17,15 +18,22 @@ export const MovimientoForm = ({
   clasesOptions,
   itemOptions,
 }) => {
-  // Arreglo de errores
   const [errors, setErrors] = useState([])
+  const [selectedItem, setSelectedItem] = useState([])
 
   const handleResetOptions = () => {
     movimientoAddForm.personaId = ''
     movimientoAddForm.tipoClaseId = ''
     movimientoAddForm.personaSeleccionada = ''
     movimientoAddForm.descripcion = ''
+    movimientoAddForm.monto = ''
   }
+
+  useEffect(() => {
+    // Ejecuta el reset cada vez que el concepto cambia
+    handleResetItem()
+    handleResetOptions()
+  }, [movimientoAddForm.concepto])
 
   // RFuncion para revisar si todos los inputs estan completos antes de hacer el envio
   const handleCheckAddForm = (event) => {
@@ -62,7 +70,11 @@ export const MovimientoForm = ({
     }
     if (!movimientoAddForm.descripcion)
       verify.push('La descripcion no puede estar vacia')
-    if (!movimientoAddForm.monto) verify.push('El monto no puede estar vacio')
+    if (!movimientoAddForm.monto) {
+      verify.push('El monto no puede estar vacio')
+    } else if (!/^\d+$/.test(movimientoAddForm.monto)) {
+      verify.push('El monto debe ser un número entero')
+    }
 
     setErrors(verify)
     return verify.length === 0 ? true : false
@@ -89,6 +101,29 @@ export const MovimientoForm = ({
     return verify.length === 0 ? true : false
   }
 
+  const handleChangeFormItem = (event) => {
+    const selectedValue = event.target.value
+
+    if (selectedValue === '') {
+      setSelectedItem({ importe: 'Monto' })
+      movimientoAddForm.monto = 'Monto'
+      movimientoAddForm.descripcion = '' // Resetea la descripción
+    } else {
+      const selectedOption = itemOptions.find(
+        (option) => option.id.toString() === selectedValue
+      )
+      setSelectedItem(selectedOption)
+      movimientoAddForm.monto = selectedOption.importe
+      movimientoAddForm.descripcion = selectedOption.concepto
+    }
+  }
+
+  const handleResetItem = () => {
+    setSelectedItem({ importe: 'Monto' })
+    movimientoAddForm.monto = 'Monto'
+    movimientoAddForm.descripcion = ''
+  }
+
   return (
     <div className="movimiento-add-component">
       <button
@@ -110,7 +145,6 @@ export const MovimientoForm = ({
           options={movimientoOptions}
           placeholder={'Concepto'}
         />
-
         {/* Lógica para mostrar campos dinámicos basados en el concepto */}
         {(() => {
           switch (movimientoAddForm.concepto) {
@@ -180,26 +214,12 @@ export const MovimientoForm = ({
                   </label>
                   <SelectReComponent
                     name={'itemId'}
-                    onChange={handleChangeFormData}
+                    onChange={handleChangeFormItem}
                     options={itemOptions || []}
                     placeholder={`Seleccionar item`}
                   />
-                  <label htmlFor="cantId" className="movimiento-form-label">
-                    *{' '}
-                  </label>
-                  <SelectReComponent
-                    name={'cantId'}
-                    onChange={handleChangeFormData}
-                    options={proveedores}
-                    placeholder={`Cantidad`}
-                  />
                 </>
               )
-
-            default:
-              // Resetear las opciones si no hay un concepto válido
-              handleResetOptions()
-              return null
           }
         })()}
 
@@ -225,8 +245,8 @@ export const MovimientoForm = ({
           name={'monto'}
           onChangeFuncion={handleChangeFormData}
           placeholder={'Monto'}
+          value={movimientoAddForm.monto}
         />
-
         <div
           style={{
             fontFamily: 'var(--normal-text)',
@@ -239,7 +259,6 @@ export const MovimientoForm = ({
             <p key={`error-${index}`}>* {error}</p>
           ))}
         </div>
-
         <button
           className="movimiento-add-form-addBtn"
           style={{ marginTop: '.5em' }}
