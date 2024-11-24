@@ -19,13 +19,16 @@ import { useModalManager } from 'hooks/Proveedores/useModalManager'
 
 function Proveedores() {
   const URL_BASE = `http://localhost:8083/api/`
+
   const CANT_FILAS = 5
 
   const { proveedores, loading, update } = useProveedores(URL_BASE)
+
   const { pagina, atras, siguiente, totalDePaginas } = usePaginacion(
     CANT_FILAS,
     proveedores.length
   )
+
   const {
     modals,
     proveedor,
@@ -47,19 +50,9 @@ function Proveedores() {
     field: 'nombre',
     direction: 'asc',
   })
+
   const [searchQuery, setSearchQuery] = useState('')
 
-  let listado
-
-  const filtrarArray = (paginaActual) => {
-    listado = proveedores.slice(
-      paginaActual * CANT_FILAS,
-      (paginaActual + 1) * CANT_FILAS
-    )
-  }
-  filtrarArray(pagina)
-
-  // Nueva función para obtener proveedores paginados, ordenados y filtrados
   const filteredAndSortedProveedores = () => {
     let lista = proveedores
     if (searchQuery) {
