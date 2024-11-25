@@ -152,8 +152,58 @@ export const ItemsAlquiler = () => {
           className="container-ajustes"
           style={{ backgroundColor: '#ffffff' }}
         >
-          <div className="table-head-ajustes">
-            <span style={{ fontSize: '1.8em' }}>Valores</span>
+          <div
+            className="table-head-ajustes"
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              position: 'relative',
+              marginBottom: '20px',
+            }}
+          >
+            <span style={{ fontSize: '1.8em', marginBottom: '10px' }}>
+              Valores
+            </span>
+            <div
+              style={{
+                display: 'flex',
+                gap: '10px',
+                position: 'absolute',
+                left: '10px',
+                top: '50%',
+                transform: 'translateY(-50%)',
+              }}
+            >
+              <Button
+                onClick={() => window.history.back()}
+                size="md"
+                style={{
+                  backgroundColor: '#4CAF50',
+                  color: 'white',
+                  border: 'none',
+                  padding: '10px 20px',
+                  borderRadius: '5px',
+                  cursor: 'pointer',
+                }}
+              >
+                Volver a la página anterior
+              </Button>
+              <Button
+                onClick={() => (window.location.href = '/inicio')}
+                size="md"
+                style={{
+                  backgroundColor: '#2196F3',
+                  color: 'white',
+                  border: 'none',
+                  padding: '10px 20px',
+                  borderRadius: '5px',
+                  cursor: 'pointer',
+                }}
+              >
+                Inicio
+              </Button>
+            </div>
           </div>
           <div className="container-table-ajustes">
             <Button
