@@ -186,6 +186,7 @@ export const Ajustes = () => {
               }}
             >
               <ButtonArrow style={{ marginLeft: '15%' }} />
+              <ButtonHome style={{ marginTop: '3%' }} />
             </div>
           </div>
           <div className="container-table-ajustes">
