@@ -10,6 +10,7 @@ import FormularioTipoClase from '../../components/Clase/AgregarTipoClase'
 import Swal from 'sweetalert2'
 import { tipoClaseService } from 'api/tipoClase'
 import ButtonArrow from 'Img/arrow'
+import ButtonHome from 'Img/home'
 
 export const Ajustes = () => {
   const URL_BASE = `http://localhost:8083/api/`
