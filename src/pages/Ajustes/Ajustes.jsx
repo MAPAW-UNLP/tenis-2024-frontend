@@ -9,6 +9,7 @@ import Button from 'components/Button/Button'
 import FormularioTipoClase from '../../components/Clase/AgregarTipoClase'
 import Swal from 'sweetalert2'
 import { tipoClaseService } from 'api/tipoClase'
+import ButtonArrow from 'Img/arrow'
 
 export const Ajustes = () => {
   const URL_BASE = `http://localhost:8083/api/`
@@ -184,34 +185,7 @@ export const Ajustes = () => {
                 transform: 'translateY(-50%)',
               }}
             >
-              <Button
-                onClick={() => window.history.back()}
-                size="md"
-                style={{
-                  backgroundColor: '#4CAF50',
-                  color: 'white',
-                  border: 'none',
-                  padding: '10px 20px',
-                  borderRadius: '5px',
-                  cursor: 'pointer',
-                }}
-              >
-                Volver a la página anterior
-              </Button>
-              <Button
-                onClick={() => (window.location.href = '/inicio')}
-                size="md"
-                style={{
-                  backgroundColor: '#2196F3',
-                  color: 'white',
-                  border: 'none',
-                  padding: '10px 20px',
-                  borderRadius: '5px',
-                  cursor: 'pointer',
-                }}
-              >
-                Inicio
-              </Button>
+              <ButtonArrow style={{ marginLeft: '15%' }} />
             </div>
           </div>
           <div className="container-table-ajustes">

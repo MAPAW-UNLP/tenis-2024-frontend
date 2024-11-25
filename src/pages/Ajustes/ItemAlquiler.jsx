@@ -9,6 +9,9 @@ import FormularioItemAlquiler from 'components/Item/AgregarItemAlquiler'
 import Swal from 'sweetalert2'
 import { itemAlquilerService } from 'api/itemalquiler'
 import Button from 'components/Button/Button'
+import Arrow from 'Img/arrow'
+import ButtonArrow from 'Img/arrow'
+import ButtonHome from 'Img/home'
 
 export const ItemsAlquiler = () => {
   const URL_BASE = `http://localhost:8083/api/`
@@ -175,34 +178,8 @@ export const ItemsAlquiler = () => {
                 transform: 'translateY(-50%)',
               }}
             >
-              <Button
-                onClick={() => window.history.back()}
-                size="md"
-                style={{
-                  backgroundColor: '#4CAF50',
-                  color: 'white',
-                  border: 'none',
-                  padding: '10px 20px',
-                  borderRadius: '5px',
-                  cursor: 'pointer',
-                }}
-              >
-                Volver a la página anterior
-              </Button>
-              <Button
-                onClick={() => (window.location.href = '/inicio')}
-                size="md"
-                style={{
-                  backgroundColor: '#2196F3',
-                  color: 'white',
-                  border: 'none',
-                  padding: '10px 20px',
-                  borderRadius: '5px',
-                  cursor: 'pointer',
-                }}
-              >
-                Inicio
-              </Button>
+              <ButtonArrow style={{ marginLeft: '15%' }} />
+              <ButtonHome style={{ marginTop: '3%' }} />
             </div>
           </div>
           <div className="container-table-ajustes">
