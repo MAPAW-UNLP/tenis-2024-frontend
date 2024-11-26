@@ -31,15 +31,13 @@ const useInputValidation = (
       return { valid: false, message: 'El nombre no puede ser vacío.' }
     } else if (!pattern.test(nombre)) {
       return { valid: false, message: 'El nombre solo debe contener letras.' }
-    } else if (proveedores.find((proveedor) => proveedor.nombre === nombre)) {
-      return { valid: false, message: 'El nombre de proveedor ya existe.' }
     } else if (nombre.length > 30) {
       return {
         valid: false,
         message: 'El nombre debe tener menos de 30 caracteres.',
       }
     }
-    return { valid: true, message: 'El nombre de proveedor es correcto.' }
+    return { valid: true, message: 'El nombre de proveedor es valido.' }
   }
 
   const validateTelefono = (telefono) => {

@@ -2,6 +2,9 @@ import { useState } from 'react'
 import CancelButton from './CancelButton'
 import ConfirmButton from './ConfirmButton'
 import { wait } from 'components/Utils/Functions'
+import '../../styles/proveedores/delete.css'
+import '../../styles/proveedores/popup.css'
+import '../../styles/proveedores/spinner.css'
 
 const EliminarProveedor = ({ idProveedor, isOpen, handleClose }) => {
   const [loading, setLoading] = useState(false)
@@ -25,18 +28,15 @@ const EliminarProveedor = ({ idProveedor, isOpen, handleClose }) => {
 
   return (
     <>
-      <div className="proveedor-delete-modal">
-        <button id="close-proveedor-add-form" onClick={handleClose}>
-          x
-        </button>
+      <>
         <h2>Eliminar Proveedor</h2>
         <p>¿Estás seguro de que deseas eliminar este proveedor?</p>
         <div className="button-container">
-          <ConfirmButton text="Eliminar" handleClick={handleDelete} />
+          <ConfirmButton handleClick={handleDelete} />
           <CancelButton handleClick={handleClose} />
         </div>
         {loading && <div className="spinner spinner-centered"></div>}
-      </div>
+      </>
       {activePopup && (
         <div className="popup">¡Proveedor eliminado con éxito!</div>
       )}

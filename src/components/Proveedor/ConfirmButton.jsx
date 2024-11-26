@@ -1,8 +1,10 @@
-const ConfirmButton = ({ text, handleClick }) => {
+import Button from 'components/Button/Button'
+
+const ConfirmButton = ({ handleClick }) => {
   return (
-    <button id="proveedor-add-form-addBtn" onClick={handleClick}>
-      <span className="textoBotonAceptar">{text}</span>
-    </button>
+    <Button onClick={handleClick} size="lg">
+      Aceptar
+    </Button>
   )
 }
 

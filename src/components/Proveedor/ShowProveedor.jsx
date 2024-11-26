@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
 import { ProveedorPagosDetail } from './ProveedorPagosDetail'
-import '../../styles/proveedores.css'
+import '../../styles/proveedores/detail.css'
+import '../../styles/proveedores/spinner.css'
 
-export const ShowProveedor = ({ handleClose, idProveedor, proveedor }) => {
+export const ShowProveedor = ({ idProveedor, proveedor }) => {
   const URL_BASE = `http://localhost:8083/api`
 
   const [proveedorPayments, setProveedorPayments] = useState([])
@@ -19,20 +20,14 @@ export const ShowProveedor = ({ handleClose, idProveedor, proveedor }) => {
         const lastTwoPayments = sortedPayments.slice(0, 2)
         setProveedorPayments(lastTwoPayments)
       })
+    setLoading(false)
   }
 
   useEffect(() => {
     fetchProveedorPayments()
-  })
+  }, [])
   return (
-    <div id="proveedor-add-component" className="show-proveedor">
-      <button
-        id="close-proveedor-add-form"
-        className="close-btn"
-        onClick={handleClose}
-      >
-        x
-      </button>
+    <>
       <div className="show-proveedor">
         <div className="provider-details-container">
           <div className="provider-info">
@@ -46,8 +41,11 @@ export const ShowProveedor = ({ handleClose, idProveedor, proveedor }) => {
             {loading ? (
               <div className="container-table-proveedores">
                 <div
-                  className="spinner"
-                  style={{ position: 'relative', marginTop: '10%' }}
+                  className="spinner spinner-centered"
+                  style={{
+                    position: 'relative',
+                    marginTop: '-10%',
+                  }}
                 ></div>
               </div>
             ) : proveedorPayments.length > 0 ? (
@@ -60,6 +58,6 @@ export const ShowProveedor = ({ handleClose, idProveedor, proveedor }) => {
           </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }

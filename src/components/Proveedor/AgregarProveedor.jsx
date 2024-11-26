@@ -2,7 +2,10 @@ import React, { useState } from 'react'
 import InputReComponent from '../Utils/InputReComponent'
 import useInputValidation from 'hooks/Proveedores/useInputValidation'
 import { wait } from 'components/Utils/Functions'
-import LoaderSpinner from 'components/LoaderSpinner'
+import '../../styles/proveedores/form.css'
+import '../../styles/proveedores/popup.css'
+import '../../styles/proveedores/spinner.css'
+import Button from 'components/Button/Button'
 
 function AgregarProveedor({ handleCloseForm, proveedores = [] }) {
   const [proveedorForm, setProveedorForm] = useState({
@@ -62,10 +65,7 @@ function AgregarProveedor({ handleCloseForm, proveedores = [] }) {
   }
 
   return (
-    <div id="proveedor-add-component">
-      <button id="close-proveedor-add-form" onClick={handleCloseForm}>
-        x
-      </button>
+    <>
       <h2>Nuevo Proveedor</h2>
       <form onSubmit={addProveedor}>
         <label className="textoFormulario">Nombre</label>
@@ -100,23 +100,19 @@ function AgregarProveedor({ handleCloseForm, proveedores = [] }) {
           </p>
         </div>
         <div className="button-container">
-          <button
-            disabled={habilitarBoton()}
-            id="proveedor-add-form-addBtn"
-            type="submit"
-          >
-            <p className="textoBotonAceptar">Agregar</p>
-          </button>
-          <button onClick={handleCloseForm} id="proveedor-add-form-cancelBtn">
-            <p className="textoBotonCancelar">Cancelar</p>
-          </button>
+          <Button size="lg" disabled={habilitarBoton()} type="submit">
+            Aceptar
+          </Button>
+          <Button color="secondary" size="lg" onClick={handleCloseForm}>
+            Cancelar
+          </Button>
         </div>
-        {loading && <div className="spinner"></div>}
+        {loading && <div className="spinner spinner-centered"></div>}
       </form>
       {showSuccessPopup && (
         <div className="popup">¡Proveedor agregado con éxito!</div>
       )}
-    </div>
+    </>
   )
 }
 
