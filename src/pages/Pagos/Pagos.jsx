@@ -8,6 +8,7 @@ import { ordenarPorNombre } from '../../components/Utils/Functions'
 import LoaderSpinner from '../../components/LoaderSpinner'
 
 import '../../styles/movimiento/movimiento.css'
+import { getProveedores } from 'api/proveedores'
 
 export const Pagos = () => {
   const URL_BASE = `http://localhost:8083/api/`
@@ -35,10 +36,12 @@ export const Pagos = () => {
       .then((response) => response.json())
       .then((data) => setProfesores(ordenarPorNombre(data)))
 
-    fetch(`${URL_BASE}proveedor`, requestOptions)
-      .then((response) => response.json())
-      .then((data) => setProveedores(ordenarPorNombre(data)))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const fetchProveedores = async () => {
+      const data = await getProveedores()
+      setProveedores(ordenarPorNombre(data))
+    }
+
+    fetchProveedores()
   }, [actPagos])
 
   // Estado para el formulario de "Agregar Pago"

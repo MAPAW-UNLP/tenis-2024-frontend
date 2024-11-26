@@ -1,3 +1,4 @@
+import { getProveedores } from 'api/proveedores'
 import { useState, useEffect } from 'react'
 
 export const useProveedores = (URL_BASE) => {
@@ -7,13 +8,12 @@ export const useProveedores = (URL_BASE) => {
 
   useEffect(() => {
     setLoading(true)
-    fetch(`${URL_BASE}proveedor`)
-      .then((response) => response.json())
-      .then((data) => {
-        setProveedores(data)
-        setLoading(false)
-      })
-      .catch(() => setLoading(false))
+    const fetchProveedores = async () => {
+      const data = await getProveedores()
+      setProveedores(data)
+      setLoading(false)
+    }
+    fetchProveedores()
   }, [updateList])
 
   const update = () => {
