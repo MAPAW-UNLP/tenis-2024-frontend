@@ -28,7 +28,12 @@ export const Pagos = () => {
     }
     fetch(`${URL_BASE}pagos`, requestOptions)
       .then((response) => response.json())
-      .then((data) => setPagos(data))
+      .then((data) => {
+        const pagosOrdenados = data.sort(
+          (a, b) => new Date(b.fecha) - new Date(a.fecha)
+        )
+        setPagos(pagosOrdenados)
+      })
       .then(() => setPagosLoader(() => false))
       .then(() => setLoadingFetch(false))
 
