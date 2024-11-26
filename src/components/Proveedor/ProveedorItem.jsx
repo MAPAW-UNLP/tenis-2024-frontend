@@ -1,4 +1,3 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faUserEdit,
   faTrash,
@@ -7,39 +6,39 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import '../../styles/proveedores/items-table.css'
 import '../../styles/proveedores/buttons-table.css'
+import Button from 'components/Button/Button'
 
 const ProveedorItem = ({ proveedor, onEdit, onDelete, onPay, onShow }) => (
   <div className="proveedores-item-list">
     <p>{proveedor.nombre}</p>
     <p>{proveedor.telefono}</p>
-    <button
-      className="proveedor-btn edit-proveedor-btn"
-      title="Modificar proveedor"
+    <Button
+      color="warning"
+      faIconStart={faUserEdit}
       onClick={() => onEdit(proveedor)}
-    >
-      <FontAwesomeIcon icon={faUserEdit} />
-    </button>
-    <button
-      className="proveedor-btn delete-proveedor-btn"
-      title="Eliminar proveedor"
+      size="lg"
+      title="Modificar proveedor"
+    />
+    <Button
+      color="danger"
+      faIconStart={faTrash}
       onClick={() => onDelete(proveedor.id)}
-    >
-      <FontAwesomeIcon icon={faTrash} />
-    </button>
-    <button
-      className="proveedor-btn pay-proveedor-btn"
-      title="Realizar pago a proveedor"
+      size="lg"
+      title="Eliminar proveedor"
+    />
+    <Button
+      faIconStart={faMoneyBillAlt}
       onClick={() => onPay(proveedor)}
-    >
-      <FontAwesomeIcon icon={faMoneyBillAlt} />
-    </button>
-    <button
-      className="proveedor-btn detail-proveedor-btn"
-      title="Ver detalle de proveedor"
+      size="lg"
+      title="Realizar pago a proveedor"
+    />
+    <Button
+      color="info"
+      faIconStart={faAddressBook}
       onClick={() => onShow(proveedor.id, proveedor.nombre, proveedor.telefono)}
-    >
-      <FontAwesomeIcon icon={faAddressBook} />
-    </button>
+      size="lg"
+      title="Ver detalle de proveedor"
+    />
   </div>
 )
 

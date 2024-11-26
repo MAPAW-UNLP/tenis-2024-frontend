@@ -28,18 +28,15 @@ const EliminarProveedor = ({ idProveedor, isOpen, handleClose }) => {
 
   return (
     <>
-      <div className="proveedor-delete-modal">
-        <button id="close-proveedor-add-form" onClick={handleClose}>
-          x
-        </button>
+      <>
         <h2>Eliminar Proveedor</h2>
         <p>¿Estás seguro de que deseas eliminar este proveedor?</p>
         <div className="button-container">
-          <ConfirmButton text="Eliminar" handleClick={handleDelete} />
+          <ConfirmButton handleClick={handleDelete} />
           <CancelButton handleClick={handleClose} />
         </div>
         {loading && <div className="spinner spinner-centered"></div>}
-      </div>
+      </>
       {activePopup && (
         <div className="popup">¡Proveedor eliminado con éxito!</div>
       )}

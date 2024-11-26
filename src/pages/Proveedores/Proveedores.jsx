@@ -1,21 +1,21 @@
 import NavBar from 'pages/Navbar/NavBar'
 import { useState } from 'react'
-import '../../styles/proveedores/main-component.css'
-import '../../styles/proveedores/background.css'
-
-import AgregarProveedor from 'components/Proveedor/AgregarProveedor'
-import { UpdateProveedor } from 'components/Proveedor/UpdateProveedor'
-import EliminarProveedor from 'components/Proveedor/EliminarProveedor'
 import AgregarPago from 'components/Proveedor/AgregarPago'
+import AgregarProveedor from 'components/Proveedor/AgregarProveedor'
+import AgregarYBuscarProveedor from 'components/Proveedor/AgregarYBuscarProveedor'
+import EliminarProveedor from 'components/Proveedor/EliminarProveedor'
 import LoaderSpinner from 'components/LoaderSpinner'
+import PaginationControls from 'components/Proveedor/PaginationControls'
+import ProveedorList from 'components/Proveedor/ProveedorList'
+import ProveedorTableHeader from 'components/Proveedor/ProveedorTableHead'
+import { UpdateProveedor } from 'components/Proveedor/UpdateProveedor'
 import { ShowProveedor } from '../../components/Proveedor/ShowProveedor'
+import { useModalManager } from 'hooks/Proveedores/useModalManager'
 import { useProveedores } from 'hooks/Proveedores/useProveedores'
 import { usePaginacion } from 'hooks/Proveedores/usePaginacion'
-import ProveedorTableHeader from 'components/Proveedor/ProveedorTableHead'
-import ProveedorList from 'components/Proveedor/ProveedorList'
-import AgregarYBuscarProveedor from 'components/Proveedor/AgregarYBuscarProveedor'
-import PaginationControls from 'components/Proveedor/PaginationControls'
-import { useModalManager } from 'hooks/Proveedores/useModalManager'
+import '../../styles/proveedores/main-component.css'
+import '../../styles/proveedores/background.css'
+import Modal from 'components/Modal/Modal'
 
 function Proveedores() {
   const URL_BASE = `http://localhost:8083/api/`
@@ -117,34 +117,42 @@ function Proveedores() {
         )}
 
         {modals.addModal && (
-          <AgregarProveedor
-            handleCloseForm={closeForm}
-            proveedores={proveedores}
-          />
+          <Modal isVisible={modals.addModal} onClose={closeForm}>
+            <AgregarProveedor
+              handleCloseForm={closeForm}
+              proveedores={proveedores}
+            />
+          </Modal>
         )}
         {modals.editModal && (
-          <UpdateProveedor handleCloseForm={closeForm} proveedor={proveedor} />
+          <Modal isVisible={modals.editModal} onClose={closeForm}>
+            <UpdateProveedor
+              handleCloseForm={closeForm}
+              proveedor={proveedor}
+            />
+          </Modal>
         )}
         {modals.deleteModal && (
-          <EliminarProveedor
-            idProveedor={idProveedor}
-            isOpen={modals.deleteModal}
-            handleClose={closeFormDelete}
-          />
+          <Modal isVisible={modals.deleteModal} onClose={closeFormDelete}>
+            <EliminarProveedor
+              idProveedor={idProveedor}
+              isOpen={modals.deleteModal}
+              handleClose={closeFormDelete}
+            />
+          </Modal>
         )}
         {modals.payModal && (
-          <AgregarPago
-            handleCloseForm={closeFormPay}
-            proveedorFijo={proveedor}
-          />
+          <Modal isVisible={modals.payModal} onClose={closeFormPay}>
+            <AgregarPago
+              handleCloseForm={closeFormPay}
+              proveedorFijo={proveedor}
+            />
+          </Modal>
         )}
         {modals.showModal && (
-          <ShowProveedor
-            isOpen={modals.showModal}
-            handleClose={closeFormShow}
-            idProveedor={idProveedor}
-            proveedor={proveedor}
-          />
+          <Modal isVisible={modals.showModal} onClose={closeFormShow}>
+            <ShowProveedor idProveedor={idProveedor} proveedor={proveedor} />
+          </Modal>
         )}
       </div>
     </div>

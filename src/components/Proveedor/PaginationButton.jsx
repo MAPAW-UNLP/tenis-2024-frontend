@@ -1,7 +1,9 @@
+import Button from 'components/Button/Button'
+
 const PaginationButton = ({ onClick, disabled, text }) => (
-  <button className="btnSelectPage" disabled={disabled} onClick={onClick}>
+  <Button size="lg" color="info" disabled={disabled} onClick={onClick}>
     {text}
-  </button>
+  </Button>
 )
 
 export default PaginationButton

@@ -2,13 +2,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import InputComponent from 'components/Utils/InputComponent'
 import '../../styles/proveedores/add-and-search.css'
+import Button from 'components/Button/Button'
 
 const AgregarYBuscarProveedor = ({ onAgregar, onBuscar }) => {
   return (
     <div className="add-and-search-container">
-      <button className="add-proveedor-btn" onClick={onAgregar}>
+      <Button size="lg" onClick={onAgregar}>
         Agregar nuevo Proveedor
-      </button>
+      </Button>
       <div className="searchbar">
         <FontAwesomeIcon className="searchbar-icon" icon={faMagnifyingGlass} />
         <InputComponent

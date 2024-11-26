@@ -4,6 +4,7 @@ import { useState } from 'react'
 import '../../styles/proveedores/form.css'
 import '../../styles/proveedores/popup.css'
 import '../../styles/proveedores/spinner.css'
+import Button from 'components/Button/Button'
 
 export const UpdateProveedor = ({ handleCloseForm, proveedor = {} }) => {
   const partial = true
@@ -73,10 +74,7 @@ export const UpdateProveedor = ({ handleCloseForm, proveedor = {} }) => {
   }
 
   return (
-    <div id="proveedor-add-component">
-      <button id="close-proveedor-add-form" onClick={handleCloseForm}>
-        x
-      </button>
+    <>
       <h2>Editar Proveedor</h2>
       <form onSubmit={updateProveedor}>
         <label className="textoFormulario">Nombre</label>
@@ -109,18 +107,18 @@ export const UpdateProveedor = ({ handleCloseForm, proveedor = {} }) => {
           </p>
         </div>
         <div className="button-container">
-          <button id="proveedor-add-form-addBtn" type="submit">
-            <p className="textoBotonAceptar">Guardar</p>
-          </button>
-          <button onClick={handleCloseForm} id="proveedor-add-form-cancelBtn">
-            <p className="textoBotonCancelar">Cancelar</p>
-          </button>
+          <Button size="lg" type="submit">
+            Aceptar
+          </Button>
+          <Button color="secondary" size="lg" onClick={handleCloseForm}>
+            Cancelar
+          </Button>
         </div>
         {loading && <div className="spinner"></div>}
       </form>
       {showSuccessPopup && (
         <div className="popup">¡Proveedor actualizado con éxito!</div>
       )}
-    </div>
+    </>
   )
 }

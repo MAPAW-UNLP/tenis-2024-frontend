@@ -3,7 +3,7 @@ import { ProveedorPagosDetail } from './ProveedorPagosDetail'
 import '../../styles/proveedores/detail.css'
 import '../../styles/proveedores/spinner.css'
 
-export const ShowProveedor = ({ handleClose, idProveedor, proveedor }) => {
+export const ShowProveedor = ({ idProveedor, proveedor }) => {
   const URL_BASE = `http://localhost:8083/api`
 
   const [proveedorPayments, setProveedorPayments] = useState([])
@@ -27,14 +27,7 @@ export const ShowProveedor = ({ handleClose, idProveedor, proveedor }) => {
     fetchProveedorPayments()
   }, [])
   return (
-    <div id="proveedor-add-component" className="show-proveedor">
-      <button
-        id="close-proveedor-add-form"
-        className="close-btn"
-        onClick={handleClose}
-      >
-        x
-      </button>
+    <>
       <div className="show-proveedor">
         <div className="provider-details-container">
           <div className="provider-info">
@@ -62,6 +55,6 @@ export const ShowProveedor = ({ handleClose, idProveedor, proveedor }) => {
           </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }

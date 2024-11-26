@@ -6,6 +6,7 @@ import { wait } from 'components/Utils/Functions'
 import '../../styles/proveedores/form.css'
 import '../../styles/proveedores/popup.css'
 import '../../styles/proveedores/spinner.css'
+import Button from 'components/Button/Button'
 
 function AgregarPago({
   handleCloseForm,
@@ -66,10 +67,7 @@ function AgregarPago({
   }
 
   return (
-    <div id="proveedor-add-component">
-      <button id="close-proveedor-add-form" onClick={handleCloseForm}>
-        x
-      </button>
+    <>
       <h2>Nuevo Pago</h2>
       <form onSubmit={addPago}>
         <label className="textoFormulario">Proveedor</label>
@@ -113,23 +111,19 @@ function AgregarPago({
         </div>
 
         <div className="button-container">
-          <button
-            disabled={habilitarBoton()}
-            id="proveedor-add-form-addBtn"
-            type="submit"
-          >
-            <p className="textoBotonAceptar">Agregar Pago</p>
-          </button>
-          <button onClick={handleCloseForm} id="proveedor-add-form-cancelBtn">
-            <p className="textoBotonCancelar">Cancelar</p>
-          </button>
+          <Button disabled={habilitarBoton()} type="submit">
+            Agregar Pago
+          </Button>
+          <Button color="secondary" onClick={handleCloseForm}>
+            Cancelar
+          </Button>
         </div>
         {loading && <div className="spinner"></div>}
       </form>
       {showSuccessPopup && (
         <div className="popup">¡Pago agregado con éxito!</div>
       )}
-    </div>
+    </>
   )
 }
 
