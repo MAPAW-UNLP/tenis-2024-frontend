@@ -5,21 +5,24 @@
   width: 50px;
   height: 50px;
   animation: spin 1s linear infinite;
-  position: absolute;
-  top: 0px;
-  margin-left: 45%;
-  margin-top: 23%;
 }
 
 .spinner-centered {
-  margin-left: auto;
-}
-
-.spinner-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  position: absolute;
+  top: 50%;
+  left: 43%;
+  z-index: 10;
+}
+
+.spinner-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 @keyframes spin {

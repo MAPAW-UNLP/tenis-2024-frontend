@@ -118,7 +118,7 @@ function AgregarPago({
             Cancelar
           </Button>
         </div>
-        {loading && <div className="spinner"></div>}
+        {loading && <div className="spinner spinner-centered"></div>}
       </form>
       {showSuccessPopup && (
         <div className="popup">¡Pago agregado con éxito!</div>

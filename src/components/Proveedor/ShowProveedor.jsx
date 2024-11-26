@@ -41,8 +41,11 @@ export const ShowProveedor = ({ idProveedor, proveedor }) => {
             {loading ? (
               <div className="container-table-proveedores">
                 <div
-                  className="spinner"
-                  style={{ position: 'relative', marginTop: '10%' }}
+                  className="spinner spinner-centered"
+                  style={{
+                    position: 'relative',
+                    marginTop: '-10%',
+                  }}
                 ></div>
               </div>
             ) : proveedorPayments.length > 0 ? (
