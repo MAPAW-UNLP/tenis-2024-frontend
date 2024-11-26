@@ -24,11 +24,6 @@ function Proveedores() {
 
   const { proveedores, loading, update } = useProveedores(URL_BASE)
 
-  const { pagina, atras, siguiente, totalDePaginas } = usePaginacion(
-    CANT_FILAS,
-    proveedores.length
-  )
-
   const {
     modals,
     proveedor,
@@ -60,14 +55,25 @@ function Proveedores() {
         p.nombre.toUpperCase().includes(searchQuery.toUpperCase())
       )
     }
-    lista = lista.sort((a, b) => {
+    return (lista = lista.sort((a, b) => {
       const fieldA = a[sortOrder.field].toLowerCase()
       const fieldB = b[sortOrder.field].toLowerCase()
       if (fieldA < fieldB) return sortOrder.direction === 'asc' ? -1 : 1
       if (fieldA > fieldB) return sortOrder.direction === 'asc' ? 1 : -1
       return 0
-    })
-    return lista.slice(pagina * CANT_FILAS, (pagina + 1) * CANT_FILAS)
+    }))
+  }
+
+  const filteredData = filteredAndSortedProveedores()
+
+  const { pagina, atras, siguiente, totalDePaginas } = usePaginacion(
+    CANT_FILAS,
+    filteredData.length
+  )
+
+  const paginatedProveedores = () => {
+    const startIndex = pagina * CANT_FILAS
+    return filteredData.slice(startIndex, startIndex + CANT_FILAS)
   }
 
   const handleSort = (field) => {
@@ -99,7 +105,7 @@ function Proveedores() {
         ) : (
           <>
             <ProveedorList
-              proveedores={filteredAndSortedProveedores()}
+              proveedores={paginatedProveedores()}
               onEdit={openFormEdit}
               onDelete={openFormDelete}
               onPay={openFormPay}
