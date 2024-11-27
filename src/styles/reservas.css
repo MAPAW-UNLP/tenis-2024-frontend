@@ -62,20 +62,6 @@
   cursor: default;
 }
 
-#continue-btn {
-  width: 100%;
-  background-color: var(--accent-green);
-  height: 5rem;
-  border: none;
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
-  transition: all 0.5s ease;
-}
-
-#continue-btn:disabled {
-  background-color: var(--neutral-black);
-}
-
 #next-icon {
   color: var(--neutral-white);
   font-size: 250%;
@@ -92,21 +78,6 @@ hr {
   width: 100%;
 }
 
-#submit-btn {
-  width: 100%;
-  background-color: var(--accent-green);
-  height: 5rem;
-  border: none;
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
-  transition: all 0.5s ease;
-  cursor: pointer;
-}
-
-#submit-btn:disabled {
-  background-color: var(--neutral-black);
-  cursor: default;
-}
 #claseFormComponent {
   width: 100%;
 }

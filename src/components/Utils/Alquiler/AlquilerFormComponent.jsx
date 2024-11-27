@@ -2,14 +2,13 @@
 import InputComponent from '../InputComponent'
 
 //FontawesomeIcon
-import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import Button from 'components/Button/Button'
 
 const AlquilerFormComponent = ({
   active,
   canchas,
   setCancha,
-  setActive,
   handleAddReserva,
   setNombre,
   setTelefono,
@@ -73,10 +72,14 @@ const AlquilerFormComponent = ({
             onChangeFuncion={handleChangePhone}
             deshabilitado={true}
           />
-          <button id="submit-btn" onClick={handleAddReserva}>
-            {' '}
-            <FontAwesomeIcon id="next-icon" icon={faPlusCircle} />{' '}
-          </button>
+          <Button
+            faIconEnd={faPlus}
+            style={{ margin: '0.75rem 5% 5% auto' }}
+            id="submit-btn"
+            onClick={handleAddReserva}
+          >
+            Crear
+          </Button>
         </div>
       )}
     </>

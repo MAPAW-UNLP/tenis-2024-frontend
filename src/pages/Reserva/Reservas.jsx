@@ -17,10 +17,10 @@ import Swal from 'sweetalert2'
 import LoaderSpinner from 'components/LoaderSpinner'
 
 //Fontawesome icons
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
 import { ordenarPorNombre } from '../../components/Utils/Functions'
+import Button from 'components/Button/Button'
 
 export const Reservas = () => {
   const URL_BASE = `http://localhost:8083/api/`
@@ -34,9 +34,6 @@ export const Reservas = () => {
   //para actualizar los profesores
   const [profesores, setProfesores] = useState([])
   const [alumnos, setAlumnos] = useState([])
-  const [actAlumnos, setActAlumnos] = useState(false)
-
-  const [actProfesores, setActProfesores] = useState(false)
 
   const [alquilerOp, setAlquilerOp] = useState(false)
   const [claseOp, setClaseOp] = useState(false)
@@ -170,14 +167,6 @@ export const Reservas = () => {
         (cancha) => nombresCanchasNoDisponibles.indexOf(cancha.nombre) === -1
       )
       .map((el) => el)
-  }
-
-  const handleSetHoraInicio = (e) => {
-    setHoraInicio(e.target.value)
-  }
-
-  const handleSetHoraFin = (e) => {
-    setHoraFin(e.target.value)
   }
 
   const handleAddReserva = () => {
@@ -369,9 +358,15 @@ export const Reservas = () => {
           )}
 
           {!alquilerOp && !claseOp && (
-            <button id="continue-btn" disabled>
-              <FontAwesomeIcon id="next-icon" icon={faChevronRight} />
-            </button>
+            <Button
+              faIconEnd={faPlus}
+              style={{ margin: '0.75rem 5% 5% auto' }}
+              id="continue-btn"
+              disabled
+              onClick={handleAddReserva}
+            >
+              Crear
+            </Button>
           )}
         </form>
       </div>

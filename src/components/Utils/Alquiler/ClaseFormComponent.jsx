@@ -4,25 +4,20 @@ import { useState } from 'react'
 import Select from 'react-select'
 
 //FontawesomeIcon
-import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import Button from 'components/Button/Button'
 
 const ClaseFormComponent = ({
   active,
   canchas,
   setCancha,
-  setActive,
   handleAddReserva,
   profesores,
-  setProfesores,
   alumnos,
-  setAlumnos,
   grupoIds,
   setGrupoIds,
   setProfesorSel,
-  replica,
   setReplica,
-  tipoClase,
   setTipoClase,
 }) => {
   const [tipoClaseSel, setTipoClaseSel] = useState('')
@@ -107,7 +102,7 @@ const ClaseFormComponent = ({
             <option value="1">Individual</option>
           </select>
 
-          {tipoClaseSel == '1' && (
+          {tipoClaseSel === '1' && (
             <select
               name=""
               className="inputReserva"
@@ -122,7 +117,7 @@ const ClaseFormComponent = ({
               ))}
             </select>
           )}
-          {tipoClaseSel == '2' && (
+          {tipoClaseSel === '2' && (
             <Select
               className="inputReserva"
               isMulti
@@ -138,10 +133,14 @@ const ClaseFormComponent = ({
             <input type="checkbox" onChange={handleChangeCheck} />
             Repetir Clase
           </label>
-          <button id="submit-btn" onClick={handleAddReserva}>
-            {' '}
-            <FontAwesomeIcon id="next-icon" icon={faPlusCircle} />{' '}
-          </button>
+          <Button
+            faIconEnd={faPlus}
+            style={{ margin: '0.75rem 5% 5% auto' }}
+            id="submit-btn"
+            onClick={handleAddReserva}
+          >
+            Crear
+          </Button>
         </div>
       )}
     </>
