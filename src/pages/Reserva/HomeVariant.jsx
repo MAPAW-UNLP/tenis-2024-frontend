@@ -22,9 +22,9 @@ import NavBar from 'pages/Navbar/NavBar'
 
 // Fontawesome
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import 'styles/home.css'
+import Button from 'components/Button/Button'
 
 const horas = [
   '08:00',
@@ -103,9 +103,6 @@ export default function Home() {
     })()
   }, [])
 
-  console.log('reservas', reservas)
-  console.log('clasesReservas', clasesReservas)
-
   return (
     <div id="home-component">
       <NavBar title={'Tennis app'} />
@@ -149,8 +146,6 @@ function HomeBody({
   const [selectedDate, setSelectedDate] = useState(Date.now())
   const [claseDetail, setClaseDetail] = useState({})
   const [profesorSeleccionado, setProfesorSeleccionado] = useState('todos')
-
-  console.log('reservasDelDia', reservasDelDia)
 
   const navigate = useNavigate()
 
@@ -251,13 +246,13 @@ function HomeBody({
         </div>
 
         <div className="home__btn-add-wrapper">
-          <button
-            className="home__btn-add"
+          <Button
+            size="lg"
+            faIconEnd={faPlus}
             onClick={() => navigate('../nuevaReserva')}
           >
-            <span>Crear reserva</span>
-            <FontAwesomeIcon icon={faPlus} />
-          </button>
+            Crear reserva
+          </Button>
         </div>
       </div>
 
