@@ -10,6 +10,7 @@ import {
   faDollarSign,
   faGear,
   faTools,
+  faChartLine,
 } from '@fortawesome/free-solid-svg-icons'
 
 import '../../styles/home/home.css'
@@ -43,7 +44,7 @@ export const HomeRe = () => {
           icon={faDollarSign}
           className="movimientosCard"
         />
-      
+
         <Card
           title="reservas"
           description="Reservación de alquileres y clases"
@@ -52,16 +53,16 @@ export const HomeRe = () => {
           className="reservasCard"
         />
 
-      {user.rolPorDefecto === 'ROLE_CLIENTE' && (
-        <Card
-          title="clases"
-          description="Visualizar las próximas clases"
-          customColor="#ee82ee"
-          icon={faCalendar}
-          className="clasesCard"
-        />
-      )}
-      
+        {user.rolPorDefecto === 'ROLE_CLIENTE' && (
+          <Card
+            title="clases"
+            description="Visualizar las próximas clases"
+            customColor="#ee82ee"
+            icon={faCalendar}
+            className="clasesCard"
+          />
+        )}
+
         {user.rolPorDefecto === 'ROLE_ADMIN' && (
           <>
             <div
@@ -188,6 +189,13 @@ export const HomeRe = () => {
               description="Gestión de proveedores"
               customColor="#32CD32"
               icon={faTools}
+              className="proveedoresCard"
+            />
+            <Card
+              title="estadisticas"
+              description="Visualización de datos"
+              customColor="#da9485"
+              icon={faChartLine}
               className="proveedoresCard"
             />
           </>
