@@ -1,0 +1,8 @@
+.filtros-estadisticas {
+  display: flex;
+  justify-content: start;
+  gap: 40px;
+  align-items: center;
+  padding: 10px;
+  font-family: Arial, Helvetica, sans-serif;
+}
