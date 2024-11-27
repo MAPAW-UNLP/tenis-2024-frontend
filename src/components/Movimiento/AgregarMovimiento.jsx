@@ -11,6 +11,7 @@ export const AgregarMovimiento = ({
   movimientoName,
   movimientoOptions,
   clasesOptions,
+  itemOptions,
 }) => {
   return (
     <>
@@ -25,6 +26,7 @@ export const AgregarMovimiento = ({
           movimientoOptions={movimientoOptions}
           movimiento={movimientoName}
           clasesOptions={clasesOptions}
+          itemOptions={itemOptions}
         />
       )}
     </>

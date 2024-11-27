@@ -49,18 +49,19 @@
 
 .modal-content label {
   font-family: var(--normal-text);
-  font-size: 1.5em;
-  margin-bottom: 1vh;
+  font-size: 1.2em;
+  margin-bottom: 0.5rem;
   width: 100%; /* El label ocupa todo el ancho */
   color: black;
+  display: block;
 }
 
 .modal-content input {
   width: 100%; /* El input ocupa todo el ancho */
   font-family: var(--normal-text);
   height: 2.2rem; /* Altura relativa */
-  margin-bottom: 15px; /* Margen inferior */
-  font-size: large;
+  margin-bottom: 1rem; /* Margen inferior */
+  font-size: 1rem;
   background-color: var(--neutral-white);
   border: 1.7px solid black;
   color: var(--neutral-black);
@@ -76,20 +77,22 @@
 }
 
 .modal-content button {
-  width: 100%; /* El botón ocupa todo el ancho */
-  height: 3.5rem; /* Altura fija para los botones */
+  width: 80%; /* Reduce el ancho del botón para que no ocupe toda la ventana */
+  height: 2.2rem; /* Disminuye la altura del botón */
   border: none;
-  border-radius: 20px; /* Bordes redondeados */
+  border-radius: 8px; /* Reduce un poco el redondeo */
   cursor: pointer;
   color: var(--neutral-white);
-  font-size: 2em;
-  font-weight: bolder;
-  margin-top: 15px; /* Espaciado entre botones */
+  font-size: 1.2em; /* Reduce el tamaño de fuente */
+  font-weight: bold;
+  margin: 0.5rem auto; /* Ajusta el margen superior e inferior */
+  padding: 0.4rem 0.6rem; /* Disminuye el relleno para hacer los botones más compactos */
+  display: block; /* Asegura que los botones estén centrados */
 }
 
 .new-clase-add-form-label {
   margin-top: 1em;
-  display: flex;
+  display: block;
   justify-content: left;
   width: 100%; /* El label ocupa todo el ancho */
   margin-bottom: 5px; /* Espaciado entre la etiqueta y el input */
@@ -98,10 +101,10 @@
   background-color: red;
   color: white;
   border: none;
-  padding: 10px 20px;
-  border-radius: 20px;
+  padding: 0.4rem 0.6rem; /* Ajusta el padding */
+  border-radius: 8px; /* Reduce el borde redondeado */
   cursor: pointer;
-  font-size: 2em;
+  font-size: 1.2em; /* Ajusta el tamaño de la fuente */
   transition: background-color 0.3s ease;
 }
 
