@@ -26,7 +26,8 @@
   --btn-bg-color: magenta;
   --btn-outline-color: magenta;
 
-  all: unset; /* Restablece todos los estilos */
+  /* RESETS */
+  border: none;
 
   cursor: pointer;
   display: inline-block;
