@@ -6,6 +6,7 @@ import '../../styles/proveedores/form.css'
 import '../../styles/proveedores/popup.css'
 import '../../styles/proveedores/spinner.css'
 import Button from 'components/Button/Button'
+import { createProveedor } from 'api/proveedores'
 
 function AgregarProveedor({ handleCloseForm, proveedores = [] }) {
   const [proveedorForm, setProveedorForm] = useState({
@@ -45,16 +46,8 @@ function AgregarProveedor({ handleCloseForm, proveedores = [] }) {
       telefono: proveedorForm.telefono,
     }
 
-    const requestOptions = {
-      method: 'POST',
-      body: JSON.stringify(data),
-    }
+    await createProveedor(data)
 
-    const response = await fetch(
-      `http://localhost:8083/api/proveedor`,
-      requestOptions
-    )
-    await response.json()
     setShowSuccessPopup(true)
 
     await wait(2000)

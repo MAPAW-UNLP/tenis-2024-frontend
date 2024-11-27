@@ -5,6 +5,7 @@ import '../../styles/proveedores/form.css'
 import '../../styles/proveedores/popup.css'
 import '../../styles/proveedores/spinner.css'
 import Button from 'components/Button/Button'
+import { actualizarProveedor } from 'api/proveedores'
 
 export const UpdateProveedor = ({ handleCloseForm, proveedor = {} }) => {
   const partial = true
@@ -42,7 +43,7 @@ export const UpdateProveedor = ({ handleCloseForm, proveedor = {} }) => {
     partial
   )
 
-  const updateProveedor = (e) => {
+  const upgradeProveedor = (e) => {
     e.preventDefault()
 
     setLoading(true)
@@ -54,29 +55,26 @@ export const UpdateProveedor = ({ handleCloseForm, proveedor = {} }) => {
         proveedorForm.telefono !== ''
           ? proveedorForm.telefono
           : proveedor.telefono,
+      id: proveedor.id,
     }
 
-    const requestOptions = {
-      method: 'PUT',
-      body: JSON.stringify(data),
+    const actualizar = async () => {
+      await actualizarProveedor(data)
+      setShowSuccessPopup(true)
+      setTimeout(() => {
+        setShowSuccessPopup(false)
+        handleCloseForm(true)
+        setLoading(false)
+      }, 5000)
     }
 
-    fetch(`http://localhost:8083/api/proveedor/${proveedor.id}`, requestOptions)
-      .then((response) => response.json())
-      .then(
-        () => setShowSuccessPopup(true),
-        setTimeout(() => {
-          setShowSuccessPopup(false)
-          handleCloseForm(true)
-          setLoading(false)
-        }, 5000)
-      )
+    actualizar()
   }
 
   return (
     <>
       <h2>Editar Proveedor</h2>
-      <form onSubmit={updateProveedor}>
+      <form onSubmit={upgradeProveedor}>
         <label className="textoFormulario">Nombre</label>
         <div className="inputlabel">
           <InputReComponent

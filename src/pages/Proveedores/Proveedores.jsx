@@ -141,7 +141,7 @@ function Proveedores() {
         {modals.deleteModal && (
           <Modal isVisible={modals.deleteModal} onClose={closeFormDelete}>
             <EliminarProveedor
-              idProveedor={idProveedor}
+              idProveedor={proveedor.id}
               isOpen={modals.deleteModal}
               handleClose={closeFormDelete}
             />
