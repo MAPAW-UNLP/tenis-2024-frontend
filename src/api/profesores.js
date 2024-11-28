@@ -22,3 +22,17 @@ export async function getProfesorById(id) {
   const data = await resp.json()
   return data
 }
+
+export const getCobrosProfesor = async (profesorId) => {
+  try {
+    const response = await fetch(
+      `${process.env.REACT_APP_BASE_URL}/pagos_por_profesor/${profesorId}`
+    )
+    if (!response.ok) {
+      throw new Error('Error al obtener los cobros del profesor')
+    }
+    return await response.json()
+  } catch (error) {
+    throw error
+  }
+}

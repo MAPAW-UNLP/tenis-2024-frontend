@@ -27,16 +27,17 @@
 
 .modal__header {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   margin-bottom: 0.5rem;
+  position: relative;
 }
 
 .modal__close-btn {
   all: unset;
   margin-left: auto;
   padding: 0.25rem;
-  margin-right: -0.25rem; /* Compensa el padding para mantener el botón alineado */
+  margin-right: -0.25rem;
   font-size: 1.25em;
   color: var(--neutral-black);
   transition: 0.15s ease-in-out;
@@ -49,4 +50,7 @@
 .modal__title {
   font-family: var(--normal-text);
   font-weight: bolder;
+  text-align: center;
+  margin: 0;
+  flex-grow: 1;
 }

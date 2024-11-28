@@ -10,18 +10,66 @@
   }
 }
 
+.profesor-buttons {
+  margin-bottom: 20px;
+}
+
 .home__header {
   max-width: 1600px;
   margin: 0 auto;
+  margin-bottom: 20px;
   padding: 1rem 1rem 0;
   font-family: var(--normal-text);
   position: relative;
+  align-items: center; /* Alinea los botones verticalmente */
+  /* display: flex;
+  justify-content: space-between; */
 }
 
-.home__btn-add-wrapper {
+.home__btn-wrapper {
   display: flex;
-  justify-content: end;
+  width: 100%; /* Hace que los botones ocupen todo el espacio disponible */
 }
+
+.home__btn-cobros {
+  background-color: #28a745; /* Verde para diferenciarlo */
+  color: #fff;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+/* Hover para el botón de ver cobros */
+.home__btn-cobros:hover {
+  background-color: #218838;
+}
+
+/* .home__btn-add {
+  all: unset;
+  padding: 0.75rem 1.25rem;
+  border-radius: 0.5rem;
+  margin-bottom: 20px;
+  background-color: var(--accent-green);
+  color: var(--neutral-white-text);
+
+  font-family: var(--normal-text);
+  font-weight: bolder;
+  cursor: pointer;
+  justify-content: flex-end;
+  transition: all ease-in-out 0.15s;
+  &:hover {
+    background-color: var(--accent-tennis-green);
+  }
+
+  & span {
+    padding-inline-end: 0.5rem;
+  }
+} */
 
 .dashboard__row.home__hora--main,
 .dashboard__row.home__cancha {
