@@ -161,7 +161,7 @@ const useMediaQuery = (query) => {
 }
 
 const CalendarioProximasClases = () => {
-  const URL_BASE = 'http://localhost:8083/api/'
+  const URL_BASE = `${process.env.REACT_APP_BASE_URL}/`
   const { session } = useSession()
   const [isLoading, setIsLoading] = useState(true)
   const [selectedDate, setSelectedDate] = useState(getCurrentDate())
