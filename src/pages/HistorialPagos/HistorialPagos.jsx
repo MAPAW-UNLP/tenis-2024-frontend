@@ -7,14 +7,21 @@ import { getHistorialPagos } from 'api/cliente'
 import FilterFormPago from './FilterFormPago'
 
 const HistorialPagos = () => {
+  const getCurrentMonthRange = () => {
+    const now = new Date()
+    const firstDay = new Date(now.getFullYear(), now.getMonth(), 1)
+    const lastDay = new Date(now.getFullYear(), now.getMonth() + 1, 0)
+    return {
+      fecha_inicio: firstDay.toISOString().split('T')[0],
+      fecha_fin: lastDay.toISOString().split('T')[0],
+      concepto: '',
+      monto: '',
+    }
+  }
+
   const [historial, setHistorial] = useState([])
   const [isLoading, setIsLoading] = useState(true)
-  const [filters, setFilters] = useState({
-    fecha_inicio: '',
-    fecha_fin: '',
-    concepto: '',
-    monto: '',
-  })
+  const [filters, setFilters] = useState(getCurrentMonthRange())
   const user = useSession().session
 
   const fetchHistorialPagos = async (appliedFilters = {}) => {
