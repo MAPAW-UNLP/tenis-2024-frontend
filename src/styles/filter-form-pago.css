@@ -46,6 +46,11 @@
   flex: 0 1 auto;
 }
 
+.reset-button {
+  color: #fff;
+  background-color: #ca2424;
+}
+
 @media (max-width: 768px) {
   .responsive-form-label {
     flex: 1 1 100%;

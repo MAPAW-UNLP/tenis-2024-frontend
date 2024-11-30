@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import '../../styles/filter-form-pago.css'
 
-const ResponsiveForm = ({ onSubmitSuccess, userId, initialValues }) => {
+const ResponsiveForm = ({ onSubmitSuccess, onResetFilters, initialValues }) => {
   const [formData, setFormData] = useState(initialValues)
 
   useEffect(() => {
@@ -16,6 +16,10 @@ const ResponsiveForm = ({ onSubmitSuccess, userId, initialValues }) => {
   const handleSubmit = (e) => {
     e.preventDefault()
     onSubmitSuccess(formData) // Pasar los filtros al componente padre
+  }
+
+  const handleReset = () => {
+    onResetFilters() // Llamar al método de reset en el componente padre
   }
 
   return (
@@ -61,9 +65,18 @@ const ResponsiveForm = ({ onSubmitSuccess, userId, initialValues }) => {
             className="responsive-form-input"
           />
         </label>
-        <button type="submit" className="responsive-form-button">
-          Filtrar
-        </button>
+        <div className="responsive-form-buttons">
+          <button type="submit" className="responsive-form-button">
+            Filtrar
+          </button>
+          <button
+            type="button"
+            onClick={handleReset}
+            className="responsive-form-button reset-button"
+          >
+            Borrar
+          </button>
+        </div>
       </form>
     </div>
   )

@@ -25,25 +25,31 @@ const HistorialPagos = () => {
   const user = useSession().session
 
   const fetchHistorialPagos = async (appliedFilters = {}) => {
-    setIsLoading(true) // Mostrar el loader
+    setIsLoading(true)
     try {
       const data = await getHistorialPagos(user.id, appliedFilters)
       setHistorial(data)
     } catch (error) {
       console.error('Error fetching historial pagos:', error)
     } finally {
-      setIsLoading(false) // Ocultar el loader
+      setIsLoading(false)
     }
+  }
+
+  const handleFormSubmit = (appliedFilters) => {
+    setFilters(appliedFilters)
+    fetchHistorialPagos(appliedFilters)
+  }
+
+  const handleResetFilters = () => {
+    const defaultFilters = getCurrentMonthRange()
+    setFilters(defaultFilters) // Actualizar los filtros al valor inicial
+    fetchHistorialPagos(defaultFilters) // Recargar datos con filtros iniciales
   }
 
   useEffect(() => {
     fetchHistorialPagos(filters)
   }, [])
-
-  const handleFormSubmit = (appliedFilters) => {
-    setFilters(appliedFilters) // Actualizar el estado del filtro
-    fetchHistorialPagos(appliedFilters)
-  }
 
   return (
     <div id="home-component">
@@ -60,6 +66,7 @@ const HistorialPagos = () => {
         <>
           <FilterFormPago
             onSubmitSuccess={handleFormSubmit}
+            onResetFilters={handleResetFilters} // Pasar la función de reset
             userId={user.id}
             initialValues={filters} // Pasar los valores actuales del filtro
           />
