@@ -9,16 +9,33 @@ import FilterFormPago from './FilterFormPago'
 const HistorialPagos = () => {
   const [historial, setHistorial] = useState([])
   const [isLoading, setIsLoading] = useState(true)
+  const [filters, setFilters] = useState({
+    fecha_inicio: '',
+    fecha_fin: '',
+    concepto: '',
+    monto: '',
+  })
   const user = useSession().session
-  useEffect(() => {
-    getHistorialPagos(user.id).then((data) => {
+
+  const fetchHistorialPagos = async (appliedFilters = {}) => {
+    setIsLoading(true) // Mostrar el loader
+    try {
+      const data = await getHistorialPagos(user.id, appliedFilters)
       setHistorial(data)
-      setIsLoading(false)
-    })
+    } catch (error) {
+      console.error('Error fetching historial pagos:', error)
+    } finally {
+      setIsLoading(false) // Ocultar el loader
+    }
+  }
+
+  useEffect(() => {
+    fetchHistorialPagos(filters)
   }, [])
 
-  const handleFormSubmit = (filteredData) => {
-    setHistorial(filteredData)
+  const handleFormSubmit = (appliedFilters) => {
+    setFilters(appliedFilters) // Actualizar el estado del filtro
+    fetchHistorialPagos(appliedFilters)
   }
 
   return (
@@ -34,7 +51,11 @@ const HistorialPagos = () => {
         </div>
       ) : (
         <>
-          <FilterFormPago onSubmitSuccess={handleFormSubmit} userId={user.id} />
+          <FilterFormPago
+            onSubmitSuccess={handleFormSubmit}
+            userId={user.id}
+            initialValues={filters} // Pasar los valores actuales del filtro
+          />
           <TablaHistorialPagos data={historial} />
         </>
       )}

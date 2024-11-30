@@ -1,25 +1,21 @@
-import React, { useState } from 'react'
-import { getHistorialPagos } from 'api/cliente'
+import React, { useState, useEffect } from 'react'
 import '../../styles/filter-form-pago.css'
 
-const ResponsiveForm = ({ onSubmitSuccess, userId }) => {
-  const [formData, setFormData] = useState({
-    fecha_inicio: '',
-    fecha_fin: '',
-    concepto: '',
-    monto: '',
-  })
+const ResponsiveForm = ({ onSubmitSuccess, userId, initialValues }) => {
+  const [formData, setFormData] = useState(initialValues)
+
+  useEffect(() => {
+    setFormData(initialValues) // Sincronizar con los valores iniciales
+  }, [initialValues])
 
   const handleChange = (e) => {
     const { name, value } = e.target
     setFormData({ ...formData, [name]: value })
   }
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault()
-    getHistorialPagos(userId, formData).then((data) => {
-      onSubmitSuccess(data)
-    })
+    onSubmitSuccess(formData) // Pasar los filtros al componente padre
   }
 
   return (
