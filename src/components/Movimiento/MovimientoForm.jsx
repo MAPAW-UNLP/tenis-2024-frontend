@@ -20,6 +20,7 @@ export const MovimientoForm = ({
 }) => {
   const [errors, setErrors] = useState([])
   const [selectedItem, setSelectedItem] = useState([])
+  const [cantidad, setCantidad] = useState(1)
 
   const handleResetOptions = () => {
     movimientoAddForm.personaId = ''
@@ -27,6 +28,12 @@ export const MovimientoForm = ({
     movimientoAddForm.personaSeleccionada = ''
     movimientoAddForm.descripcion = ''
     movimientoAddForm.monto = ''
+  }
+
+  const handleResetItem = () => {
+    setSelectedItem({ importe: 'Monto' }) // Reset selected item
+    movimientoAddForm.monto = 'Monto' // Reset monto field
+    movimientoAddForm.descripcion = '' // Reset descripcion field
   }
 
   useEffect(() => {
@@ -107,21 +114,38 @@ export const MovimientoForm = ({
     if (selectedValue === '') {
       setSelectedItem({ importe: 'Monto' })
       movimientoAddForm.monto = 'Monto'
-      movimientoAddForm.descripcion = '' // Resetea la descripción
+      movimientoAddForm.descripcion = ''
     } else {
       const selectedOption = itemOptions.find(
         (option) => option.id.toString() === selectedValue
       )
       setSelectedItem(selectedOption)
-      movimientoAddForm.monto = selectedOption.importe
+      // Inicializa el monto basado en la cantidad
+      movimientoAddForm.monto = selectedOption.importe * cantidad
       movimientoAddForm.descripcion = selectedOption.concepto
+      handleChangeFormData({
+        target: {
+          name: 'monto',
+          value: movimientoAddForm.monto,
+        },
+      })
     }
   }
 
-  const handleResetItem = () => {
-    setSelectedItem({ importe: 'Monto' })
-    movimientoAddForm.monto = 'Monto'
-    movimientoAddForm.descripcion = ''
+  const handleChangeCantidad = (event) => {
+    let value = parseInt(event.target.value, 10)
+    if (value < 1) {
+      value = 1 // Si la cantidad es menor que 1, se establece como 1
+    }
+    setCantidad(value)
+    // Actualizar el monto
+    movimientoAddForm.monto = selectedItem.importe * value
+    handleChangeFormData({
+      target: {
+        name: 'monto',
+        value: movimientoAddForm.monto,
+      },
+    })
   }
 
   return (
@@ -217,6 +241,18 @@ export const MovimientoForm = ({
                     onChange={handleChangeFormItem}
                     options={itemOptions || []}
                     placeholder={`Seleccionar item`}
+                  />
+                  <label htmlFor="cantidad" className="movimiento-form-label">
+                    Cantidad
+                  </label>
+                  <input
+                    type="number"
+                    name="cantidad"
+                    min="1"
+                    value={cantidad}
+                    onChange={handleChangeCantidad}
+                    className="cantidad-input"
+                    placeholder="Cantidad"
                   />
                 </>
               )
