@@ -2,9 +2,7 @@ import InputReComponent from '../Utils/InputReComponent'
 import InputValueComponent from '../Utils/InputValueComponent'
 import SelectReComponent from '../Utils/SelectReComponent'
 import '../../styles/movimiento/movimientoForm.css'
-import { useEffect } from 'react'
-
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 export const MovimientoForm = ({
   handleCloseForm,
@@ -20,22 +18,22 @@ export const MovimientoForm = ({
 }) => {
   const [errors, setErrors] = useState([])
   const [selectedItem, setSelectedItem] = useState([])
-
+  const [cantidad, setCantidad] = useState(1)
+  const [monto, setMonto] = useState(0)
   const handleResetOptions = () => {
     movimientoAddForm.personaId = ''
     movimientoAddForm.tipoClaseId = ''
     movimientoAddForm.personaSeleccionada = ''
     movimientoAddForm.descripcion = ''
     movimientoAddForm.monto = ''
+    setCantidad(1)
   }
 
   useEffect(() => {
-    // Ejecuta el reset cada vez que el concepto cambia
     handleResetItem()
     handleResetOptions()
   }, [movimientoAddForm.concepto])
 
-  // RFuncion para revisar si todos los inputs estan completos antes de hacer el envio
   const handleCheckAddForm = (event) => {
     event.preventDefault()
     setErrors([])
@@ -51,13 +49,11 @@ export const MovimientoForm = ({
     }
   }
 
-  // Reset errores
   const handleCloseMovimientoForm = () => {
     setErrors([])
     handleCloseForm()
   }
 
-  // Verificar cuando el movimiento es un COBRO
   const verifyFormCobro = () => {
     const verify = []
     if (!movimientoAddForm.concepto)
@@ -77,10 +73,9 @@ export const MovimientoForm = ({
     }
 
     setErrors(verify)
-    return verify.length === 0 ? true : false
+    return verify.length === 0
   }
 
-  // Verificar cuando el movimiento es un PAGO
   const verifyFormPago = () => {
     const verify = []
     if (!movimientoAddForm.concepto)
@@ -98,7 +93,7 @@ export const MovimientoForm = ({
     if (!movimientoAddForm.monto) verify.push('El monto no puede estar vacio')
 
     setErrors(verify)
-    return verify.length === 0 ? true : false
+    return verify.length === 0
   }
 
   const handleChangeFormItem = (event) => {
@@ -113,9 +108,24 @@ export const MovimientoForm = ({
         (option) => option.id.toString() === selectedValue
       )
       setSelectedItem(selectedOption)
-      movimientoAddForm.monto = selectedOption.importe
+      movimientoAddForm.monto = selectedOption.importe * cantidad
+
+      setMonto(selectedOption.importe)
       movimientoAddForm.descripcion = selectedOption.concepto
     }
+  }
+
+  const handleCantidadChange = (event) => {
+    const value = event.target.value
+    if (value < 1) {
+      value = 1 // Si la cantidad es menor que 1, se establece como 1
+    }
+    setCantidad(value)
+    handleChangeCant(value)
+  }
+
+  function handleChangeCant(cant) {
+    movimientoAddForm.monto = monto * cant
   }
 
   const handleResetItem = () => {
@@ -136,7 +146,6 @@ export const MovimientoForm = ({
       <h2>Nuevo {movimiento}</h2>
       <form className="movimiento-add-form">
         <label htmlFor="concepto" className="movimiento-form-label">
-          {' '}
           *{' '}
         </label>
         <SelectReComponent
@@ -145,10 +154,10 @@ export const MovimientoForm = ({
           options={movimientoOptions}
           placeholder={'Concepto'}
         />
-        {/* Lógica para mostrar campos dinámicos basados en el concepto */}
+
         {(() => {
           switch (movimientoAddForm.concepto) {
-            case '1': // Alumno/Profesor
+            case '1':
               return (
                 <>
                   <label htmlFor="personaId" className="movimiento-form-label">
@@ -174,11 +183,7 @@ export const MovimientoForm = ({
                       >
                         <option value="">Tipo de clase</option>
                         {clasesOptions.map((option) => (
-                          <option
-                            value={option.id}
-                            id={`tipo-clase-${option.id}`}
-                            key={`tipo-clase-${option.id}`}
-                          >
+                          <option value={option.id} key={option.id}>
                             {option.tipo}
                           </option>
                         ))}
@@ -187,8 +192,7 @@ export const MovimientoForm = ({
                   )}
                 </>
               )
-
-            case '2': // Proveedor
+            case '2':
               return (
                 <>
                   <label
@@ -205,8 +209,7 @@ export const MovimientoForm = ({
                   />
                 </>
               )
-
-            case '3': // Item
+            case '3':
               return (
                 <>
                   <label htmlFor="itemId" className="movimiento-form-label">
@@ -218,8 +221,20 @@ export const MovimientoForm = ({
                     options={itemOptions || []}
                     placeholder={`Seleccionar item`}
                   />
+                  <label htmlFor="Cantidad" className="movimiento-form-label">
+                    *{' '}
+                  </label>
+                  <input
+                    type="number"
+                    name="Cantidad"
+                    value={cantidad}
+                    onChange={handleCantidadChange}
+                    placeholder="Cantidad"
+                  />
                 </>
               )
+            default:
+              return null
           }
         })()}
 
@@ -242,11 +257,12 @@ export const MovimientoForm = ({
           *{' '}
         </label>
         <InputReComponent
-          name={'monto'}
+          name="monto"
           onChangeFuncion={handleChangeFormData}
-          placeholder={'Monto'}
+          placeholder="Monto"
           value={movimientoAddForm.monto}
         />
+
         <div
           style={{
             fontFamily: 'var(--normal-text)',
