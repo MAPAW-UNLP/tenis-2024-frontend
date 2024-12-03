@@ -122,3 +122,27 @@ select:focus {
     border-color 0.15s ease-in-out,
     box-shadow 0.15s ease-in-out;
 }
+
+.monto-cantidad-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 80%;
+}
+
+.monto-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%; /* Puedes ajustar el ancho según lo necesites */
+}
+
+.monto-container label,
+.cantidad-container label {
+  margin-bottom: 0.1em; /* Espacio entre el label y el input */
+}
+
+.monto-container input,
+.cantidad-container input {
+  padding: 0.5em;
+  font-size: 1em;
+}

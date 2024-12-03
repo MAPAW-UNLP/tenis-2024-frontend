@@ -31,6 +31,7 @@ export const MovimientoForm = ({
   }
 
   const handleResetItem = () => {
+    console.log('dd', movimientoAddForm.concepto)
     setSelectedItem({ importe: 'Monto' }) // Reset selected item
     movimientoAddForm.monto = 'Monto' // Reset monto field
     movimientoAddForm.descripcion = '' // Reset descripcion field
@@ -133,6 +134,9 @@ export const MovimientoForm = ({
   }
 
   const handleChangeCantidad = (event) => {
+    if (selectedItem.importe == 'Monto') {
+      return
+    }
     let value = parseInt(event.target.value, 10)
     if (value < 1) {
       value = 1 // Si la cantidad es menor que 1, se establece como 1
@@ -172,7 +176,7 @@ export const MovimientoForm = ({
         {/* Lógica para mostrar campos dinámicos basados en el concepto */}
         {(() => {
           switch (movimientoAddForm.concepto) {
-            case '1': // Alumno/Profesor
+            case '1':
               return (
                 <>
                   <label htmlFor="personaId" className="movimiento-form-label">
@@ -198,11 +202,7 @@ export const MovimientoForm = ({
                       >
                         <option value="">Tipo de clase</option>
                         {clasesOptions.map((option) => (
-                          <option
-                            value={option.id}
-                            id={`tipo-clase-${option.id}`}
-                            key={`tipo-clase-${option.id}`}
-                          >
+                          <option value={option.id} key={option.id}>
                             {option.tipo}
                           </option>
                         ))}
@@ -211,8 +211,7 @@ export const MovimientoForm = ({
                   )}
                 </>
               )
-
-            case '2': // Proveedor
+            case '2':
               return (
                 <>
                   <label
@@ -229,8 +228,7 @@ export const MovimientoForm = ({
                   />
                 </>
               )
-
-            case '3': // Item
+            case '3':
               return (
                 <>
                   <label htmlFor="itemId" className="movimiento-form-label">
@@ -242,20 +240,36 @@ export const MovimientoForm = ({
                     options={itemOptions || []}
                     placeholder={`Seleccionar item`}
                   />
-                  <label htmlFor="cantidad" className="movimiento-form-label">
-                    Cantidad
-                  </label>
-                  <input
-                    type="number"
-                    name="cantidad"
-                    min="1"
-                    value={cantidad}
-                    onChange={handleChangeCantidad}
-                    className="cantidad-input"
-                    placeholder="Cantidad"
-                  />
+                  <div className="monto-cantidad-container">
+                    <div className="monto-container">
+                      <label htmlFor="monto" className="movimiento-form-label">
+                        *{' '}
+                      </label>
+                      <InputReComponent
+                        name="monto"
+                        onChangeFuncion={handleChangeFormData}
+                        placeholder="Monto"
+                        value={movimientoAddForm.monto}
+                      />
+                    </div>
+                    <div className="cantidad-container">
+                      <label
+                        htmlFor="Cantidad"
+                        className="movimiento-form-label"
+                      >
+                        *Cant{' '}
+                      </label>
+                      <input
+                        type="number"
+                        value={cantidad}
+                        onChange={handleChangeCantidad}
+                      />
+                    </div>
+                  </div>
                 </>
               )
+            default:
+              return null
           }
         })()}
 
@@ -271,18 +285,18 @@ export const MovimientoForm = ({
               placeholder={'Descripción'}
               value={movimientoAddForm.descripcion}
             />
+            <label htmlFor="monto" className="movimiento-form-label">
+              *{' '}
+            </label>
+            <InputReComponent
+              name="monto"
+              onChangeFuncion={handleChangeFormData}
+              placeholder="Monto"
+              value={movimientoAddForm.monto}
+            />
           </>
         )}
 
-        <label htmlFor="monto" className="movimiento-form-label">
-          *{' '}
-        </label>
-        <InputReComponent
-          name={'monto'}
-          onChangeFuncion={handleChangeFormData}
-          placeholder={'Monto'}
-          value={movimientoAddForm.monto}
-        />
         <div
           style={{
             fontFamily: 'var(--normal-text)',
