@@ -193,7 +193,7 @@ export const Ajustes = () => {
           <div className="container-table-ajustes">
             <Button
               color="success"
-              size="md"
+              size="lg"
               onClick={() => setMostrarFormulario(true)}
             >
               Crear clase
