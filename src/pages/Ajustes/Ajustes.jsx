@@ -11,6 +11,7 @@ import Swal from 'sweetalert2'
 import { tipoClaseService } from 'api/tipoClase'
 import ButtonArrow from 'Img/arrow'
 import ButtonHome from 'Img/home'
+import ModalEliminar from 'components/Clase/ModalEliminar'
 
 export const Ajustes = () => {
   const URL_BASE = `http://localhost:8083/api/`
@@ -20,6 +21,7 @@ export const Ajustes = () => {
   const [tipoClasePorBorrar, setTipoClasePorBorrar] = useState(null) // Tipo de clase a eliminar
   const [mostrarFormulario, setMostrarFormulario] = useState(false)
   const [tipoClaseEditar, setTipoClaseEditar] = useState(null)
+  const [modalEliminar, setModalEliminar] = useState(false)
 
   useEffect(() => {
     fetchTipoClases()
@@ -92,6 +94,7 @@ export const Ajustes = () => {
   }
 
   const handleEliminarTipoClase = (tipoClase) => {
+    setModalEliminar(true)
     setTipoClasePorBorrar(tipoClase)
     setMensajeUsuario(
       <span style={{ fontSize: '1.2em' }}>
@@ -106,11 +109,13 @@ export const Ajustes = () => {
   const handleCerrarMensaje = () => {
     setMensajeUsuario('')
     setTipoClasePorBorrar(null)
+    setModalEliminar(false)
     document.getElementById('mensajesUsuario').style.display = 'none'
   }
 
   const handleAceptarBorrado = async () => {
     handleCerrarMensaje()
+    setModalEliminar(false)
     if (!tipoClasePorBorrar) return
     setCargando(true)
     const data = await tipoClaseService.borrarTipoClase(tipoClasePorBorrar.id)
@@ -302,28 +307,13 @@ export const Ajustes = () => {
       )}
 
       {/* Mensaje de confirmación */}
-      <div id="mensajesUsuario" style={{ display: 'none' }}>
-        <p>{mensajeUsuario}</p>
-        <GenericButton
-          id="button-aceptarMensaje"
-          onClick={handleAceptarBorrado}
-          className="botones-MensajesUsuario"
-          backgroundColor="#FF0000"
-          width="200px"
-          height="70px"
-        >
-          Aceptar
-        </GenericButton>
-        <GenericButton
-          id="button-cerrarMensaje"
-          onClick={handleCerrarMensaje}
-          className="botones-MensajesUsuario"
-          width="200px"
-          height="70px"
-        >
-          Cancelar
-        </GenericButton>
-      </div>
+      <ModalEliminar
+        isVisible={modalEliminar}
+        onClose={handleCerrarMensaje}
+        mensaje={mensajeUsuario}
+        titulo={''}
+        confirmarBorrar={handleAceptarBorrado}
+      />
     </div>
   )
 }

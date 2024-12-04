@@ -1,0 +1,7 @@
+.modal-eliminar {
+  padding: 50px;
+  border-radius: 15px;
+  align-items: center;
+
+  min-width: fit-content;
+}
