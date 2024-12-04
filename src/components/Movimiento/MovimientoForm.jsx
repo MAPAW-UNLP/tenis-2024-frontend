@@ -28,13 +28,14 @@ export const MovimientoForm = ({
     movimientoAddForm.personaSeleccionada = ''
     movimientoAddForm.descripcion = ''
     movimientoAddForm.monto = ''
+    setCantidad(1)
   }
 
   const handleResetItem = () => {
     console.log('dd', movimientoAddForm.concepto)
-    setSelectedItem({ importe: 'Monto' }) // Reset selected item
-    movimientoAddForm.monto = 'Monto' // Reset monto field
-    movimientoAddForm.descripcion = '' // Reset descripcion field
+    setSelectedItem({ importe: 'Monto' })
+    movimientoAddForm.monto = 'Monto'
+    movimientoAddForm.descripcion = ''
   }
 
   useEffect(() => {
@@ -59,7 +60,6 @@ export const MovimientoForm = ({
     }
   }
 
-  // Reset errores
   const handleCloseMovimientoForm = () => {
     setErrors([])
     handleCloseForm()
@@ -121,7 +121,6 @@ export const MovimientoForm = ({
         (option) => option.id.toString() === selectedValue
       )
       setSelectedItem(selectedOption)
-      // Inicializa el monto basado en la cantidad
       movimientoAddForm.monto = selectedOption.importe * cantidad
       movimientoAddForm.descripcion = selectedOption.concepto
       handleChangeFormData({
@@ -139,10 +138,9 @@ export const MovimientoForm = ({
     }
     let value = parseInt(event.target.value, 10)
     if (value < 1) {
-      value = 1 // Si la cantidad es menor que 1, se establece como 1
+      value = 1
     }
     setCantidad(value)
-    // Actualizar el monto
     movimientoAddForm.monto = selectedItem.importe * value
     handleChangeFormData({
       target: {
@@ -173,7 +171,6 @@ export const MovimientoForm = ({
           options={movimientoOptions}
           placeholder={'Concepto'}
         />
-        {/* Lógica para mostrar campos dinámicos basados en el concepto */}
         {(() => {
           switch (movimientoAddForm.concepto) {
             case '1':
