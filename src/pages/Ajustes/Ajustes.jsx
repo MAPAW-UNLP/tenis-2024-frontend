@@ -103,14 +103,12 @@ export const Ajustes = () => {
         acción no se puede deshacer.
       </span>
     )
-    document.getElementById('mensajesUsuario').style.display = 'flex'
   }
 
   const handleCerrarMensaje = () => {
     setMensajeUsuario('')
     setTipoClasePorBorrar(null)
     setModalEliminar(false)
-    document.getElementById('mensajesUsuario').style.display = 'none'
   }
 
   const handleAceptarBorrado = async () => {
