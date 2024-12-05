@@ -25,6 +25,7 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
 import 'styles/home.css'
 import Button from 'components/Button/Button'
+import { useSession } from 'hooks/useSession'
 
 const horas = [
   '08:00',
@@ -197,18 +198,7 @@ function HomeBody({
 
   if (isLoading) return null
 
-  if (canchas.length === 0) {
-    return (
-      <div style={{ marginTop: '6rem' }}>
-        <NotFound404
-          title="¡Oops! No encontramos canchas de tenis"
-          description="Parece que todavía no hay canchas de tenis disponibles en este complejo. No te preocupes, puedes agregarlas fácilmente."
-          btnText="Añadir una nueva cancha"
-          onCallToAction={() => navigate('../canchas')}
-        />
-      </div>
-    )
-  }
+  if (canchas.length === 0) return <NoHayCanchas />
 
   return (
     <>
@@ -336,5 +326,33 @@ function HomeBody({
         ))}
       </Dashboard>
     </>
+  )
+}
+
+function NoHayCanchas() {
+  const { session } = useSession()
+  const navigate = useNavigate()
+
+  let description =
+    'Parece que todavía no hay canchas de tenis disponibles en este complejo.'
+  let btnText, onCallToAction
+
+  if (session.rolPorDefecto === 'ROLE_ADMIN') {
+    description += ' No te preocupes, puedes agregarlas fácilmente.'
+    btnText = 'Añadir una nueva cancha'
+    onCallToAction = () => navigate('../canchas')
+  } else {
+    description += ' Contactate con el administrador.'
+  }
+
+  return (
+    <div style={{ marginTop: '6rem' }}>
+      <NotFound404
+        title="¡Oops! No encontramos canchas de tenis"
+        description={description}
+        btnText={btnText}
+        onCallToAction={onCallToAction}
+      />
+    </div>
   )
 }
