@@ -250,6 +250,7 @@ function HomeBody({
             size="lg"
             faIconEnd={faPlus}
             onClick={() => navigate('../nuevaReserva')}
+            style={{ marginLeft: 'auto' }}
           >
             Crear reserva
           </Button>

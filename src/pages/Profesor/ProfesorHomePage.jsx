@@ -12,6 +12,7 @@ import NavBar from 'pages/Navbar/NavBar'
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import CobrosProfesor from './CobrosProfesor'
+import Button from 'components/Button/Button'
 
 const horas = [
   '08:00',
@@ -122,24 +123,21 @@ function ProfesorHomePageBody({ profesor, setProfesor }) {
     <>
       <div className="home__header">
         <div className="home__btn-wrapper">
-          <button
-            className="home__btn-add"
+          <Button
+            size="lg"
+            color="secondary"
+            faIconEnd={faMoneyCheckAlt}
+            onClick={() => setModalVisible(true)}
+          >
+            Ver mis cobros
+          </Button>
+          <Button
+            size="lg"
+            faIconEnd={faPlus}
             onClick={() => navigate('../nuevaReserva')}
           >
-            <span>Crear reserva</span>
-            <FontAwesomeIcon icon={faPlus} />
-          </button>
-        </div>
-
-        <div className="home__btn-wrapper">
-          <button
-            className="home__btn-cobros"
-            onClick={() => setModalVisible(true)} // Abre el modal
-          >
-            <span>Ver mis cobros</span>
-            <FontAwesomeIcon icon={faMoneyCheckAlt} />
-          </button>
-          <div />
+            Crear reserva
+          </Button>
         </div>
 
         {/* Modal para ver los cobros */}

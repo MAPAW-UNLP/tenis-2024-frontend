@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import Modal from 'components/Modal/Modal'
 import { getCobrosProfesor } from 'api/profesores'
 import 'styles/cobrosProfesor.css'
-import LoaderSpinner from 'components/LoaderSpinner'
 
 const CobrosProfesor = ({ profesorId, isVisible, onClose }) => {
   const [cobros, setCobros] = useState([])
