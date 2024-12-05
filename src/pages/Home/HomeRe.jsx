@@ -14,13 +14,24 @@ import {
 
 import '../../styles/home/home.css'
 import Card from 'components/Home/Card'
+import { useEffect } from 'react'
 
 export const HomeRe = () => {
   const navigate = useNavigate()
+
+  const { session: user } = useSession()
+
   const handleRedirect = (link) => {
     navigate(link)
   }
-  let user = useSession().session
+
+  useEffect(() => {
+    // Si el usuario es profesor lo redirige a la página de reservas
+    if (user.rolPorDefecto === 'ROLE_PROFESOR') {
+      navigate(`/profesor/${user.id}`, { replace: true })
+    }
+  }, [navigate, user.id, user.rolPorDefecto])
+
   return (
     <>
       <NavBar title={'Inicio'} />
@@ -36,8 +47,7 @@ export const HomeRe = () => {
           gap: '1em',
         }}
       >
-        {(user.rolPorDefecto === 'ROLE_ADMIN' ||
-          user.rolPorDefecto === 'ROLE_PROFESOR') && (
+        {user.rolPorDefecto === 'ROLE_ADMIN' && (
           <>
             <Card
               title="movimientos"
@@ -56,6 +66,7 @@ export const HomeRe = () => {
             />
           </>
         )}
+
         {user.rolPorDefecto === 'ROLE_CLIENTE' && (
           <>
             <Card
