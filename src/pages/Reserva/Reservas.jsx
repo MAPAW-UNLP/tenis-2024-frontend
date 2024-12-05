@@ -21,11 +21,14 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
 import { ordenarPorNombre } from '../../components/Utils/Functions'
 import Button from 'components/Button/Button'
+import { useSession } from 'hooks/useSession'
 
 export const Reservas = () => {
   const URL_BASE = `http://localhost:8083/api/`
   //navegacion
   const navigate = useNavigate()
+
+  const { session } = useSession()
 
   const [reservas, setReservas] = useState([])
   const [actReservas, setActReservas] = useState(false)
@@ -227,6 +230,14 @@ export const Reservas = () => {
     }
   }
 
+  const handleOnCloseClick = () => {
+    if (session.rolPorDefecto === 'ROLE_PROFESOR') {
+      navigate('/inicio')
+    } else {
+      navigate('/reservas')
+    }
+  }
+
   useEffect(() => {
     const requestOptions = {
       method: 'GET',
@@ -257,6 +268,15 @@ export const Reservas = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  useEffect(() => {
+    if (session.rolPorDefecto === 'ROLE_PROFESOR') {
+      // Pasa como parámetro un objeto que simula que se seleccionó
+      // el valor 'Clase' para que se habiliten los otros campos.
+      // ¯\_(ツ)_/¯
+      handleTypeChange({ target: { value: 'Clase' } })
+    }
+  }, [session.rolPorDefecto])
+
   return (
     <div id="reservas-component">
       <NavBar title={'Reservas'} />
@@ -283,7 +303,7 @@ export const Reservas = () => {
             />
           </div>
         )}
-        <button id="clase-closeBTN" onClick={() => navigate('../reservas')}>
+        <button id="clase-closeBTN" onClick={handleOnCloseClick}>
           x
         </button>
         <h2>Nueva reserva</h2>
@@ -293,12 +313,13 @@ export const Reservas = () => {
             className="inputReserva"
             id="selectedReservaType"
             onChange={handleTypeChange}
-            disabled={false}
+            disabled={session.rolPorDefecto === 'ROLE_PROFESOR'}
             placeholder="Seleccionar Tipo de Reserva"
             options={[
               { displayValue: 'Alquiler', value: 'Alquiler' },
               { displayValue: 'Clase', value: 'Clase' },
             ]}
+            value={session.rolPorDefecto === 'ROLE_PROFESOR' ? 'Clase' : ''}
           />
 
           <InputComponent
