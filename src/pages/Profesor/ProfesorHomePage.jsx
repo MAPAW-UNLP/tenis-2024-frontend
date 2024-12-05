@@ -13,6 +13,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import CobrosProfesor from './CobrosProfesor'
 import Button from 'components/Button/Button'
+import { useSession } from 'hooks/useSession'
 
 const horas = [
   '08:00',
@@ -67,6 +68,14 @@ function ProfesorHomePageBody({ profesor, setProfesor }) {
 
   const { id } = useParams()
   const navigate = useNavigate()
+  const { session } = useSession()
+
+  useEffect(() => {
+    // +id convierte el id en un numero.
+    if (session.rolPorDefecto !== 'ROLE_PROFESOR' || session.id !== +id) {
+      navigate('/inicio', { replace: true })
+    }
+  }, [id, navigate, session.id, session.rolPorDefecto])
 
   useEffect(() => {
     ;(async () => {
