@@ -43,17 +43,21 @@ const NavBar = ({ title }) => {
 
           <ul id="navBar-list" className="desktop-navbar">
             <LinkItem to={'/inicio'} setActive={setActive} name={'Inicio'} />
-            <LinkItem
-              to={'/reservas'}
-              setActive={setActive}
-              name={'Reservas'}
-            />
-            <LinkItem
-              to={'/movimientos'}
-              setActive={setActive}
-              name={'Movimientos'}
-            />
-
+            {(session.rolPorDefecto === 'ROLE_ADMIN' ||
+              session.rolPorDefecto === 'ROLE_PROFESOR') && (
+              <>
+                <LinkItem
+                  to={'/reservas'}
+                  setActive={setActive}
+                  name={'Reservas'}
+                />
+                <LinkItem
+                  to={'/movimientos'}
+                  setActive={setActive}
+                  name={'Movimientos'}
+                />
+              </>
+            )}
             {(() => {
               switch (session.rolPorDefecto) {
                 case 'ROLE_ADMIN':
@@ -120,6 +124,11 @@ const NavBar = ({ title }) => {
                         to={'/clases'}
                         setActive={setActive}
                         name={'Clases'}
+                      />
+                      <LinkItem
+                        to={'/historialPagos'}
+                        setActive={setActive}
+                        name={'HistorialPagos'}
                       />
                     </>
                   )
