@@ -28,7 +28,6 @@ import { AlumnosNew } from './pages/Alumno/AlumnosNew'
 import ProfesorHomePage from 'pages/Profesor/ProfesorHomePage'
 import { Precios } from 'pages/Ajustes/AjustesHome'
 import ProximasClases from './pages/ProximasClases/ProximasClases'
-import Estadisticas from 'pages/Estadisticas/Estadisticas'
 
 function App() {
   return (
@@ -53,7 +52,6 @@ function App() {
           <Route path="/precios" element={<Precios />} />
           <Route path="/periodoAusencia" element={<PeriodoAusencia />} />
           <Route path="/suspencionClase" element={<SuspencionClase />} />
-          <Route path="/estadisticas" element={<Estadisticas />} />
           <Route
             path="/misSolicitudesSuspencion"
             element={<SolicitudesSuspencion />}

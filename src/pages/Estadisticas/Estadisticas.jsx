@@ -1,10 +1,8 @@
 import Chart from 'chart.js/auto'
 import CalendarPicker from 'components/Reserva/CalendarComponent'
-import NavBar from 'pages/Navbar/NavBar'
 import React, { useEffect, useRef, useState } from 'react'
 import './Estadisticas.css'
 import Button from 'components/Button/Button'
-import LoaderSpinner from 'components/LoaderSpinner'
 
 function Estadisticas() {
   const URL_BASE = `http://localhost:8083/api/`
@@ -129,12 +127,13 @@ function Estadisticas() {
 
   return (
     <div>
-      <NavBar title={'Estadisticas'} />
       <div className="filtros-estadisticas">
         {profesor ? (
           <>
             <div>
-              <label htmlFor="entidad">Profesor:</label>
+              <label htmlFor="entidad" style={{ color: 'white' }}>
+                Profesor:
+              </label>
               <select
                 style={{ padding: 5 }}
                 name="entidad"
@@ -157,7 +156,7 @@ function Estadisticas() {
                 gap: 4,
               }}
             >
-              <label>Fecha desde:</label>
+              <label style={{ color: 'white' }}>Fecha desde:</label>
               <CalendarPicker
                 selectedDate={fechaDesde}
                 setSelectedDate={setFechaDesde}
@@ -171,7 +170,7 @@ function Estadisticas() {
                 gap: 4,
               }}
             >
-              <label>Fecha desde:</label>
+              <label style={{ color: 'white' }}>Fecha desde:</label>
               <CalendarPicker
                 selectedDate={fechaHasta}
                 setSelectedDate={setFechaHasta}
@@ -187,10 +186,31 @@ function Estadisticas() {
       </div>
 
       {loading ? (
-        <div className="spinner"></div>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <div className="spinner"></div>
+        </div>
       ) : clases ? (
-        <div style={{ width: 700, height: 400 }}>
-          <canvas ref={chartRef} id="myChart"></canvas>
+        <div
+          style={{
+            width: '100%',
+            height: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+          }}
+        >
+          <div
+            style={{ width: 750, height: 400, backgroundColor: 'whitesmoke' }}
+          >
+            <div style={{ width: 700, height: 400 }}>
+              <canvas ref={chartRef} id="myChart"></canvas>
+            </div>
+          </div>
         </div>
       ) : (
         <></>
