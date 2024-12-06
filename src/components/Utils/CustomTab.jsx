@@ -34,7 +34,7 @@ function CustomTab({ tabsNames = [], tabsComponents = [] }) {
                 width: 120,
                 borderRadius: 2,
                 padding: 5,
-                backgroundColor: i == current ? 'white' : '#b1b9c0',
+                backgroundColor: i === current ? 'white' : '#b1b9c0',
                 border: 'none',
               }}
               key={tabName + i}
@@ -47,7 +47,7 @@ function CustomTab({ tabsNames = [], tabsComponents = [] }) {
       </div>
       <div>
         {tabsComponents.map((tab, i) => (
-          <div style={{ display: i == current ? 'block' : 'none' }}>{tab}</div>
+          <div style={{ display: i === current ? 'block' : 'none' }}>{tab}</div>
         ))}
       </div>
     </div>

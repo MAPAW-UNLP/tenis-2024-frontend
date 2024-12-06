@@ -8,6 +8,8 @@ import LoaderSpinner from '../../components/LoaderSpinner'
 import NavBar from '../Navbar/NavBar'
 
 import '../../styles/movimiento/movimiento.css'
+import CustomTab from 'components/Utils/CustomTab'
+import EstadisticasCobros from 'pages/Estadisticas/EstadisticasCobros'
 
 export const Cobros = () => {
   const URL_BASE = `http://localhost:8083/api/`
@@ -162,10 +164,9 @@ export const Cobros = () => {
     },
   ]
 
-  return (
-    <div className="movimiento-component">
-      <NavBar title={'Cobros'} />
-      <div className="movimiento-component-mainContent">
+  const renderContent = () => {
+    return (
+      <>
         <GenericLargeButton
           doSomething={() => setActive(true)}
           title={'Crear nuevo cobro'}
@@ -192,6 +193,18 @@ export const Cobros = () => {
         ) : (
           <MovimientoTable movimientos={cobros} loadingFetch={loadingFetch} />
         )}
+      </>
+    )
+  }
+
+  return (
+    <div className="movimiento-component">
+      <NavBar title={'Cobros'} />
+      <div className="movimiento-component-mainContent">
+        <CustomTab
+          tabsNames={['General', 'Estadísticas']}
+          tabsComponents={[renderContent(), <EstadisticasCobros />]}
+        />
       </div>
     </div>
   )
