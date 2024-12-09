@@ -1,17 +1,7 @@
-.modal {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  margin: 0 auto;
-  text-align: center;
-  line-height: 1.5;
-}
-
 .modal-eliminar .button-container {
   display: flex;
-  flex-direction: column; /* Para mantenerlos apilados verticalmente */
-  gap: 16px; /* Añade espacio entre los botones */
+  flex-direction: column;
+  gap: 16px;
   justify-content: center;
   align-items: center;
 }
