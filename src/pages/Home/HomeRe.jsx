@@ -37,21 +37,44 @@ export const HomeRe = () => {
           gap: '1em',
         }}
       >
-        <Card
-          title="movimientos"
-          description="Movimiento de dinero y manejo de cobros"
-          customColor="#94f5c5"
-          icon={faDollarSign}
-          className="movimientosCard"
-        />
+        {(user.rolPorDefecto === 'ROLE_ADMIN' ||
+          user.rolPorDefecto === 'ROLE_PROFESOR') && (
+          <>
+            <Card
+              title="movimientos"
+              description="Movimiento de dinero y manejo de cobros"
+              customColor="#94f5c5"
+              icon={faDollarSign}
+              className="movimientosCard"
+            />
 
-        <Card
-          title="reservas"
-          description="Reservación de alquileres y clases"
-          customColor="#ffa500"
-          icon={faCalendar}
-          className="reservasCard"
-        />
+            <Card
+              title="reservas"
+              description="Reservación de alquileres y clases"
+              customColor="#ffa500"
+              icon={faCalendar}
+              className="reservasCard"
+            />
+          </>
+        )}
+        {user.rolPorDefecto === 'ROLE_CLIENTE' && (
+          <>
+            <Card
+              title="clases"
+              description="Visualizar las próximas clases"
+              customColor="#ee82ee"
+              icon={faCalendar}
+              className="clasesCard"
+            />
+            <Card
+              title="historialpagos"
+              description="Historial de pagos del cliente"
+              customColor="#b994f5"
+              icon={faDollarSign}
+              className="historialPagosCard"
+            />
+          </>
+        )}
 
         {user.rolPorDefecto === 'ROLE_ADMIN' && (
           <>
@@ -153,7 +176,7 @@ export const HomeRe = () => {
                 className="image"
                 style={{ backgroundColor: '#78a1ca', position: 'relative' }}
               >
-                <div style={{ fontSize: '1em', color: '#5d5d5d' }}>
+                <div style={{ fontSize: '5em', color: '#5d5d5d' }}>
                   <PreciosPageIcon className="ajustes-icon" />
                 </div>
               </div>

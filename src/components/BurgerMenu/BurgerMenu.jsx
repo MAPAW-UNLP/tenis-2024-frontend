@@ -140,6 +140,11 @@ const BurgerMenu = () => {
                         setActive={setActive}
                         name={'Clases'}
                       />
+                      <LinkItem
+                        to={'/historialPagos'}
+                        setActive={setActive}
+                        name={'HistorialPagos'}
+                      />
                     </>
                   )
                 default:
