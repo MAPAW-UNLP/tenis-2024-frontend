@@ -176,7 +176,7 @@ export const HomeRe = () => {
                 className="image"
                 style={{ backgroundColor: '#78a1ca', position: 'relative' }}
               >
-                <div style={{ fontSize: '5em', color: '#5d5d5d' }}>
+                <div style={{ fontSize: '1em', color: '#5d5d5d' }}>
                   <PreciosPageIcon className="ajustes-icon" />
                 </div>
               </div>
