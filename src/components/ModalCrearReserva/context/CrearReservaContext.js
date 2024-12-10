@@ -4,21 +4,21 @@ import { getProfesores } from 'api/profesores'
 import { createContext, useCallback, useEffect, useState } from 'react'
 
 const initialFormValues = {
-  fechaValue: { value: null, errors: [] },
-  horaInicioValue: { value: '', errors: [] },
-  horaFinValue: { value: '', errors: [] },
-  canchaValue: { value: -1, errors: [] },
-  tipoReservaValue: { value: '', errors: [] },
+  fecha: { value: null, errors: [] },
+  horaInicio: { value: '', errors: [] },
+  horaFin: { value: '', errors: [] },
+  cancha: { value: -1, errors: [] },
+  tipoReserva: { value: '', errors: [] },
 
   // Alquiler:
-  nombreClienteValue: { value: '', errors: [] },
-  telefonoClienteValue: { value: '', errors: [] },
+  nombreCliente: { value: '', errors: [] },
+  telefonoCliente: { value: '', errors: [] },
 
   // Clase:
-  profesorValue: { value: '', errors: [] },
-  tipoClaseValue: { value: '', errors: [] },
-  alumnosValue: { value: [], errors: [] },
-  seRepiteValue: { value: false, errors: [] },
+  profesor: { value: '', errors: [] },
+  tipoClase: { value: '', errors: [] },
+  alumnos: { value: [], errors: [] },
+  seRepite: { value: false, errors: [] },
 }
 
 export const CrearReservaContext = createContext(null)
@@ -26,12 +26,12 @@ export const CrearReservaContext = createContext(null)
 export function CrearReservaProvider({ children }) {
   const [canchas, setCanchas] = useState({ isLoading: true, data: [] })
   const [profesores, setProfesores] = useState({ isLoading: true, data: [] })
-  const [alumnos, setAlumnos] = useState({ isLoading: true, data: [] })
+  const [alumnosData, setAlumnosData] = useState({ isLoading: true, data: [] })
 
   const [form, setForm] = useState(initialFormValues)
 
   useEffect(() => {
-    getClientes().then((data) => setAlumnos({ isLoading: false, data }))
+    getClientes().then((data) => setAlumnosData({ isLoading: false, data }))
     getProfesores().then((data) => setProfesores({ isLoading: false, data }))
     getCanchas().then((data) =>
       setCanchas({ isLoading: false, data: data.detail })
@@ -54,7 +54,7 @@ export function CrearReservaProvider({ children }) {
   return (
     <CrearReservaContext.Provider
       value={{
-        alumnos,
+        alumnosData,
         profesores,
         canchas,
         ...form,

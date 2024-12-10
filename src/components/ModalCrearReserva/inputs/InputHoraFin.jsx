@@ -3,13 +3,13 @@ import { useCrearReserva } from '../context/useCrearReserva'
 import { compareHoras, getHorasMayoresA } from '../helpers/horas'
 
 export default function InputHoraFin() {
-  const { horaFinValue, horaInicioValue, updateField } = useCrearReserva()
+  const { horaFin, horaInicio, updateField } = useCrearReserva()
 
   useEffect(() => {
-    if (compareHoras(horaInicioValue.value, horaFinValue.value) > 0) {
-      updateField('horaFinValue', '')
+    if (compareHoras(horaInicio.value, horaFin.value) > 0) {
+      updateField('horaFin', '')
     }
-  }, [horaFinValue.value, horaInicioValue.value, updateField])
+  }, [horaFin.value, horaInicio.value, updateField])
 
   return (
     <div className="reserva-group">
@@ -20,14 +20,14 @@ export default function InputHoraFin() {
         className="reserva-group__input"
         id="horaFin"
         name="horaFin"
-        value={horaFinValue.value}
-        onChange={(e) => updateField('horaFinValue', e.target.value)}
-        disabled={horaInicioValue.value === ''}
+        value={horaFin.value}
+        onChange={(e) => updateField('horaFin', e.target.value)}
+        disabled={horaInicio.value === ''}
       >
         <option value="" disabled>
           Fin
         </option>
-        {getHorasMayoresA(horaInicioValue.value).map((hora) => (
+        {getHorasMayoresA(horaInicio.value).map((hora) => (
           <option key={hora} value={hora}>
             {hora}
           </option>

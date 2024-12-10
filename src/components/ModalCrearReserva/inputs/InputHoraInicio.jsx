@@ -1,8 +1,8 @@
 import { useCrearReserva } from '../context/useCrearReserva'
-import { getHorasMayoresA, horas } from '../helpers/horas'
+import { horas } from '../helpers/horas'
 
 export default function InputHoraInicio() {
-  const { horaInicioValue, updateField } = useCrearReserva()
+  const { horaInicio, updateField } = useCrearReserva()
 
   return (
     <div className="reserva-group">
@@ -13,8 +13,8 @@ export default function InputHoraInicio() {
         className="reserva-group__input"
         id="horaInicio"
         name="horaInicio"
-        value={horaInicioValue.value}
-        onChange={(e) => updateField('horaInicioValue', e.target.value)}
+        value={horaInicio.value}
+        onChange={(e) => updateField('horaInicio', e.target.value)}
       >
         <option value="" disabled>
           Inicio

@@ -1,7 +1,7 @@
 import { useCrearReserva } from '../context/useCrearReserva'
 
 export default function InputTelefonoCliente() {
-  const { telefonoClienteValue, updateField } = useCrearReserva()
+  const { telefonoCliente, updateField } = useCrearReserva()
 
   return (
     <div className="reserva-group">
@@ -14,8 +14,8 @@ export default function InputTelefonoCliente() {
         name="telefonoCliente"
         type="text"
         placeholder="Teléfono del cliente"
-        value={telefonoClienteValue.value}
-        onChange={(e) => updateField('telefonoClienteValue', e.target.value)}
+        value={telefonoCliente.value}
+        onChange={(e) => updateField('telefonoCliente', e.target.value)}
       />
     </div>
   )

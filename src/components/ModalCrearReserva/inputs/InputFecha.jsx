@@ -2,7 +2,7 @@ import DatePicker from 'react-datepicker'
 import { useCrearReserva } from '../context/useCrearReserva'
 
 export default function InputFecha() {
-  const { fechaValue, updateField } = useCrearReserva()
+  const { fecha, updateField } = useCrearReserva()
 
   return (
     <div className="reserva-group">
@@ -16,8 +16,8 @@ export default function InputFecha() {
         dateFormat="dd/MM/yyyy"
         locale="es"
         minDate={Date.now()}
-        selected={fechaValue.value}
-        onChange={(date) => updateField('fechaValue', date)}
+        selected={fecha.value}
+        onChange={(date) => updateField('fecha', date)}
       />
     </div>
   )

@@ -1,7 +1,7 @@
 import { useCrearReserva } from '../context/useCrearReserva'
 
 export default function InputNombreCliente() {
-  const { nombreClienteValue, updateField } = useCrearReserva()
+  const { nombreCliente, updateField } = useCrearReserva()
 
   return (
     <div className="reserva-group">
@@ -14,8 +14,8 @@ export default function InputNombreCliente() {
         name="nombreCliente"
         type="text"
         placeholder="Nombre del cliente"
-        value={nombreClienteValue.value}
-        onChange={(e) => updateField('nombreClienteValue', e.target.value)}
+        value={nombreCliente.value}
+        onChange={(e) => updateField('nombreCliente', e.target.value)}
       />
     </div>
   )

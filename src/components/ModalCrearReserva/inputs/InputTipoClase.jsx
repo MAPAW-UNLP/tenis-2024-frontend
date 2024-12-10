@@ -1,7 +1,7 @@
 import { useCrearReserva } from '../context/useCrearReserva'
 
 export default function InputTipoClase() {
-  const { tipoClaseValue, updateField } = useCrearReserva()
+  const { tipoClase, updateField } = useCrearReserva()
 
   return (
     <div className="reserva-group">
@@ -12,8 +12,8 @@ export default function InputTipoClase() {
         className="reserva-group__input"
         id="tipoClase"
         name="tipoClase"
-        value={tipoClaseValue.value}
-        onChange={(e) => updateField('tipoClaseValue', e.target.value)}
+        value={tipoClase.value}
+        onChange={(e) => updateField('tipoClase', e.target.value)}
       >
         <option value="" disabled>
           Tipo de clase

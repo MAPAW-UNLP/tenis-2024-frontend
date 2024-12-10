@@ -11,7 +11,7 @@ import InputTipoClase from './inputs/InputTipoClase'
 import InputTipoReserva from './inputs/InputTipoReserva'
 
 export default function CrearReservaContent() {
-  const { tipoReservaValue } = useCrearReserva()
+  const { tipoReserva } = useCrearReserva()
 
   return (
     <form className="modal-crear-reserva">
@@ -24,15 +24,15 @@ export default function CrearReservaContent() {
 
       <InputTipoReserva />
 
-      {tipoReservaValue.value !== '' && (
+      {tipoReserva.value !== '' && (
         <>
           <hr className="reserva-hr" />
-          {tipoReservaValue.value === 'alquiler' ? (
+          {tipoReserva.value === 'alquiler' ? (
             <>
               <InputNombreCliente />
               <InputTelefonoCliente />
             </>
-          ) : tipoReservaValue.value === 'clase' ? (
+          ) : tipoReserva.value === 'clase' ? (
             <>
               <InputProfesor />
               <InputTipoClase />
@@ -40,7 +40,7 @@ export default function CrearReservaContent() {
           ) : null}
 
           <Button style={{ marginTop: '1rem', padding: '0.5rem' }}>
-            Crear {tipoReservaValue.value}
+            Crear {tipoReserva.value}
           </Button>
         </>
       )}

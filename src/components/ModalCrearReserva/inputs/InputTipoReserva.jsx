@@ -1,7 +1,7 @@
 import { useCrearReserva } from '../context/useCrearReserva'
 
 export default function InputTipoReserva() {
-  const { tipoReservaValue, updateField } = useCrearReserva()
+  const { tipoReserva, updateField } = useCrearReserva()
 
   return (
     <div className="reserva-group">
@@ -12,8 +12,8 @@ export default function InputTipoReserva() {
         className="reserva-group__input"
         id="tipoReserva"
         name="tipoReserva"
-        value={tipoReservaValue.value}
-        onChange={(e) => updateField('tipoReservaValue', e.target.value)}
+        value={tipoReserva.value}
+        onChange={(e) => updateField('tipoReserva', e.target.value)}
       >
         <option value="" disabled>
           Tipo de reserva

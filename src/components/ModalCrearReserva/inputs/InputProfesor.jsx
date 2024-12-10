@@ -1,7 +1,7 @@
 import { useCrearReserva } from '../context/useCrearReserva'
 
 export default function InputProfesor() {
-  const { profesores, profesorValue, updateField } = useCrearReserva()
+  const { profesores, profesor, updateField } = useCrearReserva()
 
   return (
     <div className="reserva-group">
@@ -13,8 +13,8 @@ export default function InputProfesor() {
         id="reserva-profesor"
         name="reserva-profesor"
         disabled={profesores.isLoading}
-        value={profesorValue.value}
-        onChange={(e) => updateField('profesorValue', e.target.value)}
+        value={profesor.value}
+        onChange={(e) => updateField('profesor', e.target.value)}
       >
         {profesores.isLoading ? (
           <option value="" disabled>
