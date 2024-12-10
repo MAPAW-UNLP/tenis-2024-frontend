@@ -11,10 +11,15 @@ import InputTipoClase from './inputs/InputTipoClase'
 import InputTipoReserva from './inputs/InputTipoReserva'
 
 export default function CrearReservaContent() {
-  const { tipoReserva } = useCrearReserva()
+  const { tipoReserva, handleSubmit } = useCrearReserva()
+
+  function handleFormSubmit(e) {
+    e.preventDefault()
+    handleSubmit()
+  }
 
   return (
-    <form className="modal-crear-reserva">
+    <form className="modal-crear-reserva" onSubmit={handleFormSubmit}>
       <InputFecha />
       <div className="reserva-horas">
         <InputHoraInicio />
