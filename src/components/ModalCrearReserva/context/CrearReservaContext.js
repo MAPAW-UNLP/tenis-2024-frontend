@@ -1,13 +1,13 @@
 import { getCanchas } from 'api/canchas'
 import { getClientes } from 'api/cliente'
 import { getProfesores } from 'api/profesores'
-import { createContext, useEffect, useState } from 'react'
+import { createContext, useCallback, useEffect, useState } from 'react'
 
 const initialFormValues = {
-  fechaValue: { value: '', errors: [] },
+  fechaValue: { value: null, errors: [] },
   horaInicioValue: { value: '', errors: [] },
   horaFinValue: { value: '', errors: [] },
-  canchaValue: { value: '', errors: [] },
+  canchaValue: { value: -1, errors: [] },
   tipoReservaValue: { value: '', errors: [] },
 
   // Alquiler:
@@ -38,12 +38,7 @@ export function CrearReservaProvider({ children }) {
     )
   }, [])
 
-  /**
-   * Actualizar un campo del formulario
-   * @param {keyof typeof initialFormValues} name
-   * @param {*} value
-   */
-  function updateField(name, value) {
+  const updateField = useCallback((name, value) => {
     setForm((prevState) => ({
       ...prevState,
       [name]: {
@@ -52,11 +47,9 @@ export function CrearReservaProvider({ children }) {
         errors: [],
       },
     }))
-  }
+  }, [])
 
-  function restore() {
-    setForm(initialFormValues)
-  }
+  const restore = useCallback(() => setForm(initialFormValues), [])
 
   return (
     <CrearReservaContext.Provider

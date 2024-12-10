@@ -10,35 +10,28 @@ import InputTipoClase from './inputs/InputTipoClase'
 import InputTipoReserva from './inputs/InputTipoReserva'
 
 export default function CrearReservaContent() {
+  const { tipoReservaValue } = useCrearReserva()
+
   return (
     <div className="modal-crear-reserva">
       <InputFecha />
       <InputHoraInicio />
       <InputHoraFin />
       <InputCancha />
+      <br />
       <InputTipoReserva />
 
-      <InputNombreCliente />
-      <InputTelefonoCliente />
-
-      <InputProfesor />
-      <InputTipoClase />
-
-      <hr />
-
-      <div className="reserva-group">
-        <label htmlFor="inputId" className="reserva-group__label">
-          Label
-        </label>
-        <input
-          className="reserva-group__input"
-          id="inputId"
-          name="inputId"
-          type="text"
-          placeholder="placeholder"
-          value="Este es un texto"
-        />
-      </div>
+      {tipoReservaValue.value === 'alquiler' ? (
+        <>
+          <InputNombreCliente />
+          <InputTelefonoCliente />
+        </>
+      ) : tipoReservaValue.value === 'clase' ? (
+        <>
+          <InputProfesor />
+          <InputTipoClase />
+        </>
+      ) : null}
     </div>
   )
 }

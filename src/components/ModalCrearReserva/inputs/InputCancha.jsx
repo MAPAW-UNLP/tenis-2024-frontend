@@ -1,7 +1,7 @@
 import { useCrearReserva } from '../context/useCrearReserva'
 
 export default function InputCancha() {
-  const { canchas } = useCrearReserva()
+  const { canchas, canchaValue, updateField } = useCrearReserva()
 
   return (
     <div className="reserva-group">
@@ -13,18 +13,23 @@ export default function InputCancha() {
         id="cancha"
         name="cancha"
         disabled={canchas.isLoading}
+        value={canchaValue.value}
+        onChange={(e) => updateField('canchaValue', e.target.value)}
       >
         {canchas.isLoading ? (
-          <option value="" disabled selected>
+          <option value={-1} disabled>
             Cargando canchas...
           </option>
         ) : (
           <>
-            <option value="" disabled selected>
+            <option value={-1} disabled>
               Cancha
             </option>
             {canchas.data.map((cancha) => (
-              <option key={cancha.id}>{`${cancha.nombre}`}</option>
+              <option
+                key={cancha.id}
+                value={cancha.id}
+              >{`${cancha.nombre}`}</option>
             ))}
           </>
         )}

@@ -1,4 +1,8 @@
+import { useCrearReserva } from '../context/useCrearReserva'
+
 export default function InputNombreCliente() {
+  const { nombreClienteValue, updateField } = useCrearReserva()
+
   return (
     <div className="reserva-group">
       <label htmlFor="nombreCliente" className="reserva-group__label">
@@ -10,6 +14,8 @@ export default function InputNombreCliente() {
         name="nombreCliente"
         type="text"
         placeholder="Nombre del cliente"
+        value={nombreClienteValue.value}
+        onChange={(e) => updateField('nombreClienteValue', e.target.value)}
       />
     </div>
   )

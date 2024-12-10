@@ -1,3 +1,5 @@
+import { useCrearReserva } from '../context/useCrearReserva'
+
 const horas = [
   '8:30',
   '9:00',
@@ -28,13 +30,21 @@ const horas = [
 ]
 
 export default function InputHoraFin() {
+  const { horaFinValue, updateField } = useCrearReserva()
+
   return (
     <div className="reserva-group">
       <label htmlFor="horaFin" className="reserva-group__label">
         Hora de fin
       </label>
-      <select className="reserva-group__input" id="horaFin" name="horaFin">
-        <option value="" disabled selected>
+      <select
+        className="reserva-group__input"
+        id="horaFin"
+        name="horaFin"
+        value={horaFinValue.value}
+        onChange={(e) => updateField('horaFinValue', e.target.value)}
+      >
+        <option value="" disabled>
           Hora de fin
         </option>
         {horas.map((hora) => (
