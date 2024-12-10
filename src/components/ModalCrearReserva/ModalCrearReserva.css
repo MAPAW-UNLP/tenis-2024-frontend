@@ -43,6 +43,28 @@
   }
 }
 
+.reserva-group--error {
+  .reserva-group__label {
+    color: var(--danger-600);
+  }
+
+  .reserva-group__input {
+    border-color: var(--danger-600);
+
+    &:focus {
+      border: 1px solid var(--danger-600);
+      box-shadow:
+        0 0 2px var(--danger-600),
+        0 0 4px var(--danger-500);
+    }
+  }
+}
+
+.reserva-group__error-desc {
+  font-size: 0.85em;
+  color: var(--danger-600);
+}
+
 .reserva-calendar {
   width: 100%;
 }

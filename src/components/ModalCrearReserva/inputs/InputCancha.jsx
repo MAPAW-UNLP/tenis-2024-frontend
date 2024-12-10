@@ -1,13 +1,15 @@
 import { useCrearReserva } from '../context/useCrearReserva'
+import ReservaInputGroup from '../ReservaInputGroup'
 
 export default function InputCancha() {
   const { canchas, cancha, updateField } = useCrearReserva()
 
   return (
-    <div className="reserva-group">
-      <label htmlFor="cancha" className="reserva-group__label">
-        Cancha
-      </label>
+    <ReservaInputGroup
+      htmlFor="cancha"
+      labelText="Cancha"
+      errors={cancha.errors}
+    >
       <select
         className="reserva-group__input"
         id="cancha"
@@ -34,6 +36,6 @@ export default function InputCancha() {
           </>
         )}
       </select>
-    </div>
+    </ReservaInputGroup>
   )
 }
