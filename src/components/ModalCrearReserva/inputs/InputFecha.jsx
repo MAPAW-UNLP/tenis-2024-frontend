@@ -10,7 +10,7 @@ export default function InputFecha() {
         Fecha
       </label>
       <DatePicker
-        className="reserva-group__input"
+        className="reserva-group__input reserva-calendar"
         id="fecha"
         placeholderText="Fecha"
         dateFormat="dd/MM/yyyy"
