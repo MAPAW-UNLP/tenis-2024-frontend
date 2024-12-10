@@ -6,6 +6,8 @@ import LoaderSpinner from 'components/LoaderSpinner'
 import Dashboard from 'components/Dashboard/Dashboard'
 import ClaseDashboardItem from 'components/Clase/ClaseDashboardItem'
 import TablaProximasClases from './TablaProximasClases'
+import ClasesAFavor from './ClasesAFavor'
+import ModalClasesAFavor from './ModalClasesAFavor'
 
 import InputReComponent from '../../components/Utils/InputReComponent'
 
@@ -167,6 +169,7 @@ const CalendarioProximasClases = () => {
   const [selectedDate, setSelectedDate] = useState(getCurrentDate())
   const [clases, setClases] = useState()
   const isMobile = useMediaQuery('(max-width: 1000px)')
+  const [isModalVisible, setIsModalVisible] = useState(false)
 
   const [filtrarSpinner, setFiltrarSpinner] = useState(false)
 
@@ -266,7 +269,11 @@ const CalendarioProximasClases = () => {
           </button>
         </div>
       </div>
-
+      <ClasesAFavor onOpenModal={() => setIsModalVisible(true)} />
+      <ModalClasesAFavor
+        isVisible={isModalVisible}
+        onClose={() => setIsModalVisible(false)}
+      />
       {isLoading ? (
         <div style={{ position: 'relative' }}>
           <LoaderSpinner
