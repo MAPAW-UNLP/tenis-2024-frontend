@@ -1,4 +1,3 @@
-const CLIENTE_URL = `${process.env.REACT_APP_BASE_URL}/cliente`
 const API_URL = `${process.env.REACT_APP_BASE_URL}`
 
 export function getHistorialPagos(id, params = {}) {
@@ -111,4 +110,9 @@ export function getHistorialPagos(id, params = {}) {
     .catch(() => {
       return dataDefault.detail
     })
+}
+
+export async function getClientes() {
+  const resp = await fetch(`${process.env.REACT_APP_BASE_URL}/clientes`)
+  return await resp.json()
 }
