@@ -1,0 +1,43 @@
+.modal-crear-reserva {
+  font-family: var(--normal-text);
+  width: clamp(240px, 50vw, 300px);
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.reserva-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  font-size: 1rem;
+}
+
+.reserva-group__label {
+  font-size: 0.9em;
+}
+
+.reserva-group__input {
+  padding: 0.5em;
+  outline: none;
+  border: 1px solid #dadada;
+
+  border-radius: 0.25em;
+  font-size: 1em;
+  background-color: var(--neutral-white);
+  color: #1f1f1f;
+
+  &:focus {
+    border: 1px solid var(--primary-500);
+    box-shadow:
+      0 0 2px var(--primary-500),
+      0 0 4px var(--primary-300);
+  }
+
+  &:disabled {
+    background-color: #dfdfdf;
+    cursor: not-allowed;
+    color: #666;
+  }
+}

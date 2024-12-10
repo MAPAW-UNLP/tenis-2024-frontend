@@ -22,6 +22,7 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { ordenarPorNombre } from '../../components/Utils/Functions'
 import Button from 'components/Button/Button'
 import { useSession } from 'hooks/useSession'
+import { ModalCrearReserva } from 'components/ModalCrearReserva'
 
 export const Reservas = () => {
   const URL_BASE = `http://localhost:8083/api/`
@@ -277,8 +278,15 @@ export const Reservas = () => {
     }
   }, [session.rolPorDefecto])
 
+  const [isVisible, setIsVisible] = useState(true)
+
   return (
     <div id="reservas-component">
+      <button onClick={() => setIsVisible(true)}>Show</button>
+      <ModalCrearReserva
+        isVisible={isVisible}
+        onClose={() => setIsVisible(false)}
+      />
       <NavBar title={'Reservas'} />
       <div id="reserva-nuevaReserva">
         {reservasLoader && (
