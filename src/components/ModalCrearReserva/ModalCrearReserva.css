@@ -24,6 +24,7 @@
   border: 1px solid #dadada;
 
   border-radius: 0.25em;
+  border-radius: 0.375em;
   font-size: 1em;
   background-color: var(--neutral-white);
   color: #1f1f1f;
@@ -44,4 +45,17 @@
 
 .reserva-calendar {
   width: 100%;
+}
+
+.reserva-horas {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+}
+
+.reserva-hr {
+  margin: 0.5rem 0;
+  width: 100%;
+  border: none;
+  border-top: solid 1px #ccc;
 }

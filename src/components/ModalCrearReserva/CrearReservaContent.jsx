@@ -1,3 +1,4 @@
+import Button from 'components/Button/Button'
 import { useCrearReserva } from './context/useCrearReserva'
 import InputCancha from './inputs/InputCancha'
 import InputFecha from './inputs/InputFecha'
@@ -13,25 +14,36 @@ export default function CrearReservaContent() {
   const { tipoReservaValue } = useCrearReserva()
 
   return (
-    <div className="modal-crear-reserva">
+    <form className="modal-crear-reserva">
       <InputFecha />
-      <InputHoraInicio />
-      <InputHoraFin />
+      <div className="reserva-horas">
+        <InputHoraInicio />
+        <InputHoraFin />
+      </div>
       <InputCancha />
-      <br />
+
       <InputTipoReserva />
 
-      {tipoReservaValue.value === 'alquiler' ? (
+      {tipoReservaValue.value !== '' && (
         <>
-          <InputNombreCliente />
-          <InputTelefonoCliente />
+          <hr className="reserva-hr" />
+          {tipoReservaValue.value === 'alquiler' ? (
+            <>
+              <InputNombreCliente />
+              <InputTelefonoCliente />
+            </>
+          ) : tipoReservaValue.value === 'clase' ? (
+            <>
+              <InputProfesor />
+              <InputTipoClase />
+            </>
+          ) : null}
+
+          <Button style={{ marginTop: '1rem', padding: '0.5rem' }}>
+            Crear {tipoReservaValue.value}
+          </Button>
         </>
-      ) : tipoReservaValue.value === 'clase' ? (
-        <>
-          <InputProfesor />
-          <InputTipoClase />
-        </>
-      ) : null}
-    </div>
+      )}
+    </form>
   )
 }
