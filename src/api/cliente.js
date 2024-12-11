@@ -116,9 +116,7 @@ export function getHistorialPagos(id, params = {}) {
 export function getClasesAFavor(id) {
   const dataDefault = {
     rta: 'ok',
-    detail: {
-      clases: 1,
-    },
+    detail: 7,
   }
 
   const baseUrl = `${CLIENTE_URL}/clasesAFavor`
@@ -132,27 +130,25 @@ export function getClasesAFavor(id) {
     .then((response) => {
       if (!response.ok) {
         console.warn(`Error HTTP: ${response.status}`)
-        return dataDefault.detail.clases
+        return dataDefault.detail
       }
-      console.log(response)
-
       return response.json()
     })
     .then((data) => {
       console.log(data)
 
       if (data.rta === 'ok') {
-        return data.detail.clases
+        return data.detail
       } else {
         console.warn(
           'Respuesta no válida del servidor, devolviendo dataDefault.'
         )
-        return dataDefault.detail.clases
+        return dataDefault.detail
       }
     })
     .catch((error) => {
       console.error('Error en el fetch:', error)
-      return dataDefault.detail.clases
+      return dataDefault.detail
     })
 }
 

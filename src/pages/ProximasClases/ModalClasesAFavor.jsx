@@ -3,12 +3,14 @@ import Modal from 'components/Modal/Modal'
 import '../../styles/modal-clases-a-favor.css'
 import { reservarClaseAFavor } from 'api/cliente'
 import Swal from 'sweetalert2'
-
+import { useSession } from '../../hooks/useSession'
 function FormModal({ isVisible, onClose }) {
+  const { session } = useSession()
   const [formData, setFormData] = useState({
     date: '',
     startTime: '',
     endTime: '',
+    clienteID: session.id,
   })
 
   const horas = [
@@ -51,10 +53,10 @@ function FormModal({ isVisible, onClose }) {
     if (data.status == 200) {
       Swal.fire({
         icon: 'success',
-        title: 'Clase suspendida con éxito',
+        title: 'Clase creada con éxito',
         toast: true,
         position: 'top-end',
-        timer: 3000,
+        timer: 7000,
         timerProgressBar: true,
         showConfirmButton: false,
       })
@@ -65,7 +67,7 @@ function FormModal({ isVisible, onClose }) {
         text: 'Intente mas tarde',
         toast: true,
         position: 'top-end',
-        timer: 3000,
+        timer: 7000,
         timerProgressBar: true,
         showConfirmButton: false,
       })
