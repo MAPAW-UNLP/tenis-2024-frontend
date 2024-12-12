@@ -28,6 +28,7 @@ import { AlumnosNew } from './pages/Alumno/AlumnosNew'
 import ProfesorHomePage from 'pages/Profesor/ProfesorHomePage'
 import { Precios } from 'pages/Ajustes/AjustesHome'
 import ProximasClases from './pages/ProximasClases/ProximasClases'
+import HistorialPagos from './pages/HistorialPagos/HistorialPagos'
 
 function App() {
   return (
@@ -63,6 +64,7 @@ function App() {
           <Route path="/ausencias" element={<Ausencias />} />
           <Route path="/profesor/:id" element={<ProfesorHomePage />} />
           <Route path="/clases" element={<ProximasClases />} />
+          <Route path="/historialPagos" element={<HistorialPagos />} />
         </Routes>
       </div>
     </>

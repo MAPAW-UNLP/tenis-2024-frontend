@@ -36,6 +36,16 @@ export const HomeRe = () => {
           gap: '1em',
         }}
       >
+        {user.rolPorDefecto === 'ROLE_CLIENTE' && (
+          <Card
+            title="clases"
+            description="Visualizar las próximas clases"
+            customColor="#ee82ee"
+            icon={faCalendar}
+            className="clasesCard"
+          />
+        )}
+
         <Card
           title="movimientos"
           description="Movimiento de dinero y manejo de cobros"
@@ -52,14 +62,43 @@ export const HomeRe = () => {
           className="reservasCard"
         />
 
+        {(user.rolPorDefecto === 'ROLE_ADMIN' ||
+          user.rolPorDefecto === 'ROLE_PROFESOR') && (
+          <>
+            <Card
+              title="movimientos"
+              description="Movimiento de dinero y manejo de cobros"
+              customColor="#94f5c5"
+              icon={faDollarSign}
+              className="movimientosCard"
+            />
+
+            <Card
+              title="reservas"
+              description="Reservación de alquileres y clases"
+              customColor="#ffa500"
+              icon={faCalendar}
+              className="reservasCard"
+            />
+          </>
+        )}
         {user.rolPorDefecto === 'ROLE_CLIENTE' && (
-          <Card
-            title="clases"
-            description="Visualizar las próximas clases"
-            customColor="#ee82ee"
-            icon={faCalendar}
-            className="clasesCard"
-          />
+          <>
+            <Card
+              title="clases"
+              description="Visualizar las próximas clases"
+              customColor="#ee82ee"
+              icon={faCalendar}
+              className="clasesCard"
+            />
+            <Card
+              title="historialpagos"
+              description="Historial de pagos del cliente"
+              customColor="#b994f5"
+              icon={faDollarSign}
+              className="historialPagosCard"
+            />
+          </>
         )}
 
         {user.rolPorDefecto === 'ROLE_ADMIN' && (

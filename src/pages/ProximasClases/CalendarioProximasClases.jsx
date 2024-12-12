@@ -161,7 +161,7 @@ const useMediaQuery = (query) => {
 }
 
 const CalendarioProximasClases = () => {
-  const URL_BASE = 'http://localhost:8083/api/'
+  const URL_BASE = `${process.env.REACT_APP_BASE_URL}/`
   const { session } = useSession()
   const [isLoading, setIsLoading] = useState(true)
   const [selectedDate, setSelectedDate] = useState(getCurrentDate())
@@ -181,7 +181,6 @@ const CalendarioProximasClases = () => {
       headers: {
         'Content-Type': 'application/json',
       },
-      
     })
       .then((response) => response.json())
       .then((data) => {
@@ -199,77 +198,74 @@ const CalendarioProximasClases = () => {
     getNextClases()
   }, [selectedDate])
 
-    const handleDateChange = (event) => {
-      setSelectedDate(event.target.value)
-    }
+  const handleDateChange = (event) => {
+    setSelectedDate(event.target.value)
+  }
 
-    const mes = ('0' + (new Date().getMonth() + 1)).slice(-2)
-    const day = ('0' + new Date().getDate()).slice(-2)
-    const año = new Date().getFullYear()
-    const today = `${año}-${mes}-${day}`
-  
-    //const [filtrarSpinner, setFiltarSpinner] = useState(false)
-  
-    const [datos, setDatos] = useState({
-      fechaInicio: today,
-    })
-    
-    const handleFiltrado = () => {
-      if (!datos.fechaInicio) datos.fechaInicio = today
-      setFiltrarSpinner(true)
-    }
-  
-    const LoadingSpinner = () => {
-      return (
-        <div
-          style={{
-            display: 'inline-block',
-            width: '24px',
-            height: '24px',
-            borderTopColor: 'rgb(255, 255, 255)',
-            borderRightColor: 'rgba(255, 255, 255, 0.4)',
-            borderBottomColor: 'rgba(255, 255, 255, 0.4)',
-            borderLeftColor: 'rgba(255, 255, 255, 0.4)',
-            borderWidth: '3px',
-            borderStyle: 'solid',
-            borderImage: 'none',
-            borderRadius: '50%',
-            animation: 'spin 1s ease-in-out infinite',
-            WebkitAnimation: 'spin 1s ease-in-out infinte',
-          }}
-        />
-      )
-    }
+  const mes = ('0' + (new Date().getMonth() + 1)).slice(-2)
+  const day = ('0' + new Date().getDate()).slice(-2)
+  const año = new Date().getFullYear()
+  const today = `${año}-${mes}-${day}`
+
+  //const [filtrarSpinner, setFiltarSpinner] = useState(false)
+
+  const [datos, setDatos] = useState({
+    fechaInicio: today,
+  })
+
+  const handleFiltrado = () => {
+    if (!datos.fechaInicio) datos.fechaInicio = today
+    setFiltrarSpinner(true)
+  }
+
+  const LoadingSpinner = () => {
+    return (
+      <div
+        style={{
+          display: 'inline-block',
+          width: '24px',
+          height: '24px',
+          borderTopColor: 'rgb(255, 255, 255)',
+          borderRightColor: 'rgba(255, 255, 255, 0.4)',
+          borderBottomColor: 'rgba(255, 255, 255, 0.4)',
+          borderLeftColor: 'rgba(255, 255, 255, 0.4)',
+          borderWidth: '3px',
+          borderStyle: 'solid',
+          borderImage: 'none',
+          borderRadius: '50%',
+          animation: 'spin 1s ease-in-out infinite',
+          WebkitAnimation: 'spin 1s ease-in-out infinte',
+        }}
+      />
+    )
+  }
 
   return (
     <>
-    <div className="clases-container">
-              <div className="clases-head">
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-around',
-                    width: '80%',
-                  }}
-                >
-                  <span style={{ marginRight: '.5em' }}>Selecciona fecha: </span>
-                  <InputReComponent
-                    type={'date'}
-                    name={'fechaInicio'}
-                    id={'fechaInicio'}
-                    className={'input-date'}
-                    placeholder={'Fecha'}
-                    onChangeFuncion={handleDateChange}
-                  />
-                </div>
-                <button
-                  className="button-clases-head"
-                  onClick={handleFiltrado}
-                >
-                  {filtrarSpinner ? <LoadingSpinner /> : 'Filtar'}
-                </button>
-              </div>
-            </div>
+      <div className="clases-container">
+        <div className="clases-head">
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-around',
+              width: '80%',
+            }}
+          >
+            <span style={{ marginRight: '.5em' }}>Selecciona fecha: </span>
+            <InputReComponent
+              type={'date'}
+              name={'fechaInicio'}
+              id={'fechaInicio'}
+              className={'input-date'}
+              placeholder={'Fecha'}
+              onChangeFuncion={handleDateChange}
+            />
+          </div>
+          <button className="button-clases-head" onClick={handleFiltrado}>
+            {filtrarSpinner ? <LoadingSpinner /> : 'Filtar'}
+          </button>
+        </div>
+      </div>
 
       {isLoading ? (
         <div style={{ position: 'relative' }}>
@@ -279,11 +275,7 @@ const CalendarioProximasClases = () => {
             loaderClass={'homeLoaderSpinner'}
           />
         </div>
-
-        
       ) : !isLoading && !isMobile ? (
-
-        
         <Dashboard header={<div className="home__dashboard-header"></div>}>
           <Dashboard.Col first={true} sticky={true}>
             <Dashboard.Row
