@@ -46,22 +46,6 @@ export const HomeRe = () => {
           />
         )}
 
-        <Card
-          title="movimientos"
-          description="Movimiento de dinero y manejo de cobros"
-          customColor="#94f5c5"
-          icon={faDollarSign}
-          className="movimientosCard"
-        />
-
-        <Card
-          title="reservas"
-          description="Reservación de alquileres y clases"
-          customColor="#ffa500"
-          icon={faCalendar}
-          className="reservasCard"
-        />
-
         {(user.rolPorDefecto === 'ROLE_ADMIN' ||
           user.rolPorDefecto === 'ROLE_PROFESOR') && (
           <>
