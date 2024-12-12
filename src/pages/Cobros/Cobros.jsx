@@ -104,7 +104,7 @@ export const Cobros = () => {
       const requestOptions = {
         method: 'POST',
         body: JSON.stringify({
-          alumnoId: +cobroAddForm.personaId,
+          clienteId: +cobroAddForm.personaId,
           concepto: cobroAddForm.concepto,
           monto: cobroAddForm.monto,
           descripcion: cobroAddForm.descripcion,

@@ -107,8 +107,18 @@ export const AlumnoDetails = ({
                   className="new-alumno-deudas"
                   style={{ marginBottom: '1em' }}
                 >
-                  <p>Clase grupal: 0</p>
-                  <p>Clase individual: 3</p>
+                  <p>
+                    Clase grupal:{' '}
+                    {cobrosActUser.reduce((acc, elem) => {
+                      return acc + (elem.idTipoClase === 2 ? 1 : 0)
+                    }, 0)}
+                  </p>
+                  <p>
+                    Clase individual:{' '}
+                    {cobrosActUser.reduce((acc, elem) => {
+                      return acc + (elem.idTipoClase === 1 ? 1 : 0)
+                    }, 0)}
+                  </p>
                 </div>
               </>
             )}

@@ -13,6 +13,10 @@ import { AlumnosList } from '../../components/AlumnoNew/AlumnosList'
 import { AgregarAlumno } from '../../components/AlumnoNew/AgregarAlumno'
 import { AlumnoDetails } from '../../components/AlumnoNew/AlumnoDetails'
 import { EditarAlumno } from '../../components/AlumnoNew/EditarAlumno'
+import { getReservas } from 'api/reservas'
+import { getGrupos } from 'api/grupos'
+import { getClientes } from 'api/clientes'
+import { getCobrosPorCliente } from 'api/cobros'
 
 export const AlumnosNew = () => {
   const URL_BASE = `http://localhost:8083/api/`
@@ -23,7 +27,6 @@ export const AlumnosNew = () => {
   // Estado booleano para abrir formulario de creacion de nuevo alumno
   const [active, setActive] = useState(false)
 
-  // Estado para guardar los alumnoso btenidos de la BD
   const [alumnos, setAlumnos] = useState([])
 
   // Spinner - loaders
@@ -57,17 +60,80 @@ export const AlumnosNew = () => {
 
   // useEffect principal para la obtencion de alumnos desde la BD
   useEffect(() => {
-    const requestOptions = {
-      method: 'GET',
+    const fetchClientesConCobros = async () => {
+      try {
+        const clientes = await getClientes()
+        const grupos = await getGrupos()
+        const reservasData = await getReservas()
+
+        const clientesConCobros = await Promise.all(
+          clientes.map(async (cliente) => {
+            const cobros = await getCobrosPorCliente(cliente.id)
+            const newCliente = { ...cliente, cobros: cobros }
+            const deuda = calcularDeuda(newCliente, grupos, reservasData.detail)
+            return { ...cliente, cobros, deuda }
+          })
+        )
+
+        setAlumnos(
+          clientesConCobros.length !== 0
+            ? ordenarPorNombre(clientesConCobros)
+            : clientesConCobros
+        )
+        setAlumnosLoader(() => false)
+      } catch (error) {
+        console.error('Error al obtener clientes y cobros:', error)
+      }
     }
-    fetch(`${URL_BASE}clientes`, requestOptions)
-      .then((response) => response.json())
-      .then((data) => {
-        setAlumnos(data.length !== 0 ? ordenarPorNombre(data) : data)
-      })
-      .then(() => setAlumnosLoader(() => false))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
+    fetchClientesConCobros()
   }, [actAlumnos])
+
+  const calcularDeuda = (cliente, grupos, reservasData) => {
+    // const reservasData = reservasData.filter(
+    //   (reserva) => new Date(reserva.fecha) < new Date()
+    // )
+
+    const gruposCliente = grupos.filter(
+      (grupo) => grupo.personaId === cliente.id
+    )
+    const gruposPasadosCliente = gruposCliente.filter((grupo) =>
+      reservasData.find((reserva) => reserva.reservaId === grupo.reservaId)
+    )
+
+    const reservasDataCliente = reservasData.filter((reserva) =>
+      gruposPasadosCliente.some(
+        (grupo) => grupo.reservaId === reserva.reservaId
+      )
+    )
+
+    const cantClases = cliente.cobros.length - gruposPasadosCliente.length
+
+    let reservasDataClienteReducidaPorHaberCobros = reservasDataCliente.filter(
+      (reserva) =>
+        cliente.cobros.some((cobro) => cobro.clienteId === reserva.reservaId)
+    )
+
+    if (cliente.cobros.length === 0) {
+      reservasDataClienteReducidaPorHaberCobros = reservasDataCliente
+    }
+
+    const montoCobros = reservasDataClienteReducidaPorHaberCobros.reduce(
+      (acc, elem) => {
+        if (elem.tipo === 1) {
+          return acc + 50
+        } else {
+          return acc + 100
+        }
+      },
+      0
+    )
+
+    return {
+      cantClases,
+      montoCobros,
+    }
+  }
 
   // Este useEffect se dispara cuando traemos los datos para editar un alumno.
   // Si actAlu es modificado entonces obtenemos datos de BD sobre el alumno,
@@ -75,12 +141,12 @@ export const AlumnosNew = () => {
   // y por ultimo vuelve a poner en false el estado que maneja el spinner de carga
   useEffect(() => {
     if (actAlu !== '') {
-      fetch(`${URL_BASE}cliente?alumnoId=${actAlu.id}`)
+      fetch(`${URL_BASE}cliente?clienteId=${actAlu.id}`)
         .then((response) => response.json())
         .then((data) => setAluDetail(data))
         .then(() => setLoadingDetails(false))
 
-      fetch(`${URL_BASE}cobros_por_alumno_v2?alumnoId=${actAlu.id}`)
+      fetch(`${URL_BASE}cobros_por_cliente_v2?clienteId=${actAlu.id}`)
         .then((response) => response.json())
         .then((data) => setCobrosActUser(data))
         .then(() => setActiveDetails(true))
@@ -211,6 +277,20 @@ export const AlumnosNew = () => {
     }
   }
 
+  const filtrarAlumnos = (e) => {
+    const value = e.target.value
+    if (value === '1') {
+      setAlumnosFiltrados(alumnos)
+      return
+    }
+
+    if (value === '2') {
+      setAlumnosFiltrados(() => alumnos.filter((a) => a.deuda.cantClases < 0))
+    } else if (value === '3') {
+      setAlumnosFiltrados(() => alumnos.filter((a) => a.deuda.cantClases >= 0))
+    }
+  }
+
   useEffect(() => {
     setAlumnosFiltrados(alumnos)
   }, [alumnos])
@@ -259,35 +339,60 @@ export const AlumnosNew = () => {
             loaderClass={'canchasLoaderSpinner'}
           />
         ) : (
-          <div
-            className="container-new-alumnos-list"
-            style={{ backgroundColor: '#ffffff' }}
-          >
-            <div className="table-head-alumnos">
-              <span style={{ fontSize: '1.8em' }}>Nombre</span>
-              <div
-                id="alumnos-searchbar"
-                className="list-options-header"
-                style={{ width: 'unset' }}
-              >
-                <FontAwesomeIcon id="magnify-icon" icon={faMagnifyingGlass} />
-                <input
-                  type="text"
-                  placeholder="Busca un alumno"
-                  onChange={handleChangeSearchAlumnno}
-                />
+          <>
+            <select className="btn-agregar-proveedor" onClick={filtrarAlumnos}>
+              <option value="1" selected onChange={filtrarAlumnos}>
+                Todos
+              </option>
+              <option value="2" onChange={filtrarAlumnos}>
+                Alumnos deudores
+              </option>
+              <option value="3" onChange={filtrarAlumnos}>
+                Alumnos no deudores
+              </option>
+            </select>
+            <div
+              className="container-new-alumnos-list"
+              style={{ backgroundColor: '#ffffff' }}
+            >
+              <div className="table-head-alumnos">
+                <span style={{ fontSize: '1.8em' }}>Nombre</span>
+                <span style={{ fontSize: '1.8em' }}>Clases</span>
+                <span style={{ fontSize: '1.8em' }}>Deuda</span>
+                <div
+                  id="alumnos-searchbar"
+                  className="list-options-header"
+                  style={{ width: 'unset' }}
+                >
+                  <FontAwesomeIcon id="magnify-icon" icon={faMagnifyingGlass} />
+                  <input
+                    type="text"
+                    placeholder="Busca un alumno"
+                    onChange={handleChangeSearchAlumnno}
+                  />
+                </div>
+              </div>
+
+              {/* Lista de alumnos */}
+              <AlumnosList
+                alumnosFiltrados={alumnosFiltrados}
+                setActAlu={setActAlu}
+                actAlu={actAlu}
+                setLoadingDetails={setLoadingDetails}
+                loadingDetails={loadingDetails}
+                calcularDeuda={calcularDeuda}
+              />
+
+              <div className="container-table-alumnos">
+                <span>Deuda total:</span>
+                <span>
+                  {alumnos.reduce((acc, elem) => {
+                    return acc + elem.deuda.montoCobros
+                  }, 0)}
+                </span>
               </div>
             </div>
-
-            {/* Lista de alumnos */}
-            <AlumnosList
-              alumnosFiltrados={alumnosFiltrados}
-              setActAlu={setActAlu}
-              actAlu={actAlu}
-              setLoadingDetails={setLoadingDetails}
-              loadingDetails={loadingDetails}
-            />
-          </div>
+          </>
         )}
       </div>
     </div>
