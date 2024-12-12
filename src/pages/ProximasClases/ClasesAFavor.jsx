@@ -33,7 +33,7 @@ const ClasesAFavor = ({ onOpenModal }) => {
         <div style={styles.cartel}>
           <p>Usted tiene {clases} clases a favor</p>
           <button style={styles.boton} onClick={onOpenModal}>
-            Realizar acción
+            Reservar Clase
           </button>
         </div>
       )}

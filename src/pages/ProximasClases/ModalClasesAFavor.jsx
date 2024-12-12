@@ -56,9 +56,11 @@ function FormModal({ isVisible, onClose }) {
         title: 'Clase creada con éxito',
         toast: true,
         position: 'top-end',
-        timer: 7000,
+        timer: 3000,
         timerProgressBar: true,
         showConfirmButton: false,
+      }).then(() => {
+        window.location.reload()
       })
     } else {
       Swal.fire({
@@ -67,7 +69,7 @@ function FormModal({ isVisible, onClose }) {
         text: 'Intente mas tarde',
         toast: true,
         position: 'top-end',
-        timer: 7000,
+        timer: 4000,
         timerProgressBar: true,
         showConfirmButton: false,
       })
