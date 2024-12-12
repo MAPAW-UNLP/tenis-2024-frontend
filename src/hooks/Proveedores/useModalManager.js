@@ -9,6 +9,13 @@ export const useModalManager = (update) => {
   const [proveedor, setProveedor] = useState({})
   const [idProveedor, setIdProveedor] = useState(null)
 
+  const proveedorSetter = (id = null, nombre = '', telefono = '') => {
+    setProveedor({
+      id,
+      nombre,
+      telefono,
+    })
+  }
   const openFormAdd = () => {
     setAddModal(true)
   }
@@ -22,21 +29,13 @@ export const useModalManager = (update) => {
   }
 
   const openFormEdit = (p) => {
-    setProveedor({
-      id: p.id,
-      nombre: p.nombre,
-      telefono: p.telefono,
-    })
+    proveedorSetter(p.id, p.nombre, p.telefono)
     setEditModal(true)
   }
 
   const openFormPay = (p) => {
     setPayModal(true)
-    setProveedor({
-      id: p.id,
-      nombre: p.nombre,
-      telefono: p.telefono,
-    })
+    proveedorSetter(p.id, p.nombre, p.telefono)
   }
 
   const closeFormPay = (bool = false) => {
@@ -45,7 +44,7 @@ export const useModalManager = (update) => {
 
   const openFormDelete = (id) => {
     setDeleteModal(true)
-    setIdProveedor(id)
+    proveedorSetter(id)
   }
 
   const closeFormDelete = (bool = false) => {
@@ -57,10 +56,7 @@ export const useModalManager = (update) => {
 
   const openFormShow = (id, name, cellphone) => {
     setIdProveedor(id)
-    setProveedor({
-      nombre: name,
-      telefono: cellphone,
-    })
+    proveedorSetter(id, name, cellphone)
     setShowModal(true)
   }
 
