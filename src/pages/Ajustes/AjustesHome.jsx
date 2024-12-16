@@ -1,11 +1,8 @@
 import { useNavigate } from 'react-router-dom'
 import { useSession } from '../../hooks/useSession'
 import NavBar from '../Navbar/NavBar'
-import {
-  ItemsIcon,
-  ClaseIcon,
-} from '../../components/items/ajustesHome/AjustesHomeIcons.js'
-
+import TipoClaseIcon from 'Img/TipoClasePage'
+import ItemPageIcon from '../../Img/ItemPage.js'
 import '../../styles/ajustes/ajustesHome.css'
 
 export const Precios = () => {
@@ -33,15 +30,15 @@ export const Precios = () => {
           <>
             {/* Card for Items */}
             <div
-              className="card items"
+              className="card-precios items-precios"
               onClick={() => handleRedirect('../itemsAlquiler')}
             >
               <div
                 className="image"
                 style={{ backgroundColor: '#DFC531', position: 'relative' }}
               >
-                <div style={{ fontSize: '5em', color: '#5d5d5d' }}>
-                  <ItemsIcon className="ajustes-icon" />
+                <div style={{ fontSize: '1em', color: '#5d5d5d' }}>
+                  <ItemPageIcon className="ajustes-icon" />
                 </div>
               </div>
               <div className="content">
@@ -56,15 +53,15 @@ export const Precios = () => {
 
             {/* Card for Clase */}
             <div
-              className="card clase"
+              className="card-precios clase-precios"
               onClick={() => handleRedirect('../ajustes')}
             >
               <div
                 className="image"
                 style={{ backgroundColor: '#45C824', position: 'relative' }}
               >
-                <div style={{ fontSize: '5em', color: '#5d5d5d' }}>
-                  <ClaseIcon className="ajustes-icon" />
+                <div style={{ fontSize: '1em', color: '#5d5d5d' }}>
+                  <TipoClaseIcon className="ajustes-icon" />
                 </div>
               </div>
               <div className="content">

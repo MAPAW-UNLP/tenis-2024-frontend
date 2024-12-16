@@ -5,21 +5,23 @@ import { GenericButton } from '../../components/Utils/GenericButton'
 import LoaderSpinner from '../../components/LoaderSpinner'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashAlt, faEdit } from '@fortawesome/free-solid-svg-icons'
-import { GenericButtonDisabled } from '../../components/Utils/GenericButtonDisabled'
+import Button from 'components/Button/Button'
 import FormularioTipoClase from '../../components/Clase/AgregarTipoClase'
 import Swal from 'sweetalert2'
+import { tipoClaseService } from 'api/tipoClase'
+import ButtonArrow from 'Img/arrow'
+import ButtonHome from 'Img/home'
+import ModalEliminar from 'components/Clase/ModalEliminar'
 
 export const Ajustes = () => {
   const URL_BASE = `http://localhost:8083/api/`
   const [tipoClases, setTipoClases] = useState([])
-  const [valoresOriginales, setValoresOriginales] = useState({})
   const [cargando, setCargando] = useState(true)
-  const [tempChanges, setTempChanges] = useState({})
   const [mensajeUsuario, setMensajeUsuario] = useState('')
   const [tipoClasePorBorrar, setTipoClasePorBorrar] = useState(null) // Tipo de clase a eliminar
-  const [botonHabilitado, setBotonHabilitado] = useState(false)
   const [mostrarFormulario, setMostrarFormulario] = useState(false)
   const [tipoClaseEditar, setTipoClaseEditar] = useState(null)
+  const [modalEliminar, setModalEliminar] = useState(false)
 
   useEffect(() => {
     fetchTipoClases()
@@ -28,15 +30,9 @@ export const Ajustes = () => {
   const fetchTipoClases = async () => {
     setCargando(true)
     try {
-      const response = await fetch(`${URL_BASE}clases`, { method: 'GET' })
-      const data = await response.json()
+      const data = await tipoClaseService.getTipoClases()
       setTipoClases(data)
       // Almacenar los valores originales de importe
-      const originales = {}
-      data.forEach((clase) => {
-        originales[clase.id] = clase.importe
-      })
-      setValoresOriginales(originales)
     } catch (error) {
       console.error('Error al obtener datos desde la BD', error)
     } finally {
@@ -46,19 +42,20 @@ export const Ajustes = () => {
 
   const handleAgregarTipoClase = async (nuevoTipoClase) => {
     setCargando(true)
-    const method = nuevoTipoClase.id ? 'PUT' : 'POST'
-    const url = nuevoTipoClase.id
-      ? `${URL_BASE}modClase`
-      : `${URL_BASE}addClase`
-
-    const response = await fetch(url, {
-      method: method,
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(nuevoTipoClase),
-    })
-
-    const data = await response.json()
-
+    let data
+    if (nuevoTipoClase.id) {
+      data = await tipoClaseService.crearModificarTipoClase(
+        nuevoTipoClase,
+        'modClase',
+        'PUT'
+      )
+    } else {
+      data = await tipoClaseService.crearModificarTipoClase(
+        nuevoTipoClase,
+        'addClase',
+        'POST'
+      )
+    }
     if (data.status === 'ok') {
       console.log('Tipo de clase creado exitosamente')
       await fetchTipoClases() // Recargar los tipos de clase
@@ -96,57 +93,8 @@ export const Ajustes = () => {
     }
   }
 
-  /**
-  const handleTipoClaseChange = (tipo, valor) => {
-    const nuevoImporte = valor.replace(/\D/g, '') // Solo permite números enteros
-    setTempChanges((prev) => ({
-      ...prev,
-      [tipo.id]: nuevoImporte,
-    }))
-
-    // Actualizar solo la vista localmente para mostrar el valor temporal
-    setTipoClases((prevTipoClases) =>
-      prevTipoClases.map((tipoClase) =>
-        tipoClase.id === tipo.id
-          ? { ...tipoClase, importe: nuevoImporte }
-          : tipoClase
-      )
-    )
-  }
-
-  useEffect(() => {
-    // Revisa si hay algún valor en tempChanges que sea diferente al original
-    const hayCambios = Object.keys(tempChanges).some(
-      (id) => tempChanges[id] !== String(valoresOriginales[id])
-    )
-
-    // Habilitar o deshabilitar el botón según si hay cambios
-    setBotonHabilitado(hayCambios)
-  }, [tempChanges, valoresOriginales])
-
-  const handleConfirmarCambios = async () => {
-    setCargando(true)
-    for (const idTipoClase in tempChanges) {
-      const nuevoImporte = tempChanges[idTipoClase]
-      try {
-        await fetch(`${URL_BASE}modClase`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ id: idTipoClase, importe: nuevoImporte }),
-        })
-      } catch (error) {
-        console.error('Error al actualizar el importe:', error)
-      }
-    }
-    // Limpiar el estado de cambios temporales y deshabilitar el botón
-    setTempChanges({})
-    setBotonHabilitado(false)
-    setCargando(false)
-    await fetchTipoClases()
-  }
-     */
-
   const handleEliminarTipoClase = (tipoClase) => {
+    setModalEliminar(true)
     setTipoClasePorBorrar(tipoClase)
     setMensajeUsuario(
       <span style={{ fontSize: '1.2em' }}>
@@ -155,26 +103,20 @@ export const Ajustes = () => {
         acción no se puede deshacer.
       </span>
     )
-    document.getElementById('mensajesUsuario').style.display = 'flex'
   }
 
   const handleCerrarMensaje = () => {
     setMensajeUsuario('')
     setTipoClasePorBorrar(null)
-    document.getElementById('mensajesUsuario').style.display = 'none'
+    setModalEliminar(false)
   }
 
   const handleAceptarBorrado = async () => {
     handleCerrarMensaje()
+    setModalEliminar(false)
     if (!tipoClasePorBorrar) return
-
     setCargando(true)
-    const response = await fetch(`${URL_BASE}bajaClase`, {
-      method: 'DELETE',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ id: tipoClasePorBorrar.id }),
-    })
-    const data = await response.json()
+    const data = await tipoClaseService.borrarTipoClase(tipoClasePorBorrar.id)
     if (data.status === 'ok') {
       console.log('Clase eliminada exitosamente')
       await fetchTipoClases() // Recargar los datos después de eliminar
@@ -224,19 +166,41 @@ export const Ajustes = () => {
           className="container-ajustes"
           style={{ backgroundColor: '#ffffff' }}
         >
-          <div className="table-head-ajustes">
-            <span style={{ fontSize: '1.8em' }}>Valores</span>
+          <div
+            className="table-head-ajustes"
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              position: 'relative',
+              marginBottom: '20px',
+            }}
+          >
+            <span style={{ fontSize: '1.8em', marginBottom: '10px' }}>
+              Valores
+            </span>
+            <div
+              style={{
+                display: 'flex',
+                gap: '10px',
+                position: 'absolute',
+                left: '10px',
+                top: '50%',
+                transform: 'translateY(-50%)',
+              }}
+            >
+              <ButtonArrow style={{ marginLeft: '15%' }} />
+              <ButtonHome style={{ marginTop: '3%' }} />
+            </div>
           </div>
           <div className="container-table-ajustes">
-            <GenericButton
-              marginBottom={'0.5em'}
-              backgroundColor={'#92bc1e'}
-              color="white"
-              borderRadius="1em"
+            <Button
+              color="success"
+              size="lg"
               onClick={() => setMostrarFormulario(true)}
             >
               Crear clase
-            </GenericButton>
+            </Button>
 
             {mostrarFormulario && (
               <FormularioTipoClase
@@ -341,28 +305,13 @@ export const Ajustes = () => {
       )}
 
       {/* Mensaje de confirmación */}
-      <div id="mensajesUsuario" style={{ display: 'none' }}>
-        <p>{mensajeUsuario}</p>
-        <GenericButton
-          id="button-aceptarMensaje"
-          onClick={handleAceptarBorrado}
-          className="botones-MensajesUsuario"
-          backgroundColor="#FF0000"
-          width="200px"
-          height="70px"
-        >
-          Aceptar
-        </GenericButton>
-        <GenericButton
-          id="button-cerrarMensaje"
-          onClick={handleCerrarMensaje}
-          className="botones-MensajesUsuario"
-          width="200px"
-          height="70px"
-        >
-          Cancelar
-        </GenericButton>
-      </div>
+      <ModalEliminar
+        isVisible={modalEliminar}
+        onClose={handleCerrarMensaje}
+        mensaje={mensajeUsuario}
+        titulo={''}
+        confirmarBorrar={handleAceptarBorrado}
+      />
     </div>
   )
 }

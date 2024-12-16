@@ -14,6 +14,7 @@ import {
 
 import '../../styles/home/home.css'
 import Card from 'components/Home/Card'
+import PreciosPageIcon from 'Img/PreciosPage'
 
 export const HomeRe = () => {
   const navigate = useNavigate()
@@ -175,17 +176,8 @@ export const HomeRe = () => {
                 className="image"
                 style={{ backgroundColor: '#78a1ca', position: 'relative' }}
               >
-                <div style={{ fontSize: '5em', color: '#5d5d5d' }}>
-                  <FontAwesomeIcon
-                    icon={faGear}
-                    style={{
-                      position: 'absolute',
-                      left: '35%',
-                      top: '0',
-                      bottom: '0',
-                      margin: 'auto',
-                    }}
-                  />
+                <div style={{ fontSize: '1em', color: '#5d5d5d' }}>
+                  <PreciosPageIcon className="ajustes-icon" />
                 </div>
               </div>
               <div className="content">

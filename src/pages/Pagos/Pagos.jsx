@@ -161,7 +161,7 @@ export const Pagos = () => {
       concepto: 'Proveedor',
     },
     {
-      id: 3,
+      id: 4,
       concepto: 'Varios',
     },
   ]
