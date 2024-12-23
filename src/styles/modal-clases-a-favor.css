@@ -1,0 +1,124 @@
+/* Fondo que cubre toda la pantalla */
+.clases-a-favor-modal-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7); /* Fondo oscuro translúcido */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Contenedor principal del modal */
+.clases-a-favor-modal {
+  background: #ffffff; /* Fondo blanco */
+  border-radius: 12px;
+  width: 450px;
+  padding: 24px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s ease-in-out;
+  font-family: 'Arial', sans-serif;
+}
+
+/* Animación del modal */
+@keyframes fadeIn {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Header del modal */
+.clases-a-favor-modal__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.clases-a-favor-modal__title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+}
+
+.clases-a-favor-modal__close-btn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: #555;
+}
+
+.clases-a-favor-modal__close-btn:hover {
+  color: #ff0000; /* Rojo para cerrar */
+}
+
+/* Cuerpo del modal */
+.clases-a-favor-modal__body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.clases-a-favor-modal__input-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.clases-a-favor-modal__label {
+  font-size: 14px;
+  margin-bottom: 4px;
+  color: #666;
+}
+
+/* Estilo de los inputs y select */
+.clases-a-favor-modal__input,
+.clases-a-favor-modal__select {
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #333;
+  background-color: #f9f9f9;
+  transition:
+    border 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.clases-a-favor-modal__input:focus,
+.clases-a-favor-modal__select:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Botón de submit */
+.clases-a-favor-modal__submit-btn {
+  padding: 12px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: background 0.3s ease;
+}
+
+.clases-a-favor-modal__submit-btn:hover {
+  background: #0056b3;
+}
+
+.clases-a-favor-modal__submit-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}

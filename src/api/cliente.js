@@ -112,3 +112,87 @@ export function getHistorialPagos(id, params = {}) {
       return dataDefault.detail
     })
 }
+
+export function getClasesAFavor(id) {
+  const dataDefault = {
+    rta: 'ok',
+    detail: 7,
+  }
+
+  const baseUrl = `${CLIENTE_URL}/clasesAFavor`
+
+  return fetch(`${baseUrl}?clienteID=${id}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => {
+      if (!response.ok) {
+        console.warn(`Error HTTP: ${response.status}`)
+        return dataDefault.detail
+      }
+      return response.json()
+    })
+    .then((data) => {
+      console.log(data)
+
+      if (data.rta === 'ok') {
+        return data.detail
+      } else {
+        console.warn(
+          'Respuesta no válida del servidor, devolviendo dataDefault.'
+        )
+        return dataDefault.detail
+      }
+    })
+    .catch((error) => {
+      console.error('Error en el fetch:', error)
+      return dataDefault.detail
+    })
+}
+
+export function reservarClaseAFavor(formData) {
+  const dataDefault = {
+    rta: 'error',
+    detail: 'Failed to reserve class',
+  }
+
+  const baseUrl = `${CLIENTE_URL}/reservarClaseAFavor`
+
+  return fetch(baseUrl, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(formData),
+  })
+    .then((response) => {
+      const status = response.status
+
+      if (!response.ok) {
+        console.warn(`Error HTTP: ${status}`)
+        return { status, data: dataDefault.detail }
+      }
+
+      console.log(response)
+      return response.json().then((data) => ({
+        status,
+        data,
+      }))
+    })
+    .then(({ status, data }) => {
+      if (data.rta === 'ok') {
+        return { status, data: data.detail }
+      } else {
+        console.warn(
+          'Respuesta no válida del servidor, devolviendo dataDefault.'
+        )
+        return { status, data: dataDefault.detail }
+      }
+    })
+    .catch((error) => {
+      console.error('Error en el fetch:', error)
+      return { status: 500, data: dataDefault.detail }
+    })
+}
