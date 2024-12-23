@@ -14,6 +14,8 @@ import { GenericLargeButton } from '../../components/Utils/GenericLargeButton'
 
 import '../../styles/profesores.css'
 import { ProfesorDetail } from '../../components/Profesor/ProfesorDetail'
+import CustomTab from 'components/Utils/CustomTab'
+import Estadisticas from 'pages/Estadisticas/Estadisticas'
 
 export const Profesores = () => {
   const URL_BASE = `http://localhost:8083/api/`
@@ -338,10 +340,9 @@ export const Profesores = () => {
     })
   }
 
-  return (
-    <div id="profesores-component">
-      <NavBar title={'Profesores'} />
-      <div id="profesores-component-mainContent">
+  const renderGeneral = () => {
+    return (
+      <>
         <GenericLargeButton
           title={'Crear nuevo profesor'}
           doSomething={() => setActive(true)}
@@ -389,6 +390,19 @@ export const Profesores = () => {
             />
           </div>
         )}
+      </>
+    )
+  }
+
+  return (
+    <div id="profesores-component">
+      <NavBar title={'Profesores'} />
+      <div id="profesores-component-mainContent">
+        <CustomTab
+          tabsNames={['General', 'Estadísticas']}
+          tabsComponents={[renderGeneral(), <Estadisticas />]}
+        />
+        {/* { renderGeneral()} */}
       </div>
     </div>
   )

@@ -8,6 +8,9 @@ import { ordenarPorNombre } from '../../components/Utils/Functions'
 import LoaderSpinner from '../../components/LoaderSpinner'
 
 import '../../styles/movimiento/movimiento.css'
+import { getProveedores } from 'api/proveedores'
+import CustomTab from 'components/Utils/CustomTab'
+import EstadisticasCobros from 'pages/Estadisticas/EstadisticasCobros'
 
 export const Pagos = () => {
   const URL_BASE = `http://localhost:8083/api/`
@@ -27,7 +30,12 @@ export const Pagos = () => {
     }
     fetch(`${URL_BASE}pagos`, requestOptions)
       .then((response) => response.json())
-      .then((data) => setPagos(data))
+      .then((data) => {
+        const pagosOrdenados = data.sort(
+          (a, b) => new Date(b.fecha) - new Date(a.fecha)
+        )
+        setPagos(pagosOrdenados)
+      })
       .then(() => setPagosLoader(() => false))
       .then(() => setLoadingFetch(false))
 
@@ -35,10 +43,12 @@ export const Pagos = () => {
       .then((response) => response.json())
       .then((data) => setProfesores(ordenarPorNombre(data)))
 
-    fetch(`${URL_BASE}proveedor`, requestOptions)
-      .then((response) => response.json())
-      .then((data) => setProveedores(ordenarPorNombre(data)))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const fetchProveedores = async () => {
+      const data = await getProveedores()
+      setProveedores(ordenarPorNombre(data))
+    }
+
+    fetchProveedores()
   }, [actPagos])
 
   // Estado para el formulario de "Agregar Pago"
@@ -166,10 +176,9 @@ export const Pagos = () => {
     },
   ]
 
-  return (
-    <div className="movimiento-component">
-      <NavBar title={'Pagos'} />
-      <div className="movimiento-component-mainContent">
+  const renderMain = () => {
+    return (
+      <>
         <GenericLargeButton
           doSomething={() => setActive(true)}
           title={'Crear nuevo pago'}
@@ -196,6 +205,18 @@ export const Pagos = () => {
         ) : (
           <MovimientoTable movimientos={pagos} loadingFetch={loadingFetch} />
         )}
+      </>
+    )
+  }
+
+  return (
+    <div className="movimiento-component">
+      <NavBar title={'Pagos'} />
+      <div className="movimiento-component-mainContent">
+        <CustomTab
+          tabsNames={['General', 'Estadísticas']}
+          tabsComponents={[renderMain(), <EstadisticasCobros type="pagos" />]}
+        />
       </div>
     </div>
   )

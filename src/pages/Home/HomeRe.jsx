@@ -36,6 +36,16 @@ export const HomeRe = () => {
           gap: '1em',
         }}
       >
+        {user.rolPorDefecto === 'ROLE_CLIENTE' && (
+          <Card
+            title="clases"
+            description="Visualizar las próximas clases"
+            customColor="#ee82ee"
+            icon={faCalendar}
+            className="clasesCard"
+          />
+        )}
+
         {(user.rolPorDefecto === 'ROLE_ADMIN' ||
           user.rolPorDefecto === 'ROLE_PROFESOR') && (
           <>

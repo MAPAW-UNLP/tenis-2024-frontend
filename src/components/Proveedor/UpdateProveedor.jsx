@@ -1,6 +1,11 @@
 import InputReComponent from '../Utils/InputReComponent'
 import useInputValidation from 'hooks/Proveedores/useInputValidation'
 import { useState } from 'react'
+import '../../styles/proveedores/form.css'
+import '../../styles/proveedores/popup.css'
+import '../../styles/proveedores/spinner.css'
+import Button from 'components/Button/Button'
+import { actualizarProveedor } from 'api/proveedores'
 
 export const UpdateProveedor = ({ handleCloseForm, proveedor = {} }) => {
   const partial = true
@@ -38,7 +43,7 @@ export const UpdateProveedor = ({ handleCloseForm, proveedor = {} }) => {
     partial
   )
 
-  const updateProveedor = (e) => {
+  const upgradeProveedor = (e) => {
     e.preventDefault()
 
     setLoading(true)
@@ -50,32 +55,26 @@ export const UpdateProveedor = ({ handleCloseForm, proveedor = {} }) => {
         proveedorForm.telefono !== ''
           ? proveedorForm.telefono
           : proveedor.telefono,
+      id: proveedor.id,
     }
 
-    const requestOptions = {
-      method: 'PUT',
-      body: JSON.stringify(data),
+    const actualizar = async () => {
+      await actualizarProveedor(data)
+      setShowSuccessPopup(true)
+      setTimeout(() => {
+        setShowSuccessPopup(false)
+        handleCloseForm(true)
+        setLoading(false)
+      }, 5000)
     }
 
-    fetch(`http://localhost:8083/api/proveedor/${proveedor.id}`, requestOptions)
-      .then((response) => response.json())
-      .then(
-        () => setShowSuccessPopup(true),
-        setTimeout(() => {
-          setShowSuccessPopup(false)
-          handleCloseForm(true)
-          setLoading(false)
-        }, 5000)
-      )
+    actualizar()
   }
 
   return (
-    <div id="proveedor-add-component">
-      <button id="close-proveedor-add-form" onClick={handleCloseForm}>
-        x
-      </button>
+    <>
       <h2>Editar Proveedor</h2>
-      <form onSubmit={updateProveedor}>
+      <form onSubmit={upgradeProveedor}>
         <label className="textoFormulario">Nombre</label>
         <div className="inputlabel">
           <InputReComponent
@@ -83,7 +82,6 @@ export const UpdateProveedor = ({ handleCloseForm, proveedor = {} }) => {
             name={'nombre'}
             className={'proveedor-add-form-input'}
             onChangeFuncion={handleChangeName}
-            placeholder={nombre}
             value={nombre}
           />
           <p className="feedbackInline" style={{ color: nombreFeedback.color }}>
@@ -97,7 +95,6 @@ export const UpdateProveedor = ({ handleCloseForm, proveedor = {} }) => {
             name={'telefono'}
             className={'proveedor-add-form-input'}
             onChangeFuncion={handleChangeTelefono}
-            placeholder={telefono}
             value={telefono}
           />
           <p
@@ -108,18 +105,18 @@ export const UpdateProveedor = ({ handleCloseForm, proveedor = {} }) => {
           </p>
         </div>
         <div className="button-container">
-          <button id="proveedor-add-form-addBtn" type="submit">
-            <p className="textoBotonAceptar">Guardar</p>
-          </button>
-          <button onClick={handleCloseForm} id="proveedor-add-form-cancelBtn">
-            <p className="textoBotonCancelar">Cancelar</p>
-          </button>
+          <Button size="lg" type="submit">
+            Aceptar
+          </Button>
+          <Button color="secondary" size="lg" onClick={handleCloseForm}>
+            Cancelar
+          </Button>
         </div>
-        {loading && <div className="spinner"></div>}
+        {loading && <div className="spinner spinner-centered"></div>}
       </form>
       {showSuccessPopup && (
         <div className="popup">¡Proveedor actualizado con éxito!</div>
       )}
-    </div>
+    </>
   )
 }
